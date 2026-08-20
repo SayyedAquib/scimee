@@ -21921,8 +21921,8 @@
       state: "Maharashtra",
       pincode: "425201",
       country: "India",
-      googleMapsUrl: "https://maps.app.goo.gl/vsxkNTDmn7NQSmcs5",
-      googleMapsEmbed: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d383.20953689833016!2d75.7952757!3d21.036519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjHCsDAyJzExLjYiTiA3NcKwNDcnNDUuMyJF!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin",
+      googleMapsUrl: "https://www.google.com/maps/place/SCIMEE/@21.0364863,75.7957231,19.83z/data=!4m6!3m5!1s0x3bd9a790aea59749:0x3eb4e3b8690ff45f!8m2!3d21.0365511!4d75.7959125",
+      googleMapsEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d522.4927527233573!2d75.79572309994202!3d21.036486269831684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd9a790aea59749%3A0x3eb4e3b8690ff45f!2sSCIMEE!5e0!3m2!1sen!2sin!4v1787217106549!5m2!1sen!2sin",
       latitude: 21.0365511,
       longitude: 75.7959125
     },
@@ -22713,24 +22713,19 @@
   function CourseExplorer({ onOpenCallModal }) {
     const [selectedId, setSelectedId] = (0, import_react7.useState)(courses_default.programs[0].id);
     const activeCourse = courses_default.programs.find((p) => p.id === selectedId) || courses_default.programs[0];
-    return /* @__PURE__ */ import_react7.default.createElement("section", { id: "courses", style: {
-      paddingTop: "clamp(48px, 8vw, 76px)",
-      paddingBottom: "clamp(54px, 8vw, 84px)",
-      background: "var(--apple-bg-base)",
-      borderBottom: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react7.default.createElement("div", { style: { textAlign: "center", maxWidth: "820px", margin: "0 auto 34px" } }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "badge-blue", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react7.default.createElement(GraduationCap, { size: 13 }), /* @__PURE__ */ import_react7.default.createElement("span", null, "Academic Programs")), /* @__PURE__ */ import_react7.default.createElement("h2", { style: {
+    return /* @__PURE__ */ import_react7.default.createElement("section", { id: "courses", style: { paddingTop: "20px", paddingBottom: "20px" } }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "bento-section-canvas" }, /* @__PURE__ */ import_react7.default.createElement("div", { style: { textAlign: "center", maxWidth: "820px", margin: "0 auto 32px" } }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "badge-blue", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react7.default.createElement(GraduationCap, { size: 13 }), /* @__PURE__ */ import_react7.default.createElement("span", null, "Academic Programs")), /* @__PURE__ */ import_react7.default.createElement("h2", { style: {
       fontSize: "clamp(2rem, 4.5vw, 3rem)",
       fontWeight: "900",
-      lineHeight: "1.15",
+      lineHeight: "1.12",
       letterSpacing: "-0.03em",
-      marginBottom: "12px",
+      marginBottom: "10px",
       color: "#ffffff"
-    } }, courses_default.sectionTitle), /* @__PURE__ */ import_react7.default.createElement("p", { style: { fontSize: "0.98rem", color: "var(--text-secondary)" } }, courses_default.sectionSubtitle)), /* @__PURE__ */ import_react7.default.createElement("div", { style: {
+    } }, courses_default.sectionTitle), /* @__PURE__ */ import_react7.default.createElement("p", { style: { fontSize: "0.96rem", color: "var(--text-sub)" } }, courses_default.sectionSubtitle)), /* @__PURE__ */ import_react7.default.createElement("div", { style: {
       display: "flex",
       flexWrap: "wrap",
       gap: "8px",
       justifyContent: "center",
-      marginBottom: "32px"
+      marginBottom: "30px"
     } }, courses_default.programs.map((program) => {
       const isSelected = program.id === selectedId;
       return /* @__PURE__ */ import_react7.default.createElement(
@@ -22740,11 +22735,11 @@
           onClick: () => setSelectedId(program.id),
           style: {
             padding: "9px 18px",
-            borderRadius: "var(--radius-full)",
-            border: isSelected ? "1px solid var(--border-gold-glow)" : "1px solid var(--border-subtle)",
-            borderTop: isSelected ? "1px solid rgba(251, 191, 36, 0.5)" : "1px solid var(--border-subtle)",
-            background: isSelected ? "linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(15, 23, 42, 0.9) 100%)" : "rgba(255, 255, 255, 0.04)",
-            color: isSelected ? "#ffffff" : "var(--text-secondary)",
+            borderRadius: "var(--radius-pill)",
+            border: isSelected ? "1px solid var(--border-gold-specular)" : "1px solid var(--border-glass)",
+            borderTop: isSelected ? "1px solid rgba(251, 191, 36, 0.5)" : "1px solid var(--border-glass)",
+            background: isSelected ? "linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(15, 23, 42, 0.9) 100%)" : "rgba(255, 255, 255, 0.04)",
+            color: isSelected ? "#fef08a" : "var(--text-sub)",
             fontWeight: isSelected ? "800" : "600",
             fontSize: "0.86rem",
             cursor: "pointer",
@@ -22754,26 +22749,27 @@
             gap: "7px"
           }
         },
-        program.featured && /* @__PURE__ */ import_react7.default.createElement("span", { style: { width: "5px", height: "5px", borderRadius: "50%", background: "var(--accent-gold)" } }),
+        program.featured && /* @__PURE__ */ import_react7.default.createElement("span", { style: { width: "5px", height: "5px", borderRadius: "50%", background: "var(--apple-gold)" } }),
         /* @__PURE__ */ import_react7.default.createElement("span", null, program.name)
       );
-    })), /* @__PURE__ */ import_react7.default.createElement("div", { className: "apple-glass", style: {
-      padding: "clamp(22px, 4.5vw, 38px)",
+    })), /* @__PURE__ */ import_react7.default.createElement("div", { className: "bento-card", style: {
+      padding: "clamp(22px, 4.5vw, 36px)",
+      borderRadius: "24px",
       borderTop: "1px solid rgba(255, 255, 255, 0.3)"
     } }, /* @__PURE__ */ import_react7.default.createElement("div", { style: {
       display: "grid",
       gridTemplateColumns: "1fr",
-      gap: "24px"
+      gap: "22px"
     } }, /* @__PURE__ */ import_react7.default.createElement("div", { style: {
       display: "flex",
       flexWrap: "wrap",
       alignItems: "center",
       justifyContent: "space-between",
-      gap: "16px",
-      borderBottom: "1px solid var(--border-subtle)",
-      paddingBottom: "18px"
-    } }, /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" } }, /* @__PURE__ */ import_react7.default.createElement("span", { className: "badge-gold" }, activeCourse.badge), /* @__PURE__ */ import_react7.default.createElement("span", { style: { fontSize: "0.82rem", color: "var(--text-tertiary)" } }, "\u2022 ", activeCourse.target)), /* @__PURE__ */ import_react7.default.createElement("h3", { style: {
-      fontSize: "clamp(1.5rem, 3vw, 2.2rem)",
+      gap: "14px",
+      borderBottom: "1px solid var(--border-glass)",
+      paddingBottom: "16px"
+    } }, /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" } }, /* @__PURE__ */ import_react7.default.createElement("span", { className: "badge-gold" }, activeCourse.badge), /* @__PURE__ */ import_react7.default.createElement("span", { style: { fontSize: "0.82rem", color: "var(--text-muted)" } }, "\u2022 ", activeCourse.target)), /* @__PURE__ */ import_react7.default.createElement("h3", { style: {
+      fontSize: "clamp(1.4rem, 3vw, 2.1rem)",
       fontWeight: "900",
       color: "#ffffff",
       letterSpacing: "-0.02em"
@@ -22782,11 +22778,11 @@
       {
         onClick: onOpenCallModal,
         className: "btn-primary",
-        style: { padding: "11px 22px", fontSize: "0.92rem" }
+        style: { padding: "11px 22px", fontSize: "0.9rem" }
       },
       /* @__PURE__ */ import_react7.default.createElement("span", null, activeCourse.ctaText),
-      /* @__PURE__ */ import_react7.default.createElement(ArrowRight, { size: 16 })
-    )), /* @__PURE__ */ import_react7.default.createElement("p", { style: { fontSize: "1rem", color: "var(--text-secondary)", lineHeight: "1.6" } }, activeCourse.description), /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("h4", { style: { fontSize: "0.88rem", fontWeight: "800", color: "#fff", marginBottom: "12px", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Key Curriculum & Pedagogy"), /* @__PURE__ */ import_react7.default.createElement("div", { style: {
+      /* @__PURE__ */ import_react7.default.createElement(ArrowRight, { size: 15 })
+    )), /* @__PURE__ */ import_react7.default.createElement("p", { style: { fontSize: "0.98rem", color: "var(--text-sub)", lineHeight: "1.6" } }, activeCourse.description), /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("h4", { style: { fontSize: "0.86rem", fontWeight: "800", color: "#fff", marginBottom: "12px", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Key Curriculum & Pedagogy"), /* @__PURE__ */ import_react7.default.createElement("div", { style: {
       display: "grid",
       gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))",
       gap: "10px"
@@ -22800,23 +22796,23 @@
           gap: "9px",
           background: "rgba(255, 255, 255, 0.03)",
           padding: "11px 13px",
-          borderRadius: "var(--radius-sm)",
+          borderRadius: "14px",
           border: "1px solid rgba(255, 255, 255, 0.05)"
         }
       },
-      /* @__PURE__ */ import_react7.default.createElement(CircleCheck, { size: 17, color: "var(--accent-emerald)", style: { flexShrink: 0, marginTop: "2px" } }),
-      /* @__PURE__ */ import_react7.default.createElement("span", { style: { fontSize: "0.86rem", color: "var(--text-primary)", lineHeight: "1.4" } }, highlight)
+      /* @__PURE__ */ import_react7.default.createElement(CircleCheck, { size: 16, color: "var(--apple-emerald-light)", style: { flexShrink: 0, marginTop: "2px" } }),
+      /* @__PURE__ */ import_react7.default.createElement("span", { style: { fontSize: "0.86rem", color: "var(--text-title)", lineHeight: "1.4" } }, highlight)
     )))), /* @__PURE__ */ import_react7.default.createElement("div", { style: {
       display: "flex",
       flexWrap: "wrap",
       alignItems: "center",
       justifyContent: "space-between",
-      gap: "14px",
-      paddingTop: "18px",
-      borderTop: "1px solid var(--border-subtle)",
+      gap: "12px",
+      paddingTop: "16px",
+      borderTop: "1px solid var(--border-glass)",
       fontSize: "0.82rem",
-      color: "var(--text-tertiary)"
-    } }, /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("strong", { style: { color: "var(--text-secondary)" } }, "Subjects Covered:"), " ", activeCourse.subjects.join(", ")), /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("strong", { style: { color: "var(--text-secondary)" } }, "Eligibility:"), " ", activeCourse.eligibility))))));
+      color: "var(--text-muted)"
+    } }, /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("strong", { style: { color: "var(--text-sub)" } }, "Subjects Covered:"), " ", activeCourse.subjects.join(", ")), /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("strong", { style: { color: "var(--text-sub)" } }, "Eligibility:"), " ", activeCourse.eligibility)))))));
   }
 
   // src/components/SyllabusExplorer.jsx
@@ -23153,21 +23149,17 @@
           return /* @__PURE__ */ import_react8.default.createElement(BookOpen, { size: 16 });
       }
     };
-    return /* @__PURE__ */ import_react8.default.createElement("section", { id: "syllabus", style: {
-      paddingTop: "clamp(48px, 8vw, 76px)",
-      paddingBottom: "clamp(54px, 8vw, 84px)",
-      background: "linear-gradient(180deg, #030712 0%, #080f24 50%, #030712 100%)",
-      borderBottom: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react8.default.createElement("div", { style: { textAlign: "center", maxWidth: "850px", margin: "0 auto 30px" } }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "badge-gold", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react8.default.createElement(FileText, { size: 13 }), /* @__PURE__ */ import_react8.default.createElement("span", null, "Official NMC Curriculum")), /* @__PURE__ */ import_react8.default.createElement("h2", { style: {
+    return /* @__PURE__ */ import_react8.default.createElement("section", { id: "syllabus", style: { paddingTop: "20px", paddingBottom: "20px" } }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "bento-section-canvas" }, /* @__PURE__ */ import_react8.default.createElement("div", { style: { textAlign: "center", maxWidth: "850px", margin: "0 auto 28px" } }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "badge-gold", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react8.default.createElement(FileText, { size: 13 }), /* @__PURE__ */ import_react8.default.createElement("span", null, "Official NMC Curriculum")), /* @__PURE__ */ import_react8.default.createElement("h2", { style: {
       fontSize: "clamp(2rem, 4.5vw, 3rem)",
       fontWeight: "900",
-      lineHeight: "1.14",
+      lineHeight: "1.12",
       letterSpacing: "-0.03em",
-      marginBottom: "12px",
+      marginBottom: "10px",
       color: "#ffffff"
-    } }, syllabus_default.title), /* @__PURE__ */ import_react8.default.createElement("p", { style: { fontSize: "0.98rem", color: "var(--text-secondary)" } }, "Complete 50-Unit Curriculum notified by the Under Graduate Medical Education Board (UGMEB / NMC) for NEET (UG) candidates.")), /* @__PURE__ */ import_react8.default.createElement("div", { className: "apple-glass", style: {
-      padding: "18px 20px",
-      marginBottom: "24px"
+    } }, syllabus_default.title), /* @__PURE__ */ import_react8.default.createElement("p", { style: { fontSize: "0.96rem", color: "var(--text-sub)" } }, "Complete 50-Unit Curriculum notified by the Under Graduate Medical Education Board (UGMEB / NMC) for NEET (UG) candidates.")), /* @__PURE__ */ import_react8.default.createElement("div", { className: "bento-card", style: {
+      padding: "16px 18px",
+      marginBottom: "22px",
+      borderRadius: "20px"
     } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: {
       display: "flex",
       flexWrap: "wrap",
@@ -23186,10 +23178,10 @@
           },
           style: {
             padding: "8px 16px",
-            borderRadius: "var(--radius-full)",
-            border: isActive ? "1px solid var(--border-gold-glow)" : "1px solid var(--border-subtle)",
-            background: isActive ? "linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(15, 23, 42, 0.9) 100%)" : "rgba(255, 255, 255, 0.04)",
-            color: isActive ? "#ffffff" : "var(--text-secondary)",
+            borderRadius: "var(--radius-pill)",
+            border: isActive ? "1px solid var(--border-gold-specular)" : "1px solid var(--border-glass)",
+            background: isActive ? "linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(15, 23, 42, 0.9) 100%)" : "rgba(255, 255, 255, 0.04)",
+            color: isActive ? "#fef08a" : "var(--text-sub)",
             fontWeight: isActive ? "800" : "600",
             fontSize: "0.86rem",
             cursor: "pointer",
@@ -23203,14 +23195,14 @@
         /* @__PURE__ */ import_react8.default.createElement("span", null, sub.name),
         /* @__PURE__ */ import_react8.default.createElement("span", { style: {
           fontSize: "0.7rem",
-          background: isActive ? "var(--accent-gold)" : "rgba(255, 255, 255, 0.1)",
+          background: isActive ? "var(--apple-gold)" : "rgba(255, 255, 255, 0.1)",
           color: isActive ? "#030712" : "#fff",
           padding: "1px 6px",
           borderRadius: "9999px",
           fontWeight: "800"
         } }, sub.totalUnits)
       );
-    })), /* @__PURE__ */ import_react8.default.createElement("div", { style: { position: "relative", minWidth: "240px", flex: "1", maxWidth: "360px" } }, /* @__PURE__ */ import_react8.default.createElement(Search, { size: 16, color: "var(--text-tertiary)", style: { position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)" } }), /* @__PURE__ */ import_react8.default.createElement(
+    })), /* @__PURE__ */ import_react8.default.createElement("div", { style: { position: "relative", minWidth: "240px", flex: "1", maxWidth: "360px" } }, /* @__PURE__ */ import_react8.default.createElement(Search, { size: 16, color: "var(--text-muted)", style: { position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)" } }), /* @__PURE__ */ import_react8.default.createElement(
       "input",
       {
         type: "text",
@@ -23220,26 +23212,26 @@
         style: {
           width: "100%",
           padding: "9px 14px 9px 38px",
-          borderRadius: "var(--radius-full)",
-          background: "var(--apple-bg-input)",
-          border: "1px solid var(--border-subtle)",
+          borderRadius: "var(--radius-pill)",
+          background: "var(--canvas-input)",
+          border: "1px solid var(--border-glass)",
           color: "#fff",
           fontSize: "0.86rem",
           outline: "none"
         }
       }
-    )))), /* @__PURE__ */ import_react8.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px", marginBottom: "30px" } }, displayedUnits.length === 0 ? /* @__PURE__ */ import_react8.default.createElement("div", { style: {
+    )))), /* @__PURE__ */ import_react8.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px", marginBottom: "24px" } }, displayedUnits.length === 0 ? /* @__PURE__ */ import_react8.default.createElement("div", { style: {
       textAlign: "center",
-      padding: "40px 20px",
-      background: "var(--apple-bg-elevated)",
-      borderRadius: "var(--radius-md)",
-      border: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ import_react8.default.createElement("p", { style: { color: "var(--text-secondary)", fontSize: "0.94rem" } }, 'No units found matching "', /* @__PURE__ */ import_react8.default.createElement("strong", null, searchQuery), '" in ', activeSubjectData?.name, "."), /* @__PURE__ */ import_react8.default.createElement(
+      padding: "36px 20px",
+      background: "rgba(15, 23, 42, 0.6)",
+      borderRadius: "18px",
+      border: "1px solid var(--border-glass)"
+    } }, /* @__PURE__ */ import_react8.default.createElement("p", { style: { color: "var(--text-sub)", fontSize: "0.92rem" } }, 'No units found matching "', /* @__PURE__ */ import_react8.default.createElement("strong", null, searchQuery), '" in ', activeSubjectData?.name, "."), /* @__PURE__ */ import_react8.default.createElement(
       "button",
       {
         onClick: () => setSearchQuery(""),
         className: "btn-secondary",
-        style: { marginTop: "10px", padding: "7px 14px", fontSize: "0.82rem" }
+        style: { marginTop: "10px", padding: "6px 14px", fontSize: "0.8rem" }
       },
       "Clear Search"
     )) : displayedUnits.map((unit) => {
@@ -23248,11 +23240,11 @@
         "div",
         {
           key: unit.unitNumber,
-          className: "apple-glass",
+          className: "bento-card",
           style: {
-            borderRadius: "var(--radius-md)",
+            borderRadius: "18px",
             overflow: "hidden",
-            border: isExpanded ? "1px solid var(--border-gold-glow)" : "1px solid var(--border-subtle)",
+            border: isExpanded ? "1px solid var(--border-gold-specular)" : "1px solid var(--border-glass)",
             borderTop: isExpanded ? "1px solid rgba(251, 191, 36, 0.45)" : "1px solid var(--border-specular-top)"
           }
         },
@@ -23274,47 +23266,48 @@
             }
           },
           /* @__PURE__ */ import_react8.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "12px" } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: {
-            width: "30px",
-            height: "30px",
+            width: "28px",
+            height: "28px",
             borderRadius: "8px",
             background: "rgba(255, 255, 255, 0.05)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "0.78rem",
+            fontSize: "0.76rem",
             fontWeight: "900",
-            color: "var(--accent-gold-light)",
+            color: "var(--apple-gold-light)",
             flexShrink: 0
-          } }, unit.unitNumber), /* @__PURE__ */ import_react8.default.createElement("div", { style: { fontSize: "0.96rem", fontWeight: "700", color: "#fff", letterSpacing: "-0.01em" } }, "Unit ", unit.unitNumber, ": ", unit.name)),
-          /* @__PURE__ */ import_react8.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "6px", color: "var(--text-tertiary)" } }, /* @__PURE__ */ import_react8.default.createElement("span", { style: { fontSize: "0.78rem" } }, isExpanded ? "Hide" : "View Topics"), isExpanded ? /* @__PURE__ */ import_react8.default.createElement(ChevronUp, { size: 16 }) : /* @__PURE__ */ import_react8.default.createElement(ChevronDown, { size: 16 }))
+          } }, unit.unitNumber), /* @__PURE__ */ import_react8.default.createElement("div", { style: { fontSize: "0.94rem", fontWeight: "700", color: "#fff", letterSpacing: "-0.01em" } }, "Unit ", unit.unitNumber, ": ", unit.name)),
+          /* @__PURE__ */ import_react8.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "6px", color: "var(--text-muted)" } }, /* @__PURE__ */ import_react8.default.createElement("span", { style: { fontSize: "0.78rem" } }, isExpanded ? "Hide" : "View Topics"), isExpanded ? /* @__PURE__ */ import_react8.default.createElement(ChevronUp, { size: 15 }) : /* @__PURE__ */ import_react8.default.createElement(ChevronDown, { size: 15 }))
         ),
         isExpanded && /* @__PURE__ */ import_react8.default.createElement("div", { style: {
-          padding: "14px 18px 18px 58px",
-          background: "rgba(3, 7, 18, 0.55)",
-          borderTop: "1px solid var(--border-subtle)",
+          padding: "14px 18px 18px 56px",
+          background: "rgba(3, 7, 18, 0.5)",
+          borderTop: "1px solid var(--border-glass)",
           fontSize: "0.88rem",
-          color: "var(--text-secondary)",
+          color: "var(--text-sub)",
           lineHeight: "1.65"
-        } }, /* @__PURE__ */ import_react8.default.createElement("strong", { style: { color: "#fff", display: "block", marginBottom: "4px", fontSize: "0.82rem", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Topics & Subtopics:"), /* @__PURE__ */ import_react8.default.createElement("p", null, unit.topics))
+        } }, /* @__PURE__ */ import_react8.default.createElement("strong", { style: { color: "#fff", display: "block", marginBottom: "4px", fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Topics & Subtopics:"), /* @__PURE__ */ import_react8.default.createElement("p", null, unit.topics))
       );
-    })), /* @__PURE__ */ import_react8.default.createElement("div", { className: "apple-glass", style: {
-      padding: "22px 24px",
+    })), /* @__PURE__ */ import_react8.default.createElement("div", { className: "bento-card", style: {
+      padding: "20px 22px",
+      borderRadius: "20px",
       display: "flex",
       flexWrap: "wrap",
       alignItems: "center",
       justifyContent: "space-between",
       gap: "14px",
       borderTop: "1px solid rgba(56, 189, 248, 0.45)"
-    } }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("h4", { style: { fontSize: "1.05rem", fontWeight: "800", color: "#fff", marginBottom: "3px", letterSpacing: "-0.01em" } }, "Struggling with any specific NEET physics, chemistry, or biology unit?"), /* @__PURE__ */ import_react8.default.createElement("p", { style: { fontSize: "0.85rem", color: "var(--text-secondary)" } }, "Get personal 1-on-1 concept drills and numerical problem-solving sessions at SCIMEE.")), /* @__PURE__ */ import_react8.default.createElement(
+    } }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("h4", { style: { fontSize: "1.02rem", fontWeight: "800", color: "#fff", marginBottom: "3px", letterSpacing: "-0.01em" } }, "Struggling with any specific NEET physics, chemistry, or biology unit?"), /* @__PURE__ */ import_react8.default.createElement("p", { style: { fontSize: "0.84rem", color: "var(--text-sub)" } }, "Get personal 1-on-1 concept drills and numerical problem-solving sessions at SCIMEE.")), /* @__PURE__ */ import_react8.default.createElement(
       "button",
       {
         onClick: onOpenCallModal,
         className: "btn-primary",
-        style: { padding: "10px 20px", fontSize: "0.88rem" }
+        style: { padding: "10px 20px", fontSize: "0.86rem" }
       },
-      /* @__PURE__ */ import_react8.default.createElement(PhoneCall, { size: 15 }),
+      /* @__PURE__ */ import_react8.default.createElement(PhoneCall, { size: 14 }),
       /* @__PURE__ */ import_react8.default.createElement("span", null, "Consult Subject Faculty")
-    ))));
+    )))));
   }
 
   // src/components/FacilitiesSection.jsx
@@ -23391,33 +23384,29 @@
       }
     };
     const facilitiesList = facilities_default.items || facilities_default.features || [];
-    return /* @__PURE__ */ import_react9.default.createElement("section", { id: "facilities", style: {
-      paddingTop: "clamp(48px, 8vw, 76px)",
-      paddingBottom: "clamp(54px, 8vw, 84px)",
-      background: "var(--apple-bg-base)",
-      borderBottom: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react9.default.createElement("div", { style: { textAlign: "center", maxWidth: "820px", margin: "0 auto 34px" } }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "badge-emerald", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react9.default.createElement(Shield, { size: 13 }), /* @__PURE__ */ import_react9.default.createElement("span", null, "Infrastructure & Pedagogy")), /* @__PURE__ */ import_react9.default.createElement("h2", { style: {
+    return /* @__PURE__ */ import_react9.default.createElement("section", { id: "facilities", style: { paddingTop: "20px", paddingBottom: "20px" } }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "bento-section-canvas" }, /* @__PURE__ */ import_react9.default.createElement("div", { style: { textAlign: "center", maxWidth: "820px", margin: "0 auto 32px" } }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "badge-emerald", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react9.default.createElement(Shield, { size: 13 }), /* @__PURE__ */ import_react9.default.createElement("span", null, "Infrastructure & Pedagogy")), /* @__PURE__ */ import_react9.default.createElement("h2", { style: {
       fontSize: "clamp(2rem, 4.5vw, 3rem)",
       fontWeight: "900",
-      lineHeight: "1.14",
+      lineHeight: "1.12",
       letterSpacing: "-0.03em",
-      marginBottom: "12px",
+      marginBottom: "10px",
       color: "#ffffff"
-    } }, facilities_default.sectionTitle || facilities_default.title), /* @__PURE__ */ import_react9.default.createElement("p", { style: { fontSize: "0.98rem", color: "var(--text-secondary)" } }, facilities_default.sectionSubtitle || facilities_default.subtitle)), /* @__PURE__ */ import_react9.default.createElement("div", { className: "grid-responsive-2", style: { marginBottom: "36px" } }, facilitiesList.map((feat) => /* @__PURE__ */ import_react9.default.createElement(
+    } }, facilities_default.sectionTitle || facilities_default.title), /* @__PURE__ */ import_react9.default.createElement("p", { style: { fontSize: "0.96rem", color: "var(--text-sub)" } }, facilities_default.sectionSubtitle || facilities_default.subtitle)), /* @__PURE__ */ import_react9.default.createElement("div", { className: "grid-responsive-2", style: { marginBottom: "32px" } }, facilitiesList.map((feat) => /* @__PURE__ */ import_react9.default.createElement(
       "div",
       {
         key: feat.id,
-        className: "apple-glass",
+        className: "bento-card",
         style: {
           padding: "24px",
+          borderRadius: "20px",
           display: "flex",
-          gap: "18px",
+          gap: "16px",
           alignItems: "flex-start"
         }
       },
       /* @__PURE__ */ import_react9.default.createElement("div", { style: {
-        width: "48px",
-        height: "48px",
+        width: "46px",
+        height: "46px",
         borderRadius: "12px",
         background: "rgba(255, 255, 255, 0.05)",
         display: "flex",
@@ -23426,9 +23415,10 @@
         flexShrink: 0,
         border: "1px solid rgba(255, 255, 255, 0.08)"
       } }, getIcon(feat.icon)),
-      /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" } }, /* @__PURE__ */ import_react9.default.createElement("h3", { style: { fontSize: "1.1rem", fontWeight: "800", color: "#fff", letterSpacing: "-0.01em" } }, feat.title), feat.tag && /* @__PURE__ */ import_react9.default.createElement("span", { className: "badge-gold", style: { fontSize: "0.62rem", padding: "1px 6px" } }, feat.tag)), /* @__PURE__ */ import_react9.default.createElement("p", { style: { fontSize: "0.88rem", color: "var(--text-secondary)", lineHeight: "1.6" } }, feat.description))
-    ))), /* @__PURE__ */ import_react9.default.createElement("div", { className: "apple-glass-gold", style: {
-      padding: "clamp(20px, 4vw, 32px)",
+      /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" } }, /* @__PURE__ */ import_react9.default.createElement("h3", { style: { fontSize: "1.08rem", fontWeight: "800", color: "#fff", letterSpacing: "-0.01em" } }, feat.title), feat.tag && /* @__PURE__ */ import_react9.default.createElement("span", { className: "badge-gold", style: { fontSize: "0.62rem", padding: "1px 6px" } }, feat.tag)), /* @__PURE__ */ import_react9.default.createElement("p", { style: { fontSize: "0.88rem", color: "var(--text-sub)", lineHeight: "1.6" } }, feat.description))
+    ))), /* @__PURE__ */ import_react9.default.createElement("div", { className: "bento-card-gold", style: {
+      padding: "clamp(20px, 4vw, 30px)",
+      borderRadius: "24px",
       display: "flex",
       flexWrap: "wrap",
       alignItems: "center",
@@ -23443,39 +23433,33 @@
       },
       /* @__PURE__ */ import_react9.default.createElement("span", null, "Book a Campus Visit"),
       /* @__PURE__ */ import_react9.default.createElement(ArrowRight, { size: 16 })
-    ))));
+    )))));
   }
 
   // src/components/MapLocation.jsx
   var import_react10 = __toESM(require_react(), 1);
   function MapLocation({ onOpenCallModal }) {
     const googleMapsUrl = site_config_default.location.googleMapsUrl;
-    const lat = site_config_default.location.latitude || 21.0365511;
-    const lng = site_config_default.location.longitude || 75.7959125;
-    const embedUrl = site_config_default.location.googleMapsEmbed || `https://maps.google.com/maps?q=${lat},${lng}&hl=en&z=17&output=embed`;
-    return /* @__PURE__ */ import_react10.default.createElement("section", { id: "location", style: {
-      paddingTop: "clamp(48px, 8vw, 76px)",
-      paddingBottom: "clamp(54px, 8vw, 84px)",
-      background: "linear-gradient(180deg, #030712 0%, #091128 50%, #030712 100%)",
-      borderBottom: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react10.default.createElement("div", { style: { textAlign: "center", maxWidth: "800px", margin: "0 auto 34px" } }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "badge-blue", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react10.default.createElement(MapPin, { size: 13 }), /* @__PURE__ */ import_react10.default.createElement("span", null, "Campus Location")), /* @__PURE__ */ import_react10.default.createElement("h2", { style: {
+    const embedUrl = site_config_default.location.googleMapsEmbed;
+    return /* @__PURE__ */ import_react10.default.createElement("section", { id: "location", style: { paddingTop: "20px", paddingBottom: "20px" } }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "bento-section-canvas" }, /* @__PURE__ */ import_react10.default.createElement("div", { style: { textAlign: "center", maxWidth: "800px", margin: "0 auto 32px" } }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "badge-blue", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react10.default.createElement(MapPin, { size: 13 }), /* @__PURE__ */ import_react10.default.createElement("span", null, "Campus Location")), /* @__PURE__ */ import_react10.default.createElement("h2", { style: {
       fontSize: "clamp(2rem, 4.5vw, 3rem)",
       fontWeight: "900",
-      lineHeight: "1.14",
+      lineHeight: "1.12",
       letterSpacing: "-0.03em",
-      marginBottom: "12px",
+      marginBottom: "10px",
       color: "#ffffff"
-    } }, "Convenient Location in Bhusawal"), /* @__PURE__ */ import_react10.default.createElement("p", { style: { fontSize: "0.98rem", color: "var(--text-secondary)" } }, "Centrally situated at Khadka Square for easy accessibility across Bhusawal, Varangaon, and Jalgaon.")), /* @__PURE__ */ import_react10.default.createElement("div", { style: {
+    } }, "Convenient Location in Bhusawal"), /* @__PURE__ */ import_react10.default.createElement("p", { style: { fontSize: "0.96rem", color: "var(--text-sub)" } }, "Centrally situated at Khadka Square for easy accessibility across Bhusawal, Varangaon, and Jalgaon.")), /* @__PURE__ */ import_react10.default.createElement("div", { style: {
       display: "grid",
       gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))",
-      gap: "22px"
-    } }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "apple-glass", style: {
+      gap: "20px"
+    } }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "bento-card", style: {
       padding: "clamp(22px, 4vw, 32px)",
+      borderRadius: "22px",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
-      gap: "20px"
-    } }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("span", { className: "badge-gold", style: { marginBottom: "10px" } }, "Campus Address"), /* @__PURE__ */ import_react10.default.createElement("h3", { style: { fontSize: "1.25rem", fontWeight: "800", color: "#fff", marginBottom: "10px", letterSpacing: "-0.02em" } }, site_config_default.brand.fullName), /* @__PURE__ */ import_react10.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px", color: "var(--text-secondary)", fontSize: "0.9rem" } }, /* @__PURE__ */ import_react10.default.createElement("div", { style: { display: "flex", alignItems: "flex-start", gap: "10px" } }, /* @__PURE__ */ import_react10.default.createElement(MapPin, { size: 18, color: "var(--accent-gold)", style: { flexShrink: 0, marginTop: "2px" } }), /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("strong", { style: { color: "#fff" } }, site_config_default.location.addressLine1), /* @__PURE__ */ import_react10.default.createElement("br", null), site_config_default.location.addressLine2, /* @__PURE__ */ import_react10.default.createElement("br", null), site_config_default.location.city, ", ", site_config_default.location.state, " - ", site_config_default.location.pincode)), /* @__PURE__ */ import_react10.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px", marginTop: "4px" } }, /* @__PURE__ */ import_react10.default.createElement(Clock, { size: 16, color: "var(--accent-blue)", style: { flexShrink: 0 } }), /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("strong", null, "Office Hours:"), " ", site_config_default.contact.operatingHours.weekdays)))), /* @__PURE__ */ import_react10.default.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "10px" } }, /* @__PURE__ */ import_react10.default.createElement(
+      gap: "18px"
+    } }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("span", { className: "badge-gold", style: { marginBottom: "10px" } }, "Campus Address"), /* @__PURE__ */ import_react10.default.createElement("h3", { style: { fontSize: "1.2rem", fontWeight: "800", color: "#fff", marginBottom: "10px", letterSpacing: "-0.02em" } }, site_config_default.brand.fullName), /* @__PURE__ */ import_react10.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px", color: "var(--text-sub)", fontSize: "0.88rem" } }, /* @__PURE__ */ import_react10.default.createElement("div", { style: { display: "flex", alignItems: "flex-start", gap: "10px" } }, /* @__PURE__ */ import_react10.default.createElement(MapPin, { size: 17, color: "var(--apple-gold)", style: { flexShrink: 0, marginTop: "2px" } }), /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("strong", { style: { color: "#fff" } }, site_config_default.location.addressLine1), /* @__PURE__ */ import_react10.default.createElement("br", null), site_config_default.location.addressLine2, /* @__PURE__ */ import_react10.default.createElement("br", null), site_config_default.location.city, ", ", site_config_default.location.state, " - ", site_config_default.location.pincode)), /* @__PURE__ */ import_react10.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px", marginTop: "4px" } }, /* @__PURE__ */ import_react10.default.createElement(Clock, { size: 16, color: "var(--apple-cyan)", style: { flexShrink: 0 } }), /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("strong", null, "Office Hours:"), " ", site_config_default.contact.operatingHours.weekdays)))), /* @__PURE__ */ import_react10.default.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "10px" } }, /* @__PURE__ */ import_react10.default.createElement(
       "a",
       {
         href: googleMapsUrl,
@@ -23483,48 +23467,49 @@
         rel: "noopener noreferrer",
         className: "btn-primary",
         style: {
-          padding: "11px 20px",
-          fontSize: "0.88rem",
+          padding: "10px 18px",
+          fontSize: "0.86rem",
           textDecoration: "none"
         }
       },
-      /* @__PURE__ */ import_react10.default.createElement(Navigation, { size: 15 }),
-      /* @__PURE__ */ import_react10.default.createElement("span", null, "Driving Directions"),
-      /* @__PURE__ */ import_react10.default.createElement(ExternalLink, { size: 13 })
+      /* @__PURE__ */ import_react10.default.createElement(Navigation, { size: 14 }),
+      /* @__PURE__ */ import_react10.default.createElement("span", null, "Open in Google Maps"),
+      /* @__PURE__ */ import_react10.default.createElement(ExternalLink, { size: 12 })
     ), /* @__PURE__ */ import_react10.default.createElement(
       "button",
       {
         onClick: onOpenCallModal,
         className: "btn-secondary",
         style: {
-          padding: "11px 18px",
-          fontSize: "0.88rem"
+          padding: "10px 16px",
+          fontSize: "0.86rem"
         }
       },
-      /* @__PURE__ */ import_react10.default.createElement(PhoneCall, { size: 15 }),
+      /* @__PURE__ */ import_react10.default.createElement(PhoneCall, { size: 14 }),
       /* @__PURE__ */ import_react10.default.createElement("span", null, "Call Institute")
-    ))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "apple-glass", style: {
+    ))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "bento-card", style: {
       overflow: "hidden",
-      borderRadius: "var(--radius-md)",
+      borderRadius: "22px",
       minHeight: "340px",
-      borderTop: "1px solid var(--border-specular-top)"
+      borderTop: "1px solid var(--border-specular-top)",
+      background: "#0d1527"
     } }, /* @__PURE__ */ import_react10.default.createElement(
       "iframe",
       {
-        title: "SCIMEE Location Map",
+        title: "SCIMEE Google Maps Location",
         src: embedUrl,
         width: "100%",
         height: "100%",
         style: {
           border: 0,
           minHeight: "340px",
-          filter: "invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%)"
+          display: "block"
         },
         allowFullScreen: "",
         loading: "lazy",
-        referrerPolicy: "no-referrer-when-downgrade"
+        referrerPolicy: "strict-origin-when-cross-origin"
       }
-    )))));
+    ))))));
   }
 
   // src/components/FAQSection.jsx
@@ -23569,29 +23554,24 @@
     const toggleIndex = (idx) => {
       setOpenIndex(openIndex === idx ? null : idx);
     };
-    return /* @__PURE__ */ import_react11.default.createElement("section", { id: "faq", style: {
-      paddingTop: "clamp(48px, 8vw, 76px)",
-      paddingBottom: "clamp(54px, 8vw, 84px)",
-      background: "var(--apple-bg-base)",
-      borderBottom: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ import_react11.default.createElement("div", { className: "container-custom", style: { maxWidth: "880px" } }, /* @__PURE__ */ import_react11.default.createElement("div", { style: { textAlign: "center", marginBottom: "34px" } }, /* @__PURE__ */ import_react11.default.createElement("div", { className: "badge-gold", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react11.default.createElement(CircleQuestionMark, { size: 13 }), /* @__PURE__ */ import_react11.default.createElement("span", null, "Got Questions?")), /* @__PURE__ */ import_react11.default.createElement("h2", { style: {
+    return /* @__PURE__ */ import_react11.default.createElement("section", { id: "faq", style: { paddingTop: "20px", paddingBottom: "30px" } }, /* @__PURE__ */ import_react11.default.createElement("div", { className: "container-custom", style: { maxWidth: "920px" } }, /* @__PURE__ */ import_react11.default.createElement("div", { className: "bento-section-canvas" }, /* @__PURE__ */ import_react11.default.createElement("div", { style: { textAlign: "center", marginBottom: "30px" } }, /* @__PURE__ */ import_react11.default.createElement("div", { className: "badge-gold", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react11.default.createElement(CircleQuestionMark, { size: 13 }), /* @__PURE__ */ import_react11.default.createElement("span", null, "Got Questions?")), /* @__PURE__ */ import_react11.default.createElement("h2", { style: {
       fontSize: "clamp(2rem, 4.5vw, 3rem)",
       fontWeight: "900",
-      lineHeight: "1.14",
+      lineHeight: "1.12",
       letterSpacing: "-0.03em",
-      marginBottom: "12px",
+      marginBottom: "10px",
       color: "#ffffff"
-    } }, faq_default.sectionTitle || faq_default.title), /* @__PURE__ */ import_react11.default.createElement("p", { style: { fontSize: "0.98rem", color: "var(--text-secondary)" } }, faq_default.sectionSubtitle || faq_default.subtitle)), /* @__PURE__ */ import_react11.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px", marginBottom: "32px" } }, faqList.map((item, idx) => {
+    } }, faq_default.sectionTitle || faq_default.title), /* @__PURE__ */ import_react11.default.createElement("p", { style: { fontSize: "0.96rem", color: "var(--text-sub)" } }, faq_default.sectionSubtitle || faq_default.subtitle)), /* @__PURE__ */ import_react11.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px", marginBottom: "28px" } }, faqList.map((item, idx) => {
       const isOpen = openIndex === idx;
       return /* @__PURE__ */ import_react11.default.createElement(
         "div",
         {
           key: idx,
-          className: "apple-glass",
+          className: "bento-card",
           style: {
-            borderRadius: "var(--radius-md)",
+            borderRadius: "18px",
             overflow: "hidden",
-            border: isOpen ? "1px solid var(--border-gold-glow)" : "1px solid var(--border-subtle)",
+            border: isOpen ? "1px solid var(--border-gold-specular)" : "1px solid var(--border-glass)",
             borderTop: isOpen ? "1px solid rgba(251, 191, 36, 0.45)" : "1px solid var(--border-specular-top)",
             transition: "border-color 150ms ease"
           }
@@ -23615,23 +23595,23 @@
             }
           },
           /* @__PURE__ */ import_react11.default.createElement("span", { style: {
-            fontSize: "0.98rem",
+            fontSize: "0.96rem",
             fontWeight: "700",
             color: isOpen ? "#fef08a" : "#ffffff",
             letterSpacing: "-0.01em"
           } }, item.question),
           /* @__PURE__ */ import_react11.default.createElement("div", { style: {
-            color: isOpen ? "var(--accent-gold)" : "var(--text-tertiary)",
+            color: isOpen ? "var(--apple-gold)" : "var(--text-muted)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             flexShrink: 0
-          } }, isOpen ? /* @__PURE__ */ import_react11.default.createElement(ChevronUp, { size: 18 }) : /* @__PURE__ */ import_react11.default.createElement(ChevronDown, { size: 18 }))
+          } }, isOpen ? /* @__PURE__ */ import_react11.default.createElement(ChevronUp, { size: 17 }) : /* @__PURE__ */ import_react11.default.createElement(ChevronDown, { size: 17 }))
         ),
         isOpen && /* @__PURE__ */ import_react11.default.createElement("div", { style: {
           padding: "0 20px 18px 20px",
-          color: "var(--text-secondary)",
-          fontSize: "0.9rem",
+          color: "var(--text-sub)",
+          fontSize: "0.88rem",
           lineHeight: "1.65",
           borderTop: "1px solid rgba(255, 255, 255, 0.05)",
           paddingTop: "12px"
@@ -23639,20 +23619,20 @@
       );
     })), /* @__PURE__ */ import_react11.default.createElement("div", { style: {
       textAlign: "center",
-      padding: "22px",
+      padding: "20px",
       background: "rgba(255, 255, 255, 0.02)",
-      borderRadius: "var(--radius-md)",
-      border: "1px dashed var(--border-subtle)"
-    } }, /* @__PURE__ */ import_react11.default.createElement("p", { style: { color: "var(--text-secondary)", fontSize: "0.9rem", marginBottom: "12px" } }, "Have more questions regarding admissions, batch timings, or fee structure?"), /* @__PURE__ */ import_react11.default.createElement(
+      borderRadius: "18px",
+      border: "1px dashed var(--border-glass)"
+    } }, /* @__PURE__ */ import_react11.default.createElement("p", { style: { color: "var(--text-sub)", fontSize: "0.88rem", marginBottom: "12px" } }, "Have more questions regarding admissions, batch timings, or fee structure?"), /* @__PURE__ */ import_react11.default.createElement(
       "button",
       {
         onClick: onOpenCallModal,
         className: "btn-secondary",
-        style: { padding: "9px 20px", fontSize: "0.86rem" }
+        style: { padding: "8px 18px", fontSize: "0.84rem" }
       },
-      /* @__PURE__ */ import_react11.default.createElement(PhoneCall, { size: 15, color: "var(--accent-gold)" }),
+      /* @__PURE__ */ import_react11.default.createElement(PhoneCall, { size: 14, color: "var(--apple-gold)" }),
       /* @__PURE__ */ import_react11.default.createElement("span", null, "Speak with Admissions Counselor")
-    ))));
+    )))));
   }
 
   // src/components/Footer.jsx
@@ -23664,15 +23644,18 @@
     )}`;
     return /* @__PURE__ */ import_react12.default.createElement("footer", { style: {
       background: "#02050e",
-      borderTop: "1px solid var(--border-subtle)",
-      paddingTop: "52px",
-      paddingBottom: "88px",
-      color: "var(--text-secondary)"
+      borderTop: "1px solid var(--border-glass-bright)",
+      borderTopLeftRadius: "36px",
+      borderTopRightRadius: "36px",
+      boxShadow: "0 -20px 48px rgba(0, 0, 0, 0.7)",
+      paddingTop: "48px",
+      paddingBottom: "84px",
+      color: "var(--text-sub)"
     } }, /* @__PURE__ */ import_react12.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react12.default.createElement("div", { style: {
       display: "grid",
       gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
       gap: "32px",
-      marginBottom: "42px"
+      marginBottom: "38px"
     } }, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" } }, /* @__PURE__ */ import_react12.default.createElement("div", { style: {
       width: "38px",
       height: "38px",
@@ -23689,37 +23672,37 @@
         alt: "SCIMEE Logo",
         style: { width: "100%", height: "100%", objectFit: "contain" }
       }
-    )), /* @__PURE__ */ import_react12.default.createElement("span", { style: { fontSize: "1.3rem", fontWeight: "900", color: "#fff", letterSpacing: "-0.02em" } }, site_config_default.brand.name)), /* @__PURE__ */ import_react12.default.createElement("p", { style: { fontSize: "0.86rem", color: "var(--text-secondary)", lineHeight: "1.55", marginBottom: "14px" } }, site_config_default.brand.fullName, " \u2014 Bhusawal's leading coaching institute for NEET-UG, IIT-JEE Foundation & MHT-CET under ", /* @__PURE__ */ import_react12.default.createElement("strong", null, site_config_default.brand.founder), "."), /* @__PURE__ */ import_react12.default.createElement("div", { className: "apple-glass-gold", style: { padding: "8px 12px", borderRadius: "10px" } }, /* @__PURE__ */ import_react12.default.createElement("span", { className: "urdu-font", style: { fontSize: "1.1rem", color: "#fef08a", display: "block", marginBottom: "2px" } }, site_config_default.brand.taglineUrdu), /* @__PURE__ */ import_react12.default.createElement("span", { style: { fontSize: "0.72rem", color: "var(--text-tertiary)" } }, site_config_default.brand.taglineEn || site_config_default.brand.taglineEnglish))), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("h4", { style: { fontSize: "0.88rem", fontWeight: "800", color: "#fff", marginBottom: "14px", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Quick Navigation"), /* @__PURE__ */ import_react12.default.createElement("ul", { style: { listStyle: "none", display: "flex", flexDirection: "column", gap: "8px" } }, site_config_default.navigation.map((item) => /* @__PURE__ */ import_react12.default.createElement("li", { key: item.label }, /* @__PURE__ */ import_react12.default.createElement(
+    )), /* @__PURE__ */ import_react12.default.createElement("span", { style: { fontSize: "1.3rem", fontWeight: "900", color: "#fff", letterSpacing: "-0.02em" } }, site_config_default.brand.name)), /* @__PURE__ */ import_react12.default.createElement("p", { style: { fontSize: "0.86rem", color: "var(--text-sub)", lineHeight: "1.55", marginBottom: "14px" } }, site_config_default.brand.fullName, " \u2014 Bhusawal's leading coaching institute for NEET-UG, IIT-JEE Foundation & MHT-CET under ", /* @__PURE__ */ import_react12.default.createElement("strong", null, site_config_default.brand.founder), "."), /* @__PURE__ */ import_react12.default.createElement("div", { className: "bento-card-gold", style: { padding: "10px 14px", borderRadius: "14px" } }, /* @__PURE__ */ import_react12.default.createElement("span", { className: "urdu-font", style: { fontSize: "1.15rem", color: "#fef08a", display: "block", marginBottom: "2px" } }, site_config_default.brand.taglineUrdu), /* @__PURE__ */ import_react12.default.createElement("span", { style: { fontSize: "0.72rem", color: "rgba(254, 240, 138, 0.75)" } }, site_config_default.brand.taglineEn || site_config_default.brand.taglineEnglish))), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("h4", { style: { fontSize: "0.88rem", fontWeight: "800", color: "#fff", marginBottom: "14px", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Quick Navigation"), /* @__PURE__ */ import_react12.default.createElement("ul", { style: { listStyle: "none", display: "flex", flexDirection: "column", gap: "8px" } }, site_config_default.navigation.map((item) => /* @__PURE__ */ import_react12.default.createElement("li", { key: item.label }, /* @__PURE__ */ import_react12.default.createElement(
       "a",
       {
         href: item.href,
         style: {
-          color: "var(--text-secondary)",
+          color: "var(--text-sub)",
           textDecoration: "none",
           fontSize: "0.88rem",
           transition: "color 120ms ease"
         },
         onMouseOver: (e) => {
-          e.currentTarget.style.color = "var(--accent-gold-light)";
+          e.currentTarget.style.color = "var(--apple-gold-light)";
         },
         onMouseOut: (e) => {
-          e.currentTarget.style.color = "var(--text-secondary)";
+          e.currentTarget.style.color = "var(--text-sub)";
         }
       },
       item.label
-    ))))), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("h4", { style: { fontSize: "0.88rem", fontWeight: "800", color: "#fff", marginBottom: "14px", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Direct Helplines"), /* @__PURE__ */ import_react12.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px" } }, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("span", { style: { fontSize: "0.74rem", color: "var(--text-tertiary)", display: "block" } }, "Primary Admissions Helpline:"), /* @__PURE__ */ import_react12.default.createElement(
+    ))))), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("h4", { style: { fontSize: "0.88rem", fontWeight: "800", color: "#fff", marginBottom: "14px", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Direct Helplines"), /* @__PURE__ */ import_react12.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px" } }, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("span", { style: { fontSize: "0.74rem", color: "var(--text-muted)", display: "block" } }, "Primary Admissions Helpline:"), /* @__PURE__ */ import_react12.default.createElement(
       "a",
       {
         href: `tel:${site_config_default.contact.primaryPhone}`,
         style: {
           fontSize: "1.05rem",
           fontWeight: "800",
-          color: "var(--accent-gold-light)",
+          color: "var(--apple-gold-light)",
           textDecoration: "none"
         }
       },
       site_config_default.contact.primaryPhoneFormatted
-    )), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("span", { style: { fontSize: "0.74rem", color: "var(--text-tertiary)", display: "block" } }, "Secondary Office Line:"), /* @__PURE__ */ import_react12.default.createElement(
+    )), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("span", { style: { fontSize: "0.74rem", color: "var(--text-muted)", display: "block" } }, "Secondary Office Line:"), /* @__PURE__ */ import_react12.default.createElement(
       "a",
       {
         href: `tel:${site_config_default.contact.secondaryPhone}`,
@@ -23747,16 +23730,16 @@
       },
       /* @__PURE__ */ import_react12.default.createElement(MessageCircle, { size: 15 }),
       /* @__PURE__ */ import_react12.default.createElement("span", null, "WhatsApp Enquiry")
-    )))), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("h4", { style: { fontSize: "0.88rem", fontWeight: "800", color: "#fff", marginBottom: "14px", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Campus Address"), /* @__PURE__ */ import_react12.default.createElement("div", { style: { display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "0.86rem", lineHeight: "1.5", marginBottom: "10px" } }, /* @__PURE__ */ import_react12.default.createElement(MapPin, { size: 16, color: "var(--accent-gold)", style: { flexShrink: 0, marginTop: "2px" } }), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("strong", null, site_config_default.location.landmark), /* @__PURE__ */ import_react12.default.createElement("br", null), site_config_default.location.addressLine1, ", ", site_config_default.location.addressLine2, /* @__PURE__ */ import_react12.default.createElement("br", null), site_config_default.location.city, " - ", site_config_default.location.pincode, ", ", site_config_default.location.state)), /* @__PURE__ */ import_react12.default.createElement("div", { style: { fontSize: "0.78rem", color: "var(--text-tertiary)" } }, /* @__PURE__ */ import_react12.default.createElement("strong", null, "Hours:"), " ", site_config_default.contact.operatingHours.weekdays))), /* @__PURE__ */ import_react12.default.createElement("div", { style: {
-      borderTop: "1px solid var(--border-subtle)",
-      paddingTop: "20px",
+    )))), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("h4", { style: { fontSize: "0.88rem", fontWeight: "800", color: "#fff", marginBottom: "14px", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Campus Address"), /* @__PURE__ */ import_react12.default.createElement("div", { style: { display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "0.86rem", lineHeight: "1.5", marginBottom: "10px" } }, /* @__PURE__ */ import_react12.default.createElement(MapPin, { size: 16, color: "var(--apple-gold)", style: { flexShrink: 0, marginTop: "2px" } }), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("strong", null, site_config_default.location.landmark), /* @__PURE__ */ import_react12.default.createElement("br", null), site_config_default.location.addressLine1, ", ", site_config_default.location.addressLine2, /* @__PURE__ */ import_react12.default.createElement("br", null), site_config_default.location.city, " - ", site_config_default.location.pincode, ", ", site_config_default.location.state)), /* @__PURE__ */ import_react12.default.createElement("div", { style: { fontSize: "0.78rem", color: "var(--text-muted)" } }, /* @__PURE__ */ import_react12.default.createElement("strong", null, "Hours:"), " ", site_config_default.contact.operatingHours.weekdays))), /* @__PURE__ */ import_react12.default.createElement("div", { style: {
+      borderTop: "1px solid var(--border-glass)",
+      paddingTop: "18px",
       display: "flex",
       flexWrap: "wrap",
       alignItems: "center",
       justifyContent: "space-between",
       gap: "10px",
       fontSize: "0.78rem",
-      color: "var(--text-tertiary)"
+      color: "var(--text-muted)"
     } }, /* @__PURE__ */ import_react12.default.createElement("div", null, "\xA9 ", currentYear, " ", site_config_default.brand.fullName, ". All rights reserved."), /* @__PURE__ */ import_react12.default.createElement("div", null, "Excellence in Medical Entrance Examination Coaching."))));
   }
 

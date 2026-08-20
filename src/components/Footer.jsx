@@ -11,10 +11,13 @@ export default function Footer({ onOpenCallModal }) {
   return (
     <footer style={{
       background: '#02050e',
-      borderTop: '1px solid var(--border-subtle)',
-      paddingTop: '52px',
-      paddingBottom: '88px',
-      color: 'var(--text-secondary)'
+      borderTop: '1px solid var(--border-glass-bright)',
+      borderTopLeftRadius: '36px',
+      borderTopRightRadius: '36px',
+      boxShadow: '0 -20px 48px rgba(0, 0, 0, 0.7)',
+      paddingTop: '48px',
+      paddingBottom: '84px',
+      color: 'var(--text-sub)'
     }}>
       <div className="container-custom">
         
@@ -23,7 +26,7 @@ export default function Footer({ onOpenCallModal }) {
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
           gap: '32px',
-          marginBottom: '42px'
+          marginBottom: '38px'
         }}>
           
           {/* Column 1: Institute Branding & Urdu Motto */}
@@ -50,15 +53,15 @@ export default function Footer({ onOpenCallModal }) {
               </span>
             </div>
 
-            <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: '1.55', marginBottom: '14px' }}>
+            <p style={{ fontSize: '0.86rem', color: 'var(--text-sub)', lineHeight: '1.55', marginBottom: '14px' }}>
               {siteConfig.brand.fullName} — Bhusawal&apos;s leading coaching institute for NEET-UG, IIT-JEE Foundation &amp; MHT-CET under <strong>{siteConfig.brand.founder}</strong>.
             </p>
 
-            <div className="apple-glass-gold" style={{ padding: '8px 12px', borderRadius: '10px' }}>
-              <span className="urdu-font" style={{ fontSize: '1.1rem', color: '#fef08a', display: 'block', marginBottom: '2px' }}>
+            <div className="bento-card-gold" style={{ padding: '10px 14px', borderRadius: '14px' }}>
+              <span className="urdu-font" style={{ fontSize: '1.15rem', color: '#fef08a', display: 'block', marginBottom: '2px' }}>
                 {siteConfig.brand.taglineUrdu}
               </span>
-              <span style={{ fontSize: '0.72rem', color: 'var(--text-tertiary)' }}>
+              <span style={{ fontSize: '0.72rem', color: 'rgba(254, 240, 138, 0.75)' }}>
                 {siteConfig.brand.taglineEn || siteConfig.brand.taglineEnglish}
               </span>
             </div>
@@ -75,13 +78,13 @@ export default function Footer({ onOpenCallModal }) {
                   <a
                     href={item.href}
                     style={{
-                      color: 'var(--text-secondary)',
+                      color: 'var(--text-sub)',
                       textDecoration: 'none',
                       fontSize: '0.88rem',
                       transition: 'color 120ms ease'
                     }}
-                    onMouseOver={(e) => { e.currentTarget.style.color = 'var(--accent-gold-light)'; }}
-                    onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; }}
+                    onMouseOver={(e) => { e.currentTarget.style.color = 'var(--apple-gold-light)'; }}
+                    onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-sub)'; }}
                   >
                     {item.label}
                   </a>
@@ -98,7 +101,7 @@ export default function Footer({ onOpenCallModal }) {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <div>
-                <span style={{ fontSize: '0.74rem', color: 'var(--text-tertiary)', display: 'block' }}>
+                <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', display: 'block' }}>
                   Primary Admissions Helpline:
                 </span>
                 <a
@@ -106,7 +109,7 @@ export default function Footer({ onOpenCallModal }) {
                   style={{
                     fontSize: '1.05rem',
                     fontWeight: '800',
-                    color: 'var(--accent-gold-light)',
+                    color: 'var(--apple-gold-light)',
                     textDecoration: 'none'
                   }}
                 >
@@ -115,7 +118,7 @@ export default function Footer({ onOpenCallModal }) {
               </div>
 
               <div>
-                <span style={{ fontSize: '0.74rem', color: 'var(--text-tertiary)', display: 'block' }}>
+                <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', display: 'block' }}>
                   Secondary Office Line:
                 </span>
                 <a
@@ -158,7 +161,7 @@ export default function Footer({ onOpenCallModal }) {
             </h4>
 
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '0.86rem', lineHeight: '1.5', marginBottom: '10px' }}>
-              <MapPin size={16} color="var(--accent-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <MapPin size={16} color="var(--apple-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
               <div>
                 <strong>{siteConfig.location.landmark}</strong><br />
                 {siteConfig.location.addressLine1}, {siteConfig.location.addressLine2}<br />
@@ -166,7 +169,7 @@ export default function Footer({ onOpenCallModal }) {
               </div>
             </div>
 
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-tertiary)' }}>
+            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
               <strong>Hours:</strong> {siteConfig.contact.operatingHours.weekdays}
             </div>
           </div>
@@ -175,15 +178,15 @@ export default function Footer({ onOpenCallModal }) {
 
         {/* Bottom Legal Bar */}
         <div style={{
-          borderTop: '1px solid var(--border-subtle)',
-          paddingTop: '20px',
+          borderTop: '1px solid var(--border-glass)',
+          paddingTop: '18px',
           display: 'flex',
           flexWrap: 'wrap',
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: '10px',
           fontSize: '0.78rem',
-          color: 'var(--text-tertiary)'
+          color: 'var(--text-muted)'
         }}>
           <div>
             &copy; {currentYear} {siteConfig.brand.fullName}. All rights reserved.

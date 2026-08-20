@@ -4,7 +4,9 @@
 :root {
   --canvas-black: #030712;
   --canvas-surface: #0b1120;
-  --canvas-elevated: rgba(15, 23, 42, 0.75);
+  --canvas-elevated: rgba(15, 23, 42, 0.72);
+  --canvas-elevated-hover: rgba(22, 34, 60, 0.82);
+  --canvas-input: rgba(11, 18, 33, 0.85);
   --apple-gold: #f59e0b;
   --apple-gold-light: #fbbf24;
   --apple-gold-glow: rgba(245, 158, 11, 0.28);
@@ -23,8 +25,9 @@
   --spring-snappy: cubic-bezier(0.16, 1, 0.3, 1);
   --spring-bounce: cubic-bezier(0.34, 1.4, 0.64, 1);
   --radius-pill: 9999px;
+  --radius-section: 32px;
+  --radius-card-lg: 26px;
   --radius-card: 20px;
-  --radius-card-lg: 28px;
   --radius-inner: 14px;
 }
 * {
@@ -55,15 +58,15 @@ body {
   background:
     radial-gradient(
       ellipse 80% 50% at 50% -20%,
-      rgba(245, 158, 11, 0.15),
+      rgba(245, 158, 11, 0.14),
       transparent 70%),
     radial-gradient(
       circle at 10% 25%,
-      rgba(56, 189, 248, 0.08) 0%,
+      rgba(56, 189, 248, 0.07) 0%,
       transparent 40%),
     radial-gradient(
       circle at 90% 45%,
-      rgba(16, 185, 129, 0.06) 0%,
+      rgba(16, 185, 129, 0.05) 0%,
       transparent 45%),
     radial-gradient(
       circle at 50% 80%,
@@ -91,6 +94,50 @@ body {
     padding: 0 32px;
   }
 }
+.bento-section-canvas {
+  background: rgba(11, 18, 33, 0.55);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-radius: var(--radius-section);
+  border: 1px solid var(--border-glass);
+  border-top: 1px solid var(--border-specular-top);
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.65), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  padding: clamp(24px, 5vw, 44px);
+  margin-bottom: clamp(32px, 5vw, 56px);
+  position: relative;
+}
+.bento-card {
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-glass);
+  border-top: 1px solid var(--border-specular-top);
+  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  transition: all 240ms var(--spring-snappy);
+  overflow: hidden;
+  position: relative;
+}
+.bento-card:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 34, 60, 0.82);
+  border-color: var(--border-glass-bright);
+  border-top-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 20px 44px -8px rgba(0, 0, 0, 0.65), inset 0 1px 0 0 rgba(255, 255, 255, 0.18);
+}
+.bento-card-gold {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(245, 158, 11, 0.12) 0%,
+      rgba(15, 23, 42, 0.85) 100%);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border-radius: var(--radius-card-lg);
+  border: 1px solid var(--border-gold-specular);
+  border-top: 1px solid rgba(251, 191, 36, 0.5);
+  box-shadow: 0 16px 40px rgba(245, 158, 11, 0.18), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+}
 .floating-navbar-wrapper {
   position: sticky;
   top: 14px;
@@ -103,7 +150,7 @@ body {
 .floating-navbar {
   width: 100%;
   max-width: 1100px;
-  height: 64px;
+  height: 62px;
   border-radius: var(--radius-pill);
   background: rgba(11, 17, 32, 0.82);
   backdrop-filter: blur(32px) saturate(210%);
@@ -114,7 +161,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 18px;
   transition: all 250ms var(--spring-snappy);
 }
 .nav-link {
@@ -123,45 +170,13 @@ body {
   font-size: 0.88rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  padding: 8px 14px;
+  padding: 7px 14px;
   border-radius: var(--radius-pill);
   transition: all 150ms ease;
 }
 .nav-link:hover {
   color: #fff;
   background: rgba(255, 255, 255, 0.08);
-}
-.bento-card {
-  background: rgba(15, 23, 42, 0.72);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border-radius: var(--radius-card);
-  border: 1px solid var(--border-glass);
-  border-top: 1px solid var(--border-specular-top);
-  box-shadow: 0 14px 34px -8px rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
-  transition: all 260ms var(--spring-snappy);
-  overflow: hidden;
-  position: relative;
-}
-.bento-card:hover {
-  transform: translateY(-3px);
-  background: rgba(20, 31, 56, 0.82);
-  border-color: var(--border-glass-bright);
-  border-top-color: rgba(255, 255, 255, 0.38);
-  box-shadow: 0 24px 48px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
-}
-.bento-card-gold {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(245, 158, 11, 0.12) 0%,
-      rgba(15, 23, 42, 0.85) 100%);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border-radius: var(--radius-card);
-  border: 1px solid var(--border-gold-specular);
-  border-top: 1px solid rgba(251, 191, 36, 0.5);
-  box-shadow: 0 16px 40px rgba(245, 158, 11, 0.18), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
 }
 .btn-primary {
   display: inline-flex;
@@ -183,10 +198,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.35);
   cursor: pointer;
   box-shadow: 0 6px 24px rgba(245, 158, 11, 0.38), inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
-  transition:
-    transform 100ms ease,
-    box-shadow 150ms ease,
-    filter 150ms ease;
+  transition: transform 100ms ease, box-shadow 150ms ease;
   text-decoration: none;
   user-select: none;
 }
@@ -197,7 +209,6 @@ body {
 }
 .btn-primary:active {
   transform: scale(0.96) translateY(1px);
-  filter: brightness(0.96);
   box-shadow: 0 2px 10px rgba(245, 158, 11, 0.25);
 }
 .btn-secondary {
@@ -251,7 +262,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.3);
   cursor: pointer;
   box-shadow: 0 6px 20px rgba(34, 197, 94, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
-  transition: transform 100ms ease, box-shadow 150ms ease;
+  transition: transform 100ms ease;
   text-decoration: none;
   user-select: none;
 }
@@ -342,14 +353,14 @@ body {
 }
 @media (min-width: 768px) {
   .modal-card {
-    border-radius: var(--radius-card-lg);
+    border-radius: var(--radius-section);
     animation: appleScaleIn 260ms var(--spring-snappy);
   }
 }
 .modal-grab-handle {
   width: 36px;
   height: 5px;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.25);
   margin: 10px auto 4px;
   display: block;
