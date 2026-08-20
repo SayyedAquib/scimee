@@ -10,140 +10,134 @@ export default function MapLocation({ onOpenCallModal }) {
 
   return (
     <section id="location" style={{
-      paddingTop: '64px',
-      paddingBottom: '72px',
-      background: 'linear-gradient(180deg, #060913 0%, #0c142b 50%, #060913 100%)',
+      paddingTop: 'clamp(48px, 8vw, 76px)',
+      paddingBottom: 'clamp(54px, 8vw, 84px)',
+      background: 'linear-gradient(180deg, #030712 0%, #091128 50%, #030712 100%)',
       borderBottom: '1px solid var(--border-subtle)'
     }}>
       <div className="container-custom">
         
         {/* Section Header */}
-        <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 36px' }}>
+        <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 34px' }}>
           <div className="badge-blue" style={{ marginBottom: '10px' }}>
-            <MapPin size={14} />
+            <MapPin size={13} />
             <span>Campus Location</span>
           </div>
 
           <h2 style={{
-            fontSize: 'clamp(1.9rem, 4vw, 2.8rem)',
+            fontSize: 'clamp(2rem, 4.5vw, 3rem)',
             fontWeight: '900',
-            lineHeight: '1.2',
-            letterSpacing: '-0.02em',
-            marginBottom: '14px',
+            lineHeight: '1.14',
+            letterSpacing: '-0.03em',
+            marginBottom: '12px',
             color: '#ffffff'
           }}>
             Convenient Location in Bhusawal
           </h2>
 
-          <p style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>
-            Easily accessible from all parts of Bhusawal, Varangaon, and Jalgaon district with safe study surroundings.
+          <p style={{ fontSize: '0.98rem', color: 'var(--text-secondary)' }}>
+            Centrally situated at Khadka Square for easy accessibility across Bhusawal, Varangaon, and Jalgaon.
           </p>
         </div>
 
         {/* Map & Details Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr',
-          gap: '24px'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))',
+          gap: '22px'
         }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '24px'
+          
+          {/* Address Details Card */}
+          <div className="apple-glass" style={{
+            padding: 'clamp(22px, 4vw, 32px)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '20px'
           }}>
-            
-            {/* Address Details Card */}
-            <div className="glass-panel" style={{
-              padding: 'clamp(20px, 4vw, 32px)',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '24px'
-            }}>
-              <div>
-                <span className="badge-gold" style={{ marginBottom: '12px' }}>
-                  Institute Address
-                </span>
-                
-                <h3 style={{ fontSize: '1.35rem', fontWeight: '800', color: '#fff', marginBottom: '12px' }}>
-                  {siteConfig.brand.fullName}
-                </h3>
+            <div>
+              <span className="badge-gold" style={{ marginBottom: '10px' }}>
+                Campus Address
+              </span>
+              
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#fff', marginBottom: '10px', letterSpacing: '-0.02em' }}>
+                {siteConfig.brand.fullName}
+              </h3>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', color: 'var(--text-secondary)', fontSize: '0.94rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                    <MapPin size={20} color="var(--accent-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                    <div>
-                      <strong style={{ color: '#fff' }}>{siteConfig.location.addressLine1}</strong><br />
-                      {siteConfig.location.addressLine2}<br />
-                      {siteConfig.location.city}, {siteConfig.location.state} - {siteConfig.location.pincode}
-                    </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                  <MapPin size={18} color="var(--accent-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <div>
+                    <strong style={{ color: '#fff' }}>{siteConfig.location.addressLine1}</strong><br />
+                    {siteConfig.location.addressLine2}<br />
+                    {siteConfig.location.city}, {siteConfig.location.state} - {siteConfig.location.pincode}
                   </div>
+                </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '6px' }}>
-                    <Clock size={18} color="var(--accent-blue)" style={{ flexShrink: 0 }} />
-                    <div>
-                      <strong>Office Hours:</strong> {siteConfig.contact.operatingHours.weekdays}
-                    </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '4px' }}>
+                  <Clock size={16} color="var(--accent-blue)" style={{ flexShrink: 0 }} />
+                  <div>
+                    <strong>Office Hours:</strong> {siteConfig.contact.operatingHours.weekdays}
                   </div>
                 </div>
               </div>
-
-              {/* Action Buttons */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-                <a
-                  href={googleMapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary"
-                  style={{
-                    padding: '12px 22px',
-                    fontSize: '0.92rem',
-                    textDecoration: 'none'
-                  }}
-                >
-                  <Navigation size={17} />
-                  <span>Get Driving Directions</span>
-                  <ExternalLink size={14} />
-                </a>
-
-                <button
-                  onClick={onOpenCallModal}
-                  className="btn-secondary"
-                  style={{
-                    padding: '12px 20px',
-                    fontSize: '0.92rem'
-                  }}
-                >
-                  <PhoneCall size={17} />
-                  <span>Call Institute</span>
-                </button>
-              </div>
             </div>
 
-            {/* Embedded Google Maps Frame */}
-            <div className="glass-panel" style={{
-              overflow: 'hidden',
-              borderRadius: 'var(--radius-md)',
-              minHeight: '360px',
-              border: '1px solid var(--border-highlight)'
-            }}>
-              <iframe
-                title="SCIMEE Location Map"
-                src={embedUrl}
-                width="100%"
-                height="100%"
+            {/* Action Buttons */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+              <a
+                href={googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
                 style={{
-                  border: 0,
-                  minHeight: '360px',
-                  filter: 'invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%)'
+                  padding: '11px 20px',
+                  fontSize: '0.88rem',
+                  textDecoration: 'none'
                 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
+              >
+                <Navigation size={15} />
+                <span>Driving Directions</span>
+                <ExternalLink size={13} />
+              </a>
 
+              <button
+                onClick={onOpenCallModal}
+                className="btn-secondary"
+                style={{
+                  padding: '11px 18px',
+                  fontSize: '0.88rem'
+                }}
+              >
+                <PhoneCall size={15} />
+                <span>Call Institute</span>
+              </button>
+            </div>
           </div>
+
+          {/* Embedded Google Maps Frame */}
+          <div className="apple-glass" style={{
+            overflow: 'hidden',
+            borderRadius: 'var(--radius-md)',
+            minHeight: '340px',
+            borderTop: '1px solid var(--border-specular-top)'
+          }}>
+            <iframe
+              title="SCIMEE Location Map"
+              src={embedUrl}
+              width="100%"
+              height="100%"
+              style={{
+                border: 0,
+                minHeight: '340px',
+                filter: 'invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%)'
+              }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+
         </div>
 
       </div>

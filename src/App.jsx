@@ -18,11 +18,11 @@ export default function App() {
   const closeCallModal = () => setIsCallModalOpen(false);
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* Sticky Top Header */}
+    <div className="apple-bg-mesh" style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* Apple Floating Island Top Header */}
       <Header onOpenCallModal={openCallModal} />
 
-      {/* Main Page Sections */}
+      {/* Main Sections */}
       <main style={{ flex: '1' }}>
         <Hero onOpenCallModal={openCallModal} />
         <ToppersSection onOpenCallModal={openCallModal} />
@@ -36,7 +36,7 @@ export default function App() {
       {/* Footer */}
       <Footer onOpenCallModal={openCallModal} />
 
-      {/* Direct Phone Call Popup Modal */}
+      {/* Direct Phone Call Popup Modal (Apple Sheet) */}
       <PhoneCallModal isOpen={isCallModalOpen} onClose={closeCallModal} />
 
       {/* Sticky Bottom Action Bar for Mobile */}

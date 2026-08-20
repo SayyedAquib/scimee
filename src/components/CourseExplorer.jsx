@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, CheckCircle2, Clock, Users, ArrowRight, Sparkles, GraduationCap } from 'lucide-react';
+import { BookOpen, CheckCircle2, Clock, Users, ArrowRight, GraduationCap } from 'lucide-react';
 import coursesData from '../data/courses.json';
 
 export default function CourseExplorer({ onOpenCallModal }) {
@@ -9,41 +9,41 @@ export default function CourseExplorer({ onOpenCallModal }) {
 
   return (
     <section id="courses" style={{
-      paddingTop: '64px',
-      paddingBottom: '72px',
-      background: 'var(--bg-primary)',
+      paddingTop: 'clamp(48px, 8vw, 76px)',
+      paddingBottom: 'clamp(54px, 8vw, 84px)',
+      background: 'var(--apple-bg-base)',
       borderBottom: '1px solid var(--border-subtle)'
     }}>
       <div className="container-custom">
         
         {/* Section Header */}
-        <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 36px' }}>
+        <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 34px' }}>
           <div className="badge-blue" style={{ marginBottom: '10px' }}>
-            <GraduationCap size={14} />
+            <GraduationCap size={13} />
             <span>Academic Programs</span>
           </div>
 
           <h2 style={{
-            fontSize: 'clamp(1.9rem, 4vw, 2.8rem)',
+            fontSize: 'clamp(2rem, 4.5vw, 3rem)',
             fontWeight: '900',
-            lineHeight: '1.2',
-            letterSpacing: '-0.02em',
-            marginBottom: '14px',
+            lineHeight: '1.15',
+            letterSpacing: '-0.03em',
+            marginBottom: '12px',
             color: '#ffffff'
           }}>
             {coursesData.sectionTitle}
           </h2>
 
-          <p style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>
+          <p style={{ fontSize: '0.98rem', color: 'var(--text-secondary)' }}>
             {coursesData.sectionSubtitle}
           </p>
         </div>
 
-        {/* Tab Switcher Pills */}
+        {/* Apple Segmented Tab Switcher */}
         <div style={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: '10px',
+          gap: '8px',
           justifyContent: 'center',
           marginBottom: '32px'
         }}>
@@ -54,22 +54,23 @@ export default function CourseExplorer({ onOpenCallModal }) {
                 key={program.id}
                 onClick={() => setSelectedId(program.id)}
                 style={{
-                  padding: '10px 18px',
+                  padding: '9px 18px',
                   borderRadius: 'var(--radius-full)',
-                  border: isSelected ? '1px solid var(--accent-gold)' : '1px solid var(--border-subtle)',
-                  background: isSelected ? 'linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(15, 23, 42, 0.9) 100%)' : 'rgba(255, 255, 255, 0.04)',
+                  border: isSelected ? '1px solid var(--border-gold-glow)' : '1px solid var(--border-subtle)',
+                  borderTop: isSelected ? '1px solid rgba(251, 191, 36, 0.5)' : '1px solid var(--border-subtle)',
+                  background: isSelected ? 'linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(15, 23, 42, 0.9) 100%)' : 'rgba(255, 255, 255, 0.04)',
                   color: isSelected ? '#ffffff' : 'var(--text-secondary)',
                   fontWeight: isSelected ? '800' : '600',
-                  fontSize: '0.88rem',
+                  fontSize: '0.86rem',
                   cursor: 'pointer',
-                  transition: 'all var(--transition-fast)',
+                  transition: 'all 150ms ease',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px'
+                  gap: '7px'
                 }}
               >
                 {program.featured && (
-                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-gold)' }} />
+                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--accent-gold)' }} />
                 )}
                 <span>{program.name}</span>
               </button>
@@ -77,16 +78,15 @@ export default function CourseExplorer({ onOpenCallModal }) {
           })}
         </div>
 
-        {/* Active Course Detail Card */}
-        <div className="glass-panel" style={{
-          padding: 'clamp(20px, 4vw, 36px)',
-          border: '1px solid var(--border-highlight)',
-          background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(11, 18, 38, 0.95) 100%)'
+        {/* Active Course Bento Card */}
+        <div className="apple-glass" style={{
+          padding: 'clamp(22px, 4.5vw, 38px)',
+          borderTop: '1px solid rgba(255, 255, 255, 0.3)'
         }}>
           <div style={{
             display: 'grid',
             gridTemplateColumns: '1fr',
-            gap: '28px'
+            gap: '24px'
           }}>
             <div style={{
               display: 'flex',
@@ -95,14 +95,14 @@ export default function CourseExplorer({ onOpenCallModal }) {
               justifyContent: 'space-between',
               gap: '16px',
               borderBottom: '1px solid var(--border-subtle)',
-              paddingBottom: '20px'
+              paddingBottom: '18px'
             }}>
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                   <span className="badge-gold">
                     {activeCourse.badge}
                   </span>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--text-tertiary)' }}>
                     • {activeCourse.target}
                   </span>
                 </div>
@@ -119,26 +119,26 @@ export default function CourseExplorer({ onOpenCallModal }) {
               <button
                 onClick={onOpenCallModal}
                 className="btn-primary"
-                style={{ padding: '12px 24px', fontSize: '0.95rem' }}
+                style={{ padding: '11px 22px', fontSize: '0.92rem' }}
               >
                 <span>{activeCourse.ctaText}</span>
-                <ArrowRight size={17} />
+                <ArrowRight size={16} />
               </button>
             </div>
 
-            <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+            <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
               {activeCourse.description}
             </p>
 
             {/* Highlights Grid */}
             <div>
-              <h4 style={{ fontSize: '0.95rem', fontWeight: '700', color: '#fff', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                Key Curriculum & Teaching Highlights
+              <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: '#fff', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                Key Curriculum &amp; Pedagogy
               </h4>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: '12px'
+                gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))',
+                gap: '10px'
               }}>
                 {activeCourse.highlights.map((highlight, idx) => (
                   <div
@@ -146,15 +146,15 @@ export default function CourseExplorer({ onOpenCallModal }) {
                     style={{
                       display: 'flex',
                       alignItems: 'flex-start',
-                      gap: '10px',
+                      gap: '9px',
                       background: 'rgba(255, 255, 255, 0.03)',
-                      padding: '12px 14px',
-                      borderRadius: '10px',
+                      padding: '11px 13px',
+                      borderRadius: 'var(--radius-sm)',
                       border: '1px solid rgba(255, 255, 255, 0.05)'
                     }}
                   >
-                    <CheckCircle2 size={18} color="var(--accent-emerald)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                    <span style={{ fontSize: '0.88rem', color: 'var(--text-primary)', lineHeight: '1.4' }}>
+                    <CheckCircle2 size={17} color="var(--accent-emerald)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                    <span style={{ fontSize: '0.86rem', color: 'var(--text-primary)', lineHeight: '1.4' }}>
                       {highlight}
                     </span>
                   </div>
@@ -168,17 +168,17 @@ export default function CourseExplorer({ onOpenCallModal }) {
               flexWrap: 'wrap',
               alignItems: 'center',
               justifyContent: 'space-between',
-              gap: '16px',
-              paddingTop: '20px',
+              gap: '14px',
+              paddingTop: '18px',
               borderTop: '1px solid var(--border-subtle)',
-              fontSize: '0.85rem',
-              color: 'var(--text-muted)'
+              fontSize: '0.82rem',
+              color: 'var(--text-tertiary)'
             }}>
               <div>
-                <strong>Subjects Covered:</strong> {activeCourse.subjects.join(', ')}
+                <strong style={{ color: 'var(--text-secondary)' }}>Subjects Covered:</strong> {activeCourse.subjects.join(', ')}
               </div>
               <div>
-                <strong>Eligibility:</strong> {activeCourse.eligibility}
+                <strong style={{ color: 'var(--text-secondary)' }}>Eligibility:</strong> {activeCourse.eligibility}
               </div>
             </div>
 

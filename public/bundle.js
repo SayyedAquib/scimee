@@ -29,277 +29,6 @@
     mod
   ));
 
-  // node_modules/scheduler/cjs/scheduler.development.js
-  var require_scheduler_development = __commonJS({
-    "node_modules/scheduler/cjs/scheduler.development.js"(exports) {
-      "use strict";
-      (function() {
-        function performWorkUntilDeadline() {
-          needsPaint = false;
-          if (isMessageLoopRunning) {
-            var currentTime = exports.unstable_now();
-            startTime = currentTime;
-            var hasMoreWork = true;
-            try {
-              a: {
-                isHostCallbackScheduled = false;
-                isHostTimeoutScheduled && (isHostTimeoutScheduled = false, localClearTimeout(taskTimeoutID), taskTimeoutID = -1);
-                isPerformingWork = true;
-                var previousPriorityLevel = currentPriorityLevel;
-                try {
-                  b: {
-                    advanceTimers(currentTime);
-                    for (currentTask = peek(taskQueue); null !== currentTask && !(currentTask.expirationTime > currentTime && shouldYieldToHost()); ) {
-                      var callback = currentTask.callback;
-                      if ("function" === typeof callback) {
-                        currentTask.callback = null;
-                        currentPriorityLevel = currentTask.priorityLevel;
-                        var continuationCallback = callback(
-                          currentTask.expirationTime <= currentTime
-                        );
-                        currentTime = exports.unstable_now();
-                        if ("function" === typeof continuationCallback) {
-                          currentTask.callback = continuationCallback;
-                          advanceTimers(currentTime);
-                          hasMoreWork = true;
-                          break b;
-                        }
-                        currentTask === peek(taskQueue) && pop(taskQueue);
-                        advanceTimers(currentTime);
-                      } else pop(taskQueue);
-                      currentTask = peek(taskQueue);
-                    }
-                    if (null !== currentTask) hasMoreWork = true;
-                    else {
-                      var firstTimer = peek(timerQueue);
-                      null !== firstTimer && requestHostTimeout(
-                        handleTimeout,
-                        firstTimer.startTime - currentTime
-                      );
-                      hasMoreWork = false;
-                    }
-                  }
-                  break a;
-                } finally {
-                  currentTask = null, currentPriorityLevel = previousPriorityLevel, isPerformingWork = false;
-                }
-                hasMoreWork = void 0;
-              }
-            } finally {
-              hasMoreWork ? schedulePerformWorkUntilDeadline() : isMessageLoopRunning = false;
-            }
-          }
-        }
-        function push(heap, node) {
-          var index = heap.length;
-          heap.push(node);
-          a: for (; 0 < index; ) {
-            var parentIndex = index - 1 >>> 1, parent = heap[parentIndex];
-            if (0 < compare(parent, node))
-              heap[parentIndex] = node, heap[index] = parent, index = parentIndex;
-            else break a;
-          }
-        }
-        function peek(heap) {
-          return 0 === heap.length ? null : heap[0];
-        }
-        function pop(heap) {
-          if (0 === heap.length) return null;
-          var first = heap[0], last = heap.pop();
-          if (last !== first) {
-            heap[0] = last;
-            a: for (var index = 0, length = heap.length, halfLength = length >>> 1; index < halfLength; ) {
-              var leftIndex = 2 * (index + 1) - 1, left = heap[leftIndex], rightIndex = leftIndex + 1, right = heap[rightIndex];
-              if (0 > compare(left, last))
-                rightIndex < length && 0 > compare(right, left) ? (heap[index] = right, heap[rightIndex] = last, index = rightIndex) : (heap[index] = left, heap[leftIndex] = last, index = leftIndex);
-              else if (rightIndex < length && 0 > compare(right, last))
-                heap[index] = right, heap[rightIndex] = last, index = rightIndex;
-              else break a;
-            }
-          }
-          return first;
-        }
-        function compare(a, b) {
-          var diff = a.sortIndex - b.sortIndex;
-          return 0 !== diff ? diff : a.id - b.id;
-        }
-        function advanceTimers(currentTime) {
-          for (var timer = peek(timerQueue); null !== timer; ) {
-            if (null === timer.callback) pop(timerQueue);
-            else if (timer.startTime <= currentTime)
-              pop(timerQueue), timer.sortIndex = timer.expirationTime, push(taskQueue, timer);
-            else break;
-            timer = peek(timerQueue);
-          }
-        }
-        function handleTimeout(currentTime) {
-          isHostTimeoutScheduled = false;
-          advanceTimers(currentTime);
-          if (!isHostCallbackScheduled)
-            if (null !== peek(taskQueue))
-              isHostCallbackScheduled = true, isMessageLoopRunning || (isMessageLoopRunning = true, schedulePerformWorkUntilDeadline());
-            else {
-              var firstTimer = peek(timerQueue);
-              null !== firstTimer && requestHostTimeout(
-                handleTimeout,
-                firstTimer.startTime - currentTime
-              );
-            }
-        }
-        function shouldYieldToHost() {
-          return needsPaint ? true : exports.unstable_now() - startTime < frameInterval ? false : true;
-        }
-        function requestHostTimeout(callback, ms) {
-          taskTimeoutID = localSetTimeout(function() {
-            callback(exports.unstable_now());
-          }, ms);
-        }
-        "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        exports.unstable_now = void 0;
-        if ("object" === typeof performance && "function" === typeof performance.now) {
-          var localPerformance = performance;
-          exports.unstable_now = function() {
-            return localPerformance.now();
-          };
-        } else {
-          var localDate = Date, initialTime = localDate.now();
-          exports.unstable_now = function() {
-            return localDate.now() - initialTime;
-          };
-        }
-        var taskQueue = [], timerQueue = [], taskIdCounter = 1, currentTask = null, currentPriorityLevel = 3, isPerformingWork = false, isHostCallbackScheduled = false, isHostTimeoutScheduled = false, needsPaint = false, localSetTimeout = "function" === typeof setTimeout ? setTimeout : null, localClearTimeout = "function" === typeof clearTimeout ? clearTimeout : null, localSetImmediate = "undefined" !== typeof setImmediate ? setImmediate : null, isMessageLoopRunning = false, taskTimeoutID = -1, frameInterval = 5, startTime = -1;
-        if ("function" === typeof localSetImmediate)
-          var schedulePerformWorkUntilDeadline = function() {
-            localSetImmediate(performWorkUntilDeadline);
-          };
-        else if ("undefined" !== typeof MessageChannel) {
-          var channel = new MessageChannel(), port = channel.port2;
-          channel.port1.onmessage = performWorkUntilDeadline;
-          schedulePerformWorkUntilDeadline = function() {
-            port.postMessage(null);
-          };
-        } else
-          schedulePerformWorkUntilDeadline = function() {
-            localSetTimeout(performWorkUntilDeadline, 0);
-          };
-        exports.unstable_IdlePriority = 5;
-        exports.unstable_ImmediatePriority = 1;
-        exports.unstable_LowPriority = 4;
-        exports.unstable_NormalPriority = 3;
-        exports.unstable_Profiling = null;
-        exports.unstable_UserBlockingPriority = 2;
-        exports.unstable_cancelCallback = function(task) {
-          task.callback = null;
-        };
-        exports.unstable_forceFrameRate = function(fps) {
-          0 > fps || 125 < fps ? console.error(
-            "forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"
-          ) : frameInterval = 0 < fps ? Math.floor(1e3 / fps) : 5;
-        };
-        exports.unstable_getCurrentPriorityLevel = function() {
-          return currentPriorityLevel;
-        };
-        exports.unstable_next = function(eventHandler) {
-          switch (currentPriorityLevel) {
-            case 1:
-            case 2:
-            case 3:
-              var priorityLevel = 3;
-              break;
-            default:
-              priorityLevel = currentPriorityLevel;
-          }
-          var previousPriorityLevel = currentPriorityLevel;
-          currentPriorityLevel = priorityLevel;
-          try {
-            return eventHandler();
-          } finally {
-            currentPriorityLevel = previousPriorityLevel;
-          }
-        };
-        exports.unstable_requestPaint = function() {
-          needsPaint = true;
-        };
-        exports.unstable_runWithPriority = function(priorityLevel, eventHandler) {
-          switch (priorityLevel) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-              break;
-            default:
-              priorityLevel = 3;
-          }
-          var previousPriorityLevel = currentPriorityLevel;
-          currentPriorityLevel = priorityLevel;
-          try {
-            return eventHandler();
-          } finally {
-            currentPriorityLevel = previousPriorityLevel;
-          }
-        };
-        exports.unstable_scheduleCallback = function(priorityLevel, callback, options) {
-          var currentTime = exports.unstable_now();
-          "object" === typeof options && null !== options ? (options = options.delay, options = "number" === typeof options && 0 < options ? currentTime + options : currentTime) : options = currentTime;
-          switch (priorityLevel) {
-            case 1:
-              var timeout = -1;
-              break;
-            case 2:
-              timeout = 250;
-              break;
-            case 5:
-              timeout = 1073741823;
-              break;
-            case 4:
-              timeout = 1e4;
-              break;
-            default:
-              timeout = 5e3;
-          }
-          timeout = options + timeout;
-          priorityLevel = {
-            id: taskIdCounter++,
-            callback,
-            priorityLevel,
-            startTime: options,
-            expirationTime: timeout,
-            sortIndex: -1
-          };
-          options > currentTime ? (priorityLevel.sortIndex = options, push(timerQueue, priorityLevel), null === peek(taskQueue) && priorityLevel === peek(timerQueue) && (isHostTimeoutScheduled ? (localClearTimeout(taskTimeoutID), taskTimeoutID = -1) : isHostTimeoutScheduled = true, requestHostTimeout(handleTimeout, options - currentTime))) : (priorityLevel.sortIndex = timeout, push(taskQueue, priorityLevel), isHostCallbackScheduled || isPerformingWork || (isHostCallbackScheduled = true, isMessageLoopRunning || (isMessageLoopRunning = true, schedulePerformWorkUntilDeadline())));
-          return priorityLevel;
-        };
-        exports.unstable_shouldYield = shouldYieldToHost;
-        exports.unstable_wrapCallback = function(callback) {
-          var parentPriorityLevel = currentPriorityLevel;
-          return function() {
-            var previousPriorityLevel = currentPriorityLevel;
-            currentPriorityLevel = parentPriorityLevel;
-            try {
-              return callback.apply(this, arguments);
-            } finally {
-              currentPriorityLevel = previousPriorityLevel;
-            }
-          };
-        };
-        "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
-      })();
-    }
-  });
-
-  // node_modules/scheduler/index.js
-  var require_scheduler = __commonJS({
-    "node_modules/scheduler/index.js"(exports, module) {
-      "use strict";
-      if (false) {
-        module.exports = null;
-      } else {
-        module.exports = require_scheduler_development();
-      }
-    }
-  });
-
   // node_modules/react/cjs/react.development.js
   var require_react_development = __commonJS({
     "node_modules/react/cjs/react.development.js"(exports, module) {
@@ -1284,6 +1013,277 @@
     }
   });
 
+  // node_modules/scheduler/cjs/scheduler.development.js
+  var require_scheduler_development = __commonJS({
+    "node_modules/scheduler/cjs/scheduler.development.js"(exports) {
+      "use strict";
+      (function() {
+        function performWorkUntilDeadline() {
+          needsPaint = false;
+          if (isMessageLoopRunning) {
+            var currentTime = exports.unstable_now();
+            startTime = currentTime;
+            var hasMoreWork = true;
+            try {
+              a: {
+                isHostCallbackScheduled = false;
+                isHostTimeoutScheduled && (isHostTimeoutScheduled = false, localClearTimeout(taskTimeoutID), taskTimeoutID = -1);
+                isPerformingWork = true;
+                var previousPriorityLevel = currentPriorityLevel;
+                try {
+                  b: {
+                    advanceTimers(currentTime);
+                    for (currentTask = peek(taskQueue); null !== currentTask && !(currentTask.expirationTime > currentTime && shouldYieldToHost()); ) {
+                      var callback = currentTask.callback;
+                      if ("function" === typeof callback) {
+                        currentTask.callback = null;
+                        currentPriorityLevel = currentTask.priorityLevel;
+                        var continuationCallback = callback(
+                          currentTask.expirationTime <= currentTime
+                        );
+                        currentTime = exports.unstable_now();
+                        if ("function" === typeof continuationCallback) {
+                          currentTask.callback = continuationCallback;
+                          advanceTimers(currentTime);
+                          hasMoreWork = true;
+                          break b;
+                        }
+                        currentTask === peek(taskQueue) && pop(taskQueue);
+                        advanceTimers(currentTime);
+                      } else pop(taskQueue);
+                      currentTask = peek(taskQueue);
+                    }
+                    if (null !== currentTask) hasMoreWork = true;
+                    else {
+                      var firstTimer = peek(timerQueue);
+                      null !== firstTimer && requestHostTimeout(
+                        handleTimeout,
+                        firstTimer.startTime - currentTime
+                      );
+                      hasMoreWork = false;
+                    }
+                  }
+                  break a;
+                } finally {
+                  currentTask = null, currentPriorityLevel = previousPriorityLevel, isPerformingWork = false;
+                }
+                hasMoreWork = void 0;
+              }
+            } finally {
+              hasMoreWork ? schedulePerformWorkUntilDeadline() : isMessageLoopRunning = false;
+            }
+          }
+        }
+        function push(heap, node) {
+          var index = heap.length;
+          heap.push(node);
+          a: for (; 0 < index; ) {
+            var parentIndex = index - 1 >>> 1, parent = heap[parentIndex];
+            if (0 < compare(parent, node))
+              heap[parentIndex] = node, heap[index] = parent, index = parentIndex;
+            else break a;
+          }
+        }
+        function peek(heap) {
+          return 0 === heap.length ? null : heap[0];
+        }
+        function pop(heap) {
+          if (0 === heap.length) return null;
+          var first = heap[0], last = heap.pop();
+          if (last !== first) {
+            heap[0] = last;
+            a: for (var index = 0, length = heap.length, halfLength = length >>> 1; index < halfLength; ) {
+              var leftIndex = 2 * (index + 1) - 1, left = heap[leftIndex], rightIndex = leftIndex + 1, right = heap[rightIndex];
+              if (0 > compare(left, last))
+                rightIndex < length && 0 > compare(right, left) ? (heap[index] = right, heap[rightIndex] = last, index = rightIndex) : (heap[index] = left, heap[leftIndex] = last, index = leftIndex);
+              else if (rightIndex < length && 0 > compare(right, last))
+                heap[index] = right, heap[rightIndex] = last, index = rightIndex;
+              else break a;
+            }
+          }
+          return first;
+        }
+        function compare(a, b) {
+          var diff = a.sortIndex - b.sortIndex;
+          return 0 !== diff ? diff : a.id - b.id;
+        }
+        function advanceTimers(currentTime) {
+          for (var timer = peek(timerQueue); null !== timer; ) {
+            if (null === timer.callback) pop(timerQueue);
+            else if (timer.startTime <= currentTime)
+              pop(timerQueue), timer.sortIndex = timer.expirationTime, push(taskQueue, timer);
+            else break;
+            timer = peek(timerQueue);
+          }
+        }
+        function handleTimeout(currentTime) {
+          isHostTimeoutScheduled = false;
+          advanceTimers(currentTime);
+          if (!isHostCallbackScheduled)
+            if (null !== peek(taskQueue))
+              isHostCallbackScheduled = true, isMessageLoopRunning || (isMessageLoopRunning = true, schedulePerformWorkUntilDeadline());
+            else {
+              var firstTimer = peek(timerQueue);
+              null !== firstTimer && requestHostTimeout(
+                handleTimeout,
+                firstTimer.startTime - currentTime
+              );
+            }
+        }
+        function shouldYieldToHost() {
+          return needsPaint ? true : exports.unstable_now() - startTime < frameInterval ? false : true;
+        }
+        function requestHostTimeout(callback, ms) {
+          taskTimeoutID = localSetTimeout(function() {
+            callback(exports.unstable_now());
+          }, ms);
+        }
+        "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
+        exports.unstable_now = void 0;
+        if ("object" === typeof performance && "function" === typeof performance.now) {
+          var localPerformance = performance;
+          exports.unstable_now = function() {
+            return localPerformance.now();
+          };
+        } else {
+          var localDate = Date, initialTime = localDate.now();
+          exports.unstable_now = function() {
+            return localDate.now() - initialTime;
+          };
+        }
+        var taskQueue = [], timerQueue = [], taskIdCounter = 1, currentTask = null, currentPriorityLevel = 3, isPerformingWork = false, isHostCallbackScheduled = false, isHostTimeoutScheduled = false, needsPaint = false, localSetTimeout = "function" === typeof setTimeout ? setTimeout : null, localClearTimeout = "function" === typeof clearTimeout ? clearTimeout : null, localSetImmediate = "undefined" !== typeof setImmediate ? setImmediate : null, isMessageLoopRunning = false, taskTimeoutID = -1, frameInterval = 5, startTime = -1;
+        if ("function" === typeof localSetImmediate)
+          var schedulePerformWorkUntilDeadline = function() {
+            localSetImmediate(performWorkUntilDeadline);
+          };
+        else if ("undefined" !== typeof MessageChannel) {
+          var channel = new MessageChannel(), port = channel.port2;
+          channel.port1.onmessage = performWorkUntilDeadline;
+          schedulePerformWorkUntilDeadline = function() {
+            port.postMessage(null);
+          };
+        } else
+          schedulePerformWorkUntilDeadline = function() {
+            localSetTimeout(performWorkUntilDeadline, 0);
+          };
+        exports.unstable_IdlePriority = 5;
+        exports.unstable_ImmediatePriority = 1;
+        exports.unstable_LowPriority = 4;
+        exports.unstable_NormalPriority = 3;
+        exports.unstable_Profiling = null;
+        exports.unstable_UserBlockingPriority = 2;
+        exports.unstable_cancelCallback = function(task) {
+          task.callback = null;
+        };
+        exports.unstable_forceFrameRate = function(fps) {
+          0 > fps || 125 < fps ? console.error(
+            "forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"
+          ) : frameInterval = 0 < fps ? Math.floor(1e3 / fps) : 5;
+        };
+        exports.unstable_getCurrentPriorityLevel = function() {
+          return currentPriorityLevel;
+        };
+        exports.unstable_next = function(eventHandler) {
+          switch (currentPriorityLevel) {
+            case 1:
+            case 2:
+            case 3:
+              var priorityLevel = 3;
+              break;
+            default:
+              priorityLevel = currentPriorityLevel;
+          }
+          var previousPriorityLevel = currentPriorityLevel;
+          currentPriorityLevel = priorityLevel;
+          try {
+            return eventHandler();
+          } finally {
+            currentPriorityLevel = previousPriorityLevel;
+          }
+        };
+        exports.unstable_requestPaint = function() {
+          needsPaint = true;
+        };
+        exports.unstable_runWithPriority = function(priorityLevel, eventHandler) {
+          switch (priorityLevel) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+              break;
+            default:
+              priorityLevel = 3;
+          }
+          var previousPriorityLevel = currentPriorityLevel;
+          currentPriorityLevel = priorityLevel;
+          try {
+            return eventHandler();
+          } finally {
+            currentPriorityLevel = previousPriorityLevel;
+          }
+        };
+        exports.unstable_scheduleCallback = function(priorityLevel, callback, options) {
+          var currentTime = exports.unstable_now();
+          "object" === typeof options && null !== options ? (options = options.delay, options = "number" === typeof options && 0 < options ? currentTime + options : currentTime) : options = currentTime;
+          switch (priorityLevel) {
+            case 1:
+              var timeout = -1;
+              break;
+            case 2:
+              timeout = 250;
+              break;
+            case 5:
+              timeout = 1073741823;
+              break;
+            case 4:
+              timeout = 1e4;
+              break;
+            default:
+              timeout = 5e3;
+          }
+          timeout = options + timeout;
+          priorityLevel = {
+            id: taskIdCounter++,
+            callback,
+            priorityLevel,
+            startTime: options,
+            expirationTime: timeout,
+            sortIndex: -1
+          };
+          options > currentTime ? (priorityLevel.sortIndex = options, push(timerQueue, priorityLevel), null === peek(taskQueue) && priorityLevel === peek(timerQueue) && (isHostTimeoutScheduled ? (localClearTimeout(taskTimeoutID), taskTimeoutID = -1) : isHostTimeoutScheduled = true, requestHostTimeout(handleTimeout, options - currentTime))) : (priorityLevel.sortIndex = timeout, push(taskQueue, priorityLevel), isHostCallbackScheduled || isPerformingWork || (isHostCallbackScheduled = true, isMessageLoopRunning || (isMessageLoopRunning = true, schedulePerformWorkUntilDeadline())));
+          return priorityLevel;
+        };
+        exports.unstable_shouldYield = shouldYieldToHost;
+        exports.unstable_wrapCallback = function(callback) {
+          var parentPriorityLevel = currentPriorityLevel;
+          return function() {
+            var previousPriorityLevel = currentPriorityLevel;
+            currentPriorityLevel = parentPriorityLevel;
+            try {
+              return callback.apply(this, arguments);
+            } finally {
+              currentPriorityLevel = previousPriorityLevel;
+            }
+          };
+        };
+        "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
+      })();
+    }
+  });
+
+  // node_modules/scheduler/index.js
+  var require_scheduler = __commonJS({
+    "node_modules/scheduler/index.js"(exports, module) {
+      "use strict";
+      if (false) {
+        module.exports = null;
+      } else {
+        module.exports = require_scheduler_development();
+      }
+    }
+  });
+
   // node_modules/react-dom/cjs/react-dom.development.js
   var require_react_dom_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom.development.js"(exports) {
@@ -1333,7 +1333,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React2 = require_react(), Internals = {
+        var React14 = require_react(), Internals = {
           d: {
             f: noop,
             r: function() {
@@ -1351,7 +1351,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React2.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React14.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -2886,7 +2886,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React2.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React14.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -18518,14 +18518,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React2 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React14 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React2.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React14.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -21313,7 +21313,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React2.version;
+          var isomorphicReactPackageVersion = React14.version;
           if ("19.2.8" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.8\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -21454,10 +21454,11 @@
   });
 
   // src/main.jsx
+  var import_react16 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // src/App.jsx
-  var import_react10 = __toESM(require_react(), 1);
+  var import_react15 = __toESM(require_react(), 1);
 
   // src/components/Header.jsx
   var import_react4 = __toESM(require_react(), 1);
@@ -21573,15 +21574,8 @@
   ];
   var ArrowRight = createLucideIcon("arrow-right", __iconNode);
 
-  // node_modules/lucide-react/dist/esm/icons/arrow-up.mjs
-  var __iconNode2 = [
-    ["path", { d: "m5 12 7-7 7 7", key: "hav0vg" }],
-    ["path", { d: "M12 19V5", key: "x0mq9r" }]
-  ];
-  var ArrowUp = createLucideIcon("arrow-up", __iconNode2);
-
   // node_modules/lucide-react/dist/esm/icons/atom.mjs
-  var __iconNode3 = [
+  var __iconNode2 = [
     ["circle", { cx: "12", cy: "12", r: "1", key: "41hilf" }],
     [
       "path",
@@ -21598,10 +21592,10 @@
       }
     ]
   ];
-  var Atom = createLucideIcon("atom", __iconNode3);
+  var Atom = createLucideIcon("atom", __iconNode2);
 
   // node_modules/lucide-react/dist/esm/icons/award.mjs
-  var __iconNode4 = [
+  var __iconNode3 = [
     [
       "path",
       {
@@ -21611,10 +21605,10 @@
     ],
     ["circle", { cx: "12", cy: "8", r: "6", key: "1vp47v" }]
   ];
-  var Award = createLucideIcon("award", __iconNode4);
+  var Award = createLucideIcon("award", __iconNode3);
 
   // node_modules/lucide-react/dist/esm/icons/book-open.mjs
-  var __iconNode5 = [
+  var __iconNode4 = [
     ["path", { d: "M12 5v16", key: "1f6ucr" }],
     [
       "path",
@@ -21624,11 +21618,15 @@
       }
     ]
   ];
-  var BookOpen = createLucideIcon("book-open", __iconNode5);
+  var BookOpen = createLucideIcon("book-open", __iconNode4);
 
   // node_modules/lucide-react/dist/esm/icons/chevron-down.mjs
-  var __iconNode6 = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
-  var ChevronDown = createLucideIcon("chevron-down", __iconNode6);
+  var __iconNode5 = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
+  var ChevronDown = createLucideIcon("chevron-down", __iconNode5);
+
+  // node_modules/lucide-react/dist/esm/icons/chevron-right.mjs
+  var __iconNode6 = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
+  var ChevronRight = createLucideIcon("chevron-right", __iconNode6);
 
   // node_modules/lucide-react/dist/esm/icons/chevron-up.mjs
   var __iconNode7 = [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]];
@@ -21823,8 +21821,20 @@
   ];
   var ShieldCheck = createLucideIcon("shield-check", __iconNode24);
 
-  // node_modules/lucide-react/dist/esm/icons/sparkles.mjs
+  // node_modules/lucide-react/dist/esm/icons/shield.mjs
   var __iconNode25 = [
+    [
+      "path",
+      {
+        d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",
+        key: "oel41y"
+      }
+    ]
+  ];
+  var Shield = createLucideIcon("shield", __iconNode25);
+
+  // node_modules/lucide-react/dist/esm/icons/sparkles.mjs
+  var __iconNode26 = [
     [
       "path",
       {
@@ -21836,10 +21846,10 @@
     ["path", { d: "M22 4h-4", key: "gwowj6" }],
     ["circle", { cx: "4", cy: "20", r: "2", key: "6kqj1y" }]
   ];
-  var Sparkles = createLucideIcon("sparkles", __iconNode25);
+  var Sparkles = createLucideIcon("sparkles", __iconNode26);
 
   // node_modules/lucide-react/dist/esm/icons/trophy.mjs
-  var __iconNode26 = [
+  var __iconNode27 = [
     ["path", { d: "M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2", key: "pwuv1l" }],
     ["path", { d: "M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2", key: "1y54w1" }],
     ["path", { d: "M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3", key: "e30mpu" }],
@@ -21847,38 +21857,38 @@
     ["path", { d: "M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z", key: "1mhfuq" }],
     ["path", { d: "M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3", key: "i0yafy" }]
   ];
-  var Trophy = createLucideIcon("trophy", __iconNode26);
+  var Trophy = createLucideIcon("trophy", __iconNode27);
 
   // node_modules/lucide-react/dist/esm/icons/user-check.mjs
-  var __iconNode27 = [
+  var __iconNode28 = [
     ["path", { d: "m16 11 2 2 4-4", key: "9rsbq5" }],
     ["path", { d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2", key: "1yyitq" }],
     ["circle", { cx: "9", cy: "7", r: "4", key: "nufk8" }]
   ];
-  var UserCheck = createLucideIcon("user-check", __iconNode27);
+  var UserCheck = createLucideIcon("user-check", __iconNode28);
 
   // node_modules/lucide-react/dist/esm/icons/user.mjs
-  var __iconNode28 = [
+  var __iconNode29 = [
     ["path", { d: "M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2", key: "975kel" }],
     ["circle", { cx: "12", cy: "7", r: "4", key: "17ys0d" }]
   ];
-  var User = createLucideIcon("user", __iconNode28);
+  var User = createLucideIcon("user", __iconNode29);
 
   // node_modules/lucide-react/dist/esm/icons/users.mjs
-  var __iconNode29 = [
+  var __iconNode30 = [
     ["path", { d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2", key: "1yyitq" }],
     ["path", { d: "M16 3.128a4 4 0 0 1 0 7.744", key: "16gr8j" }],
     ["path", { d: "M22 21v-2a4 4 0 0 0-3-3.87", key: "kshegd" }],
     ["circle", { cx: "9", cy: "7", r: "4", key: "nufk8" }]
   ];
-  var Users = createLucideIcon("users", __iconNode29);
+  var Users = createLucideIcon("users", __iconNode30);
 
   // node_modules/lucide-react/dist/esm/icons/x.mjs
-  var __iconNode30 = [
+  var __iconNode31 = [
     ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
     ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
   ];
-  var X = createLucideIcon("x", __iconNode30);
+  var X = createLucideIcon("x", __iconNode31);
 
   // src/data/site-config.json
   var site_config_default = {
@@ -21967,134 +21977,80 @@
       const handleScroll = () => {
         setScrolled(window.scrollY > 20);
       };
-      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", handleScroll, { passive: true });
       return () => window.removeEventListener("scroll", handleScroll);
     }, []);
     const closeMenu = () => setMobileMenuOpen(false);
-    return /* @__PURE__ */ React.createElement(React.Fragment, null, site_config_default.announcement.enabled && /* @__PURE__ */ React.createElement("div", { style: {
-      background: "linear-gradient(90deg, #1e1b4b 0%, #0f172a 50%, #312e81 100%)",
-      borderBottom: "1px solid rgba(245, 158, 11, 0.25)",
-      padding: "8px 16px",
-      textAlign: "center",
-      fontSize: "0.8rem",
-      color: "var(--text-primary)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: "10px",
-      position: "relative",
-      zIndex: 60
-    } }, /* @__PURE__ */ React.createElement("span", { className: "badge-gold", style: { padding: "2px 8px", fontSize: "0.7rem" } }, site_config_default.announcement.badge), /* @__PURE__ */ React.createElement("span", { style: { fontWeight: "500" } }, site_config_default.announcement.text), /* @__PURE__ */ React.createElement(
-      "button",
-      {
-        onClick: onOpenCallModal,
-        style: {
-          background: "none",
-          border: "none",
-          color: "var(--accent-gold-light)",
-          fontWeight: "700",
-          cursor: "pointer",
-          textDecoration: "underline",
-          fontSize: "0.8rem",
-          marginLeft: "4px"
-        }
-      },
-      site_config_default.announcement.ctaText,
-      " \u2192"
-    )), /* @__PURE__ */ React.createElement("header", { style: {
-      position: "sticky",
-      top: 0,
-      zIndex: 50,
-      background: scrolled ? "rgba(6, 9, 19, 0.88)" : "rgba(6, 9, 19, 0.65)",
-      backdropFilter: "blur(16px)",
-      WebkitBackdropFilter: "blur(16px)",
-      borderBottom: "1px solid var(--border-subtle)",
-      transition: "background var(--transition-base), box-shadow var(--transition-base)",
-      boxShadow: scrolled ? "0 10px 30px rgba(0, 0, 0, 0.45)" : "none"
-    } }, /* @__PURE__ */ React.createElement("div", { className: "container-custom", style: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      height: "74px"
-    } }, /* @__PURE__ */ React.createElement("a", { href: "#", style: { display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" } }, /* @__PURE__ */ React.createElement("div", { style: {
-      width: "46px",
-      height: "46px",
-      borderRadius: "12px",
+    return /* @__PURE__ */ import_react4.default.createElement(import_react4.default.Fragment, null, /* @__PURE__ */ import_react4.default.createElement("div", { className: "floating-navbar-wrapper" }, /* @__PURE__ */ import_react4.default.createElement("header", { className: "floating-navbar", style: {
+      background: scrolled ? "rgba(9, 14, 28, 0.88)" : "rgba(11, 17, 32, 0.72)",
+      boxShadow: scrolled ? "0 20px 48px -8px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.15)" : "0 16px 36px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1)"
+    } }, /* @__PURE__ */ import_react4.default.createElement("a", { href: "#", style: { display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" } }, /* @__PURE__ */ import_react4.default.createElement("div", { style: {
+      width: "38px",
+      height: "38px",
+      borderRadius: "10px",
       background: "#ffffff",
-      padding: "4px",
+      padding: "3px",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      boxShadow: "0 4px 14px rgba(0, 0, 0, 0.4)",
-      border: "1px solid rgba(255, 255, 255, 0.2)"
-    } }, /* @__PURE__ */ React.createElement(
+      boxShadow: "0 4px 14px rgba(0, 0, 0, 0.45)",
+      border: "1px solid rgba(255, 255, 255, 0.3)"
+    } }, /* @__PURE__ */ import_react4.default.createElement(
       "img",
       {
         src: "/assets/logo.svg",
         alt: "SCIMEE Logo",
         style: { width: "100%", height: "100%", objectFit: "contain" }
       }
-    )), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: "6px" } }, /* @__PURE__ */ React.createElement("span", { style: {
-      fontSize: "1.35rem",
+    )), /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "6px" } }, /* @__PURE__ */ import_react4.default.createElement("span", { style: {
+      fontSize: "1.2rem",
       fontWeight: "900",
-      color: "#fff",
-      letterSpacing: "1px",
-      fontFamily: "'Plus Jakarta Sans', sans-serif"
-    } }, site_config_default.brand.name), /* @__PURE__ */ React.createElement("span", { className: "badge-gold", style: { padding: "1px 6px", fontSize: "0.65rem" } }, "NEET EXPERTS")), /* @__PURE__ */ React.createElement("p", { style: {
-      fontSize: "0.72rem",
+      color: "#ffffff",
+      letterSpacing: "-0.02em",
+      lineHeight: "1"
+    } }, site_config_default.brand.name), /* @__PURE__ */ import_react4.default.createElement("span", { className: "badge-gold", style: { padding: "1px 6px", fontSize: "0.6rem" } }, "NEET 2026")), /* @__PURE__ */ import_react4.default.createElement("p", { style: {
+      fontSize: "0.68rem",
       color: "var(--text-muted)",
-      fontWeight: "500",
-      lineHeight: 1.1,
-      marginTop: "1px"
-    } }, "By ", site_config_default.brand.founder, " \u2022 Bhusawal"))), /* @__PURE__ */ React.createElement("nav", { style: { display: "none", alignItems: "center", gap: "26px" }, className: "desktop-nav" }, site_config_default.navigation.map((item) => /* @__PURE__ */ React.createElement(
+      fontWeight: "600",
+      lineHeight: 1,
+      marginTop: "2px"
+    } }, "By ", site_config_default.brand.founder))), /* @__PURE__ */ import_react4.default.createElement("nav", { style: { display: "none", alignItems: "center", gap: "4px" }, className: "desktop-nav" }, site_config_default.navigation.map((item) => /* @__PURE__ */ import_react4.default.createElement(
       "a",
       {
         key: item.label,
         href: item.href,
-        style: {
-          color: "var(--text-secondary)",
-          textDecoration: "none",
-          fontSize: "0.9rem",
-          fontWeight: "600",
-          transition: "color var(--transition-fast)"
-        },
-        onMouseOver: (e) => {
-          e.currentTarget.style.color = "var(--text-primary)";
-        },
-        onMouseOut: (e) => {
-          e.currentTarget.style.color = "var(--text-secondary)";
-        }
+        className: "nav-link"
       },
       item.label
-    ))), /* @__PURE__ */ React.createElement("div", { style: { display: "none", alignItems: "center", gap: "14px" }, className: "desktop-nav" }, /* @__PURE__ */ React.createElement(
+    ))), /* @__PURE__ */ import_react4.default.createElement("div", { style: { display: "none", alignItems: "center", gap: "10px" }, className: "desktop-nav" }, /* @__PURE__ */ import_react4.default.createElement(
       "button",
       {
         onClick: onOpenCallModal,
         className: "btn-primary",
-        style: { padding: "10px 20px", fontSize: "0.88rem" }
+        style: { padding: "8px 18px", fontSize: "0.82rem" }
       },
-      /* @__PURE__ */ React.createElement(PhoneCall, { size: 17 }),
-      /* @__PURE__ */ React.createElement("span", null, "Call Helpline")
-    )), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, className: "mobile-toggle" }, /* @__PURE__ */ React.createElement(
+      /* @__PURE__ */ import_react4.default.createElement(PhoneCall, { size: 14 }),
+      /* @__PURE__ */ import_react4.default.createElement("span", null, "Call Helpline")
+    )), /* @__PURE__ */ import_react4.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, className: "mobile-toggle" }, /* @__PURE__ */ import_react4.default.createElement(
       "button",
       {
         onClick: onOpenCallModal,
         className: "btn-primary",
-        style: { padding: "8px 14px", fontSize: "0.82rem" },
+        style: { padding: "6px 12px", fontSize: "0.76rem" },
         "aria-label": "Call Helpline"
       },
-      /* @__PURE__ */ React.createElement(PhoneCall, { size: 15 }),
-      /* @__PURE__ */ React.createElement("span", null, "Call")
-    ), /* @__PURE__ */ React.createElement(
+      /* @__PURE__ */ import_react4.default.createElement(PhoneCall, { size: 13 }),
+      /* @__PURE__ */ import_react4.default.createElement("span", null, "Call")
+    ), /* @__PURE__ */ import_react4.default.createElement(
       "button",
       {
         onClick: () => setMobileMenuOpen(!mobileMenuOpen),
-        "aria-label": "Toggle navigation menu",
+        "aria-label": "Toggle menu",
         style: {
-          background: "rgba(255, 255, 255, 0.06)",
-          border: "1px solid var(--border-subtle)",
+          background: "rgba(255, 255, 255, 0.08)",
+          border: "1px solid var(--border-glass-bright)",
           color: "#fff",
-          padding: "8px",
+          padding: "6px",
           borderRadius: "8px",
           cursor: "pointer",
           display: "flex",
@@ -22102,31 +22058,44 @@
           justifyContent: "center"
         }
       },
-      mobileMenuOpen ? /* @__PURE__ */ React.createElement(X, { size: 22 }) : /* @__PURE__ */ React.createElement(Menu, { size: 22 })
-    ))), mobileMenuOpen && /* @__PURE__ */ React.createElement("div", { style: {
-      background: "rgba(11, 18, 38, 0.98)",
-      backdropFilter: "blur(20px)",
-      borderTop: "1px solid var(--border-subtle)",
-      borderBottom: "1px solid var(--border-subtle)",
-      padding: "20px",
-      animation: "fadeIn 200ms ease"
-    } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "14px" } }, site_config_default.navigation.map((item) => /* @__PURE__ */ React.createElement(
+      mobileMenuOpen ? /* @__PURE__ */ import_react4.default.createElement(X, { size: 18 }) : /* @__PURE__ */ import_react4.default.createElement(Menu, { size: 18 })
+    )))), mobileMenuOpen && /* @__PURE__ */ import_react4.default.createElement("div", { style: {
+      position: "fixed",
+      top: "84px",
+      left: "16px",
+      right: "16px",
+      zIndex: 99,
+      background: "rgba(9, 15, 30, 0.94)",
+      backdropFilter: "blur(30px) saturate(200%)",
+      WebkitBackdropFilter: "blur(30px) saturate(200%)",
+      borderRadius: "24px",
+      border: "1px solid var(--border-glass-bright)",
+      borderTop: "1px solid var(--border-specular-top)",
+      padding: "18px",
+      boxShadow: "0 20px 48px rgba(0, 0, 0, 0.85)",
+      animation: "appleScaleIn 200ms var(--spring-snappy)"
+    } }, /* @__PURE__ */ import_react4.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "8px" } }, site_config_default.navigation.map((item) => /* @__PURE__ */ import_react4.default.createElement(
       "a",
       {
         key: item.label,
         href: item.href,
         onClick: closeMenu,
         style: {
-          color: "var(--text-primary)",
+          color: "#fff",
           textDecoration: "none",
-          fontSize: "1.05rem",
+          fontSize: "0.96rem",
           fontWeight: "600",
-          padding: "8px 0",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.05)"
+          padding: "10px 14px",
+          borderRadius: "12px",
+          background: "rgba(255, 255, 255, 0.04)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between"
         }
       },
-      item.label
-    )), /* @__PURE__ */ React.createElement("div", { style: { paddingTop: "10px", display: "flex", flexDirection: "column", gap: "10px" } }, /* @__PURE__ */ React.createElement(
+      /* @__PURE__ */ import_react4.default.createElement("span", null, item.label),
+      /* @__PURE__ */ import_react4.default.createElement(ChevronRight, { size: 15, color: "var(--text-muted)" })
+    )), /* @__PURE__ */ import_react4.default.createElement("div", { style: { paddingTop: "8px" } }, /* @__PURE__ */ import_react4.default.createElement(
       "button",
       {
         onClick: () => {
@@ -22134,159 +22103,146 @@
           onOpenCallModal();
         },
         className: "btn-primary",
-        style: { width: "100%", padding: "12px" }
+        style: { width: "100%", padding: "11px", fontSize: "0.9rem" }
       },
-      /* @__PURE__ */ React.createElement(PhoneCall, { size: 18 }),
-      /* @__PURE__ */ React.createElement("span", null, "Call ", site_config_default.contact.primaryPhoneFormatted)
-    ))))), /* @__PURE__ */ React.createElement("style", { jsx: true }, `
-        @media (min-width: 992px) {
-          :global(.desktop-nav) {
-            display: flex !important;
-          }
-          :global(.mobile-toggle) {
-            display: none !important;
-          }
-        }
-      `));
+      /* @__PURE__ */ import_react4.default.createElement(PhoneCall, { size: 16 }),
+      /* @__PURE__ */ import_react4.default.createElement("span", null, "Call ", site_config_default.contact.primaryPhoneFormatted)
+    )))));
   }
 
   // src/components/Hero.jsx
+  var import_react5 = __toESM(require_react(), 1);
   function Hero({ onOpenCallModal }) {
-    return /* @__PURE__ */ React.createElement("section", { style: {
+    return /* @__PURE__ */ import_react5.default.createElement("section", { style: {
       position: "relative",
-      paddingTop: "48px",
-      paddingBottom: "64px",
-      overflow: "hidden",
-      borderBottom: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ React.createElement("div", { style: {
-      position: "absolute",
-      top: "10%",
-      left: "50%",
-      transform: "translateX(-50%)",
-      width: "600px",
-      height: "350px",
-      background: "radial-gradient(ellipse, rgba(245, 158, 11, 0.12) 0%, rgba(56, 189, 248, 0.05) 50%, transparent 80%)",
-      filter: "blur(70px)",
-      zIndex: 0,
-      pointerEvents: "none"
-    } }), /* @__PURE__ */ React.createElement("div", { className: "container-custom", style: { position: "relative", zIndex: 1 } }, /* @__PURE__ */ React.createElement("div", { style: { maxWidth: "920px", margin: "0 auto", textAlign: "center" } }, /* @__PURE__ */ React.createElement("div", { style: {
+      paddingTop: "clamp(36px, 6vw, 64px)",
+      paddingBottom: "clamp(48px, 8vw, 80px)",
+      overflow: "hidden"
+    } }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "container-custom", style: { position: "relative", zIndex: 1 } }, /* @__PURE__ */ import_react5.default.createElement("div", { style: { maxWidth: "960px", margin: "0 auto", textAlign: "center" } }, /* @__PURE__ */ import_react5.default.createElement("div", { style: {
       display: "inline-flex",
       alignItems: "center",
       gap: "12px",
-      background: "linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(15, 23, 42, 0.85) 100%)",
-      border: "1px solid var(--border-gold)",
+      background: "rgba(245, 158, 11, 0.08)",
+      backdropFilter: "blur(24px) saturate(200%)",
+      WebkitBackdropFilter: "blur(24px) saturate(200%)",
+      border: "1px solid rgba(245, 158, 11, 0.35)",
+      borderTop: "1px solid rgba(251, 191, 36, 0.6)",
       padding: "8px 20px",
-      borderRadius: "9999px",
+      borderRadius: "var(--radius-pill)",
       marginBottom: "24px",
-      boxShadow: "0 4px 20px rgba(245, 158, 11, 0.15)"
-    } }, /* @__PURE__ */ React.createElement("span", { className: "urdu-font", style: {
-      fontSize: "1.25rem",
+      boxShadow: "0 8px 24px rgba(245, 158, 11, 0.15)"
+    } }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "urdu-font", style: {
+      fontSize: "1.35rem",
       color: "#fef08a",
       fontWeight: "700",
-      lineHeight: "1.4"
-    } }, site_config_default.brand.taglineUrdu), /* @__PURE__ */ React.createElement("div", { style: { width: "4px", height: "4px", borderRadius: "50%", background: "var(--accent-gold)" } }), /* @__PURE__ */ React.createElement("span", { style: {
-      fontSize: "0.78rem",
-      fontWeight: "700",
-      letterSpacing: "1px",
+      lineHeight: "1.2"
+    } }, site_config_default.brand.taglineUrdu), /* @__PURE__ */ import_react5.default.createElement("div", { style: { width: "4px", height: "4px", borderRadius: "50%", background: "var(--apple-gold)" } }), /* @__PURE__ */ import_react5.default.createElement("span", { style: {
+      fontSize: "0.75rem",
+      fontWeight: "800",
+      letterSpacing: "0.04em",
       textTransform: "uppercase",
-      color: "var(--accent-gold-light)"
-    } }, "Bhusawal's Premier Medical Coaching")), /* @__PURE__ */ React.createElement("h1", { style: {
-      fontSize: "clamp(2.1rem, 5vw, 3.8rem)",
+      color: "var(--apple-gold-light)"
+    } }, "Bhusawal Medical Entrance")), /* @__PURE__ */ import_react5.default.createElement("h1", { style: {
+      fontSize: "clamp(2.4rem, 5.5vw, 4.2rem)",
       fontWeight: "900",
-      lineHeight: "1.12",
-      letterSpacing: "-0.03em",
-      marginBottom: "16px",
+      lineHeight: "1.06",
+      letterSpacing: "-0.04em",
+      marginBottom: "20px",
       color: "#ffffff"
-    } }, "Crack NEET-UG with Proven Mastery at", " ", /* @__PURE__ */ React.createElement("span", { style: {
-      background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ea580c 100%)",
+    } }, "Crack NEET-UG with Proven Mastery at", " ", /* @__PURE__ */ import_react5.default.createElement("span", { style: {
+      background: "linear-gradient(135deg, #fef08a 0%, #fbbf24 35%, #f59e0b 70%, #ea580c 100%)",
       WebkitBackgroundClip: "text",
       WebkitTextFillColor: "transparent",
       display: "inline-block"
-    } }, "SCIMEE")), /* @__PURE__ */ React.createElement("p", { style: {
-      fontSize: "clamp(1rem, 2vw, 1.22rem)",
-      color: "var(--text-secondary)",
+    } }, "SCIMEE")), /* @__PURE__ */ import_react5.default.createElement("p", { style: {
+      fontSize: "clamp(1.05rem, 2.2vw, 1.25rem)",
+      color: "var(--text-sub)",
       maxWidth: "780px",
-      margin: "0 auto 28px",
-      lineHeight: "1.6"
-    } }, "Under the guidance of ", /* @__PURE__ */ React.createElement("strong", null, site_config_default.brand.founder), ", we transform medical aspirants into doctors through conceptual teaching, weekly OMR simulations, and dedicated library study facilities."), /* @__PURE__ */ React.createElement("div", { style: {
+      margin: "0 auto 36px",
+      lineHeight: "1.6",
+      letterSpacing: "-0.01em"
+    } }, "Under the mentorship of ", /* @__PURE__ */ import_react5.default.createElement("strong", null, site_config_default.brand.founder), ", we prepare medical aspirants through conceptual clarity, weekly OMR examination drills, and dedicated on-campus reading room facilities."), /* @__PURE__ */ import_react5.default.createElement("div", { style: {
       display: "flex",
       flexWrap: "wrap",
       alignItems: "center",
       justifyContent: "center",
-      gap: "14px",
-      marginBottom: "42px"
-    } }, /* @__PURE__ */ React.createElement(
+      gap: "12px",
+      marginBottom: "48px"
+    } }, /* @__PURE__ */ import_react5.default.createElement(
       "button",
       {
         onClick: onOpenCallModal,
         className: "btn-primary",
         style: {
           padding: "14px 28px",
-          fontSize: "1.02rem",
+          fontSize: "1rem",
           minWidth: "220px"
         }
       },
-      /* @__PURE__ */ React.createElement(PhoneCall, { size: 20 }),
-      /* @__PURE__ */ React.createElement("span", null, "Direct Call Helpline")
-    ), /* @__PURE__ */ React.createElement(
+      /* @__PURE__ */ import_react5.default.createElement(PhoneCall, { size: 18 }),
+      /* @__PURE__ */ import_react5.default.createElement("span", null, "Direct Call Helpline")
+    ), /* @__PURE__ */ import_react5.default.createElement(
       "a",
       {
         href: "#results",
-        className: "btn-secondary",
-        style: {
-          padding: "14px 26px",
-          fontSize: "1rem"
-        }
-      },
-      /* @__PURE__ */ React.createElement(Trophy, { size: 18, color: "var(--accent-gold)" }),
-      /* @__PURE__ */ React.createElement("span", null, "View 2026 Achievers")
-    ), /* @__PURE__ */ React.createElement(
-      "a",
-      {
-        href: "#syllabus",
         className: "btn-secondary",
         style: {
           padding: "14px 24px",
           fontSize: "0.96rem"
         }
       },
-      /* @__PURE__ */ React.createElement(BookOpen, { size: 18, color: "var(--accent-blue)" }),
-      /* @__PURE__ */ React.createElement("span", null, "NEET 2026 Syllabus")
-    )), /* @__PURE__ */ React.createElement("div", { className: "grid-responsive-4", style: { textAlign: "left" } }, site_config_default.stats.map((stat, idx) => /* @__PURE__ */ React.createElement(
-      "div",
+      /* @__PURE__ */ import_react5.default.createElement(Trophy, { size: 17, color: "var(--apple-gold)" }),
+      /* @__PURE__ */ import_react5.default.createElement("span", null, "100% NEET 2026 Results")
+    ), /* @__PURE__ */ import_react5.default.createElement(
+      "a",
       {
-        key: stat.id,
-        className: "glass-panel",
+        href: "#syllabus",
+        className: "btn-secondary",
         style: {
-          padding: "18px",
-          border: idx === 1 ? "1px solid var(--border-gold)" : "1px solid var(--border-subtle)",
-          background: idx === 1 ? "linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%)" : "var(--bg-card)"
+          padding: "14px 22px",
+          fontSize: "0.94rem"
         }
       },
-      /* @__PURE__ */ React.createElement("div", { style: {
-        fontSize: "clamp(1.6rem, 3vw, 2.1rem)",
-        fontWeight: "900",
-        color: idx === 1 ? "var(--accent-gold-light)" : "#ffffff",
-        letterSpacing: "-0.02em",
-        lineHeight: "1.1",
-        marginBottom: "4px"
-      } }, stat.value),
-      /* @__PURE__ */ React.createElement("div", { style: {
-        fontSize: "0.88rem",
-        fontWeight: "700",
-        color: "var(--text-primary)",
-        marginBottom: "2px"
-      } }, stat.label),
-      /* @__PURE__ */ React.createElement("div", { style: {
-        fontSize: "0.74rem",
-        color: "var(--text-muted)",
-        lineHeight: "1.3"
-      } }, stat.subtext)
-    ))))));
+      /* @__PURE__ */ import_react5.default.createElement(BookOpen, { size: 17, color: "var(--apple-cyan)" }),
+      /* @__PURE__ */ import_react5.default.createElement("span", null, "NMC 2026 Syllabus")
+    )), /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid-responsive-4", style: { textAlign: "left" } }, site_config_default.stats.map((stat, idx) => {
+      const isGold = idx === 1;
+      return /* @__PURE__ */ import_react5.default.createElement(
+        "div",
+        {
+          key: stat.id,
+          className: isGold ? "bento-card-gold" : "bento-card",
+          style: {
+            padding: "22px 18px",
+            borderRadius: "22px"
+          }
+        },
+        /* @__PURE__ */ import_react5.default.createElement("div", { style: {
+          fontSize: "clamp(1.8rem, 3.4vw, 2.4rem)",
+          fontWeight: "900",
+          color: isGold ? "#fef08a" : "#ffffff",
+          letterSpacing: "-0.04em",
+          lineHeight: "1",
+          marginBottom: "6px"
+        } }, stat.value),
+        /* @__PURE__ */ import_react5.default.createElement("div", { style: {
+          fontSize: "0.88rem",
+          fontWeight: "800",
+          color: "#ffffff",
+          marginBottom: "3px",
+          letterSpacing: "-0.01em"
+        } }, stat.label),
+        /* @__PURE__ */ import_react5.default.createElement("div", { style: {
+          fontSize: "0.74rem",
+          color: isGold ? "rgba(254, 240, 138, 0.85)" : "var(--text-muted)",
+          lineHeight: "1.3"
+        } }, stat.subtext)
+      );
+    })))));
   }
 
   // src/components/ToppersSection.jsx
-  var import_react5 = __toESM(require_react(), 1);
+  var import_react6 = __toESM(require_react(), 1);
 
   // src/data/toppers.json
   var toppers_default = {
@@ -22456,7 +22412,7 @@
 
   // src/components/ToppersSection.jsx
   function ToppersSection({ onOpenCallModal }) {
-    const [activeFilter, setActiveFilter] = (0, import_react5.useState)("all");
+    const [activeFilter, setActiveFilter] = (0, import_react6.useState)("all");
     const filteredStudents = toppers_default.students.filter((student) => {
       if (activeFilter === "top") return student.score >= 350;
       if (activeFilter === "rank1") return student.score >= 500;
@@ -22465,229 +22421,209 @@
     const getSubjectIcon = (iconName) => {
       switch (iconName) {
         case "dna":
-          return /* @__PURE__ */ React.createElement(Dna, { size: 26, color: "#34d399" });
+          return /* @__PURE__ */ import_react6.default.createElement(Dna, { size: 26, color: "#34d399" });
         case "atom":
-          return /* @__PURE__ */ React.createElement(Atom, { size: 26, color: "#38bdf8" });
+          return /* @__PURE__ */ import_react6.default.createElement(Atom, { size: 26, color: "#38bdf8" });
         case "flask-conical":
-          return /* @__PURE__ */ React.createElement(FlaskConical, { size: 26, color: "#c084fc" });
+          return /* @__PURE__ */ import_react6.default.createElement(FlaskConical, { size: 26, color: "#c084fc" });
         default:
-          return /* @__PURE__ */ React.createElement(Award, { size: 26, color: "#fbbf24" });
+          return /* @__PURE__ */ import_react6.default.createElement(Award, { size: 26, color: "#fbbf24" });
       }
     };
-    return /* @__PURE__ */ React.createElement("section", { id: "results", style: {
-      paddingTop: "64px",
-      paddingBottom: "72px",
-      background: "linear-gradient(180deg, #060913 0%, #0a0f24 50%, #060913 100%)",
-      borderBottom: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ React.createElement("div", { className: "container-custom" }, /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", maxWidth: "800px", margin: "0 auto 36px" } }, /* @__PURE__ */ React.createElement("div", { className: "badge-gold", style: { marginBottom: "10px" } }, /* @__PURE__ */ React.createElement(Trophy, { size: 14 }), /* @__PURE__ */ React.createElement("span", null, "NEET UG ", toppers_default.year, " Results")), /* @__PURE__ */ React.createElement("h2", { style: {
-      fontSize: "clamp(1.9rem, 4vw, 2.8rem)",
+    return /* @__PURE__ */ import_react6.default.createElement("section", { id: "results", style: {
+      paddingTop: "clamp(54px, 8vw, 84px)",
+      paddingBottom: "clamp(54px, 8vw, 84px)",
+      borderBottom: "1px solid var(--border-glass)"
+    } }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react6.default.createElement("div", { style: { textAlign: "center", maxWidth: "820px", margin: "0 auto 36px" } }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "badge-gold", style: { marginBottom: "12px" } }, /* @__PURE__ */ import_react6.default.createElement(Trophy, { size: 13 }), /* @__PURE__ */ import_react6.default.createElement("span", null, "NEET UG ", toppers_default.year, " Results")), /* @__PURE__ */ import_react6.default.createElement("h2", { style: {
+      fontSize: "clamp(2.1rem, 4.8vw, 3.2rem)",
       fontWeight: "900",
-      lineHeight: "1.2",
-      letterSpacing: "-0.02em",
-      marginBottom: "14px",
+      lineHeight: "1.1",
+      letterSpacing: "-0.035em",
+      marginBottom: "12px",
       color: "#ffffff"
-    } }, "Outstanding Achievers Wall of Fame"), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1rem", color: "var(--text-secondary)" } }, "Consistent performance, rigorous practice, and unwavering dedication. Celebrating our remarkable students who qualified for medical entrance.")), /* @__PURE__ */ React.createElement("div", { style: {
-      background: "linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(30, 27, 75, 0.8) 50%, rgba(15, 23, 42, 0.95) 100%)",
-      border: "2px solid rgba(245, 158, 11, 0.5)",
-      borderRadius: "var(--radius-lg)",
-      padding: "24px 28px",
+    } }, "Outstanding Achievers Wall of Fame"), /* @__PURE__ */ import_react6.default.createElement("p", { style: { fontSize: "1rem", color: "var(--text-sub)" } }, "Consistent practice, rigorous error analysis, and dedicated mentorship. Celebrating our students who cracked NEET-UG.")), /* @__PURE__ */ import_react6.default.createElement("div", { className: "bento-card-gold", style: {
+      padding: "clamp(22px, 4.5vw, 34px)",
       display: "flex",
       flexWrap: "wrap",
       alignItems: "center",
       justifyContent: "space-between",
       gap: "20px",
-      marginBottom: "36px",
-      boxShadow: "0 12px 36px rgba(245, 158, 11, 0.15)"
-    } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: "16px" } }, /* @__PURE__ */ React.createElement("div", { style: {
-      width: "56px",
-      height: "56px",
+      marginBottom: "40px",
+      borderRadius: "26px"
+    } }, /* @__PURE__ */ import_react6.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "18px" } }, /* @__PURE__ */ import_react6.default.createElement("div", { style: {
+      width: "58px",
+      height: "58px",
       borderRadius: "50%",
-      background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
+      background: "linear-gradient(135deg, #fef08a 0%, #fbbf24 40%, #f59e0b 80%, #d97706 100%)",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      boxShadow: "0 4px 20px rgba(245, 158, 11, 0.4)",
-      flexShrink: 0
-    } }, /* @__PURE__ */ React.createElement(Trophy, { size: 28, color: "#060913" })), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: {
-      fontSize: "clamp(1.2rem, 3vw, 1.6rem)",
+      boxShadow: "0 6px 24px rgba(245, 158, 11, 0.45)",
+      flexShrink: 0,
+      border: "2px solid rgba(255, 255, 255, 0.4)"
+    } }, /* @__PURE__ */ import_react6.default.createElement(Trophy, { size: 28, color: "#030712" })), /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("div", { style: {
+      fontSize: "clamp(1.25rem, 3.4vw, 1.75rem)",
       fontWeight: "900",
-      color: "#fff",
-      letterSpacing: "-0.01em",
-      lineHeight: "1.2"
-    } }, "16 / 16 ALL STUDENTS QUALIFIED"), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "0.88rem", color: "var(--text-gold)", marginTop: "2px" } }, "100% Qualification Rate in NEET UG ", toppers_default.year, " Batch"))), /* @__PURE__ */ React.createElement(
+      color: "#ffffff",
+      letterSpacing: "-0.025em",
+      lineHeight: "1.15"
+    } }, "16 / 16 ALL STUDENTS QUALIFIED"), /* @__PURE__ */ import_react6.default.createElement("p", { style: { fontSize: "0.9rem", color: "#fef08a", marginTop: "2px", fontWeight: "600" } }, "100% Qualification Success Rate in NEET UG ", toppers_default.year))), /* @__PURE__ */ import_react6.default.createElement(
       "button",
       {
         onClick: onOpenCallModal,
         className: "btn-primary",
-        style: { padding: "12px 24px", fontSize: "0.92rem" }
+        style: { padding: "12px 24px", fontSize: "0.94rem" }
       },
-      /* @__PURE__ */ React.createElement("span", null, "Join Next Toppers Batch"),
-      /* @__PURE__ */ React.createElement(Sparkles, { size: 16 })
-    )), /* @__PURE__ */ React.createElement("div", { style: { marginBottom: "42px" } }, /* @__PURE__ */ React.createElement("h3", { style: {
-      fontSize: "1.25rem",
+      /* @__PURE__ */ import_react6.default.createElement("span", null, "Join Next Toppers Batch"),
+      /* @__PURE__ */ import_react6.default.createElement(Sparkles, { size: 16 })
+    )), /* @__PURE__ */ import_react6.default.createElement("div", { style: { marginBottom: "44px" } }, /* @__PURE__ */ import_react6.default.createElement("h3", { style: {
+      fontSize: "1.2rem",
       fontWeight: "800",
       color: "#fff",
-      marginBottom: "16px",
-      textAlign: "center"
-    } }, "Subject-Wise Topper Highlights"), /* @__PURE__ */ React.createElement("div", { className: "grid-responsive-3" }, toppers_default.subjectToppers.map((st) => /* @__PURE__ */ React.createElement(
-      "div",
-      {
-        key: st.subject,
-        className: "glass-panel",
-        style: {
-          padding: "22px",
+      marginBottom: "18px",
+      textAlign: "center",
+      letterSpacing: "-0.02em"
+    } }, "Subject-Wise Topper Highlights"), /* @__PURE__ */ import_react6.default.createElement("div", { className: "grid-responsive-3" }, toppers_default.subjectToppers.map((st) => {
+      const isBio = st.subject === "Biology";
+      return /* @__PURE__ */ import_react6.default.createElement(
+        "div",
+        {
+          key: st.subject,
+          className: "bento-card",
+          style: {
+            padding: "24px 20px",
+            display: "flex",
+            alignItems: "center",
+            gap: "16px",
+            borderTop: isBio ? "1px solid rgba(52, 211, 153, 0.55)" : "1px solid var(--border-specular-top)"
+          }
+        },
+        /* @__PURE__ */ import_react6.default.createElement("div", { style: {
+          width: "52px",
+          height: "52px",
+          borderRadius: "14px",
+          background: "rgba(255, 255, 255, 0.05)",
           display: "flex",
           alignItems: "center",
-          gap: "16px",
-          border: st.subject === "Biology" ? "1px solid rgba(16, 185, 129, 0.4)" : "1px solid var(--border-subtle)",
-          background: st.subject === "Biology" ? "linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%)" : "var(--bg-card)"
-        }
-      },
-      /* @__PURE__ */ React.createElement("div", { style: {
-        width: "52px",
-        height: "52px",
-        borderRadius: "14px",
-        background: "rgba(255, 255, 255, 0.06)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexShrink: 0
-      } }, getSubjectIcon(st.icon)),
-      /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { fontSize: "0.8rem", color: "var(--text-muted)", fontWeight: "700", textTransform: "uppercase" } }, st.subject, " Topper"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "baseline", gap: "4px" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "1.9rem", fontWeight: "900", color: "#fff", letterSpacing: "-0.02em" } }, st.score), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.9rem", color: "var(--text-secondary)" } }, "/", st.total)), /* @__PURE__ */ React.createElement("div", { style: { fontSize: "0.74rem", color: "var(--text-secondary)", marginTop: "2px" } }, st.tagline))
-    )))), /* @__PURE__ */ React.createElement("div", { style: {
+          justifyContent: "center",
+          flexShrink: 0,
+          border: "1px solid rgba(255, 255, 255, 0.1)"
+        } }, getSubjectIcon(st.icon)),
+        /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("div", { style: { fontSize: "0.74rem", color: "var(--text-muted)", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.05em" } }, st.subject, " Topper"), /* @__PURE__ */ import_react6.default.createElement("div", { style: { display: "flex", alignItems: "baseline", gap: "4px" } }, /* @__PURE__ */ import_react6.default.createElement("span", { style: { fontSize: "1.9rem", fontWeight: "900", color: "#ffffff", letterSpacing: "-0.03em", lineHeight: "1.1" } }, st.score), /* @__PURE__ */ import_react6.default.createElement("span", { style: { fontSize: "0.9rem", color: "var(--text-sub)" } }, "/", st.total)), /* @__PURE__ */ import_react6.default.createElement("div", { style: { fontSize: "0.74rem", color: "var(--text-sub)", marginTop: "2px" } }, st.tagline))
+      );
+    }))), /* @__PURE__ */ import_react6.default.createElement("div", { style: {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
       flexWrap: "wrap",
       gap: "12px",
-      marginBottom: "20px",
+      marginBottom: "22px",
       paddingBottom: "14px",
-      borderBottom: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ React.createElement("h3", { style: { fontSize: "1.15rem", fontWeight: "800", color: "#fff" } }, "All Qualified Candidates (", filteredStudents.length, ")"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: "8px" } }, /* @__PURE__ */ React.createElement(
-      "button",
-      {
-        onClick: () => setActiveFilter("all"),
-        style: {
-          padding: "6px 14px",
-          borderRadius: "9999px",
-          border: "1px solid",
-          borderColor: activeFilter === "all" ? "var(--accent-gold)" : "var(--border-subtle)",
-          background: activeFilter === "all" ? "rgba(245, 158, 11, 0.15)" : "transparent",
-          color: activeFilter === "all" ? "var(--accent-gold-light)" : "var(--text-secondary)",
-          fontSize: "0.82rem",
-          fontWeight: "600",
-          cursor: "pointer"
-        }
-      },
-      "All 16 Achievers"
-    ), /* @__PURE__ */ React.createElement(
-      "button",
-      {
-        onClick: () => setActiveFilter("top"),
-        style: {
-          padding: "6px 14px",
-          borderRadius: "9999px",
-          border: "1px solid",
-          borderColor: activeFilter === "top" ? "var(--accent-gold)" : "var(--border-subtle)",
-          background: activeFilter === "top" ? "rgba(245, 158, 11, 0.15)" : "transparent",
-          color: activeFilter === "top" ? "var(--accent-gold-light)" : "var(--text-secondary)",
-          fontSize: "0.82rem",
-          fontWeight: "600",
-          cursor: "pointer"
-        }
-      },
-      "Scores 350+"
-    ), /* @__PURE__ */ React.createElement(
-      "button",
-      {
-        onClick: () => setActiveFilter("rank1"),
-        style: {
-          padding: "6px 14px",
-          borderRadius: "9999px",
-          border: "1px solid",
-          borderColor: activeFilter === "rank1" ? "var(--accent-gold)" : "var(--border-subtle)",
-          background: activeFilter === "rank1" ? "rgba(245, 158, 11, 0.15)" : "transparent",
-          color: activeFilter === "rank1" ? "var(--accent-gold-light)" : "var(--text-secondary)",
-          fontSize: "0.82rem",
-          fontWeight: "600",
-          cursor: "pointer"
-        }
-      },
-      "Top Rank (552)"
-    ))), /* @__PURE__ */ React.createElement("div", { className: "grid-responsive-4" }, filteredStudents.map((student) => {
+      borderBottom: "1px solid var(--border-glass)"
+    } }, /* @__PURE__ */ import_react6.default.createElement("h3", { style: { fontSize: "1.15rem", fontWeight: "800", color: "#fff", letterSpacing: "-0.01em" } }, "All Qualified Candidates (", filteredStudents.length, ")"), /* @__PURE__ */ import_react6.default.createElement("div", { style: {
+      display: "inline-flex",
+      background: "rgba(255, 255, 255, 0.05)",
+      padding: "4px",
+      borderRadius: "var(--radius-pill)",
+      border: "1px solid var(--border-glass)"
+    } }, [
+      { id: "all", label: "All 16 Achievers" },
+      { id: "top", label: "Scores 350+" },
+      { id: "rank1", label: "Top Rank (552)" }
+    ].map((tab) => {
+      const isSelected = activeFilter === tab.id;
+      return /* @__PURE__ */ import_react6.default.createElement(
+        "button",
+        {
+          key: tab.id,
+          onClick: () => setActiveFilter(tab.id),
+          style: {
+            padding: "6px 14px",
+            borderRadius: "var(--radius-pill)",
+            border: "none",
+            background: isSelected ? "rgba(245, 158, 11, 0.28)" : "transparent",
+            color: isSelected ? "#fef08a" : "var(--text-sub)",
+            fontSize: "0.82rem",
+            fontWeight: isSelected ? "800" : "600",
+            cursor: "pointer",
+            transition: "all 150ms ease"
+          }
+        },
+        tab.label
+      );
+    }))), /* @__PURE__ */ import_react6.default.createElement("div", { className: "grid-responsive-4" }, filteredStudents.map((student) => {
       const isRank1 = student.score >= 500;
-      const isTopTier = student.score >= 370;
-      return /* @__PURE__ */ React.createElement(
+      return /* @__PURE__ */ import_react6.default.createElement(
         "div",
         {
           key: student.id,
-          className: "glass-panel",
+          className: isRank1 ? "bento-card-gold" : "bento-card",
           style: {
             padding: "20px 16px",
             textAlign: "center",
-            position: "relative",
-            border: isRank1 ? "2px solid rgba(245, 158, 11, 0.6)" : isTopTier ? "1px solid rgba(56, 189, 248, 0.35)" : "1px solid var(--border-subtle)",
-            background: isRank1 ? "linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(15, 23, 42, 0.9) 100%)" : "var(--bg-card)"
+            borderRadius: "20px"
           }
         },
-        isRank1 && /* @__PURE__ */ React.createElement("div", { style: {
+        isRank1 && /* @__PURE__ */ import_react6.default.createElement("div", { style: {
           position: "absolute",
           top: "-10px",
           left: "50%",
           transform: "translateX(-50%)",
-          background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-          color: "#060913",
-          fontSize: "0.68rem",
+          background: "linear-gradient(135deg, #fef08a 0%, #f59e0b 100%)",
+          color: "#030712",
+          fontSize: "0.64rem",
           fontWeight: "900",
           padding: "2px 10px",
-          borderRadius: "9999px",
+          borderRadius: "var(--radius-pill)",
           textTransform: "uppercase",
-          letterSpacing: "0.5px",
-          boxShadow: "0 2px 10px rgba(245, 158, 11, 0.4)"
+          letterSpacing: "0.04em",
+          boxShadow: "0 2px 10px rgba(245, 158, 11, 0.45)"
         } }, "Top Scorer"),
-        /* @__PURE__ */ React.createElement("div", { style: {
-          width: "54px",
-          height: "54px",
+        /* @__PURE__ */ import_react6.default.createElement("div", { style: {
+          width: "50px",
+          height: "50px",
           borderRadius: "50%",
-          margin: "0 auto 12px",
-          background: isRank1 ? "rgba(245, 158, 11, 0.2)" : "rgba(255, 255, 255, 0.06)",
+          margin: "0 auto 10px",
+          background: isRank1 ? "rgba(245, 158, 11, 0.2)" : "rgba(255, 255, 255, 0.05)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          border: isRank1 ? "2px solid var(--accent-gold)" : "1px solid rgba(255, 255, 255, 0.1)"
-        } }, /* @__PURE__ */ React.createElement(User, { size: 26, color: isRank1 ? "var(--accent-gold-light)" : "var(--text-secondary)" })),
-        /* @__PURE__ */ React.createElement("h4", { style: {
-          fontSize: "1rem",
+          border: isRank1 ? "1.5px solid var(--apple-gold)" : "1px solid rgba(255, 255, 255, 0.12)"
+        } }, /* @__PURE__ */ import_react6.default.createElement(User, { size: 24, color: isRank1 ? "#fef08a" : "var(--text-sub)" })),
+        /* @__PURE__ */ import_react6.default.createElement("h4", { style: {
+          fontSize: "0.98rem",
           fontWeight: "800",
-          color: "#fff",
-          marginBottom: "6px",
+          color: "#ffffff",
+          marginBottom: "4px",
           whiteSpace: "nowrap",
           overflow: "hidden",
-          textOverflow: "ellipsis"
+          textOverflow: "ellipsis",
+          letterSpacing: "-0.01em"
         } }, student.name),
-        /* @__PURE__ */ React.createElement("div", { style: {
-          fontSize: "clamp(1.7rem, 3vw, 2.1rem)",
+        /* @__PURE__ */ import_react6.default.createElement("div", { style: {
+          fontSize: "clamp(1.7rem, 3.4vw, 2.1rem)",
           fontWeight: "900",
-          color: isRank1 ? "#fbbf24" : "#ef4444",
-          lineHeight: "1.1",
-          marginBottom: "6px"
+          color: isRank1 ? "#fef08a" : "#f87171",
+          lineHeight: "1.05",
+          marginBottom: "6px",
+          letterSpacing: "-0.03em"
         } }, student.score),
-        /* @__PURE__ */ React.createElement("div", { style: {
+        /* @__PURE__ */ import_react6.default.createElement("div", { style: {
           display: "inline-flex",
           alignItems: "center",
           gap: "4px",
           fontSize: "0.72rem",
-          color: "var(--text-secondary)",
+          color: "var(--text-sub)",
           background: "rgba(255, 255, 255, 0.04)",
-          padding: "3px 8px",
+          padding: "2px 8px",
           borderRadius: "6px"
-        } }, /* @__PURE__ */ React.createElement(CircleCheck, { size: 12, color: "#34d399" }), /* @__PURE__ */ React.createElement("span", null, student.badge))
+        } }, /* @__PURE__ */ import_react6.default.createElement(CircleCheck, { size: 11, color: "#34d399" }), /* @__PURE__ */ import_react6.default.createElement("span", null, student.badge))
       );
     }))));
   }
 
   // src/components/CourseExplorer.jsx
-  var import_react6 = __toESM(require_react(), 1);
+  var import_react7 = __toESM(require_react(), 1);
 
   // src/data/courses.json
   var courses_default = {
@@ -22775,116 +22711,116 @@
 
   // src/components/CourseExplorer.jsx
   function CourseExplorer({ onOpenCallModal }) {
-    const [selectedId, setSelectedId] = (0, import_react6.useState)(courses_default.programs[0].id);
+    const [selectedId, setSelectedId] = (0, import_react7.useState)(courses_default.programs[0].id);
     const activeCourse = courses_default.programs.find((p) => p.id === selectedId) || courses_default.programs[0];
-    return /* @__PURE__ */ React.createElement("section", { id: "courses", style: {
-      paddingTop: "64px",
-      paddingBottom: "72px",
-      background: "var(--bg-primary)",
+    return /* @__PURE__ */ import_react7.default.createElement("section", { id: "courses", style: {
+      paddingTop: "clamp(48px, 8vw, 76px)",
+      paddingBottom: "clamp(54px, 8vw, 84px)",
+      background: "var(--apple-bg-base)",
       borderBottom: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ React.createElement("div", { className: "container-custom" }, /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", maxWidth: "820px", margin: "0 auto 36px" } }, /* @__PURE__ */ React.createElement("div", { className: "badge-blue", style: { marginBottom: "10px" } }, /* @__PURE__ */ React.createElement(GraduationCap, { size: 14 }), /* @__PURE__ */ React.createElement("span", null, "Academic Programs")), /* @__PURE__ */ React.createElement("h2", { style: {
-      fontSize: "clamp(1.9rem, 4vw, 2.8rem)",
+    } }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react7.default.createElement("div", { style: { textAlign: "center", maxWidth: "820px", margin: "0 auto 34px" } }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "badge-blue", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react7.default.createElement(GraduationCap, { size: 13 }), /* @__PURE__ */ import_react7.default.createElement("span", null, "Academic Programs")), /* @__PURE__ */ import_react7.default.createElement("h2", { style: {
+      fontSize: "clamp(2rem, 4.5vw, 3rem)",
       fontWeight: "900",
-      lineHeight: "1.2",
-      letterSpacing: "-0.02em",
-      marginBottom: "14px",
+      lineHeight: "1.15",
+      letterSpacing: "-0.03em",
+      marginBottom: "12px",
       color: "#ffffff"
-    } }, courses_default.sectionTitle), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1rem", color: "var(--text-secondary)" } }, courses_default.sectionSubtitle)), /* @__PURE__ */ React.createElement("div", { style: {
+    } }, courses_default.sectionTitle), /* @__PURE__ */ import_react7.default.createElement("p", { style: { fontSize: "0.98rem", color: "var(--text-secondary)" } }, courses_default.sectionSubtitle)), /* @__PURE__ */ import_react7.default.createElement("div", { style: {
       display: "flex",
       flexWrap: "wrap",
-      gap: "10px",
+      gap: "8px",
       justifyContent: "center",
       marginBottom: "32px"
     } }, courses_default.programs.map((program) => {
       const isSelected = program.id === selectedId;
-      return /* @__PURE__ */ React.createElement(
+      return /* @__PURE__ */ import_react7.default.createElement(
         "button",
         {
           key: program.id,
           onClick: () => setSelectedId(program.id),
           style: {
-            padding: "10px 18px",
+            padding: "9px 18px",
             borderRadius: "var(--radius-full)",
-            border: isSelected ? "1px solid var(--accent-gold)" : "1px solid var(--border-subtle)",
-            background: isSelected ? "linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(15, 23, 42, 0.9) 100%)" : "rgba(255, 255, 255, 0.04)",
+            border: isSelected ? "1px solid var(--border-gold-glow)" : "1px solid var(--border-subtle)",
+            borderTop: isSelected ? "1px solid rgba(251, 191, 36, 0.5)" : "1px solid var(--border-subtle)",
+            background: isSelected ? "linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(15, 23, 42, 0.9) 100%)" : "rgba(255, 255, 255, 0.04)",
             color: isSelected ? "#ffffff" : "var(--text-secondary)",
             fontWeight: isSelected ? "800" : "600",
-            fontSize: "0.88rem",
+            fontSize: "0.86rem",
             cursor: "pointer",
-            transition: "all var(--transition-fast)",
+            transition: "all 150ms ease",
             display: "flex",
             alignItems: "center",
-            gap: "8px"
+            gap: "7px"
           }
         },
-        program.featured && /* @__PURE__ */ React.createElement("span", { style: { width: "6px", height: "6px", borderRadius: "50%", background: "var(--accent-gold)" } }),
-        /* @__PURE__ */ React.createElement("span", null, program.name)
+        program.featured && /* @__PURE__ */ import_react7.default.createElement("span", { style: { width: "5px", height: "5px", borderRadius: "50%", background: "var(--accent-gold)" } }),
+        /* @__PURE__ */ import_react7.default.createElement("span", null, program.name)
       );
-    })), /* @__PURE__ */ React.createElement("div", { className: "glass-panel", style: {
-      padding: "clamp(20px, 4vw, 36px)",
-      border: "1px solid var(--border-highlight)",
-      background: "linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(11, 18, 38, 0.95) 100%)"
-    } }, /* @__PURE__ */ React.createElement("div", { style: {
+    })), /* @__PURE__ */ import_react7.default.createElement("div", { className: "apple-glass", style: {
+      padding: "clamp(22px, 4.5vw, 38px)",
+      borderTop: "1px solid rgba(255, 255, 255, 0.3)"
+    } }, /* @__PURE__ */ import_react7.default.createElement("div", { style: {
       display: "grid",
       gridTemplateColumns: "1fr",
-      gap: "28px"
-    } }, /* @__PURE__ */ React.createElement("div", { style: {
+      gap: "24px"
+    } }, /* @__PURE__ */ import_react7.default.createElement("div", { style: {
       display: "flex",
       flexWrap: "wrap",
       alignItems: "center",
       justifyContent: "space-between",
       gap: "16px",
       borderBottom: "1px solid var(--border-subtle)",
-      paddingBottom: "20px"
-    } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" } }, /* @__PURE__ */ React.createElement("span", { className: "badge-gold" }, activeCourse.badge), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.85rem", color: "var(--text-muted)" } }, "\u2022 ", activeCourse.target)), /* @__PURE__ */ React.createElement("h3", { style: {
+      paddingBottom: "18px"
+    } }, /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" } }, /* @__PURE__ */ import_react7.default.createElement("span", { className: "badge-gold" }, activeCourse.badge), /* @__PURE__ */ import_react7.default.createElement("span", { style: { fontSize: "0.82rem", color: "var(--text-tertiary)" } }, "\u2022 ", activeCourse.target)), /* @__PURE__ */ import_react7.default.createElement("h3", { style: {
       fontSize: "clamp(1.5rem, 3vw, 2.2rem)",
       fontWeight: "900",
       color: "#ffffff",
       letterSpacing: "-0.02em"
-    } }, activeCourse.name)), /* @__PURE__ */ React.createElement(
+    } }, activeCourse.name)), /* @__PURE__ */ import_react7.default.createElement(
       "button",
       {
         onClick: onOpenCallModal,
         className: "btn-primary",
-        style: { padding: "12px 24px", fontSize: "0.95rem" }
+        style: { padding: "11px 22px", fontSize: "0.92rem" }
       },
-      /* @__PURE__ */ React.createElement("span", null, activeCourse.ctaText),
-      /* @__PURE__ */ React.createElement(ArrowRight, { size: 17 })
-    )), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1.05rem", color: "var(--text-secondary)", lineHeight: "1.6" } }, activeCourse.description), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h4", { style: { fontSize: "0.95rem", fontWeight: "700", color: "#fff", marginBottom: "14px", textTransform: "uppercase", letterSpacing: "0.5px" } }, "Key Curriculum & Teaching Highlights"), /* @__PURE__ */ React.createElement("div", { style: {
+      /* @__PURE__ */ import_react7.default.createElement("span", null, activeCourse.ctaText),
+      /* @__PURE__ */ import_react7.default.createElement(ArrowRight, { size: 16 })
+    )), /* @__PURE__ */ import_react7.default.createElement("p", { style: { fontSize: "1rem", color: "var(--text-secondary)", lineHeight: "1.6" } }, activeCourse.description), /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("h4", { style: { fontSize: "0.88rem", fontWeight: "800", color: "#fff", marginBottom: "12px", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Key Curriculum & Pedagogy"), /* @__PURE__ */ import_react7.default.createElement("div", { style: {
       display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-      gap: "12px"
-    } }, activeCourse.highlights.map((highlight, idx) => /* @__PURE__ */ React.createElement(
+      gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))",
+      gap: "10px"
+    } }, activeCourse.highlights.map((highlight, idx) => /* @__PURE__ */ import_react7.default.createElement(
       "div",
       {
         key: idx,
         style: {
           display: "flex",
           alignItems: "flex-start",
-          gap: "10px",
+          gap: "9px",
           background: "rgba(255, 255, 255, 0.03)",
-          padding: "12px 14px",
-          borderRadius: "10px",
+          padding: "11px 13px",
+          borderRadius: "var(--radius-sm)",
           border: "1px solid rgba(255, 255, 255, 0.05)"
         }
       },
-      /* @__PURE__ */ React.createElement(CircleCheck, { size: 18, color: "var(--accent-emerald)", style: { flexShrink: 0, marginTop: "2px" } }),
-      /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.88rem", color: "var(--text-primary)", lineHeight: "1.4" } }, highlight)
-    )))), /* @__PURE__ */ React.createElement("div", { style: {
+      /* @__PURE__ */ import_react7.default.createElement(CircleCheck, { size: 17, color: "var(--accent-emerald)", style: { flexShrink: 0, marginTop: "2px" } }),
+      /* @__PURE__ */ import_react7.default.createElement("span", { style: { fontSize: "0.86rem", color: "var(--text-primary)", lineHeight: "1.4" } }, highlight)
+    )))), /* @__PURE__ */ import_react7.default.createElement("div", { style: {
       display: "flex",
       flexWrap: "wrap",
       alignItems: "center",
       justifyContent: "space-between",
-      gap: "16px",
-      paddingTop: "20px",
+      gap: "14px",
+      paddingTop: "18px",
       borderTop: "1px solid var(--border-subtle)",
-      fontSize: "0.85rem",
-      color: "var(--text-muted)"
-    } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("strong", null, "Subjects Covered:"), " ", activeCourse.subjects.join(", ")), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("strong", null, "Eligibility:"), " ", activeCourse.eligibility))))));
+      fontSize: "0.82rem",
+      color: "var(--text-tertiary)"
+    } }, /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("strong", { style: { color: "var(--text-secondary)" } }, "Subjects Covered:"), " ", activeCourse.subjects.join(", ")), /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("strong", { style: { color: "var(--text-secondary)" } }, "Eligibility:"), " ", activeCourse.eligibility))))));
   }
 
   // src/components/SyllabusExplorer.jsx
-  var import_react7 = __toESM(require_react(), 1);
+  var import_react8 = __toESM(require_react(), 1);
 
   // src/data/syllabus.json
   var syllabus_default = {
@@ -23187,10 +23123,10 @@
 
   // src/components/SyllabusExplorer.jsx
   function SyllabusExplorer({ onOpenCallModal }) {
-    const [activeSubject, setActiveSubject] = (0, import_react7.useState)("physics");
-    const [searchQuery, setSearchQuery] = (0, import_react7.useState)("");
-    const [expandedUnit, setExpandedUnit] = (0, import_react7.useState)(null);
-    const displayedUnits = (0, import_react7.useMemo)(() => {
+    const [activeSubject, setActiveSubject] = (0, import_react8.useState)("physics");
+    const [searchQuery, setSearchQuery] = (0, import_react8.useState)("");
+    const [expandedUnit, setExpandedUnit] = (0, import_react8.useState)(null);
+    const displayedUnits = (0, import_react8.useMemo)(() => {
       const subjectObj = syllabus_default.subjects.find((s) => s.id === activeSubject);
       if (!subjectObj) return [];
       if (!searchQuery.trim()) {
@@ -23208,42 +23144,39 @@
     const getSubjectIcon = (subjectId) => {
       switch (subjectId) {
         case "physics":
-          return /* @__PURE__ */ React.createElement(Atom, { size: 18 });
+          return /* @__PURE__ */ import_react8.default.createElement(Atom, { size: 16 });
         case "chemistry":
-          return /* @__PURE__ */ React.createElement(FlaskConical, { size: 18 });
+          return /* @__PURE__ */ import_react8.default.createElement(FlaskConical, { size: 16 });
         case "biology":
-          return /* @__PURE__ */ React.createElement(Dna, { size: 18 });
+          return /* @__PURE__ */ import_react8.default.createElement(Dna, { size: 16 });
         default:
-          return /* @__PURE__ */ React.createElement(BookOpen, { size: 18 });
+          return /* @__PURE__ */ import_react8.default.createElement(BookOpen, { size: 16 });
       }
     };
-    return /* @__PURE__ */ React.createElement("section", { id: "syllabus", style: {
-      paddingTop: "64px",
-      paddingBottom: "72px",
-      background: "linear-gradient(180deg, #060913 0%, #0b1226 50%, #060913 100%)",
+    return /* @__PURE__ */ import_react8.default.createElement("section", { id: "syllabus", style: {
+      paddingTop: "clamp(48px, 8vw, 76px)",
+      paddingBottom: "clamp(54px, 8vw, 84px)",
+      background: "linear-gradient(180deg, #030712 0%, #080f24 50%, #030712 100%)",
       borderBottom: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ React.createElement("div", { className: "container-custom" }, /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", maxWidth: "850px", margin: "0 auto 32px" } }, /* @__PURE__ */ React.createElement("div", { className: "badge-gold", style: { marginBottom: "10px" } }, /* @__PURE__ */ React.createElement(FileText, { size: 14 }), /* @__PURE__ */ React.createElement("span", null, "Official NMC Curriculum")), /* @__PURE__ */ React.createElement("h2", { style: {
-      fontSize: "clamp(1.9rem, 4vw, 2.8rem)",
+    } }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react8.default.createElement("div", { style: { textAlign: "center", maxWidth: "850px", margin: "0 auto 30px" } }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "badge-gold", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react8.default.createElement(FileText, { size: 13 }), /* @__PURE__ */ import_react8.default.createElement("span", null, "Official NMC Curriculum")), /* @__PURE__ */ import_react8.default.createElement("h2", { style: {
+      fontSize: "clamp(2rem, 4.5vw, 3rem)",
       fontWeight: "900",
-      lineHeight: "1.2",
-      letterSpacing: "-0.02em",
-      marginBottom: "14px",
+      lineHeight: "1.14",
+      letterSpacing: "-0.03em",
+      marginBottom: "12px",
       color: "#ffffff"
-    } }, syllabus_default.title), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1rem", color: "var(--text-secondary)" } }, "Complete 50-Unit Curriculum notified by the Under Graduate Medical Education Board (UGMEB / NMC) for NEET (UG) candidates.")), /* @__PURE__ */ React.createElement("div", { style: {
-      background: "var(--bg-card)",
-      border: "1px solid var(--border-subtle)",
-      borderRadius: "var(--radius-lg)",
-      padding: "24px",
-      marginBottom: "28px"
-    } }, /* @__PURE__ */ React.createElement("div", { style: {
+    } }, syllabus_default.title), /* @__PURE__ */ import_react8.default.createElement("p", { style: { fontSize: "0.98rem", color: "var(--text-secondary)" } }, "Complete 50-Unit Curriculum notified by the Under Graduate Medical Education Board (UGMEB / NMC) for NEET (UG) candidates.")), /* @__PURE__ */ import_react8.default.createElement("div", { className: "apple-glass", style: {
+      padding: "18px 20px",
+      marginBottom: "24px"
+    } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: {
       display: "flex",
       flexWrap: "wrap",
       alignItems: "center",
       justifyContent: "space-between",
-      gap: "16px"
-    } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } }, syllabus_default.subjects.map((sub) => {
+      gap: "14px"
+    } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "6px" } }, syllabus_default.subjects.map((sub) => {
       const isActive = sub.id === activeSubject;
-      return /* @__PURE__ */ React.createElement(
+      return /* @__PURE__ */ import_react8.default.createElement(
         "button",
         {
           key: sub.id,
@@ -23252,84 +23185,84 @@
             setExpandedUnit(null);
           },
           style: {
-            padding: "10px 20px",
+            padding: "8px 16px",
             borderRadius: "var(--radius-full)",
-            border: isActive ? "1px solid var(--accent-gold)" : "1px solid var(--border-subtle)",
+            border: isActive ? "1px solid var(--border-gold-glow)" : "1px solid var(--border-subtle)",
             background: isActive ? "linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(15, 23, 42, 0.9) 100%)" : "rgba(255, 255, 255, 0.04)",
             color: isActive ? "#ffffff" : "var(--text-secondary)",
             fontWeight: isActive ? "800" : "600",
-            fontSize: "0.9rem",
+            fontSize: "0.86rem",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
-            gap: "8px",
-            transition: "all var(--transition-fast)"
+            gap: "7px",
+            transition: "all 150ms ease"
           }
         },
         getSubjectIcon(sub.id),
-        /* @__PURE__ */ React.createElement("span", null, sub.name),
-        /* @__PURE__ */ React.createElement("span", { style: {
-          fontSize: "0.72rem",
+        /* @__PURE__ */ import_react8.default.createElement("span", null, sub.name),
+        /* @__PURE__ */ import_react8.default.createElement("span", { style: {
+          fontSize: "0.7rem",
           background: isActive ? "var(--accent-gold)" : "rgba(255, 255, 255, 0.1)",
-          color: isActive ? "#060913" : "#fff",
-          padding: "2px 7px",
+          color: isActive ? "#030712" : "#fff",
+          padding: "1px 6px",
           borderRadius: "9999px",
           fontWeight: "800"
-        } }, sub.totalUnits, " Units")
+        } }, sub.totalUnits)
       );
-    })), /* @__PURE__ */ React.createElement("div", { style: { position: "relative", minWidth: "260px", flex: "1", maxWidth: "380px" } }, /* @__PURE__ */ React.createElement(Search, { size: 17, color: "var(--text-muted)", style: { position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)" } }), /* @__PURE__ */ React.createElement(
+    })), /* @__PURE__ */ import_react8.default.createElement("div", { style: { position: "relative", minWidth: "240px", flex: "1", maxWidth: "360px" } }, /* @__PURE__ */ import_react8.default.createElement(Search, { size: 16, color: "var(--text-tertiary)", style: { position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)" } }), /* @__PURE__ */ import_react8.default.createElement(
       "input",
       {
         type: "text",
-        placeholder: `Search ${activeSubjectData?.name || ""} topics (e.g. Optics, Kinetics)...`,
+        placeholder: `Search ${activeSubjectData?.name || ""} units (e.g. Optics)...`,
         value: searchQuery,
         onChange: (e) => setSearchQuery(e.target.value),
         style: {
           width: "100%",
-          padding: "10px 14px 10px 40px",
+          padding: "9px 14px 9px 38px",
           borderRadius: "var(--radius-full)",
-          background: "var(--bg-input)",
+          background: "var(--apple-bg-input)",
           border: "1px solid var(--border-subtle)",
           color: "#fff",
-          fontSize: "0.88rem",
+          fontSize: "0.86rem",
           outline: "none"
         }
       }
-    )))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "12px", marginBottom: "32px" } }, displayedUnits.length === 0 ? /* @__PURE__ */ React.createElement("div", { style: {
+    )))), /* @__PURE__ */ import_react8.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px", marginBottom: "30px" } }, displayedUnits.length === 0 ? /* @__PURE__ */ import_react8.default.createElement("div", { style: {
       textAlign: "center",
-      padding: "48px 20px",
-      background: "var(--bg-card)",
+      padding: "40px 20px",
+      background: "var(--apple-bg-elevated)",
       borderRadius: "var(--radius-md)",
       border: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ React.createElement("p", { style: { color: "var(--text-secondary)", fontSize: "1rem" } }, 'No units found matching "', /* @__PURE__ */ React.createElement("strong", null, searchQuery), '" in ', activeSubjectData?.name, "."), /* @__PURE__ */ React.createElement(
+    } }, /* @__PURE__ */ import_react8.default.createElement("p", { style: { color: "var(--text-secondary)", fontSize: "0.94rem" } }, 'No units found matching "', /* @__PURE__ */ import_react8.default.createElement("strong", null, searchQuery), '" in ', activeSubjectData?.name, "."), /* @__PURE__ */ import_react8.default.createElement(
       "button",
       {
         onClick: () => setSearchQuery(""),
         className: "btn-secondary",
-        style: { marginTop: "12px", padding: "8px 16px", fontSize: "0.85rem" }
+        style: { marginTop: "10px", padding: "7px 14px", fontSize: "0.82rem" }
       },
       "Clear Search"
     )) : displayedUnits.map((unit) => {
       const isExpanded = expandedUnit === unit.unitNumber;
-      return /* @__PURE__ */ React.createElement(
+      return /* @__PURE__ */ import_react8.default.createElement(
         "div",
         {
           key: unit.unitNumber,
-          className: "glass-panel",
+          className: "apple-glass",
           style: {
             borderRadius: "var(--radius-md)",
             overflow: "hidden",
-            border: isExpanded ? "1px solid var(--border-gold)" : "1px solid var(--border-subtle)",
-            transition: "border-color var(--transition-fast)"
+            border: isExpanded ? "1px solid var(--border-gold-glow)" : "1px solid var(--border-subtle)",
+            borderTop: isExpanded ? "1px solid rgba(251, 191, 36, 0.45)" : "1px solid var(--border-specular-top)"
           }
         },
-        /* @__PURE__ */ React.createElement(
+        /* @__PURE__ */ import_react8.default.createElement(
           "button",
           {
             onClick: () => toggleUnit(unit.unitNumber),
             style: {
               width: "100%",
-              padding: "16px 20px",
+              padding: "14px 18px",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -23340,51 +23273,52 @@
               cursor: "pointer"
             }
           },
-          /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: "14px" } }, /* @__PURE__ */ React.createElement("div", { style: {
-            width: "32px",
-            height: "32px",
+          /* @__PURE__ */ import_react8.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "12px" } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: {
+            width: "30px",
+            height: "30px",
             borderRadius: "8px",
-            background: "rgba(255, 255, 255, 0.06)",
+            background: "rgba(255, 255, 255, 0.05)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "0.82rem",
-            fontWeight: "800",
+            fontSize: "0.78rem",
+            fontWeight: "900",
             color: "var(--accent-gold-light)",
             flexShrink: 0
-          } }, unit.unitNumber), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { fontSize: "1rem", fontWeight: "700", color: "#fff" } }, "Unit ", unit.unitNumber, ": ", unit.name))),
-          /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", color: "var(--text-muted)" } }, /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.8rem" } }, isExpanded ? "Hide" : "View Topics"), isExpanded ? /* @__PURE__ */ React.createElement(ChevronUp, { size: 18 }) : /* @__PURE__ */ React.createElement(ChevronDown, { size: 18 }))
+          } }, unit.unitNumber), /* @__PURE__ */ import_react8.default.createElement("div", { style: { fontSize: "0.96rem", fontWeight: "700", color: "#fff", letterSpacing: "-0.01em" } }, "Unit ", unit.unitNumber, ": ", unit.name)),
+          /* @__PURE__ */ import_react8.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "6px", color: "var(--text-tertiary)" } }, /* @__PURE__ */ import_react8.default.createElement("span", { style: { fontSize: "0.78rem" } }, isExpanded ? "Hide" : "View Topics"), isExpanded ? /* @__PURE__ */ import_react8.default.createElement(ChevronUp, { size: 16 }) : /* @__PURE__ */ import_react8.default.createElement(ChevronDown, { size: 16 }))
         ),
-        isExpanded && /* @__PURE__ */ React.createElement("div", { style: {
-          padding: "16px 20px 20px 66px",
-          background: "rgba(6, 9, 19, 0.5)",
+        isExpanded && /* @__PURE__ */ import_react8.default.createElement("div", { style: {
+          padding: "14px 18px 18px 58px",
+          background: "rgba(3, 7, 18, 0.55)",
           borderTop: "1px solid var(--border-subtle)",
-          fontSize: "0.9rem",
+          fontSize: "0.88rem",
           color: "var(--text-secondary)",
-          lineHeight: "1.7"
-        } }, /* @__PURE__ */ React.createElement("strong", { style: { color: "#fff", display: "block", marginBottom: "4px" } }, "Topics & Subtopics Covered:"), /* @__PURE__ */ React.createElement("p", null, unit.topics))
+          lineHeight: "1.65"
+        } }, /* @__PURE__ */ import_react8.default.createElement("strong", { style: { color: "#fff", display: "block", marginBottom: "4px", fontSize: "0.82rem", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Topics & Subtopics:"), /* @__PURE__ */ import_react8.default.createElement("p", null, unit.topics))
       );
-    })), /* @__PURE__ */ React.createElement("div", { style: {
-      background: "linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(15, 23, 42, 0.85) 100%)",
-      border: "1px solid rgba(56, 189, 248, 0.25)",
-      borderRadius: "var(--radius-lg)",
-      padding: "24px 28px",
+    })), /* @__PURE__ */ import_react8.default.createElement("div", { className: "apple-glass", style: {
+      padding: "22px 24px",
       display: "flex",
       flexWrap: "wrap",
       alignItems: "center",
       justifyContent: "space-between",
-      gap: "16px"
-    } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h4", { style: { fontSize: "1.15rem", fontWeight: "800", color: "#fff", marginBottom: "4px" } }, "Struggling with any specific NEET physics, chemistry, or biology unit?"), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "0.88rem", color: "var(--text-secondary)" } }, "Get personal chapter-wise concept drills and numerical problem-solving sessions at SCIMEE.")), /* @__PURE__ */ React.createElement(
+      gap: "14px",
+      borderTop: "1px solid rgba(56, 189, 248, 0.45)"
+    } }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("h4", { style: { fontSize: "1.05rem", fontWeight: "800", color: "#fff", marginBottom: "3px", letterSpacing: "-0.01em" } }, "Struggling with any specific NEET physics, chemistry, or biology unit?"), /* @__PURE__ */ import_react8.default.createElement("p", { style: { fontSize: "0.85rem", color: "var(--text-secondary)" } }, "Get personal 1-on-1 concept drills and numerical problem-solving sessions at SCIMEE.")), /* @__PURE__ */ import_react8.default.createElement(
       "button",
       {
         onClick: onOpenCallModal,
         className: "btn-primary",
-        style: { padding: "11px 22px", fontSize: "0.9rem" }
+        style: { padding: "10px 20px", fontSize: "0.88rem" }
       },
-      /* @__PURE__ */ React.createElement(PhoneCall, { size: 16 }),
-      /* @__PURE__ */ React.createElement("span", null, "Consult Subject Faculty")
+      /* @__PURE__ */ import_react8.default.createElement(PhoneCall, { size: 15 }),
+      /* @__PURE__ */ import_react8.default.createElement("span", null, "Consult Subject Faculty")
     ))));
   }
+
+  // src/components/FacilitiesSection.jsx
+  var import_react9 = __toESM(require_react(), 1);
 
   // src/data/facilities.json
   var facilities_default = {
@@ -23438,144 +23372,154 @@
 
   // src/components/FacilitiesSection.jsx
   function FacilitiesSection({ onOpenCallModal }) {
-    const getFacilityIcon = (iconName) => {
+    const getIcon = (iconName) => {
       switch (iconName) {
         case "book-open":
-          return /* @__PURE__ */ React.createElement(BookOpen, { size: 24, color: "#f59e0b" });
+          return /* @__PURE__ */ import_react9.default.createElement(BookOpen, { size: 22, color: "#fbbf24" });
         case "graduation-cap":
-          return /* @__PURE__ */ React.createElement(GraduationCap, { size: 24, color: "#38bdf8" });
+          return /* @__PURE__ */ import_react9.default.createElement(GraduationCap, { size: 22, color: "#38bdf8" });
         case "clipboard-check":
-          return /* @__PURE__ */ React.createElement(ClipboardCheck, { size: 24, color: "#10b981" });
+          return /* @__PURE__ */ import_react9.default.createElement(ClipboardCheck, { size: 22, color: "#34d399" });
         case "user-check":
-          return /* @__PURE__ */ React.createElement(UserCheck, { size: 24, color: "#a855f7" });
+          return /* @__PURE__ */ import_react9.default.createElement(UserCheck, { size: 22, color: "#c084fc" });
         case "users":
-          return /* @__PURE__ */ React.createElement(Users, { size: 24, color: "#f43f5e" });
+          return /* @__PURE__ */ import_react9.default.createElement(Users, { size: 22, color: "#fbbf24" });
         case "shield-check":
-          return /* @__PURE__ */ React.createElement(ShieldCheck, { size: 24, color: "#34d399" });
+          return /* @__PURE__ */ import_react9.default.createElement(ShieldCheck, { size: 22, color: "#34d399" });
         default:
-          return /* @__PURE__ */ React.createElement(Sparkles, { size: 24, color: "#f59e0b" });
+          return /* @__PURE__ */ import_react9.default.createElement(Award, { size: 22, color: "#fbbf24" });
       }
     };
-    return /* @__PURE__ */ React.createElement("section", { id: "facilities", style: {
-      paddingTop: "64px",
-      paddingBottom: "72px",
-      background: "var(--bg-primary)",
+    const facilitiesList = facilities_default.items || facilities_default.features || [];
+    return /* @__PURE__ */ import_react9.default.createElement("section", { id: "facilities", style: {
+      paddingTop: "clamp(48px, 8vw, 76px)",
+      paddingBottom: "clamp(54px, 8vw, 84px)",
+      background: "var(--apple-bg-base)",
       borderBottom: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ React.createElement("div", { className: "container-custom" }, /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", maxWidth: "820px", margin: "0 auto 36px" } }, /* @__PURE__ */ React.createElement("div", { className: "badge-gold", style: { marginBottom: "10px" } }, /* @__PURE__ */ React.createElement(Sparkles, { size: 14 }), /* @__PURE__ */ React.createElement("span", null, "Infrastructure & Methodology")), /* @__PURE__ */ React.createElement("h2", { style: {
-      fontSize: "clamp(1.9rem, 4vw, 2.8rem)",
+    } }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react9.default.createElement("div", { style: { textAlign: "center", maxWidth: "820px", margin: "0 auto 34px" } }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "badge-emerald", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react9.default.createElement(Shield, { size: 13 }), /* @__PURE__ */ import_react9.default.createElement("span", null, "Infrastructure & Pedagogy")), /* @__PURE__ */ import_react9.default.createElement("h2", { style: {
+      fontSize: "clamp(2rem, 4.5vw, 3rem)",
       fontWeight: "900",
-      lineHeight: "1.2",
-      letterSpacing: "-0.02em",
-      marginBottom: "14px",
+      lineHeight: "1.14",
+      letterSpacing: "-0.03em",
+      marginBottom: "12px",
       color: "#ffffff"
-    } }, facilities_default.sectionTitle), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1rem", color: "var(--text-secondary)" } }, facilities_default.sectionSubtitle)), /* @__PURE__ */ React.createElement("div", { className: "grid-responsive-3", style: { marginBottom: "40px" } }, facilities_default.items.map((item) => /* @__PURE__ */ React.createElement(
+    } }, facilities_default.sectionTitle || facilities_default.title), /* @__PURE__ */ import_react9.default.createElement("p", { style: { fontSize: "0.98rem", color: "var(--text-secondary)" } }, facilities_default.sectionSubtitle || facilities_default.subtitle)), /* @__PURE__ */ import_react9.default.createElement("div", { className: "grid-responsive-2", style: { marginBottom: "36px" } }, facilitiesList.map((feat) => /* @__PURE__ */ import_react9.default.createElement(
       "div",
       {
-        key: item.id,
-        className: "glass-panel",
+        key: feat.id,
+        className: "apple-glass",
         style: {
-          padding: "28px",
+          padding: "24px",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          gap: "16px"
+          gap: "18px",
+          alignItems: "flex-start"
         }
       },
-      /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" } }, /* @__PURE__ */ React.createElement("div", { style: {
-        width: "50px",
-        height: "50px",
+      /* @__PURE__ */ import_react9.default.createElement("div", { style: {
+        width: "48px",
+        height: "48px",
         borderRadius: "12px",
         background: "rgba(255, 255, 255, 0.05)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        flexShrink: 0,
         border: "1px solid rgba(255, 255, 255, 0.08)"
-      } }, getFacilityIcon(item.icon)), /* @__PURE__ */ React.createElement("span", { className: "badge-gold", style: { fontSize: "0.68rem", padding: "2px 8px" } }, item.tag)), /* @__PURE__ */ React.createElement("h3", { style: { fontSize: "1.15rem", fontWeight: "800", color: "#fff", marginBottom: "10px", lineHeight: "1.3" } }, item.title), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: "1.6" } }, item.description)),
-      /* @__PURE__ */ React.createElement("div", { style: {
-        display: "flex",
-        alignItems: "center",
-        gap: "6px",
-        fontSize: "0.78rem",
-        color: "var(--accent-gold-light)",
-        fontWeight: "600",
-        paddingTop: "12px",
-        borderTop: "1px solid rgba(255, 255, 255, 0.04)"
-      } }, /* @__PURE__ */ React.createElement(CircleCheck, { size: 14, color: "var(--accent-emerald)" }), /* @__PURE__ */ React.createElement("span", null, "Verified Facility at Bhusawal Centre"))
-    ))), /* @__PURE__ */ React.createElement("div", { style: {
-      background: "linear-gradient(135deg, rgba(30, 27, 75, 0.7) 0%, rgba(15, 23, 42, 0.95) 100%)",
-      border: "1px solid var(--border-gold)",
-      borderRadius: "var(--radius-lg)",
-      padding: "clamp(24px, 4vw, 40px)",
+      } }, getIcon(feat.icon)),
+      /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" } }, /* @__PURE__ */ import_react9.default.createElement("h3", { style: { fontSize: "1.1rem", fontWeight: "800", color: "#fff", letterSpacing: "-0.01em" } }, feat.title), feat.tag && /* @__PURE__ */ import_react9.default.createElement("span", { className: "badge-gold", style: { fontSize: "0.62rem", padding: "1px 6px" } }, feat.tag)), /* @__PURE__ */ import_react9.default.createElement("p", { style: { fontSize: "0.88rem", color: "var(--text-secondary)", lineHeight: "1.6" } }, feat.description))
+    ))), /* @__PURE__ */ import_react9.default.createElement("div", { className: "apple-glass-gold", style: {
+      padding: "clamp(20px, 4vw, 32px)",
       display: "flex",
       flexWrap: "wrap",
       alignItems: "center",
       justifyContent: "space-between",
-      gap: "24px"
-    } }, /* @__PURE__ */ React.createElement("div", { style: { maxWidth: "680px" } }, /* @__PURE__ */ React.createElement("span", { className: "badge-gold", style: { marginBottom: "12px" } }, "Leadership & Mentorship"), /* @__PURE__ */ React.createElement("h3", { style: { fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: "900", color: "#fff", marginBottom: "8px" } }, "Guided by Ansari Rehan Ahmed"), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: "1.6", marginBottom: "16px" } }, '"Our mission at SCIMEE is not just about scoring marks, but igniting true scientific curiosity and building lifelong confidence in every student from school foundation to medical college."'), /* @__PURE__ */ React.createElement("div", { className: "urdu-font", style: { fontSize: "1.4rem", color: "#fde68a", fontWeight: "700" } }, site_config_default.brand.taglineUrdu)), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px" } }, /* @__PURE__ */ React.createElement(
+      gap: "18px"
+    } }, /* @__PURE__ */ import_react9.default.createElement("div", { style: { maxWidth: "680px" } }, /* @__PURE__ */ import_react9.default.createElement("span", { className: "badge-gold", style: { marginBottom: "6px" } }, "Special Campus Facility"), /* @__PURE__ */ import_react9.default.createElement("h3", { style: { fontSize: "clamp(1.25rem, 2.5vw, 1.7rem)", fontWeight: "900", color: "#fff", marginBottom: "6px", letterSpacing: "-0.02em" } }, "Dedicated Quiet Reading Room & Medical Reference Library"), /* @__PURE__ */ import_react9.default.createElement("p", { style: { fontSize: "0.9rem", color: "#fef08a", lineHeight: "1.55" } }, "Distraction-free environment with individual study cubicles, NCERT line-by-line problem sets, and past 20-year NEET PYQ archives.")), /* @__PURE__ */ import_react9.default.createElement(
       "button",
       {
         onClick: onOpenCallModal,
         className: "btn-primary",
-        style: { padding: "14px 26px", fontSize: "0.98rem" }
+        style: { padding: "12px 24px", fontSize: "0.92rem" }
       },
-      /* @__PURE__ */ React.createElement("span", null, "Visit Campus & Library")
-    )))));
+      /* @__PURE__ */ import_react9.default.createElement("span", null, "Book a Campus Visit"),
+      /* @__PURE__ */ import_react9.default.createElement(ArrowRight, { size: 16 })
+    ))));
   }
 
   // src/components/MapLocation.jsx
+  var import_react10 = __toESM(require_react(), 1);
   function MapLocation({ onOpenCallModal }) {
-    return /* @__PURE__ */ React.createElement("section", { id: "location", style: {
-      paddingTop: "64px",
-      paddingBottom: "72px",
-      background: "linear-gradient(180deg, #060913 0%, #0a0f24 50%, #060913 100%)",
+    const googleMapsUrl = site_config_default.location.googleMapsUrl;
+    const lat = site_config_default.location.latitude || 21.0365511;
+    const lng = site_config_default.location.longitude || 75.7959125;
+    const embedUrl = site_config_default.location.googleMapsEmbed || `https://maps.google.com/maps?q=${lat},${lng}&hl=en&z=17&output=embed`;
+    return /* @__PURE__ */ import_react10.default.createElement("section", { id: "location", style: {
+      paddingTop: "clamp(48px, 8vw, 76px)",
+      paddingBottom: "clamp(54px, 8vw, 84px)",
+      background: "linear-gradient(180deg, #030712 0%, #091128 50%, #030712 100%)",
       borderBottom: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ React.createElement("div", { className: "container-custom" }, /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", maxWidth: "800px", margin: "0 auto 36px" } }, /* @__PURE__ */ React.createElement("div", { className: "badge-blue", style: { marginBottom: "10px" } }, /* @__PURE__ */ React.createElement(MapPin, { size: 14 }), /* @__PURE__ */ React.createElement("span", null, "Visit Institute")), /* @__PURE__ */ React.createElement("h2", { style: {
-      fontSize: "clamp(1.9rem, 4vw, 2.8rem)",
+    } }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react10.default.createElement("div", { style: { textAlign: "center", maxWidth: "800px", margin: "0 auto 34px" } }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "badge-blue", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react10.default.createElement(MapPin, { size: 13 }), /* @__PURE__ */ import_react10.default.createElement("span", null, "Campus Location")), /* @__PURE__ */ import_react10.default.createElement("h2", { style: {
+      fontSize: "clamp(2rem, 4.5vw, 3rem)",
       fontWeight: "900",
-      lineHeight: "1.2",
-      letterSpacing: "-0.02em",
-      marginBottom: "14px",
+      lineHeight: "1.14",
+      letterSpacing: "-0.03em",
+      marginBottom: "12px",
       color: "#ffffff"
-    } }, "Convenient Location in Bhusawal"), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1rem", color: "var(--text-secondary)" } }, "Easily accessible from all parts of Bhusawal and neighboring towns. Drop by for in-person counseling and campus tour.")), /* @__PURE__ */ React.createElement("div", { className: "grid-responsive-2", style: { alignItems: "stretch" } }, /* @__PURE__ */ React.createElement("div", { className: "glass-panel", style: {
-      padding: "32px",
+    } }, "Convenient Location in Bhusawal"), /* @__PURE__ */ import_react10.default.createElement("p", { style: { fontSize: "0.98rem", color: "var(--text-secondary)" } }, "Centrally situated at Khadka Square for easy accessibility across Bhusawal, Varangaon, and Jalgaon.")), /* @__PURE__ */ import_react10.default.createElement("div", { style: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))",
+      gap: "22px"
+    } }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "apple-glass", style: {
+      padding: "clamp(22px, 4vw, 32px)",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
-      gap: "24px"
-    } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "badge-gold", style: { marginBottom: "14px" } }, "Main Campus"), /* @__PURE__ */ React.createElement("h3", { style: { fontSize: "1.45rem", fontWeight: "800", color: "#fff", marginBottom: "12px" } }, "SCIMEE Head Centre"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "16px", color: "var(--text-secondary)", fontSize: "0.95rem" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "flex-start", gap: "12px" } }, /* @__PURE__ */ React.createElement(MapPin, { size: 20, color: "var(--accent-gold)", style: { flexShrink: 0, marginTop: "3px" } }), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("strong", { style: { color: "#fff" } }, "Address:"), /* @__PURE__ */ React.createElement("br", null), site_config_default.location.addressLine1, ",", /* @__PURE__ */ React.createElement("br", null), site_config_default.location.addressLine2, ",", /* @__PURE__ */ React.createElement("br", null), site_config_default.location.city, " - ", site_config_default.location.pincode, ", ", site_config_default.location.state)), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "flex-start", gap: "12px" } }, /* @__PURE__ */ React.createElement(Clock, { size: 20, color: "var(--accent-blue)", style: { flexShrink: 0, marginTop: "3px" } }), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("strong", { style: { color: "#fff" } }, "Office & Counseling Hours:"), /* @__PURE__ */ React.createElement("br", null), "Mon \u2013 Sat: ", site_config_default.contact.operatingHours.weekdays, /* @__PURE__ */ React.createElement("br", null), "Sunday: ", site_config_default.contact.operatingHours.sunday)), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "flex-start", gap: "12px" } }, /* @__PURE__ */ React.createElement(Phone, { size: 20, color: "var(--accent-emerald)", style: { flexShrink: 0, marginTop: "3px" } }), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("strong", { style: { color: "#fff" } }, "Phone Helplines:"), /* @__PURE__ */ React.createElement("br", null), site_config_default.contact.primaryPhoneFormatted, " / ", site_config_default.contact.secondaryPhoneFormatted)))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "12px", paddingTop: "16px", borderTop: "1px solid var(--border-subtle)" } }, /* @__PURE__ */ React.createElement(
+      gap: "20px"
+    } }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("span", { className: "badge-gold", style: { marginBottom: "10px" } }, "Campus Address"), /* @__PURE__ */ import_react10.default.createElement("h3", { style: { fontSize: "1.25rem", fontWeight: "800", color: "#fff", marginBottom: "10px", letterSpacing: "-0.02em" } }, site_config_default.brand.fullName), /* @__PURE__ */ import_react10.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px", color: "var(--text-secondary)", fontSize: "0.9rem" } }, /* @__PURE__ */ import_react10.default.createElement("div", { style: { display: "flex", alignItems: "flex-start", gap: "10px" } }, /* @__PURE__ */ import_react10.default.createElement(MapPin, { size: 18, color: "var(--accent-gold)", style: { flexShrink: 0, marginTop: "2px" } }), /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("strong", { style: { color: "#fff" } }, site_config_default.location.addressLine1), /* @__PURE__ */ import_react10.default.createElement("br", null), site_config_default.location.addressLine2, /* @__PURE__ */ import_react10.default.createElement("br", null), site_config_default.location.city, ", ", site_config_default.location.state, " - ", site_config_default.location.pincode)), /* @__PURE__ */ import_react10.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px", marginTop: "4px" } }, /* @__PURE__ */ import_react10.default.createElement(Clock, { size: 16, color: "var(--accent-blue)", style: { flexShrink: 0 } }), /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("strong", null, "Office Hours:"), " ", site_config_default.contact.operatingHours.weekdays)))), /* @__PURE__ */ import_react10.default.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "10px" } }, /* @__PURE__ */ import_react10.default.createElement(
       "a",
       {
-        href: site_config_default.location.googleMapsUrl,
+        href: googleMapsUrl,
         target: "_blank",
         rel: "noopener noreferrer",
         className: "btn-primary",
-        style: { flex: "1", minWidth: "180px", textDecoration: "none", padding: "12px 20px" }
+        style: {
+          padding: "11px 20px",
+          fontSize: "0.88rem",
+          textDecoration: "none"
+        }
       },
-      /* @__PURE__ */ React.createElement(Navigation, { size: 17 }),
-      /* @__PURE__ */ React.createElement("span", null, "Get Directions"),
-      /* @__PURE__ */ React.createElement(ExternalLink, { size: 14 })
-    ), /* @__PURE__ */ React.createElement(
+      /* @__PURE__ */ import_react10.default.createElement(Navigation, { size: 15 }),
+      /* @__PURE__ */ import_react10.default.createElement("span", null, "Driving Directions"),
+      /* @__PURE__ */ import_react10.default.createElement(ExternalLink, { size: 13 })
+    ), /* @__PURE__ */ import_react10.default.createElement(
       "button",
       {
         onClick: onOpenCallModal,
         className: "btn-secondary",
-        style: { flex: "1", minWidth: "160px", padding: "12px 20px" }
+        style: {
+          padding: "11px 18px",
+          fontSize: "0.88rem"
+        }
       },
-      /* @__PURE__ */ React.createElement(Phone, { size: 17 }),
-      /* @__PURE__ */ React.createElement("span", null, "Call Centre")
-    ))), /* @__PURE__ */ React.createElement("div", { className: "glass-panel", style: {
+      /* @__PURE__ */ import_react10.default.createElement(PhoneCall, { size: 15 }),
+      /* @__PURE__ */ import_react10.default.createElement("span", null, "Call Institute")
+    ))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "apple-glass", style: {
       overflow: "hidden",
-      minHeight: "380px",
-      position: "relative",
-      padding: 0
-    } }, /* @__PURE__ */ React.createElement(
+      borderRadius: "var(--radius-md)",
+      minHeight: "340px",
+      borderTop: "1px solid var(--border-specular-top)"
+    } }, /* @__PURE__ */ import_react10.default.createElement(
       "iframe",
       {
         title: "SCIMEE Location Map",
-        src: "https://maps.google.com/maps?q=21.0365511,75.7959125&hl=en&z=17&output=embed",
+        src: embedUrl,
         width: "100%",
         height: "100%",
-        style: { border: 0, minHeight: "380px", display: "block", filter: "invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%)" },
+        style: {
+          border: 0,
+          minHeight: "340px",
+          filter: "invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%)"
+        },
         allowFullScreen: "",
         loading: "lazy",
         referrerPolicy: "no-referrer-when-downgrade"
@@ -23584,7 +23528,7 @@
   }
 
   // src/components/FAQSection.jsx
-  var import_react8 = __toESM(require_react(), 1);
+  var import_react11 = __toESM(require_react(), 1);
 
   // src/data/faq.json
   var faq_default = {
@@ -23620,50 +23564,49 @@
 
   // src/components/FAQSection.jsx
   function FAQSection({ onOpenCallModal }) {
-    const [openIndex, setOpenIndex] = (0, import_react8.useState)(0);
-    const toggleFAQ = (index) => {
-      setOpenIndex(openIndex === index ? null : index);
+    const [openIndex, setOpenIndex] = (0, import_react11.useState)(0);
+    const faqList = faq_default.faqs || faq_default.items || [];
+    const toggleIndex = (idx) => {
+      setOpenIndex(openIndex === idx ? null : idx);
     };
-    const whatsappUrl = `https://wa.me/${site_config_default.contact.whatsappNumber}?text=${encodeURIComponent(
-      "Hello SCIMEE, I have a question about admissions and fee structure."
-    )}`;
-    return /* @__PURE__ */ React.createElement("section", { id: "faq", style: {
-      paddingTop: "64px",
-      paddingBottom: "72px",
-      background: "var(--bg-primary)",
+    return /* @__PURE__ */ import_react11.default.createElement("section", { id: "faq", style: {
+      paddingTop: "clamp(48px, 8vw, 76px)",
+      paddingBottom: "clamp(54px, 8vw, 84px)",
+      background: "var(--apple-bg-base)",
       borderBottom: "1px solid var(--border-subtle)"
-    } }, /* @__PURE__ */ React.createElement("div", { className: "container-custom" }, /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", maxWidth: "800px", margin: "0 auto 36px" } }, /* @__PURE__ */ React.createElement("div", { className: "badge-gold", style: { marginBottom: "10px" } }, /* @__PURE__ */ React.createElement(CircleQuestionMark, { size: 14 }), /* @__PURE__ */ React.createElement("span", null, "Got Questions?")), /* @__PURE__ */ React.createElement("h2", { style: {
-      fontSize: "clamp(1.9rem, 4vw, 2.8rem)",
+    } }, /* @__PURE__ */ import_react11.default.createElement("div", { className: "container-custom", style: { maxWidth: "880px" } }, /* @__PURE__ */ import_react11.default.createElement("div", { style: { textAlign: "center", marginBottom: "34px" } }, /* @__PURE__ */ import_react11.default.createElement("div", { className: "badge-gold", style: { marginBottom: "10px" } }, /* @__PURE__ */ import_react11.default.createElement(CircleQuestionMark, { size: 13 }), /* @__PURE__ */ import_react11.default.createElement("span", null, "Got Questions?")), /* @__PURE__ */ import_react11.default.createElement("h2", { style: {
+      fontSize: "clamp(2rem, 4.5vw, 3rem)",
       fontWeight: "900",
-      lineHeight: "1.2",
-      letterSpacing: "-0.02em",
-      marginBottom: "14px",
+      lineHeight: "1.14",
+      letterSpacing: "-0.03em",
+      marginBottom: "12px",
       color: "#ffffff"
-    } }, faq_default.sectionTitle), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "1rem", color: "var(--text-secondary)" } }, faq_default.sectionSubtitle)), /* @__PURE__ */ React.createElement("div", { style: { maxWidth: "860px", margin: "0 auto 40px", display: "flex", flexDirection: "column", gap: "12px" } }, faq_default.faqs.map((faq, idx) => {
+    } }, faq_default.sectionTitle || faq_default.title), /* @__PURE__ */ import_react11.default.createElement("p", { style: { fontSize: "0.98rem", color: "var(--text-secondary)" } }, faq_default.sectionSubtitle || faq_default.subtitle)), /* @__PURE__ */ import_react11.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px", marginBottom: "32px" } }, faqList.map((item, idx) => {
       const isOpen = openIndex === idx;
-      return /* @__PURE__ */ React.createElement(
+      return /* @__PURE__ */ import_react11.default.createElement(
         "div",
         {
           key: idx,
-          className: "glass-panel",
+          className: "apple-glass",
           style: {
             borderRadius: "var(--radius-md)",
             overflow: "hidden",
-            border: isOpen ? "1px solid var(--border-gold)" : "1px solid var(--border-subtle)",
-            transition: "all var(--transition-fast)"
+            border: isOpen ? "1px solid var(--border-gold-glow)" : "1px solid var(--border-subtle)",
+            borderTop: isOpen ? "1px solid rgba(251, 191, 36, 0.45)" : "1px solid var(--border-specular-top)",
+            transition: "border-color 150ms ease"
           }
         },
-        /* @__PURE__ */ React.createElement(
+        /* @__PURE__ */ import_react11.default.createElement(
           "button",
           {
-            onClick: () => toggleFAQ(idx),
+            onClick: () => toggleIndex(idx),
             style: {
               width: "100%",
-              padding: "20px 24px",
+              padding: "16px 20px",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              gap: "16px",
+              gap: "14px",
               background: isOpen ? "rgba(245, 158, 11, 0.04)" : "transparent",
               border: "none",
               color: "#fff",
@@ -23671,167 +23614,161 @@
               cursor: "pointer"
             }
           },
-          /* @__PURE__ */ React.createElement("span", { style: { fontSize: "1.05rem", fontWeight: "700", lineHeight: "1.4" } }, faq.question),
-          /* @__PURE__ */ React.createElement("div", { style: {
-            width: "32px",
-            height: "32px",
-            borderRadius: "50%",
-            background: isOpen ? "var(--accent-gold)" : "rgba(255, 255, 255, 0.06)",
-            color: isOpen ? "#060913" : "var(--text-secondary)",
+          /* @__PURE__ */ import_react11.default.createElement("span", { style: {
+            fontSize: "0.98rem",
+            fontWeight: "700",
+            color: isOpen ? "#fef08a" : "#ffffff",
+            letterSpacing: "-0.01em"
+          } }, item.question),
+          /* @__PURE__ */ import_react11.default.createElement("div", { style: {
+            color: isOpen ? "var(--accent-gold)" : "var(--text-tertiary)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            flexShrink: 0,
-            transition: "all var(--transition-fast)"
-          } }, isOpen ? /* @__PURE__ */ React.createElement(ChevronUp, { size: 18 }) : /* @__PURE__ */ React.createElement(ChevronDown, { size: 18 }))
+            flexShrink: 0
+          } }, isOpen ? /* @__PURE__ */ import_react11.default.createElement(ChevronUp, { size: 18 }) : /* @__PURE__ */ import_react11.default.createElement(ChevronDown, { size: 18 }))
         ),
-        isOpen && /* @__PURE__ */ React.createElement("div", { style: {
-          padding: "0 24px 22px",
-          fontSize: "0.94rem",
+        isOpen && /* @__PURE__ */ import_react11.default.createElement("div", { style: {
+          padding: "0 20px 18px 20px",
           color: "var(--text-secondary)",
-          lineHeight: "1.7",
-          borderTop: "1px solid rgba(255, 255, 255, 0.04)",
-          paddingTop: "16px"
-        } }, faq.answer)
+          fontSize: "0.9rem",
+          lineHeight: "1.65",
+          borderTop: "1px solid rgba(255, 255, 255, 0.05)",
+          paddingTop: "12px"
+        } }, item.answer)
       );
-    })), /* @__PURE__ */ React.createElement("div", { style: {
-      maxWidth: "860px",
-      margin: "0 auto",
-      background: "linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 27, 75, 0.6) 100%)",
-      border: "1px solid var(--border-subtle)",
-      borderRadius: "var(--radius-lg)",
-      padding: "28px 32px",
+    })), /* @__PURE__ */ import_react11.default.createElement("div", { style: {
       textAlign: "center",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: "16px"
-    } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h3", { style: { fontSize: "1.25rem", fontWeight: "800", color: "#fff", marginBottom: "6px" } }, "Have a specific question about your child's preparation?"), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "0.9rem", color: "var(--text-secondary)" } }, "Directly consult with our academic counselor or schedule an in-person meeting.")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "12px", justifyContent: "center" } }, /* @__PURE__ */ React.createElement(
+      padding: "22px",
+      background: "rgba(255, 255, 255, 0.02)",
+      borderRadius: "var(--radius-md)",
+      border: "1px dashed var(--border-subtle)"
+    } }, /* @__PURE__ */ import_react11.default.createElement("p", { style: { color: "var(--text-secondary)", fontSize: "0.9rem", marginBottom: "12px" } }, "Have more questions regarding admissions, batch timings, or fee structure?"), /* @__PURE__ */ import_react11.default.createElement(
       "button",
       {
         onClick: onOpenCallModal,
-        className: "btn-primary",
-        style: { padding: "12px 24px", fontSize: "0.92rem" }
+        className: "btn-secondary",
+        style: { padding: "9px 20px", fontSize: "0.86rem" }
       },
-      /* @__PURE__ */ React.createElement(PhoneCall, { size: 17 }),
-      /* @__PURE__ */ React.createElement("span", null, "Call Helpline (", site_config_default.contact.primaryPhoneFormatted, ")")
-    ), /* @__PURE__ */ React.createElement(
+      /* @__PURE__ */ import_react11.default.createElement(PhoneCall, { size: 15, color: "var(--accent-gold)" }),
+      /* @__PURE__ */ import_react11.default.createElement("span", null, "Speak with Admissions Counselor")
+    ))));
+  }
+
+  // src/components/Footer.jsx
+  var import_react12 = __toESM(require_react(), 1);
+  function Footer({ onOpenCallModal }) {
+    const currentYear = (/* @__PURE__ */ new Date()).getFullYear();
+    const whatsappUrl = `https://wa.me/${site_config_default.contact.whatsappNumber}?text=${encodeURIComponent(
+      site_config_default.contact.whatsappPrefillText
+    )}`;
+    return /* @__PURE__ */ import_react12.default.createElement("footer", { style: {
+      background: "#02050e",
+      borderTop: "1px solid var(--border-subtle)",
+      paddingTop: "52px",
+      paddingBottom: "88px",
+      color: "var(--text-secondary)"
+    } }, /* @__PURE__ */ import_react12.default.createElement("div", { className: "container-custom" }, /* @__PURE__ */ import_react12.default.createElement("div", { style: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+      gap: "32px",
+      marginBottom: "42px"
+    } }, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" } }, /* @__PURE__ */ import_react12.default.createElement("div", { style: {
+      width: "38px",
+      height: "38px",
+      borderRadius: "10px",
+      background: "#fff",
+      padding: "3px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    } }, /* @__PURE__ */ import_react12.default.createElement(
+      "img",
+      {
+        src: "/assets/logo.svg",
+        alt: "SCIMEE Logo",
+        style: { width: "100%", height: "100%", objectFit: "contain" }
+      }
+    )), /* @__PURE__ */ import_react12.default.createElement("span", { style: { fontSize: "1.3rem", fontWeight: "900", color: "#fff", letterSpacing: "-0.02em" } }, site_config_default.brand.name)), /* @__PURE__ */ import_react12.default.createElement("p", { style: { fontSize: "0.86rem", color: "var(--text-secondary)", lineHeight: "1.55", marginBottom: "14px" } }, site_config_default.brand.fullName, " \u2014 Bhusawal's leading coaching institute for NEET-UG, IIT-JEE Foundation & MHT-CET under ", /* @__PURE__ */ import_react12.default.createElement("strong", null, site_config_default.brand.founder), "."), /* @__PURE__ */ import_react12.default.createElement("div", { className: "apple-glass-gold", style: { padding: "8px 12px", borderRadius: "10px" } }, /* @__PURE__ */ import_react12.default.createElement("span", { className: "urdu-font", style: { fontSize: "1.1rem", color: "#fef08a", display: "block", marginBottom: "2px" } }, site_config_default.brand.taglineUrdu), /* @__PURE__ */ import_react12.default.createElement("span", { style: { fontSize: "0.72rem", color: "var(--text-tertiary)" } }, site_config_default.brand.taglineEn || site_config_default.brand.taglineEnglish))), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("h4", { style: { fontSize: "0.88rem", fontWeight: "800", color: "#fff", marginBottom: "14px", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Quick Navigation"), /* @__PURE__ */ import_react12.default.createElement("ul", { style: { listStyle: "none", display: "flex", flexDirection: "column", gap: "8px" } }, site_config_default.navigation.map((item) => /* @__PURE__ */ import_react12.default.createElement("li", { key: item.label }, /* @__PURE__ */ import_react12.default.createElement(
+      "a",
+      {
+        href: item.href,
+        style: {
+          color: "var(--text-secondary)",
+          textDecoration: "none",
+          fontSize: "0.88rem",
+          transition: "color 120ms ease"
+        },
+        onMouseOver: (e) => {
+          e.currentTarget.style.color = "var(--accent-gold-light)";
+        },
+        onMouseOut: (e) => {
+          e.currentTarget.style.color = "var(--text-secondary)";
+        }
+      },
+      item.label
+    ))))), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("h4", { style: { fontSize: "0.88rem", fontWeight: "800", color: "#fff", marginBottom: "14px", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Direct Helplines"), /* @__PURE__ */ import_react12.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px" } }, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("span", { style: { fontSize: "0.74rem", color: "var(--text-tertiary)", display: "block" } }, "Primary Admissions Helpline:"), /* @__PURE__ */ import_react12.default.createElement(
+      "a",
+      {
+        href: `tel:${site_config_default.contact.primaryPhone}`,
+        style: {
+          fontSize: "1.05rem",
+          fontWeight: "800",
+          color: "var(--accent-gold-light)",
+          textDecoration: "none"
+        }
+      },
+      site_config_default.contact.primaryPhoneFormatted
+    )), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("span", { style: { fontSize: "0.74rem", color: "var(--text-tertiary)", display: "block" } }, "Secondary Office Line:"), /* @__PURE__ */ import_react12.default.createElement(
+      "a",
+      {
+        href: `tel:${site_config_default.contact.secondaryPhone}`,
+        style: {
+          fontSize: "0.98rem",
+          fontWeight: "700",
+          color: "#ffffff",
+          textDecoration: "none"
+        }
+      },
+      site_config_default.contact.secondaryPhoneFormatted
+    )), /* @__PURE__ */ import_react12.default.createElement("div", { style: { marginTop: "4px" } }, /* @__PURE__ */ import_react12.default.createElement(
       "a",
       {
         href: whatsappUrl,
         target: "_blank",
         rel: "noopener noreferrer",
         className: "btn-whatsapp",
-        style: { padding: "12px 22px", fontSize: "0.92rem", textDecoration: "none" }
-      },
-      /* @__PURE__ */ React.createElement(MessageCircle, { size: 18 }),
-      /* @__PURE__ */ React.createElement("span", null, "Ask on WhatsApp")
-    )))));
-  }
-
-  // src/components/Footer.jsx
-  function Footer({ onOpenCallModal }) {
-    const scrollToTop = () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-    return /* @__PURE__ */ React.createElement("footer", { style: {
-      background: "#040710",
-      borderTop: "1px solid var(--border-subtle)",
-      paddingTop: "64px",
-      paddingBottom: "90px",
-      // Extra bottom padding for mobile action bar
-      color: "var(--text-secondary)",
-      fontSize: "0.9rem"
-    } }, /* @__PURE__ */ React.createElement("div", { className: "container-custom" }, /* @__PURE__ */ React.createElement("div", { style: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-      gap: "40px",
-      marginBottom: "48px"
-    } }, /* @__PURE__ */ React.createElement("div", { style: { maxWidth: "340px" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" } }, /* @__PURE__ */ React.createElement("div", { style: {
-      width: "42px",
-      height: "42px",
-      borderRadius: "10px",
-      background: "#ffffff",
-      padding: "4px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    } }, /* @__PURE__ */ React.createElement("img", { src: "/assets/logo.svg", alt: "SCIMEE Logo", style: { width: "100%", height: "100%", objectFit: "contain" } })), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "1.35rem", fontWeight: "900", color: "#fff", letterSpacing: "1px" } }, site_config_default.brand.name)), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "0.85rem", color: "var(--text-muted)", lineHeight: "1.6", marginBottom: "14px" } }, site_config_default.brand.fullName), /* @__PURE__ */ React.createElement("div", { className: "urdu-font", style: { fontSize: "1.25rem", color: "#fde68a", fontWeight: "700", marginBottom: "8px" } }, site_config_default.brand.taglineUrdu), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "0.8rem", color: "var(--text-muted)" } }, "Under the direct mentorship of ", /* @__PURE__ */ React.createElement("strong", null, site_config_default.brand.founder), ".")), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h4", { style: { fontSize: "1rem", fontWeight: "800", color: "#fff", marginBottom: "16px", letterSpacing: "0.5px" } }, "Academic Programs"), /* @__PURE__ */ React.createElement("ul", { style: { listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" } }, /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", { href: "#courses", style: { color: "var(--text-secondary)", textDecoration: "none", transition: "color var(--transition-fast)" }, onMouseOver: (e) => e.currentTarget.style.color = "#fff", onMouseOut: (e) => e.currentTarget.style.color = "var(--text-secondary)" }, "NEET Repeater / Dropper Batch")), /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", { href: "#courses", style: { color: "var(--text-secondary)", textDecoration: "none", transition: "color var(--transition-fast)" }, onMouseOver: (e) => e.currentTarget.style.color = "#fff", onMouseOut: (e) => e.currentTarget.style.color = "var(--text-secondary)" }, "NEET Fresher (11th & 12th Integrated)")), /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", { href: "#courses", style: { color: "var(--text-secondary)", textDecoration: "none", transition: "color var(--transition-fast)" }, onMouseOver: (e) => e.currentTarget.style.color = "#fff", onMouseOut: (e) => e.currentTarget.style.color = "var(--text-secondary)" }, "Pre-Foundation (Class 5th\u201310th)")), /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", { href: "#courses", style: { color: "var(--text-secondary)", textDecoration: "none", transition: "color var(--transition-fast)" }, onMouseOver: (e) => e.currentTarget.style.color = "#fff", onMouseOut: (e) => e.currentTarget.style.color = "var(--text-secondary)" }, "MHT-CET & JEE Foundation")), /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", { href: "#syllabus", style: { color: "var(--accent-gold-light)", textDecoration: "none", fontWeight: "700" } }, "Official NEET 2026 Syllabus \u2192")))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h4", { style: { fontSize: "1rem", fontWeight: "800", color: "#fff", marginBottom: "16px", letterSpacing: "0.5px" } }, "Explore"), /* @__PURE__ */ React.createElement("ul", { style: { listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" } }, site_config_default.navigation.map((item) => /* @__PURE__ */ React.createElement("li", { key: item.label }, /* @__PURE__ */ React.createElement(
-      "a",
-      {
-        href: item.href,
-        style: { color: "var(--text-secondary)", textDecoration: "none", transition: "color var(--transition-fast)" },
-        onMouseOver: (e) => e.currentTarget.style.color = "#fff",
-        onMouseOut: (e) => e.currentTarget.style.color = "var(--text-secondary)"
-      },
-      item.label
-    ))))), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h4", { style: { fontSize: "1rem", fontWeight: "800", color: "#fff", marginBottom: "16px", letterSpacing: "0.5px" } }, "Contact & Helplines"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "12px" } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "flex-start", gap: "10px" } }, /* @__PURE__ */ React.createElement(MapPin, { size: 18, color: "var(--accent-gold)", style: { flexShrink: 0, marginTop: "2px" } }), /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.85rem" } }, site_config_default.location.addressLine1, ", ", site_config_default.location.addressLine2, ", ", site_config_default.location.city, " (", site_config_default.location.pincode, ")")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: "10px" } }, /* @__PURE__ */ React.createElement(Phone, { size: 18, color: "var(--accent-blue)", style: { flexShrink: 0 } }), /* @__PURE__ */ React.createElement(
-      "button",
-      {
-        onClick: onOpenCallModal,
         style: {
-          background: "none",
-          border: "none",
-          color: "#fff",
-          fontWeight: "700",
-          fontSize: "0.9rem",
-          cursor: "pointer",
-          padding: 0,
-          textDecoration: "underline"
+          padding: "7px 14px",
+          fontSize: "0.82rem",
+          textDecoration: "none",
+          display: "inline-flex"
         }
       },
-      site_config_default.contact.primaryPhoneFormatted,
-      " / ",
-      site_config_default.contact.secondaryPhoneFormatted
-    )), /* @__PURE__ */ React.createElement("div", { style: { paddingTop: "8px" } }, /* @__PURE__ */ React.createElement(
-      "button",
-      {
-        onClick: onOpenCallModal,
-        className: "btn-primary",
-        style: { width: "100%", padding: "10px 16px", fontSize: "0.85rem" }
-      },
-      /* @__PURE__ */ React.createElement("span", null, "Request Callback")
-    ))))), /* @__PURE__ */ React.createElement("div", { style: {
-      paddingTop: "28px",
+      /* @__PURE__ */ import_react12.default.createElement(MessageCircle, { size: 15 }),
+      /* @__PURE__ */ import_react12.default.createElement("span", null, "WhatsApp Enquiry")
+    )))), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("h4", { style: { fontSize: "0.88rem", fontWeight: "800", color: "#fff", marginBottom: "14px", textTransform: "uppercase", letterSpacing: "0.04em" } }, "Campus Address"), /* @__PURE__ */ import_react12.default.createElement("div", { style: { display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "0.86rem", lineHeight: "1.5", marginBottom: "10px" } }, /* @__PURE__ */ import_react12.default.createElement(MapPin, { size: 16, color: "var(--accent-gold)", style: { flexShrink: 0, marginTop: "2px" } }), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("strong", null, site_config_default.location.landmark), /* @__PURE__ */ import_react12.default.createElement("br", null), site_config_default.location.addressLine1, ", ", site_config_default.location.addressLine2, /* @__PURE__ */ import_react12.default.createElement("br", null), site_config_default.location.city, " - ", site_config_default.location.pincode, ", ", site_config_default.location.state)), /* @__PURE__ */ import_react12.default.createElement("div", { style: { fontSize: "0.78rem", color: "var(--text-tertiary)" } }, /* @__PURE__ */ import_react12.default.createElement("strong", null, "Hours:"), " ", site_config_default.contact.operatingHours.weekdays))), /* @__PURE__ */ import_react12.default.createElement("div", { style: {
       borderTop: "1px solid var(--border-subtle)",
+      paddingTop: "20px",
       display: "flex",
       flexWrap: "wrap",
       alignItems: "center",
       justifyContent: "space-between",
-      gap: "16px",
-      fontSize: "0.82rem",
-      color: "var(--text-muted)"
-    } }, /* @__PURE__ */ React.createElement("div", null, "\xA9 ", (/* @__PURE__ */ new Date()).getFullYear(), " ", site_config_default.brand.name, " (", site_config_default.brand.fullName, "). All rights reserved."), /* @__PURE__ */ React.createElement(
-      "button",
-      {
-        onClick: scrollToTop,
-        style: {
-          background: "rgba(255, 255, 255, 0.06)",
-          border: "1px solid var(--border-subtle)",
-          color: "#fff",
-          padding: "6px 14px",
-          borderRadius: "9999px",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          gap: "6px",
-          fontSize: "0.78rem"
-        }
-      },
-      /* @__PURE__ */ React.createElement("span", null, "Back to Top"),
-      /* @__PURE__ */ React.createElement(ArrowUp, { size: 14 })
-    ))));
+      gap: "10px",
+      fontSize: "0.78rem",
+      color: "var(--text-tertiary)"
+    } }, /* @__PURE__ */ import_react12.default.createElement("div", null, "\xA9 ", currentYear, " ", site_config_default.brand.fullName, ". All rights reserved."), /* @__PURE__ */ import_react12.default.createElement("div", null, "Excellence in Medical Entrance Examination Coaching."))));
   }
 
   // src/components/PhoneCallModal.jsx
-  var import_react9 = __toESM(require_react(), 1);
+  var import_react13 = __toESM(require_react(), 1);
   function PhoneCallModal({ isOpen, onClose }) {
-    const [callbackRequested, setCallbackRequested] = (0, import_react9.useState)(false);
-    const [phoneNumber, setPhoneNumber] = (0, import_react9.useState)("");
-    const [studentName, setStudentName] = (0, import_react9.useState)("");
-    const [selectedCourse, setSelectedCourse] = (0, import_react9.useState)("NEET Repeater");
-    const [formError, setFormError] = (0, import_react9.useState)("");
-    (0, import_react9.useEffect)(() => {
+    const [callbackRequested, setCallbackRequested] = (0, import_react13.useState)(false);
+    const [phoneNumber, setPhoneNumber] = (0, import_react13.useState)("");
+    const [studentName, setStudentName] = (0, import_react13.useState)("");
+    const [selectedCourse, setSelectedCourse] = (0, import_react13.useState)("NEET Repeater");
+    const [formError, setFormError] = (0, import_react13.useState)("");
+    (0, import_react13.useEffect)(() => {
       const handleKeyDown = (e) => {
         if (e.key === "Escape" && isOpen) {
           onClose();
@@ -23840,7 +23777,7 @@
       window.addEventListener("keydown", handleKeyDown);
       return () => window.removeEventListener("keydown", handleKeyDown);
     }, [isOpen, onClose]);
-    (0, import_react9.useEffect)(() => {
+    (0, import_react13.useEffect)(() => {
       if (isOpen) {
         document.body.style.overflow = "hidden";
       } else {
@@ -23870,37 +23807,38 @@
     const whatsappUrl = `https://wa.me/${site_config_default.contact.whatsappNumber}?text=${encodeURIComponent(
       site_config_default.contact.whatsappPrefillText
     )}`;
-    return /* @__PURE__ */ React.createElement("div", { className: "modal-backdrop", onClick: onClose, role: "dialog", "aria-modal": "true", "aria-labelledby": "call-modal-title" }, /* @__PURE__ */ React.createElement(
+    return /* @__PURE__ */ import_react13.default.createElement("div", { className: "modal-backdrop", onClick: onClose, role: "dialog", "aria-modal": "true", "aria-labelledby": "call-modal-title" }, /* @__PURE__ */ import_react13.default.createElement(
       "div",
       {
         className: "modal-card",
         onClick: (e) => e.stopPropagation()
       },
-      /* @__PURE__ */ React.createElement("div", { style: {
-        background: "linear-gradient(135deg, #0b132b 0%, #1c2541 100%)",
-        padding: "22px 24px",
+      /* @__PURE__ */ import_react13.default.createElement("div", { className: "modal-grab-handle" }),
+      /* @__PURE__ */ import_react13.default.createElement("div", { style: {
+        background: "linear-gradient(135deg, #0f1a36 0%, #152244 100%)",
+        padding: "20px 24px",
         borderBottom: "1px solid var(--border-subtle)",
-        position: "relative",
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between"
-      } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { className: "badge-gold", style: { marginBottom: "6px" } }, "Direct Helpline"), /* @__PURE__ */ React.createElement("h3", { id: "call-modal-title", style: { fontSize: "1.25rem", fontWeight: "800", color: "#fff", letterSpacing: "-0.02em" } }, "Connect with SCIMEE"), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "0.84rem", color: "var(--text-secondary)", marginTop: "2px" } }, "Sara Coaching Institute of Medical Entrance Examination")), /* @__PURE__ */ React.createElement(
+        justifyContent: "space-between",
+        position: "relative"
+      } }, /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("div", { className: "badge-gold", style: { marginBottom: "4px" } }, "Direct Admissions Line"), /* @__PURE__ */ import_react13.default.createElement("h3", { id: "call-modal-title", style: { fontSize: "1.2rem", fontWeight: "800", color: "#fff", letterSpacing: "-0.02em" } }, "Connect with SCIMEE"), /* @__PURE__ */ import_react13.default.createElement("p", { style: { fontSize: "0.8rem", color: "var(--text-secondary)", marginTop: "2px" } }, "Sara Coaching Institute of Medical Entrance Examination")), /* @__PURE__ */ import_react13.default.createElement(
         "button",
         {
           onClick: resetAndClose,
-          "aria-label": "Close modal",
+          "aria-label": "Close dialog",
           style: {
             background: "rgba(255, 255, 255, 0.08)",
             border: "none",
             borderRadius: "50%",
-            width: "36px",
-            height: "36px",
+            width: "32px",
+            height: "32px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             color: "var(--text-secondary)",
             cursor: "pointer",
-            transition: "all 150ms ease"
+            transition: "all 120ms ease"
           },
           onMouseOver: (e) => {
             e.currentTarget.style.background = "rgba(255, 255, 255, 0.16)";
@@ -23911,50 +23849,51 @@
             e.currentTarget.style.color = "var(--text-secondary)";
           }
         },
-        /* @__PURE__ */ React.createElement(X, { size: 18 })
+        /* @__PURE__ */ import_react13.default.createElement(X, { size: 17 })
       )),
-      /* @__PURE__ */ React.createElement("div", { style: { padding: "24px", maxHeight: "80vh", overflowY: "auto" } }, /* @__PURE__ */ React.createElement("div", { style: {
+      /* @__PURE__ */ import_react13.default.createElement("div", { style: { padding: "22px 24px", maxHeight: "78vh", overflowY: "auto" } }, /* @__PURE__ */ import_react13.default.createElement("div", { style: {
         display: "flex",
         alignItems: "center",
-        gap: "12px",
+        gap: "10px",
         background: "rgba(56, 189, 248, 0.08)",
-        border: "1px solid rgba(56, 189, 248, 0.2)",
-        padding: "10px 14px",
-        borderRadius: "10px",
-        marginBottom: "20px"
-      } }, /* @__PURE__ */ React.createElement(Clock, { size: 18, color: "var(--accent-blue)", style: { flexShrink: 0 } }), /* @__PURE__ */ React.createElement("div", { style: { fontSize: "0.82rem", color: "var(--text-primary)" } }, /* @__PURE__ */ React.createElement("strong", null, "Hours:"), " ", site_config_default.contact.operatingHours.weekdays, " (Sun: ", site_config_default.contact.operatingHours.sunday, ")")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "12px", marginBottom: "22px" } }, /* @__PURE__ */ React.createElement(
+        border: "1px solid rgba(56, 189, 248, 0.22)",
+        borderTop: "1px solid rgba(56, 189, 248, 0.4)",
+        padding: "9px 12px",
+        borderRadius: "var(--radius-sm)",
+        marginBottom: "18px"
+      } }, /* @__PURE__ */ import_react13.default.createElement(Clock, { size: 16, color: "var(--accent-blue)", style: { flexShrink: 0 } }), /* @__PURE__ */ import_react13.default.createElement("div", { style: { fontSize: "0.8rem", color: "#e2e8f0" } }, /* @__PURE__ */ import_react13.default.createElement("strong", null, "Hours:"), " ", site_config_default.contact.operatingHours.weekdays, " (Sun: ", site_config_default.contact.operatingHours.sunday, ")")), /* @__PURE__ */ import_react13.default.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px" } }, /* @__PURE__ */ import_react13.default.createElement(
         "a",
         {
           href: `tel:${site_config_default.contact.primaryPhone}`,
           className: "btn-primary",
           style: {
             width: "100%",
-            padding: "14px 20px",
-            fontSize: "1.02rem",
-            display: "flex",
-            justifyContent: "space-between",
-            textDecoration: "none"
-          }
-        },
-        /* @__PURE__ */ React.createElement("span", { style: { display: "flex", alignItems: "center", gap: "10px" } }, /* @__PURE__ */ React.createElement(PhoneCall, { size: 20 }), /* @__PURE__ */ React.createElement("span", null, "Call Primary Helpline")),
-        /* @__PURE__ */ React.createElement("span", { style: { fontWeight: "800", letterSpacing: "0.5px" } }, site_config_default.contact.primaryPhoneFormatted)
-      ), /* @__PURE__ */ React.createElement(
-        "a",
-        {
-          href: `tel:${site_config_default.contact.secondaryPhone}`,
-          className: "btn-secondary",
-          style: {
-            width: "100%",
-            padding: "13px 20px",
+            padding: "13px 18px",
             fontSize: "0.98rem",
             display: "flex",
             justifyContent: "space-between",
             textDecoration: "none"
           }
         },
-        /* @__PURE__ */ React.createElement("span", { style: { display: "flex", alignItems: "center", gap: "10px" } }, /* @__PURE__ */ React.createElement(Phone, { size: 18, color: "var(--accent-gold)" }), /* @__PURE__ */ React.createElement("span", null, "Call Secondary Line")),
-        /* @__PURE__ */ React.createElement("span", { style: { fontWeight: "700", letterSpacing: "0.5px" } }, site_config_default.contact.secondaryPhoneFormatted)
-      ), /* @__PURE__ */ React.createElement(
+        /* @__PURE__ */ import_react13.default.createElement("span", { style: { display: "flex", alignItems: "center", gap: "8px" } }, /* @__PURE__ */ import_react13.default.createElement(PhoneCall, { size: 18 }), /* @__PURE__ */ import_react13.default.createElement("span", null, "Call Primary Line")),
+        /* @__PURE__ */ import_react13.default.createElement("span", { style: { fontWeight: "900", letterSpacing: "0.02em" } }, site_config_default.contact.primaryPhoneFormatted)
+      ), /* @__PURE__ */ import_react13.default.createElement(
+        "a",
+        {
+          href: `tel:${site_config_default.contact.secondaryPhone}`,
+          className: "btn-secondary",
+          style: {
+            width: "100%",
+            padding: "12px 18px",
+            fontSize: "0.94rem",
+            display: "flex",
+            justifyContent: "space-between",
+            textDecoration: "none"
+          }
+        },
+        /* @__PURE__ */ import_react13.default.createElement("span", { style: { display: "flex", alignItems: "center", gap: "8px" } }, /* @__PURE__ */ import_react13.default.createElement(Phone, { size: 17, color: "var(--accent-gold)" }), /* @__PURE__ */ import_react13.default.createElement("span", null, "Secondary Line")),
+        /* @__PURE__ */ import_react13.default.createElement("span", { style: { fontWeight: "700", letterSpacing: "0.02em" } }, site_config_default.contact.secondaryPhoneFormatted)
+      ), /* @__PURE__ */ import_react13.default.createElement(
         "a",
         {
           href: whatsappUrl,
@@ -23963,37 +23902,39 @@
           className: "btn-whatsapp",
           style: {
             width: "100%",
-            padding: "13px 20px",
-            fontSize: "0.98rem",
+            padding: "12px 18px",
+            fontSize: "0.94rem",
             display: "flex",
             justifyContent: "space-between",
             textDecoration: "none"
           }
         },
-        /* @__PURE__ */ React.createElement("span", { style: { display: "flex", alignItems: "center", gap: "10px" } }, /* @__PURE__ */ React.createElement(MessageCircle, { size: 19 }), /* @__PURE__ */ React.createElement("span", null, "Chat on WhatsApp")),
-        /* @__PURE__ */ React.createElement("span", { style: { fontSize: "0.85rem", fontWeight: "700" } }, "Instant Reply \u2192")
-      )), /* @__PURE__ */ React.createElement("div", { style: {
+        /* @__PURE__ */ import_react13.default.createElement("span", { style: { display: "flex", alignItems: "center", gap: "8px" } }, /* @__PURE__ */ import_react13.default.createElement(MessageCircle, { size: 18 }), /* @__PURE__ */ import_react13.default.createElement("span", null, "WhatsApp Enquiry")),
+        /* @__PURE__ */ import_react13.default.createElement("span", { style: { fontSize: "0.82rem", fontWeight: "800" } }, "Instant Reply \u2192")
+      )), /* @__PURE__ */ import_react13.default.createElement("div", { style: {
         display: "flex",
         alignItems: "center",
-        gap: "12px",
-        margin: "20px 0",
-        color: "var(--text-muted)",
-        fontSize: "0.8rem"
-      } }, /* @__PURE__ */ React.createElement("div", { style: { flex: 1, height: "1px", background: "var(--border-subtle)" } }), /* @__PURE__ */ React.createElement("span", null, "OR REQUEST A CALLBACK"), /* @__PURE__ */ React.createElement("div", { style: { flex: 1, height: "1px", background: "var(--border-subtle)" } })), callbackRequested ? /* @__PURE__ */ React.createElement("div", { style: {
+        gap: "10px",
+        margin: "18px 0",
+        color: "var(--text-tertiary)",
+        fontSize: "0.74rem",
+        letterSpacing: "0.05em"
+      } }, /* @__PURE__ */ import_react13.default.createElement("div", { style: { flex: 1, height: "1px", background: "var(--border-subtle)" } }), /* @__PURE__ */ import_react13.default.createElement("span", null, "OR REQUEST A CALLBACK"), /* @__PURE__ */ import_react13.default.createElement("div", { style: { flex: 1, height: "1px", background: "var(--border-subtle)" } })), callbackRequested ? /* @__PURE__ */ import_react13.default.createElement("div", { style: {
         background: "rgba(16, 185, 129, 0.1)",
         border: "1px solid rgba(16, 185, 129, 0.3)",
-        borderRadius: "12px",
-        padding: "20px",
+        borderTop: "1px solid rgba(52, 211, 153, 0.5)",
+        borderRadius: "var(--radius-md)",
+        padding: "18px",
         textAlign: "center"
-      } }, /* @__PURE__ */ React.createElement(CircleCheck, { size: 36, color: "var(--accent-emerald)", style: { margin: "0 auto 10px" } }), /* @__PURE__ */ React.createElement("h4", { style: { color: "#fff", fontSize: "1.05rem", fontWeight: "700", marginBottom: "4px" } }, "Callback Request Received!"), /* @__PURE__ */ React.createElement("p", { style: { fontSize: "0.85rem", color: "var(--text-secondary)" } }, "Our admissions counselor will call you shortly at ", /* @__PURE__ */ React.createElement("strong", null, phoneNumber), "."), /* @__PURE__ */ React.createElement(
+      } }, /* @__PURE__ */ import_react13.default.createElement(CircleCheck, { size: 32, color: "var(--accent-emerald)", style: { margin: "0 auto 8px" } }), /* @__PURE__ */ import_react13.default.createElement("h4", { style: { color: "#fff", fontSize: "1rem", fontWeight: "800", marginBottom: "4px" } }, "Callback Request Received!"), /* @__PURE__ */ import_react13.default.createElement("p", { style: { fontSize: "0.82rem", color: "var(--text-secondary)" } }, "Our faculty counselor will call you shortly at ", /* @__PURE__ */ import_react13.default.createElement("strong", null, phoneNumber), "."), /* @__PURE__ */ import_react13.default.createElement(
         "button",
         {
           onClick: resetAndClose,
           className: "btn-secondary",
-          style: { marginTop: "14px", width: "100%", padding: "10px" }
+          style: { marginTop: "12px", width: "100%", padding: "9px" }
         },
-        "Close"
-      )) : /* @__PURE__ */ React.createElement("form", { onSubmit: handleCallbackSubmit, style: { display: "flex", flexDirection: "column", gap: "12px" } }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("label", { style: { display: "block", fontSize: "0.8rem", color: "var(--text-secondary)", marginBottom: "4px", fontWeight: "600" } }, "Student / Parent Name (Optional)"), /* @__PURE__ */ React.createElement(
+        "Done"
+      )) : /* @__PURE__ */ import_react13.default.createElement("form", { onSubmit: handleCallbackSubmit, style: { display: "flex", flexDirection: "column", gap: "10px" } }, /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("label", { style: { display: "block", fontSize: "0.76rem", color: "var(--text-secondary)", marginBottom: "3px", fontWeight: "600" } }, "Student / Parent Name (Optional)"), /* @__PURE__ */ import_react13.default.createElement(
         "input",
         {
           type: "text",
@@ -24002,16 +23943,16 @@
           onChange: (e) => setStudentName(e.target.value),
           style: {
             width: "100%",
-            padding: "11px 14px",
-            borderRadius: "8px",
-            background: "var(--bg-input)",
+            padding: "10px 12px",
+            borderRadius: "var(--radius-sm)",
+            background: "var(--apple-bg-input)",
             border: "1px solid var(--border-subtle)",
             color: "#fff",
-            fontSize: "0.9rem",
+            fontSize: "0.88rem",
             outline: "none"
           }
         }
-      )), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("label", { style: { display: "block", fontSize: "0.8rem", color: "var(--text-secondary)", marginBottom: "4px", fontWeight: "600" } }, "Mobile Number ", /* @__PURE__ */ React.createElement("span", { style: { color: "#f87171" } }, "*")), /* @__PURE__ */ React.createElement(
+      )), /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("label", { style: { display: "block", fontSize: "0.76rem", color: "var(--text-secondary)", marginBottom: "3px", fontWeight: "600" } }, "Mobile Number ", /* @__PURE__ */ import_react13.default.createElement("span", { style: { color: "#f87171" } }, "*")), /* @__PURE__ */ import_react13.default.createElement(
         "input",
         {
           type: "tel",
@@ -24021,68 +23962,69 @@
           onChange: (e) => setPhoneNumber(e.target.value),
           style: {
             width: "100%",
-            padding: "11px 14px",
-            borderRadius: "8px",
-            background: "var(--bg-input)",
+            padding: "10px 12px",
+            borderRadius: "var(--radius-sm)",
+            background: "var(--apple-bg-input)",
             border: formError ? "1px solid #ef4444" : "1px solid var(--border-subtle)",
             color: "#fff",
-            fontSize: "0.9rem",
+            fontSize: "0.88rem",
             outline: "none"
           }
         }
-      ), formError && /* @__PURE__ */ React.createElement("p", { style: { color: "#f87171", fontSize: "0.75rem", marginTop: "4px" } }, formError)), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("label", { style: { display: "block", fontSize: "0.8rem", color: "var(--text-secondary)", marginBottom: "4px", fontWeight: "600" } }, "Interested Batch"), /* @__PURE__ */ React.createElement(
+      ), formError && /* @__PURE__ */ import_react13.default.createElement("p", { style: { color: "#f87171", fontSize: "0.72rem", marginTop: "3px" } }, formError)), /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("label", { style: { display: "block", fontSize: "0.76rem", color: "var(--text-secondary)", marginBottom: "3px", fontWeight: "600" } }, "Target Batch"), /* @__PURE__ */ import_react13.default.createElement(
         "select",
         {
           value: selectedCourse,
           onChange: (e) => setSelectedCourse(e.target.value),
           style: {
             width: "100%",
-            padding: "11px 14px",
-            borderRadius: "8px",
-            background: "#0b1220",
+            padding: "10px 12px",
+            borderRadius: "var(--radius-sm)",
+            background: "#090f1d",
             border: "1px solid var(--border-subtle)",
             color: "#fff",
-            fontSize: "0.9rem",
+            fontSize: "0.88rem",
             outline: "none"
           }
         },
-        /* @__PURE__ */ React.createElement("option", { value: "NEET Repeater" }, "NEET Repeater / Dropper Batch"),
-        /* @__PURE__ */ React.createElement("option", { value: "NEET 11th/12th Integrated" }, "NEET 11th & 12th Integrated"),
-        /* @__PURE__ */ React.createElement("option", { value: "Pre-Foundation 5th-10th" }, "Pre-Foundation (Class 5th - 10th)"),
-        /* @__PURE__ */ React.createElement("option", { value: "MHT-CET / JEE" }, "MHT-CET & JEE Foundation")
-      )), /* @__PURE__ */ React.createElement(
+        /* @__PURE__ */ import_react13.default.createElement("option", { value: "NEET Repeater" }, "NEET Repeater / Dropper Batch"),
+        /* @__PURE__ */ import_react13.default.createElement("option", { value: "NEET 11th/12th Integrated" }, "NEET 11th & 12th Integrated"),
+        /* @__PURE__ */ import_react13.default.createElement("option", { value: "Pre-Foundation 5th-10th" }, "Pre-Foundation (Class 5th - 10th)"),
+        /* @__PURE__ */ import_react13.default.createElement("option", { value: "MHT-CET / JEE" }, "MHT-CET & JEE Foundation")
+      )), /* @__PURE__ */ import_react13.default.createElement(
         "button",
         {
           type: "submit",
           className: "btn-primary",
           style: {
             width: "100%",
-            marginTop: "6px",
-            padding: "12px",
-            fontSize: "0.95rem"
+            marginTop: "4px",
+            padding: "11px",
+            fontSize: "0.92rem"
           }
         },
-        /* @__PURE__ */ React.createElement("span", null, "Submit Callback Request"),
-        /* @__PURE__ */ React.createElement(ArrowRight, { size: 16 })
-      )), /* @__PURE__ */ React.createElement("div", { style: {
+        /* @__PURE__ */ import_react13.default.createElement("span", null, "Request Call Back"),
+        /* @__PURE__ */ import_react13.default.createElement(ArrowRight, { size: 15 })
+      )), /* @__PURE__ */ import_react13.default.createElement("div", { style: {
         display: "flex",
         alignItems: "flex-start",
         gap: "8px",
-        marginTop: "20px",
-        paddingTop: "16px",
+        marginTop: "16px",
+        paddingTop: "12px",
         borderTop: "1px solid var(--border-subtle)",
-        fontSize: "0.78rem",
-        color: "var(--text-muted)"
-      } }, /* @__PURE__ */ React.createElement(MapPin, { size: 15, color: "var(--accent-gold)", style: { flexShrink: 0, marginTop: "2px" } }), /* @__PURE__ */ React.createElement("span", null, site_config_default.location.addressLine1, ", ", site_config_default.location.addressLine2, ", ", site_config_default.location.city, " - ", site_config_default.location.pincode)))
+        fontSize: "0.74rem",
+        color: "var(--text-tertiary)"
+      } }, /* @__PURE__ */ import_react13.default.createElement(MapPin, { size: 14, color: "var(--accent-gold)", style: { flexShrink: 0, marginTop: "2px" } }), /* @__PURE__ */ import_react13.default.createElement("span", null, site_config_default.location.addressLine1, ", ", site_config_default.location.addressLine2, ", ", site_config_default.location.city, " - ", site_config_default.location.pincode)))
     ));
   }
 
   // src/components/MobileActionBar.jsx
+  var import_react14 = __toESM(require_react(), 1);
   function MobileActionBar({ onOpenCallModal }) {
     const whatsappUrl = `https://wa.me/${site_config_default.contact.whatsappNumber}?text=${encodeURIComponent(
       site_config_default.contact.whatsappPrefillText
     )}`;
-    return /* @__PURE__ */ React.createElement(
+    return /* @__PURE__ */ import_react14.default.createElement(
       "div",
       {
         style: {
@@ -24091,36 +24033,35 @@
           left: 0,
           right: 0,
           zIndex: 90,
-          background: "rgba(6, 9, 19, 0.95)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          borderTop: "1px solid var(--border-subtle)",
-          padding: "10px 14px",
-          boxShadow: "0 -8px 24px rgba(0, 0, 0, 0.6)"
+          background: "rgba(3, 7, 18, 0.88)",
+          backdropFilter: "blur(28px) saturate(190%)",
+          WebkitBackdropFilter: "blur(28px) saturate(190%)",
+          borderTop: "1px solid var(--border-specular-top)",
+          padding: "9px 14px 12px 14px",
+          boxShadow: "0 -10px 30px rgba(0, 0, 0, 0.6)"
         },
         className: "mobile-action-bar"
       },
-      /* @__PURE__ */ React.createElement("div", { style: {
+      /* @__PURE__ */ import_react14.default.createElement("div", { style: {
         display: "grid",
-        gridTemplateColumns: "1.2fr 1fr 1fr",
+        gridTemplateColumns: "1.25fr 1fr 1fr",
         gap: "8px",
-        maxWidth: "500px",
+        maxWidth: "480px",
         margin: "0 auto"
-      } }, /* @__PURE__ */ React.createElement(
+      } }, /* @__PURE__ */ import_react14.default.createElement(
         "button",
         {
           onClick: onOpenCallModal,
           className: "btn-primary",
           style: {
-            padding: "10px 12px",
-            fontSize: "0.85rem",
-            borderRadius: "10px",
-            boxShadow: "0 2px 10px rgba(245, 158, 11, 0.3)"
+            padding: "9px 12px",
+            fontSize: "0.82rem",
+            borderRadius: "10px"
           }
         },
-        /* @__PURE__ */ React.createElement(PhoneCall, { size: 16 }),
-        /* @__PURE__ */ React.createElement("span", null, "Call Now")
-      ), /* @__PURE__ */ React.createElement(
+        /* @__PURE__ */ import_react14.default.createElement(PhoneCall, { size: 15 }),
+        /* @__PURE__ */ import_react14.default.createElement("span", null, "Call Now")
+      ), /* @__PURE__ */ import_react14.default.createElement(
         "a",
         {
           href: whatsappUrl,
@@ -24128,63 +24069,57 @@
           rel: "noopener noreferrer",
           className: "btn-whatsapp",
           style: {
-            padding: "10px 12px",
-            fontSize: "0.85rem",
+            padding: "9px 12px",
+            fontSize: "0.82rem",
             borderRadius: "10px",
             textDecoration: "none",
             justifyContent: "center"
           }
         },
-        /* @__PURE__ */ React.createElement(MessageCircle, { size: 16 }),
-        /* @__PURE__ */ React.createElement("span", null, "WhatsApp")
-      ), /* @__PURE__ */ React.createElement(
+        /* @__PURE__ */ import_react14.default.createElement(MessageCircle, { size: 15 }),
+        /* @__PURE__ */ import_react14.default.createElement("span", null, "WhatsApp")
+      ), /* @__PURE__ */ import_react14.default.createElement(
         "a",
         {
           href: "#syllabus",
           className: "btn-secondary",
           style: {
-            padding: "10px 10px",
-            fontSize: "0.85rem",
+            padding: "9px 10px",
+            fontSize: "0.82rem",
             borderRadius: "10px",
             textDecoration: "none",
-            justifyContent: "center",
-            background: "rgba(255, 255, 255, 0.08)"
+            justifyContent: "center"
           }
         },
-        /* @__PURE__ */ React.createElement(BookOpen, { size: 15, color: "var(--accent-blue)" }),
-        /* @__PURE__ */ React.createElement("span", null, "Syllabus")
-      )),
-      /* @__PURE__ */ React.createElement("style", { jsx: true }, `
-        @media (min-width: 768px) {
-          :global(.mobile-action-bar) {
-            display: none !important;
-          }
-        }
-      `)
+        /* @__PURE__ */ import_react14.default.createElement(BookOpen, { size: 14, color: "var(--accent-blue)" }),
+        /* @__PURE__ */ import_react14.default.createElement("span", null, "Syllabus")
+      ))
     );
   }
 
   // src/App.jsx
   function App() {
-    const [isCallModalOpen, setIsCallModalOpen] = (0, import_react10.useState)(false);
+    const [isCallModalOpen, setIsCallModalOpen] = (0, import_react15.useState)(false);
     const openCallModal = () => setIsCallModalOpen(true);
     const closeCallModal = () => setIsCallModalOpen(false);
-    return /* @__PURE__ */ React.createElement("div", { style: { position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column" } }, /* @__PURE__ */ React.createElement(Header, { onOpenCallModal: openCallModal }), /* @__PURE__ */ React.createElement("main", { style: { flex: "1" } }, /* @__PURE__ */ React.createElement(Hero, { onOpenCallModal: openCallModal }), /* @__PURE__ */ React.createElement(ToppersSection, { onOpenCallModal: openCallModal }), /* @__PURE__ */ React.createElement(CourseExplorer, { onOpenCallModal: openCallModal }), /* @__PURE__ */ React.createElement(SyllabusExplorer, { onOpenCallModal: openCallModal }), /* @__PURE__ */ React.createElement(FacilitiesSection, { onOpenCallModal: openCallModal }), /* @__PURE__ */ React.createElement(MapLocation, { onOpenCallModal: openCallModal }), /* @__PURE__ */ React.createElement(FAQSection, { onOpenCallModal: openCallModal })), /* @__PURE__ */ React.createElement(Footer, { onOpenCallModal: openCallModal }), /* @__PURE__ */ React.createElement(PhoneCallModal, { isOpen: isCallModalOpen, onClose: closeCallModal }), /* @__PURE__ */ React.createElement(MobileActionBar, { onOpenCallModal: openCallModal }));
+    return /* @__PURE__ */ import_react15.default.createElement("div", { className: "apple-bg-mesh", style: { position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column" } }, /* @__PURE__ */ import_react15.default.createElement(Header, { onOpenCallModal: openCallModal }), /* @__PURE__ */ import_react15.default.createElement("main", { style: { flex: "1" } }, /* @__PURE__ */ import_react15.default.createElement(Hero, { onOpenCallModal: openCallModal }), /* @__PURE__ */ import_react15.default.createElement(ToppersSection, { onOpenCallModal: openCallModal }), /* @__PURE__ */ import_react15.default.createElement(CourseExplorer, { onOpenCallModal: openCallModal }), /* @__PURE__ */ import_react15.default.createElement(SyllabusExplorer, { onOpenCallModal: openCallModal }), /* @__PURE__ */ import_react15.default.createElement(FacilitiesSection, { onOpenCallModal: openCallModal }), /* @__PURE__ */ import_react15.default.createElement(MapLocation, { onOpenCallModal: openCallModal }), /* @__PURE__ */ import_react15.default.createElement(FAQSection, { onOpenCallModal: openCallModal })), /* @__PURE__ */ import_react15.default.createElement(Footer, { onOpenCallModal: openCallModal }), /* @__PURE__ */ import_react15.default.createElement(PhoneCallModal, { isOpen: isCallModalOpen, onClose: closeCallModal }), /* @__PURE__ */ import_react15.default.createElement(MobileActionBar, { onOpenCallModal: openCallModal }));
   }
 
   // src/main.jsx
   var container = document.getElementById("root");
   if (container) {
     const root = (0, import_client.createRoot)(container);
-    root.render(/* @__PURE__ */ React.createElement(App, null));
+    root.render(
+      /* @__PURE__ */ import_react16.default.createElement(import_react16.default.StrictMode, null, /* @__PURE__ */ import_react16.default.createElement(App, null))
+    );
   }
 })();
 /*! Bundled license information:
 
-scheduler/cjs/scheduler.development.js:
+react/cjs/react.development.js:
   (**
    * @license React
-   * scheduler.development.js
+   * react.development.js
    *
    * Copyright (c) Meta Platforms, Inc. and affiliates.
    *
@@ -24192,10 +24127,10 @@ scheduler/cjs/scheduler.development.js:
    * LICENSE file in the root directory of this source tree.
    *)
 
-react/cjs/react.development.js:
+scheduler/cjs/scheduler.development.js:
   (**
    * @license React
-   * react.development.js
+   * scheduler.development.js
    *
    * Copyright (c) Meta Platforms, Inc. and affiliates.
    *
@@ -24235,11 +24170,11 @@ lucide-react/dist/esm/context.mjs:
 lucide-react/dist/esm/Icon.mjs:
 lucide-react/dist/esm/createLucideIcon.mjs:
 lucide-react/dist/esm/icons/arrow-right.mjs:
-lucide-react/dist/esm/icons/arrow-up.mjs:
 lucide-react/dist/esm/icons/atom.mjs:
 lucide-react/dist/esm/icons/award.mjs:
 lucide-react/dist/esm/icons/book-open.mjs:
 lucide-react/dist/esm/icons/chevron-down.mjs:
+lucide-react/dist/esm/icons/chevron-right.mjs:
 lucide-react/dist/esm/icons/chevron-up.mjs:
 lucide-react/dist/esm/icons/circle-check.mjs:
 lucide-react/dist/esm/icons/circle-question-mark.mjs:
@@ -24258,6 +24193,7 @@ lucide-react/dist/esm/icons/phone-call.mjs:
 lucide-react/dist/esm/icons/phone.mjs:
 lucide-react/dist/esm/icons/search.mjs:
 lucide-react/dist/esm/icons/shield-check.mjs:
+lucide-react/dist/esm/icons/shield.mjs:
 lucide-react/dist/esm/icons/sparkles.mjs:
 lucide-react/dist/esm/icons/trophy.mjs:
 lucide-react/dist/esm/icons/user-check.mjs:
@@ -24272,4 +24208,3 @@ lucide-react/dist/esm/lucide-react.mjs:
    * See the LICENSE file in the root directory of this source tree.
    *)
 */
-//# sourceMappingURL=bundle.js.map

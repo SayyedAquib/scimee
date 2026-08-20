@@ -6,19 +6,19 @@ export default function FacilitiesSection({ onOpenCallModal }) {
   const getIcon = (iconName) => {
     switch (iconName) {
       case 'book-open':
-        return <BookOpen size={24} color="#f59e0b" />;
+        return <BookOpen size={22} color="#fbbf24" />;
       case 'graduation-cap':
-        return <GraduationCap size={24} color="#38bdf8" />;
+        return <GraduationCap size={22} color="#38bdf8" />;
       case 'clipboard-check':
-        return <ClipboardCheck size={24} color="#34d399" />;
+        return <ClipboardCheck size={22} color="#34d399" />;
       case 'user-check':
-        return <UserCheck size={24} color="#c084fc" />;
+        return <UserCheck size={22} color="#c084fc" />;
       case 'users':
-        return <Users size={24} color="#fbbf24" />;
+        return <Users size={22} color="#fbbf24" />;
       case 'shield-check':
-        return <ShieldCheck size={24} color="#34d399" />;
+        return <ShieldCheck size={22} color="#34d399" />;
       default:
-        return <Award size={24} color="#fbbf24" />;
+        return <Award size={22} color="#fbbf24" />;
     }
   };
 
@@ -26,53 +26,53 @@ export default function FacilitiesSection({ onOpenCallModal }) {
 
   return (
     <section id="facilities" style={{
-      paddingTop: '64px',
-      paddingBottom: '72px',
-      background: 'var(--bg-primary)',
+      paddingTop: 'clamp(48px, 8vw, 76px)',
+      paddingBottom: 'clamp(54px, 8vw, 84px)',
+      background: 'var(--apple-bg-base)',
       borderBottom: '1px solid var(--border-subtle)'
     }}>
       <div className="container-custom">
         
         {/* Section Header */}
-        <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 36px' }}>
+        <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 34px' }}>
           <div className="badge-emerald" style={{ marginBottom: '10px' }}>
-            <Shield size={14} />
+            <Shield size={13} />
             <span>Infrastructure &amp; Pedagogy</span>
           </div>
 
           <h2 style={{
-            fontSize: 'clamp(1.9rem, 4vw, 2.8rem)',
+            fontSize: 'clamp(2rem, 4.5vw, 3rem)',
             fontWeight: '900',
-            lineHeight: '1.2',
-            letterSpacing: '-0.02em',
-            marginBottom: '14px',
+            lineHeight: '1.14',
+            letterSpacing: '-0.03em',
+            marginBottom: '12px',
             color: '#ffffff'
           }}>
             {facilitiesData.sectionTitle || facilitiesData.title}
           </h2>
 
-          <p style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>
+          <p style={{ fontSize: '0.98rem', color: 'var(--text-secondary)' }}>
             {facilitiesData.sectionSubtitle || facilitiesData.subtitle}
           </p>
         </div>
 
-        {/* Feature Cards Grid */}
-        <div className="grid-responsive-2" style={{ marginBottom: '40px' }}>
+        {/* Feature Cards Grid (Apple Bento Grid) */}
+        <div className="grid-responsive-2" style={{ marginBottom: '36px' }}>
           {facilitiesList.map((feat) => (
             <div
               key={feat.id}
-              className="glass-panel"
+              className="apple-glass"
               style={{
-                padding: '28px',
-                border: '1px solid var(--border-subtle)',
+                padding: '24px',
                 display: 'flex',
-                gap: '20px'
+                gap: '18px',
+                alignItems: 'flex-start'
               }}
             >
               <div style={{
-                width: '54px',
-                height: '54px',
-                borderRadius: '14px',
+                width: '48px',
+                height: '48px',
+                borderRadius: '12px',
                 background: 'rgba(255, 255, 255, 0.05)',
                 display: 'flex',
                 alignItems: 'center',
@@ -84,17 +84,17 @@ export default function FacilitiesSection({ onOpenCallModal }) {
               </div>
 
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                  <h3 style={{ fontSize: '1.18rem', fontWeight: '800', color: '#fff' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#fff', letterSpacing: '-0.01em' }}>
                     {feat.title}
                   </h3>
                   {feat.tag && (
-                    <span className="badge-gold" style={{ fontSize: '0.65rem', padding: '1px 6px' }}>
+                    <span className="badge-gold" style={{ fontSize: '0.62rem', padding: '1px 6px' }}>
                       {feat.tag}
                     </span>
                   )}
                 </div>
-                <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
                   {feat.description}
                 </p>
               </div>
@@ -103,33 +103,33 @@ export default function FacilitiesSection({ onOpenCallModal }) {
         </div>
 
         {/* Library & Reading Room Highlight Callout */}
-        <div className="glass-panel-gold" style={{
-          padding: 'clamp(20px, 4vw, 36px)',
+        <div className="apple-glass-gold" style={{
+          padding: 'clamp(20px, 4vw, 32px)',
           display: 'flex',
           flexWrap: 'wrap',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '20px'
+          gap: '18px'
         }}>
           <div style={{ maxWidth: '680px' }}>
-            <span className="badge-gold" style={{ marginBottom: '8px' }}>
+            <span className="badge-gold" style={{ marginBottom: '6px' }}>
               Special Campus Facility
             </span>
-            <h3 style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.8rem)', fontWeight: '900', color: '#fff', marginBottom: '8px' }}>
-              Dedicated Quiet Reading Room &amp; Medical Entrance Reference Library
+            <h3 style={{ fontSize: 'clamp(1.25rem, 2.5vw, 1.7rem)', fontWeight: '900', color: '#fff', marginBottom: '6px', letterSpacing: '-0.02em' }}>
+              Dedicated Quiet Reading Room &amp; Medical Reference Library
             </h3>
-            <p style={{ fontSize: '0.94rem', color: 'var(--text-gold)', lineHeight: '1.6' }}>
-              Distraction-free environment with individual study desks, NCERT line-by-line problem sets, and past 20-year NEET PYQ archives.
+            <p style={{ fontSize: '0.9rem', color: '#fef08a', lineHeight: '1.55' }}>
+              Distraction-free environment with individual study cubicles, NCERT line-by-line problem sets, and past 20-year NEET PYQ archives.
             </p>
           </div>
 
           <button
             onClick={onOpenCallModal}
             className="btn-primary"
-            style={{ padding: '14px 28px', fontSize: '0.95rem' }}
+            style={{ padding: '12px 24px', fontSize: '0.92rem' }}
           >
             <span>Book a Campus Visit</span>
-            <ArrowRight size={18} />
+            <ArrowRight size={16} />
           </button>
         </div>
 
