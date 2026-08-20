@@ -1,0 +1,77 @@
+{
+  "brand": {
+    "name": "SCIMEE",
+    "fullName": "Sara Coaching Institute of Medical Entrance Examination",
+    "founder": "Ansari Rehan Ahmed",
+    "taglineUrdu": "ہم جذبہِ تعمیر جہاں لے کے اٹھے ہیں",
+    "taglineEn": "Empowering Medical & Engineering Aspirants with Concept-Driven Excellence",
+    "shortDescription": "Premier coaching institute in Bhusawal specializing in NEET-UG, IIT-JEE Foundation, MHT-CET, and Pre-Foundation (5th–10th). Dedicated mentorship, exhaustive test series, and a proven track record of 45+ doctors."
+  },
+  "contact": {
+    "primaryPhone": "9175013140",
+    "primaryPhoneFormatted": "+91 9175013140",
+    "secondaryPhone": "9226134986",
+    "secondaryPhoneFormatted": "+91 9226134986",
+    "whatsappNumber": "919175013140",
+    "whatsappPrefillText": "Hello SCIMEE, I want to enquire about NEET / Foundation admissions and batch details.",
+    "email": "scimeebhusawal@gmail.com",
+    "operatingHours": {
+      "weekdays": "8:00 AM – 8:30 PM",
+      "sunday": "9:00 AM – 4:00 PM",
+      "status": "Admissions Open for 2026–2028 Batches"
+    }
+  },
+  "location": {
+    "addressLine1": "Beside Kali Matti Ground",
+    "addressLine2": "Opposite Sunrise Apartment, Khadka Square",
+    "city": "Bhusawal",
+    "state": "Maharashtra",
+    "pincode": "425201",
+    "country": "India",
+    "googleMapsUrl": "https://maps.app.goo.gl/vsxkNTDmn7NQSmcs5",
+    "googleMapsEmbed": "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d383.20953689833016!2d75.7952757!3d21.036519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjHCsDAyJzExLjYiTiA3NcKwNDcnNDUuMyJF!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin",
+    "latitude": 21.0365511,
+    "longitude": 75.7959125
+  },
+  "stats": [
+    {
+      "id": "medical-selections",
+      "value": "45+",
+      "label": "Students in Medical Field",
+      "subtext": "MBBS, BDS, BAMS, BHMS & Allied Sciences"
+    },
+    {
+      "id": "qualify-rate",
+      "value": "100%",
+      "label": "Batch Qualification Rate",
+      "subtext": "16/16 Students Qualified in NEET UG 2026"
+    },
+    {
+      "id": "bio-high",
+      "value": "332/360",
+      "label": "Top Biology Score",
+      "subtext": "Exhaustive NCERT line-by-line mastery"
+    },
+    {
+      "id": "mentorship",
+      "value": "1-on-1",
+      "label": "Personal Mentorship",
+      "subtext": "Direct guidance by Ansari Rehan Ahmed & Senior Faculty"
+    }
+  ],
+  "announcement": {
+    "enabled": true,
+    "badge": "ADMISSIONS OPEN",
+    "text": "Admissions open for NEET 2027 & 2028 (Repeaters, Freshers 11th/12th & Foundation 5th–10th)",
+    "ctaText": "Enquire Now"
+  },
+  "navigation": [
+    { "label": "About", "href": "#about" },
+    { "label": "Results", "href": "#results" },
+    { "label": "Courses", "href": "#courses" },
+    { "label": "NEET Syllabus", "href": "#syllabus" },
+    { "label": "Facilities", "href": "#facilities" },
+    { "label": "Location", "href": "#location" },
+    { "label": "FAQ", "href": "#faq" }
+  ]
+}

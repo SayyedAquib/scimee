@@ -1,0 +1,164 @@
+{
+  "year": "2026",
+  "highlight": {
+    "title": "Outstanding Achievers - NEET UG 2026",
+    "badge": "16 / 16 ALL STUDENTS QUALIFIED",
+    "subtext": "100% Qualification Success Rate with exceptional scores across all three subjects."
+  },
+  "subjectToppers": [
+    {
+      "subject": "Biology",
+      "score": "332",
+      "total": "360",
+      "icon": "dna",
+      "accent": "emerald",
+      "tagline": "NCERT Line-by-Line Mastery & Diagram Drills"
+    },
+    {
+      "subject": "Physics",
+      "score": "116",
+      "total": "180",
+      "icon": "atom",
+      "accent": "cyan",
+      "tagline": "Concept Clarity & Fast Numerical Problem Solving"
+    },
+    {
+      "subject": "Chemistry",
+      "score": "104",
+      "total": "180",
+      "icon": "flask-conical",
+      "accent": "purple",
+      "tagline": "Reaction Mechanisms & Physical Chemistry Formula Practice"
+    }
+  ],
+  "students": [
+    {
+      "id": 1,
+      "name": "Naushin Ara",
+      "score": 552,
+      "badge": "Institute Rank 1",
+      "gender": "female",
+      "category": "General"
+    },
+    {
+      "id": 2,
+      "name": "Abdur Rahman",
+      "score": 399,
+      "badge": "Top Performer",
+      "gender": "male",
+      "category": "General"
+    },
+    {
+      "id": 3,
+      "name": "Hura Fatema",
+      "score": 394,
+      "badge": "Top Performer",
+      "gender": "female",
+      "category": "General"
+    },
+    {
+      "id": 4,
+      "name": "Aaisha Safina",
+      "score": 371,
+      "badge": "Merit List",
+      "gender": "female",
+      "category": "General"
+    },
+    {
+      "id": 5,
+      "name": "Sharmin Shaikh",
+      "score": 358,
+      "badge": "Merit List",
+      "gender": "female",
+      "category": "General"
+    },
+    {
+      "id": 6,
+      "name": "Afiya Shah",
+      "score": 350,
+      "badge": "Qualified",
+      "gender": "female",
+      "category": "General"
+    },
+    {
+      "id": 7,
+      "name": "Tahura Amin",
+      "score": 347,
+      "badge": "Qualified",
+      "gender": "female",
+      "category": "General"
+    },
+    {
+      "id": 8,
+      "name": "Fareha Fatema",
+      "score": 333,
+      "badge": "Qualified",
+      "gender": "female",
+      "category": "General"
+    },
+    {
+      "id": 9,
+      "name": "S. Hussain",
+      "score": 328,
+      "badge": "Qualified",
+      "gender": "male",
+      "category": "General"
+    },
+    {
+      "id": 10,
+      "name": "Aqsa Akhtar",
+      "score": 316,
+      "badge": "Qualified",
+      "gender": "female",
+      "category": "General"
+    },
+    {
+      "id": 11,
+      "name": "Ketifa Sayed",
+      "score": 312,
+      "badge": "Qualified",
+      "gender": "female",
+      "category": "General"
+    },
+    {
+      "id": 12,
+      "name": "Abubakar Khan",
+      "score": 306,
+      "badge": "Qualified",
+      "gender": "male",
+      "category": "General"
+    },
+    {
+      "id": 13,
+      "name": "Jawairiya Shaikh",
+      "score": 305,
+      "badge": "Qualified",
+      "gender": "female",
+      "category": "General"
+    },
+    {
+      "id": 14,
+      "name": "Farheen Naaz",
+      "score": 289,
+      "badge": "Qualified",
+      "gender": "female",
+      "category": "General"
+    },
+    {
+      "id": 15,
+      "name": "Mahek Khan",
+      "score": 231,
+      "badge": "Qualified",
+      "gender": "female",
+      "category": "General"
+    },
+    {
+      "id": 16,
+      "name": "Nawaz Pinjari",
+      "score": 182,
+      "badge": "OBC Qualified",
+      "gender": "male",
+      "category": "OBC"
+    }
+  ]
+}

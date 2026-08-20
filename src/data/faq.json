@@ -1,0 +1,30 @@
+{
+  "sectionTitle": "Frequently Asked Questions",
+  "sectionSubtitle": "Everything you need to know about admissions, batches, testing methodology, and facilities at SCIMEE.",
+  "faqs": [
+    {
+      "question": "Who can enroll in SCIMEE programs?",
+      "answer": "We offer dedicated courses for Class 5th to 10th (Pre-Foundation Maths & Science), Class 11th & 12th (State Board & CBSE + NEET Integrated), NEET Repeaters / Dropper batch (12th Pass), and MHT-CET / JEE Foundation aspirants."
+    },
+    {
+      "question": "How do I enroll or book a counseling session?",
+      "answer": "You can directly call our helplines at +91 9175013140 or +91 9226134986, click the 'Call Now' button on this website, send a WhatsApp enquiry, or visit our institute at Khadka Square, Beside Kali Matti Ground, Opposite Sunrise Apartment, Bhusawal."
+    },
+    {
+      "question": "What is SCIMEE's track record in NEET-UG?",
+      "answer": "SCIMEE has placed 45+ students directly into medical colleges (MBBS, BDS, BAMS, BHMS, etc.). In our recent NEET UG 2026 batch, 100% of enrolled students (16 out of 16) qualified, led by top scores like Naushin Ara (552), Abdur Rahman (399), and subject-wise toppers achieving 332/360 in Biology."
+    },
+    {
+      "question": "Is there a library or reading room available for self-study?",
+      "answer": "Yes! SCIMEE provides an on-premise quiet Reading Room & Library equipped with comfortable individual study cubicles, curated NCERT reference books, and extended daily hours so students can focus without home distractions."
+    },
+    {
+      "question": "How often are tests conducted?",
+      "answer": "Weekly OMR-based mock tests are conducted every Sunday following the exact NTA NEET-UG pattern. Detailed scorecards and error-analysis reports are shared with both students and parents."
+    },
+    {
+      "question": "Are separate batches available for English and Urdu / Semi-English medium students?",
+      "answer": "Yes, our faculty explains core scientific and mathematical concepts with bilingual clarity (English + Hindi/Urdu) so students from State Board, CBSE, and all mediums grasp difficult topics effortlessly."
+    }
+  ]
+}

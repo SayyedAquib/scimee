@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="scimeeGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <linearGradient id="scimeeNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Crescent Swash (Grey Accent) -->
+  <path d="M 90 280 C 70 200, 110 110, 220 95 C 160 135, 130 200, 150 285 C 170 370, 250 410, 360 410 C 250 435, 140 400, 90 280 Z" fill="#64748B" opacity="0.65" />
+
+  <!-- Main Dynamic Swash (Black/Navy) -->
+  <path d="M 60 450 C 90 380, 140 280, 330 220 C 420 190, 425 210, 350 270 C 230 330, 150 400, 95 465 Z" fill="#0F172A" />
+  
+  <!-- Upper Motion Arc -->
+  <path d="M 125 270 C 180 210, 290 150, 410 215 C 330 190, 220 220, 155 285 Z" fill="#0F172A" />
+
+  <!-- Head / Focus Circle -->
+  <circle cx="260" cy="115" r="36" fill="#0F172A" />
+
+  <!-- SCIMEE Wordmark Arc/Stylized -->
+  <g transform="translate(100, 345) rotate(-24)">
+    <text x="0" y="0" font-family="'Plus Jakarta Sans', 'Montserrat', 'Arial Black', sans-serif" font-size="52" font-weight="900" letter-spacing="3" fill="#0F172A">
+      SCIMEE
+    </text>
+  </g>
+
+  <!-- Founder Subtext -->
+  <text x="250" y="475" text-anchor="middle" font-family="'Georgia', 'Times New Roman', serif" font-style="italic" font-weight="bold" font-size="19" letter-spacing="1.5" fill="#1E293B">
+    BY ANSARI REHAN AHMED
+  </text>
+</svg>

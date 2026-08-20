@@ -1,0 +1,48 @@
+{
+  "sectionTitle": "Why SCIMEE is the First Choice for Medical Aspirants",
+  "sectionSubtitle": "A disciplined learning ecosystem combining cutting-edge testing, personalized mentorship, and dedicated study infrastructure.",
+  "items": [
+    {
+      "id": "reading-room",
+      "title": "Dedicated Library & Quiet Reading Room",
+      "icon": "book-open",
+      "description": "Distraction-free environment with individual study desks, reference books, NCERT exhaustive modules, and extended operating hours for self-study and deep revision.",
+      "tag": "Infrastructure"
+    },
+    {
+      "id": "expert-faculty",
+      "title": "Experienced Faculty for Each Subject",
+      "icon": "graduation-cap",
+      "description": "Specialist educators dedicated to Physics, Chemistry, and Biology who break down complex numericals and biological processes into intuitive, easily memorable concepts.",
+      "tag": "Academics"
+    },
+    {
+      "id": "omr-testing",
+      "title": "Weekly OMR Test Series & Error Analysis",
+      "icon": "clipboard-check",
+      "description": "Strict examination hall simulation with optical mark recognition (OMR) sheets, negative marking drills, and question-by-question post-test postmortems.",
+      "tag": "Assessment"
+    },
+    {
+      "id": "personal-attention",
+      "title": "Special 1-on-1 Attention on Each Student",
+      "icon": "user-check",
+      "description": "Small cohort sizes allowing teachers to pinpoint individual student weaknesses, clarify doubts on demand, and craft customized improvement roadmaps.",
+      "tag": "Mentorship"
+    },
+    {
+      "id": "parent-interaction",
+      "title": "Continuous Interaction with Parents",
+      "icon": "users",
+      "description": "Regular performance updates, attendance monitoring, and parent-teacher counseling sessions to keep families aligned and motivated throughout the NEET journey.",
+      "tag": "Transparency"
+    },
+    {
+      "id": "affordable-fees",
+      "title": "Transparent & Reasonable Fee Structure",
+      "icon": "shield-check",
+      "description": "High-standard national-level medical coaching made affordable for all deserving students in Bhusawal, Jalgaon, and Khandesh region without hidden costs.",
+      "tag": "Value"
+    }
+  ]
+}
