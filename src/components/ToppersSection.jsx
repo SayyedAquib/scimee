@@ -231,18 +231,21 @@ export default function ToppersSection({ onOpenCallModal }) {
                 key={student.id}
                 className={isRank1 ? 'bento-card-gold' : 'bento-card'}
                 style={{
-                  padding: '20px 16px',
+                  padding: '22px 16px',
                   textAlign: 'center',
-                  borderRadius: '20px'
+                  borderRadius: '20px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
                 }}
               >
-                {/* Top Rank Pill */}
+                {/* Top Rank Pill - Contained inside card */}
                 {isRank1 && (
                   <div style={{
-                    position: 'absolute',
-                    top: '-10px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
                     background: 'linear-gradient(135deg, #fef08a 0%, #f59e0b 100%)',
                     color: '#030712',
                     fontSize: '0.64rem',
@@ -251,9 +254,11 @@ export default function ToppersSection({ onOpenCallModal }) {
                     borderRadius: 'var(--radius-pill)',
                     textTransform: 'uppercase',
                     letterSpacing: '0.04em',
-                    boxShadow: '0 2px 10px rgba(245, 158, 11, 0.45)'
+                    boxShadow: '0 2px 10px rgba(245, 158, 11, 0.45)',
+                    marginBottom: '10px'
                   }}>
-                    Top Scorer
+                    <Star size={10} fill="#030712" />
+                    <span>Top Scorer</span>
                   </div>
                 )}
 
@@ -262,7 +267,7 @@ export default function ToppersSection({ onOpenCallModal }) {
                   width: '50px',
                   height: '50px',
                   borderRadius: '50%',
-                  margin: '0 auto 10px',
+                  margin: isRank1 ? '0 auto 10px' : '6px auto 10px',
                   background: isRank1 ? 'rgba(245, 158, 11, 0.2)' : 'rgba(255, 255, 255, 0.05)',
                   display: 'flex',
                   alignItems: 'center',
@@ -281,6 +286,7 @@ export default function ToppersSection({ onOpenCallModal }) {
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
+                  maxWidth: '100%',
                   letterSpacing: '-0.01em'
                 }}>
                   {student.name}
