@@ -163,11 +163,11 @@ export default function Footer({ onOpenCallModal }) {
             </h4>
 
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '0.86rem', lineHeight: '1.5', marginBottom: '10px' }}>
-              <MapPin size={16} color="#d97706" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <MapPin size={16} color="#d97706" style={{ flexShrink: 0, marginTop: '3px' }} />
               <div>
-                <strong style={{ color: 'var(--text-heading)' }}>{siteConfig.location.landmark}</strong><br />
-                {siteConfig.location.addressLine1}, {siteConfig.location.addressLine2}<br />
-                {siteConfig.location.city} - {siteConfig.location.pincode}, {siteConfig.location.state}
+                <strong style={{ color: 'var(--text-heading)', display: 'block' }}>{siteConfig.location.addressLine1}</strong>
+                <span style={{ display: 'block', color: 'var(--text-sub)' }}>{siteConfig.location.addressLine2}</span>
+                <span style={{ display: 'block', color: 'var(--text-sub)' }}>{siteConfig.location.city} - {siteConfig.location.pincode}, {siteConfig.location.state}</span>
               </div>
             </div>
 

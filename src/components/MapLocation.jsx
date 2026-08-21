@@ -61,11 +61,11 @@ export default function MapLocation({ onOpenCallModal }) {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', color: 'var(--text-sub)', fontSize: '0.88rem' }}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                    <MapPin size={17} color="#d97706" style={{ flexShrink: 0, marginTop: '2px' }} />
+                    <MapPin size={17} color="#d97706" style={{ flexShrink: 0, marginTop: '3px' }} />
                     <div>
-                      <strong style={{ color: 'var(--text-heading)' }}>{siteConfig.location.addressLine1}</strong><br />
-                      {siteConfig.location.addressLine2}<br />
-                      {siteConfig.location.city}, {siteConfig.location.state} - {siteConfig.location.pincode}
+                      <strong style={{ color: 'var(--text-heading)', display: 'block' }}>{siteConfig.location.addressLine1}</strong>
+                      <span style={{ display: 'block', color: 'var(--text-sub)' }}>{siteConfig.location.addressLine2}</span>
+                      <span style={{ display: 'block', color: 'var(--text-sub)' }}>{siteConfig.location.city}, {siteConfig.location.state} - {siteConfig.location.pincode}</span>
                     </div>
                   </div>
 
