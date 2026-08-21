@@ -14,21 +14,20 @@ export default function ToppersSection({ onOpenCallModal }) {
   const getSubjectIcon = (iconName) => {
     switch (iconName) {
       case 'dna':
-        return <Dna size={26} color="#34d399" />;
+        return <Dna size={26} color="#059669" />;
       case 'atom':
-        return <Atom size={26} color="#38bdf8" />;
+        return <Atom size={26} color="#0284c7" />;
       case 'flask-conical':
-        return <FlaskConical size={26} color="#c084fc" />;
+        return <FlaskConical size={26} color="#9333ea" />;
       default:
-        return <Award size={26} color="#fbbf24" />;
+        return <Award size={26} color="#d97706" />;
     }
   };
 
   return (
     <section id="results" style={{
       paddingTop: 'clamp(54px, 8vw, 84px)',
-      paddingBottom: 'clamp(54px, 8vw, 84px)',
-      borderBottom: '1px solid var(--border-glass)'
+      paddingBottom: 'clamp(54px, 8vw, 84px)'
     }}>
       <div className="container-custom">
         
@@ -45,7 +44,7 @@ export default function ToppersSection({ onOpenCallModal }) {
             lineHeight: '1.1',
             letterSpacing: '-0.035em',
             marginBottom: '12px',
-            color: '#ffffff'
+            color: 'var(--text-heading)'
           }}>
             Outstanding Achievers Wall of Fame
           </h2>
@@ -55,7 +54,7 @@ export default function ToppersSection({ onOpenCallModal }) {
           </p>
         </div>
 
-        {/* 100% Qualification Apple Hero Award Banner */}
+        {/* 100% Qualification Apple Hero Award Banner (Light Theme) */}
         <div className="bento-card-gold" style={{
           padding: 'clamp(22px, 4.5vw, 34px)',
           display: 'flex',
@@ -75,23 +74,23 @@ export default function ToppersSection({ onOpenCallModal }) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 6px 24px rgba(245, 158, 11, 0.45)',
+              boxShadow: '0 6px 20px rgba(245, 158, 11, 0.3)',
               flexShrink: 0,
-              border: '2px solid rgba(255, 255, 255, 0.4)'
+              border: '2px solid #ffffff'
             }}>
-              <Trophy size={28} color="#030712" />
+              <Trophy size={28} color="#0f172a" />
             </div>
             <div>
               <div style={{
                 fontSize: 'clamp(1.25rem, 3.4vw, 1.75rem)',
                 fontWeight: '900',
-                color: '#ffffff',
+                color: '#78350f',
                 letterSpacing: '-0.025em',
                 lineHeight: '1.15'
               }}>
                 16 / 16 ALL STUDENTS QUALIFIED
               </div>
-              <p style={{ fontSize: '0.9rem', color: '#fef08a', marginTop: '2px', fontWeight: '600' }}>
+              <p style={{ fontSize: '0.9rem', color: '#92400e', marginTop: '2px', fontWeight: '700' }}>
                 100% Qualification Success Rate in NEET UG {toppersData.year}
               </p>
             </div>
@@ -112,7 +111,7 @@ export default function ToppersSection({ onOpenCallModal }) {
           <h3 style={{
             fontSize: '1.2rem',
             fontWeight: '800',
-            color: '#fff',
+            color: 'var(--text-heading)',
             marginBottom: '18px',
             textAlign: 'center',
             letterSpacing: '-0.02em'
@@ -121,52 +120,48 @@ export default function ToppersSection({ onOpenCallModal }) {
           </h3>
 
           <div className="grid-responsive-3">
-            {toppersData.subjectToppers.map((st) => {
-              const isBio = st.subject === 'Biology';
-              return (
-                <div
-                  key={st.subject}
-                  className="bento-card"
-                  style={{
-                    padding: '24px 20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '16px',
-                    borderTop: isBio ? '1px solid rgba(52, 211, 153, 0.55)' : '1px solid var(--border-specular-top)'
-                  }}
-                >
-                  <div style={{
-                    width: '52px',
-                    height: '52px',
-                    borderRadius: '14px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                    border: '1px solid rgba(255, 255, 255, 0.1)'
-                  }}>
-                    {getSubjectIcon(st.icon)}
+            {toppersData.subjectToppers.map((st) => (
+              <div
+                key={st.subject}
+                className="bento-card"
+                style={{
+                  padding: '24px 20px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '16px'
+                }}
+              >
+                <div style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '14px',
+                  background: 'rgba(0, 0, 0, 0.03)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                  border: '1px solid rgba(0, 0, 0, 0.06)'
+                }}>
+                  {getSubjectIcon(st.icon)}
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    {st.subject} Topper
                   </div>
-                  <div>
-                    <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                      {st.subject} Topper
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
-                      <span style={{ fontSize: '1.9rem', fontWeight: '900', color: '#ffffff', letterSpacing: '-0.03em', lineHeight: '1.1' }}>
-                        {st.score}
-                      </span>
-                      <span style={{ fontSize: '0.9rem', color: 'var(--text-sub)' }}>
-                        /{st.total}
-                      </span>
-                    </div>
-                    <div style={{ fontSize: '0.74rem', color: 'var(--text-sub)', marginTop: '2px' }}>
-                      {st.tagline}
-                    </div>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
+                    <span style={{ fontSize: '1.9rem', fontWeight: '900', color: 'var(--text-heading)', letterSpacing: '-0.03em', lineHeight: '1.1' }}>
+                      {st.score}
+                    </span>
+                    <span style={{ fontSize: '0.9rem', color: 'var(--text-sub)' }}>
+                      /{st.total}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '0.74rem', color: 'var(--text-sub)', marginTop: '2px' }}>
+                    {st.tagline}
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </div>
 
@@ -181,13 +176,13 @@ export default function ToppersSection({ onOpenCallModal }) {
           paddingBottom: '14px',
           borderBottom: '1px solid var(--border-glass)'
         }}>
-          <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#fff', letterSpacing: '-0.01em' }}>
+          <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: 'var(--text-heading)', letterSpacing: '-0.01em' }}>
             All Qualified Candidates ({filteredStudents.length})
           </h3>
 
           <div style={{
             display: 'inline-flex',
-            background: 'rgba(255, 255, 255, 0.05)',
+            background: 'rgba(0, 0, 0, 0.04)',
             padding: '4px',
             borderRadius: 'var(--radius-pill)',
             border: '1px solid var(--border-glass)'
@@ -206,11 +201,12 @@ export default function ToppersSection({ onOpenCallModal }) {
                     padding: '6px 14px',
                     borderRadius: 'var(--radius-pill)',
                     border: 'none',
-                    background: isSelected ? 'rgba(245, 158, 11, 0.28)' : 'transparent',
-                    color: isSelected ? '#fef08a' : 'var(--text-sub)',
+                    background: isSelected ? '#ffffff' : 'transparent',
+                    color: isSelected ? '#b45309' : 'var(--text-sub)',
                     fontSize: '0.82rem',
                     fontWeight: isSelected ? '800' : '600',
                     cursor: 'pointer',
+                    boxShadow: isSelected ? '0 2px 8px rgba(0, 0, 0, 0.08)' : 'none',
                     transition: 'all 150ms ease'
                   }}
                 >
@@ -240,24 +236,24 @@ export default function ToppersSection({ onOpenCallModal }) {
                   justifyContent: 'space-between'
                 }}
               >
-                {/* Top Rank Pill - Contained inside card */}
+                {/* Top Rank Pill */}
                 {isRank1 && (
                   <div style={{
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '4px',
-                    background: 'linear-gradient(135deg, #fef08a 0%, #f59e0b 100%)',
-                    color: '#030712',
+                    background: 'linear-gradient(135deg, #fef08a 0%, #fbbf24 100%)',
+                    color: '#78350f',
                     fontSize: '0.64rem',
                     fontWeight: '900',
                     padding: '2px 10px',
                     borderRadius: 'var(--radius-pill)',
                     textTransform: 'uppercase',
                     letterSpacing: '0.04em',
-                    boxShadow: '0 2px 10px rgba(245, 158, 11, 0.45)',
+                    boxShadow: '0 2px 8px rgba(245, 158, 11, 0.3)',
                     marginBottom: '10px'
                   }}>
-                    <Star size={10} fill="#030712" />
+                    <Star size={10} fill="#78350f" />
                     <span>Top Scorer</span>
                   </div>
                 )}
@@ -268,20 +264,20 @@ export default function ToppersSection({ onOpenCallModal }) {
                   height: '50px',
                   borderRadius: '50%',
                   margin: isRank1 ? '0 auto 10px' : '6px auto 10px',
-                  background: isRank1 ? 'rgba(245, 158, 11, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                  background: isRank1 ? '#fef3c7' : '#f8fafc',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  border: isRank1 ? '1.5px solid var(--apple-gold)' : '1px solid rgba(255, 255, 255, 0.12)'
+                  border: isRank1 ? '1.5px solid #d97706' : '1px solid rgba(0, 0, 0, 0.08)'
                 }}>
-                  <User size={24} color={isRank1 ? '#fef08a' : 'var(--text-sub)'} />
+                  <User size={24} color={isRank1 ? '#b45309' : 'var(--text-muted)'} />
                 </div>
 
                 {/* Name */}
                 <h4 style={{
                   fontSize: '0.98rem',
                   fontWeight: '800',
-                  color: '#ffffff',
+                  color: 'var(--text-heading)',
                   marginBottom: '4px',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
@@ -296,7 +292,7 @@ export default function ToppersSection({ onOpenCallModal }) {
                 <div style={{
                   fontSize: 'clamp(1.7rem, 3.4vw, 2.1rem)',
                   fontWeight: '900',
-                  color: isRank1 ? '#fef08a' : '#f87171',
+                  color: isRank1 ? '#b45309' : '#e11d48',
                   lineHeight: '1.05',
                   marginBottom: '6px',
                   letterSpacing: '-0.03em'
@@ -311,11 +307,11 @@ export default function ToppersSection({ onOpenCallModal }) {
                   gap: '4px',
                   fontSize: '0.72rem',
                   color: 'var(--text-sub)',
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  padding: '2px 8px',
+                  background: 'rgba(0, 0, 0, 0.03)',
+                  padding: '3px 8px',
                   borderRadius: '6px'
                 }}>
-                  <CheckCircle2 size={11} color="#34d399" />
+                  <CheckCircle2 size={11} color="#059669" />
                   <span>{student.badge}</span>
                 </div>
               </div>

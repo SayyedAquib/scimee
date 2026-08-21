@@ -10,11 +10,11 @@ export default function Footer({ onOpenCallModal }) {
 
   return (
     <footer style={{
-      background: '#02050e',
-      borderTop: '1px solid var(--border-glass-bright)',
+      background: '#f8fafc',
+      borderTop: '1px solid rgba(0, 0, 0, 0.08)',
       borderTopLeftRadius: '36px',
       borderTopRightRadius: '36px',
-      boxShadow: '0 -20px 48px rgba(0, 0, 0, 0.7)',
+      boxShadow: '0 -10px 30px rgba(0, 0, 0, 0.03)',
       paddingTop: '48px',
       paddingBottom: '84px',
       color: 'var(--text-sub)'
@@ -36,11 +36,13 @@ export default function Footer({ onOpenCallModal }) {
                 width: '38px',
                 height: '38px',
                 borderRadius: '10px',
-                background: '#fff',
+                background: '#ffffff',
                 padding: '3px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+                border: '1px solid rgba(0, 0, 0, 0.08)'
               }}>
                 <img 
                   src="/assets/logo.svg" 
@@ -48,7 +50,7 @@ export default function Footer({ onOpenCallModal }) {
                   style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                 />
               </div>
-              <span style={{ fontSize: '1.3rem', fontWeight: '900', color: '#fff', letterSpacing: '-0.02em' }}>
+              <span style={{ fontSize: '1.3rem', fontWeight: '900', color: 'var(--text-heading)', letterSpacing: '-0.02em' }}>
                 {siteConfig.brand.name}
               </span>
             </div>
@@ -58,10 +60,10 @@ export default function Footer({ onOpenCallModal }) {
             </p>
 
             <div className="bento-card-gold" style={{ padding: '10px 14px', borderRadius: '14px' }}>
-              <span className="urdu-font" style={{ fontSize: '1.15rem', color: '#fef08a', display: 'block', marginBottom: '2px' }}>
+              <span className="urdu-font" style={{ fontSize: '1.15rem', color: '#92400e', display: 'block', marginBottom: '2px', fontWeight: '700' }}>
                 {siteConfig.brand.taglineUrdu}
               </span>
-              <span style={{ fontSize: '0.72rem', color: 'rgba(254, 240, 138, 0.75)' }}>
+              <span style={{ fontSize: '0.72rem', color: '#b45309' }}>
                 {siteConfig.brand.taglineEn || siteConfig.brand.taglineEnglish}
               </span>
             </div>
@@ -69,7 +71,7 @@ export default function Footer({ onOpenCallModal }) {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: '#fff', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: 'var(--text-heading)', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               Quick Navigation
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -83,7 +85,7 @@ export default function Footer({ onOpenCallModal }) {
                       fontSize: '0.88rem',
                       transition: 'color 120ms ease'
                     }}
-                    onMouseOver={(e) => { e.currentTarget.style.color = 'var(--apple-gold-light)'; }}
+                    onMouseOver={(e) => { e.currentTarget.style.color = '#b45309'; }}
                     onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-sub)'; }}
                   >
                     {item.label}
@@ -95,7 +97,7 @@ export default function Footer({ onOpenCallModal }) {
 
           {/* Column 3: Helplines & Direct Calling */}
           <div>
-            <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: '#fff', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: 'var(--text-heading)', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               Direct Helplines
             </h4>
 
@@ -109,7 +111,7 @@ export default function Footer({ onOpenCallModal }) {
                   style={{
                     fontSize: '1.05rem',
                     fontWeight: '800',
-                    color: 'var(--apple-gold-light)',
+                    color: '#b45309',
                     textDecoration: 'none'
                   }}
                 >
@@ -126,7 +128,7 @@ export default function Footer({ onOpenCallModal }) {
                   style={{
                     fontSize: '0.98rem',
                     fontWeight: '700',
-                    color: '#ffffff',
+                    color: 'var(--text-heading)',
                     textDecoration: 'none'
                   }}
                 >
@@ -156,14 +158,14 @@ export default function Footer({ onOpenCallModal }) {
 
           {/* Column 4: Campus Location & Hours */}
           <div>
-            <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: '#fff', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: 'var(--text-heading)', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               Campus Address
             </h4>
 
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '0.86rem', lineHeight: '1.5', marginBottom: '10px' }}>
-              <MapPin size={16} color="var(--apple-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <MapPin size={16} color="#d97706" style={{ flexShrink: 0, marginTop: '2px' }} />
               <div>
-                <strong>{siteConfig.location.landmark}</strong><br />
+                <strong style={{ color: 'var(--text-heading)' }}>{siteConfig.location.landmark}</strong><br />
                 {siteConfig.location.addressLine1}, {siteConfig.location.addressLine2}<br />
                 {siteConfig.location.city} - {siteConfig.location.pincode}, {siteConfig.location.state}
               </div>
@@ -178,7 +180,7 @@ export default function Footer({ onOpenCallModal }) {
 
         {/* Bottom Legal Bar */}
         <div style={{
-          borderTop: '1px solid var(--border-glass)',
+          borderTop: '1px solid rgba(0, 0, 0, 0.08)',
           paddingTop: '18px',
           display: 'flex',
           flexWrap: 'wrap',

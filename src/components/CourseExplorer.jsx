@@ -25,7 +25,7 @@ export default function CourseExplorer({ onOpenCallModal }) {
               lineHeight: '1.12',
               letterSpacing: '-0.03em',
               marginBottom: '10px',
-              color: '#ffffff'
+              color: 'var(--text-heading)'
             }}>
               {coursesData.sectionTitle}
             </h2>
@@ -52,13 +52,13 @@ export default function CourseExplorer({ onOpenCallModal }) {
                   style={{
                     padding: '9px 18px',
                     borderRadius: 'var(--radius-pill)',
-                    border: isSelected ? '1px solid var(--border-gold-specular)' : '1px solid var(--border-glass)',
-                    borderTop: isSelected ? '1px solid rgba(251, 191, 36, 0.5)' : '1px solid var(--border-glass)',
-                    background: isSelected ? 'linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(15, 23, 42, 0.9) 100%)' : 'rgba(255, 255, 255, 0.04)',
-                    color: isSelected ? '#fef08a' : 'var(--text-sub)',
+                    border: isSelected ? '1px solid rgba(217, 119, 6, 0.4)' : '1px solid rgba(0, 0, 0, 0.08)',
+                    background: isSelected ? '#fffbeb' : '#ffffff',
+                    color: isSelected ? '#b45309' : 'var(--text-sub)',
                     fontWeight: isSelected ? '800' : '600',
                     fontSize: '0.86rem',
                     cursor: 'pointer',
+                    boxShadow: isSelected ? '0 2px 10px rgba(217, 119, 6, 0.15)' : '0 2px 6px rgba(0, 0, 0, 0.03)',
                     transition: 'all 150ms ease',
                     display: 'flex',
                     alignItems: 'center',
@@ -66,7 +66,7 @@ export default function CourseExplorer({ onOpenCallModal }) {
                   }}
                 >
                   {program.featured && (
-                    <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--apple-gold)' }} />
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#d97706' }} />
                   )}
                   <span>{program.name}</span>
                 </button>
@@ -77,8 +77,7 @@ export default function CourseExplorer({ onOpenCallModal }) {
           {/* Active Course Bento Card */}
           <div className="bento-card" style={{
             padding: 'clamp(22px, 4.5vw, 36px)',
-            borderRadius: '24px',
-            borderTop: '1px solid rgba(255, 255, 255, 0.3)'
+            borderRadius: '24px'
           }}>
             <div style={{
               display: 'grid',
@@ -106,7 +105,7 @@ export default function CourseExplorer({ onOpenCallModal }) {
                   <h3 style={{
                     fontSize: 'clamp(1.4rem, 3vw, 2.1rem)',
                     fontWeight: '900',
-                    color: '#ffffff',
+                    color: 'var(--text-heading)',
                     letterSpacing: '-0.02em'
                   }}>
                     {activeCourse.name}
@@ -129,7 +128,7 @@ export default function CourseExplorer({ onOpenCallModal }) {
 
               {/* Highlights Grid */}
               <div>
-                <h4 style={{ fontSize: '0.86rem', fontWeight: '800', color: '#fff', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                <h4 style={{ fontSize: '0.86rem', fontWeight: '800', color: 'var(--text-heading)', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                   Key Curriculum &amp; Pedagogy
                 </h4>
                 <div style={{
@@ -144,13 +143,13 @@ export default function CourseExplorer({ onOpenCallModal }) {
                         display: 'flex',
                         alignItems: 'flex-start',
                         gap: '9px',
-                        background: 'rgba(255, 255, 255, 0.03)',
-                        padding: '11px 13px',
+                        background: '#f8fafc',
+                        padding: '12px 14px',
                         borderRadius: '14px',
-                        border: '1px solid rgba(255, 255, 255, 0.05)'
+                        border: '1px solid rgba(0, 0, 0, 0.05)'
                       }}
                     >
-                      <CheckCircle2 size={16} color="var(--apple-emerald-light)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                      <CheckCircle2 size={16} color="#059669" style={{ flexShrink: 0, marginTop: '2px' }} />
                       <span style={{ fontSize: '0.86rem', color: 'var(--text-title)', lineHeight: '1.4' }}>
                         {highlight}
                       </span>

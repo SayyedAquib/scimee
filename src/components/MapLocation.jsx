@@ -24,7 +24,7 @@ export default function MapLocation({ onOpenCallModal }) {
               lineHeight: '1.12',
               letterSpacing: '-0.03em',
               marginBottom: '10px',
-              color: '#ffffff'
+              color: 'var(--text-heading)'
             }}>
               Convenient Location in Bhusawal
             </h2>
@@ -55,22 +55,22 @@ export default function MapLocation({ onOpenCallModal }) {
                   Campus Address
                 </span>
                 
-                <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#fff', marginBottom: '10px', letterSpacing: '-0.02em' }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: 'var(--text-heading)', marginBottom: '10px', letterSpacing: '-0.02em' }}>
                   {siteConfig.brand.fullName}
                 </h3>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', color: 'var(--text-sub)', fontSize: '0.88rem' }}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                    <MapPin size={17} color="var(--apple-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                    <MapPin size={17} color="#d97706" style={{ flexShrink: 0, marginTop: '2px' }} />
                     <div>
-                      <strong style={{ color: '#fff' }}>{siteConfig.location.addressLine1}</strong><br />
+                      <strong style={{ color: 'var(--text-heading)' }}>{siteConfig.location.addressLine1}</strong><br />
                       {siteConfig.location.addressLine2}<br />
                       {siteConfig.location.city}, {siteConfig.location.state} - {siteConfig.location.pincode}
                     </div>
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '4px' }}>
-                    <Clock size={16} color="var(--apple-cyan)" style={{ flexShrink: 0 }} />
+                    <Clock size={16} color="#0284c7" style={{ flexShrink: 0 }} />
                     <div>
                       <strong>Office Hours:</strong> {siteConfig.contact.operatingHours.weekdays}
                     </div>
@@ -115,8 +115,7 @@ export default function MapLocation({ onOpenCallModal }) {
               overflow: 'hidden',
               borderRadius: '22px',
               minHeight: '340px',
-              borderTop: '1px solid var(--border-specular-top)',
-              background: '#0d1527'
+              background: '#f8fafc'
             }}>
               <iframe
                 title="SCIMEE Google Maps Location"

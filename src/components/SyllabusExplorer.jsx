@@ -62,7 +62,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
               lineHeight: '1.12',
               letterSpacing: '-0.03em',
               marginBottom: '10px',
-              color: '#ffffff'
+              color: 'var(--text-heading)'
             }}>
               {syllabusData.title}
             </h2>
@@ -97,15 +97,16 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                       style={{
                         padding: '8px 16px',
                         borderRadius: 'var(--radius-pill)',
-                        border: isActive ? '1px solid var(--border-gold-specular)' : '1px solid var(--border-glass)',
-                        background: isActive ? 'linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(15, 23, 42, 0.9) 100%)' : 'rgba(255, 255, 255, 0.04)',
-                        color: isActive ? '#fef08a' : 'var(--text-sub)',
+                        border: isActive ? '1px solid rgba(217, 119, 6, 0.4)' : '1px solid rgba(0, 0, 0, 0.08)',
+                        background: isActive ? '#fffbeb' : '#f8fafc',
+                        color: isActive ? '#b45309' : 'var(--text-sub)',
                         fontWeight: isActive ? '800' : '600',
                         fontSize: '0.86rem',
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '7px',
+                        boxShadow: isActive ? '0 2px 8px rgba(217, 119, 6, 0.15)' : 'none',
                         transition: 'all 150ms ease'
                       }}
                     >
@@ -113,8 +114,8 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                       <span>{sub.name}</span>
                       <span style={{
                         fontSize: '0.7rem',
-                        background: isActive ? 'var(--apple-gold)' : 'rgba(255, 255, 255, 0.1)',
-                        color: isActive ? '#030712' : '#fff',
+                        background: isActive ? '#d97706' : 'rgba(0, 0, 0, 0.08)',
+                        color: isActive ? '#ffffff' : 'var(--text-sub)',
                         padding: '1px 6px',
                         borderRadius: '9999px',
                         fontWeight: '800'
@@ -138,11 +139,12 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                     width: '100%',
                     padding: '9px 14px 9px 38px',
                     borderRadius: 'var(--radius-pill)',
-                    background: 'var(--canvas-input)',
-                    border: '1px solid var(--border-glass)',
-                    color: '#fff',
+                    background: '#ffffff',
+                    border: '1px solid rgba(0, 0, 0, 0.12)',
+                    color: 'var(--text-heading)',
                     fontSize: '0.86rem',
-                    outline: 'none'
+                    outline: 'none',
+                    boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.03)'
                   }}
                 />
               </div>
@@ -156,7 +158,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
               <div style={{
                 textAlign: 'center',
                 padding: '36px 20px',
-                background: 'rgba(15, 23, 42, 0.6)',
+                background: '#ffffff',
                 borderRadius: '18px',
                 border: '1px solid var(--border-glass)'
               }}>
@@ -181,8 +183,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                     style={{
                       borderRadius: '18px',
                       overflow: 'hidden',
-                      border: isExpanded ? '1px solid var(--border-gold-specular)' : '1px solid var(--border-glass)',
-                      borderTop: isExpanded ? '1px solid rgba(251, 191, 36, 0.45)' : '1px solid var(--border-specular-top)'
+                      border: isExpanded ? '1px solid rgba(217, 119, 6, 0.4)' : '1px solid var(--border-glass)'
                     }}
                   >
                     <button
@@ -193,9 +194,9 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        background: isExpanded ? 'rgba(245, 158, 11, 0.04)' : 'transparent',
+                        background: isExpanded ? '#fffbeb' : '#ffffff',
                         border: 'none',
-                        color: '#fff',
+                        color: 'var(--text-heading)',
                         textAlign: 'left',
                         cursor: 'pointer'
                       }}
@@ -205,18 +206,18 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                           width: '28px',
                           height: '28px',
                           borderRadius: '8px',
-                          background: 'rgba(255, 255, 255, 0.05)',
+                          background: isExpanded ? '#fef3c7' : '#f1f5f9',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           fontSize: '0.76rem',
                           fontWeight: '900',
-                          color: 'var(--apple-gold-light)',
+                          color: '#b45309',
                           flexShrink: 0
                         }}>
                           {unit.unitNumber}
                         </div>
-                        <div style={{ fontSize: '0.94rem', fontWeight: '700', color: '#fff', letterSpacing: '-0.01em' }}>
+                        <div style={{ fontSize: '0.94rem', fontWeight: '700', color: isExpanded ? '#78350f' : 'var(--text-heading)', letterSpacing: '-0.01em' }}>
                           Unit {unit.unitNumber}: {unit.name}
                         </div>
                       </div>
@@ -230,13 +231,13 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                     {isExpanded && (
                       <div style={{
                         padding: '14px 18px 18px 56px',
-                        background: 'rgba(3, 7, 18, 0.5)',
+                        background: '#f8fafc',
                         borderTop: '1px solid var(--border-glass)',
                         fontSize: '0.88rem',
                         color: 'var(--text-sub)',
                         lineHeight: '1.65'
                       }}>
-                        <strong style={{ color: '#fff', display: 'block', marginBottom: '4px', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                        <strong style={{ color: 'var(--text-heading)', display: 'block', marginBottom: '4px', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                           Topics &amp; Subtopics:
                         </strong>
                         <p>{unit.topics}</p>
@@ -257,10 +258,10 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: '14px',
-            borderTop: '1px solid rgba(56, 189, 248, 0.45)'
+            borderLeft: '4px solid #0284c7'
           }}>
             <div>
-              <h4 style={{ fontSize: '1.02rem', fontWeight: '800', color: '#fff', marginBottom: '3px', letterSpacing: '-0.01em' }}>
+              <h4 style={{ fontSize: '1.02rem', fontWeight: '800', color: 'var(--text-heading)', marginBottom: '3px', letterSpacing: '-0.01em' }}>
                 Struggling with any specific NEET physics, chemistry, or biology unit?
               </h4>
               <p style={{ fontSize: '0.84rem', color: 'var(--text-sub)' }}>

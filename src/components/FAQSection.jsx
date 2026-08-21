@@ -29,7 +29,7 @@ export default function FAQSection({ onOpenCallModal }) {
               lineHeight: '1.12',
               letterSpacing: '-0.03em',
               marginBottom: '10px',
-              color: '#ffffff'
+              color: 'var(--text-heading)'
             }}>
               {faqData.sectionTitle || faqData.title}
             </h2>
@@ -50,8 +50,7 @@ export default function FAQSection({ onOpenCallModal }) {
                   style={{
                     borderRadius: '18px',
                     overflow: 'hidden',
-                    border: isOpen ? '1px solid var(--border-gold-specular)' : '1px solid var(--border-glass)',
-                    borderTop: isOpen ? '1px solid rgba(251, 191, 36, 0.45)' : '1px solid var(--border-specular-top)',
+                    border: isOpen ? '1px solid rgba(217, 119, 6, 0.4)' : '1px solid var(--border-glass)',
                     transition: 'border-color 150ms ease'
                   }}
                 >
@@ -64,9 +63,9 @@ export default function FAQSection({ onOpenCallModal }) {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       gap: '14px',
-                      background: isOpen ? 'rgba(245, 158, 11, 0.04)' : 'transparent',
+                      background: isOpen ? '#fffbeb' : '#ffffff',
                       border: 'none',
-                      color: '#fff',
+                      color: 'var(--text-heading)',
                       textAlign: 'left',
                       cursor: 'pointer'
                     }}
@@ -74,13 +73,13 @@ export default function FAQSection({ onOpenCallModal }) {
                     <span style={{
                       fontSize: '0.96rem',
                       fontWeight: '700',
-                      color: isOpen ? '#fef08a' : '#ffffff',
+                      color: isOpen ? '#92400e' : 'var(--text-heading)',
                       letterSpacing: '-0.01em'
                     }}>
                       {item.question}
                     </span>
                     <div style={{
-                      color: isOpen ? 'var(--apple-gold)' : 'var(--text-muted)',
+                      color: isOpen ? '#d97706' : 'var(--text-muted)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -93,10 +92,11 @@ export default function FAQSection({ onOpenCallModal }) {
                   {isOpen && (
                     <div style={{
                       padding: '0 20px 18px 20px',
+                      background: '#fffbeb',
                       color: 'var(--text-sub)',
                       fontSize: '0.88rem',
                       lineHeight: '1.65',
-                      borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+                      borderTop: '1px solid rgba(217, 119, 6, 0.15)',
                       paddingTop: '12px'
                     }}>
                       {item.answer}
@@ -111,9 +111,9 @@ export default function FAQSection({ onOpenCallModal }) {
           <div style={{
             textAlign: 'center',
             padding: '20px',
-            background: 'rgba(255, 255, 255, 0.02)',
+            background: '#f8fafc',
             borderRadius: '18px',
-            border: '1px dashed var(--border-glass)'
+            border: '1px dashed rgba(0, 0, 0, 0.12)'
           }}>
             <p style={{ color: 'var(--text-sub)', fontSize: '0.88rem', marginBottom: '12px' }}>
               Have more questions regarding admissions, batch timings, or fee structure?
@@ -123,7 +123,7 @@ export default function FAQSection({ onOpenCallModal }) {
               className="btn-secondary"
               style={{ padding: '8px 18px', fontSize: '0.84rem' }}
             >
-              <PhoneCall size={14} color="var(--apple-gold)" />
+              <PhoneCall size={14} color="#d97706" />
               <span>Speak with Admissions Counselor</span>
             </button>
           </div>

@@ -15,12 +15,12 @@ export default function MobileActionBar({ onOpenCallModal }) {
         left: 0,
         right: 0,
         zIndex: 90,
-        background: 'rgba(3, 7, 18, 0.88)',
+        background: 'rgba(255, 255, 255, 0.92)',
         backdropFilter: 'blur(28px) saturate(190%)',
         WebkitBackdropFilter: 'blur(28px) saturate(190%)',
-        borderTop: '1px solid var(--border-specular-top)',
+        borderTop: '1px solid rgba(0, 0, 0, 0.08)',
         padding: '9px 14px 12px 14px',
-        boxShadow: '0 -10px 30px rgba(0, 0, 0, 0.6)'
+        boxShadow: '0 -10px 30px rgba(0, 0, 0, 0.08)'
       }}
       className="mobile-action-bar"
     >
@@ -75,7 +75,7 @@ export default function MobileActionBar({ onOpenCallModal }) {
             justifyContent: 'center'
           }}
         >
-          <BookOpen size={14} color="var(--accent-blue)" />
+          <BookOpen size={14} color="#0284c7" />
           <span>Syllabus</span>
         </a>
       </div>

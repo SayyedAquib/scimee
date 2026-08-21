@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, PhoneCall, MessageCircle, Clock, MapPin, X, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
+import { Phone, PhoneCall, MessageCircle, Clock, MapPin, X, CheckCircle2, ArrowRight } from 'lucide-react';
 import siteConfig from '../data/site-config.json';
 
 export default function PhoneCallModal({ isOpen, onClose }) {
@@ -67,9 +67,9 @@ export default function PhoneCallModal({ isOpen, onClose }) {
 
         {/* Modal Header */}
         <div style={{
-          background: 'linear-gradient(135deg, #0f1a36 0%, #152244 100%)',
+          background: '#fffbeb',
           padding: '20px 24px',
-          borderBottom: '1px solid var(--border-subtle)',
+          borderBottom: '1px solid rgba(217, 119, 6, 0.18)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -79,10 +79,10 @@ export default function PhoneCallModal({ isOpen, onClose }) {
             <div className="badge-gold" style={{ marginBottom: '4px' }}>
               Direct Admissions Line
             </div>
-            <h3 id="call-modal-title" style={{ fontSize: '1.2rem', fontWeight: '800', color: '#fff', letterSpacing: '-0.02em' }}>
+            <h3 id="call-modal-title" style={{ fontSize: '1.2rem', fontWeight: '800', color: '#78350f', letterSpacing: '-0.02em' }}>
               Connect with SCIMEE
             </h3>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
+            <p style={{ fontSize: '0.8rem', color: '#92400e', marginTop: '2px' }}>
               Sara Coaching Institute of Medical Entrance Examination
             </p>
           </div>
@@ -91,7 +91,7 @@ export default function PhoneCallModal({ isOpen, onClose }) {
             onClick={resetAndClose}
             aria-label="Close dialog"
             style={{
-              background: 'rgba(255, 255, 255, 0.08)',
+              background: 'rgba(0, 0, 0, 0.06)',
               border: 'none',
               borderRadius: '50%',
               width: '32px',
@@ -99,34 +99,31 @@ export default function PhoneCallModal({ isOpen, onClose }) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: 'var(--text-secondary)',
+              color: 'var(--text-sub)',
               cursor: 'pointer',
               transition: 'all 120ms ease'
             }}
-            onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.16)'; e.currentTarget.style.color = '#fff'; }}
-            onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
           >
             <X size={17} />
           </button>
         </div>
 
         {/* Modal Content */}
-        <div style={{ padding: '22px 24px', maxHeight: '78vh', overflowY: 'auto' }}>
+        <div style={{ padding: '22px 24px', maxHeight: '78vh', overflowY: 'auto', background: '#ffffff' }}>
           
           {/* Operating Hours Strip */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
-            background: 'rgba(56, 189, 248, 0.08)',
-            border: '1px solid rgba(56, 189, 248, 0.22)',
-            borderTop: '1px solid rgba(56, 189, 248, 0.4)',
+            background: '#f0f9ff',
+            border: '1px solid rgba(2, 132, 199, 0.2)',
             padding: '9px 12px',
-            borderRadius: 'var(--radius-sm)',
+            borderRadius: '12px',
             marginBottom: '18px'
           }}>
-            <Clock size={16} color="var(--accent-blue)" style={{ flexShrink: 0 }} />
-            <div style={{ fontSize: '0.8rem', color: '#e2e8f0' }}>
+            <Clock size={16} color="#0284c7" style={{ flexShrink: 0 }} />
+            <div style={{ fontSize: '0.8rem', color: '#0369a1' }}>
               <strong>Hours:</strong> {siteConfig.contact.operatingHours.weekdays} (Sun: {siteConfig.contact.operatingHours.sunday})
             </div>
           </div>
@@ -167,7 +164,7 @@ export default function PhoneCallModal({ isOpen, onClose }) {
               }}
             >
               <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Phone size={17} color="var(--accent-gold)" />
+                <Phone size={17} color="#d97706" />
                 <span>Secondary Line</span>
               </span>
               <span style={{ fontWeight: '700', letterSpacing: '0.02em' }}>
@@ -205,30 +202,29 @@ export default function PhoneCallModal({ isOpen, onClose }) {
             alignItems: 'center',
             gap: '10px',
             margin: '18px 0',
-            color: 'var(--text-tertiary)',
+            color: 'var(--text-muted)',
             fontSize: '0.74rem',
             letterSpacing: '0.05em'
           }}>
-            <div style={{ flex: 1, height: '1px', background: 'var(--border-subtle)' }} />
+            <div style={{ flex: 1, height: '1px', background: 'rgba(0,0,0,0.08)' }} />
             <span>OR REQUEST A CALLBACK</span>
-            <div style={{ flex: 1, height: '1px', background: 'var(--border-subtle)' }} />
+            <div style={{ flex: 1, height: '1px', background: 'rgba(0,0,0,0.08)' }} />
           </div>
 
           {/* Callback Form */}
           {callbackRequested ? (
             <div style={{
-              background: 'rgba(16, 185, 129, 0.1)',
-              border: '1px solid rgba(16, 185, 129, 0.3)',
-              borderTop: '1px solid rgba(52, 211, 153, 0.5)',
-              borderRadius: 'var(--radius-md)',
+              background: '#ecfdf5',
+              border: '1px solid rgba(5, 150, 105, 0.3)',
+              borderRadius: '16px',
               padding: '18px',
               textAlign: 'center'
             }}>
-              <CheckCircle2 size={32} color="var(--accent-emerald)" style={{ margin: '0 auto 8px' }} />
-              <h4 style={{ color: '#fff', fontSize: '1rem', fontWeight: '800', marginBottom: '4px' }}>
+              <CheckCircle2 size={32} color="#059669" style={{ margin: '0 auto 8px' }} />
+              <h4 style={{ color: '#065f46', fontSize: '1rem', fontWeight: '800', marginBottom: '4px' }}>
                 Callback Request Received!
               </h4>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+              <p style={{ fontSize: '0.82rem', color: '#047857' }}>
                 Our faculty counselor will call you shortly at <strong>{phoneNumber}</strong>.
               </p>
               <button
@@ -242,7 +238,7 @@ export default function PhoneCallModal({ isOpen, onClose }) {
           ) : (
             <form onSubmit={handleCallbackSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.76rem', color: 'var(--text-secondary)', marginBottom: '3px', fontWeight: '600' }}>
+                <label style={{ display: 'block', fontSize: '0.76rem', color: 'var(--text-sub)', marginBottom: '3px', fontWeight: '600' }}>
                   Student / Parent Name (Optional)
                 </label>
                 <input
@@ -253,10 +249,10 @@ export default function PhoneCallModal({ isOpen, onClose }) {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    borderRadius: 'var(--radius-sm)',
-                    background: 'var(--apple-bg-input)',
-                    border: '1px solid var(--border-subtle)',
-                    color: '#fff',
+                    borderRadius: '10px',
+                    background: '#ffffff',
+                    border: '1px solid rgba(0, 0, 0, 0.12)',
+                    color: 'var(--text-heading)',
                     fontSize: '0.88rem',
                     outline: 'none'
                   }}
@@ -264,8 +260,8 @@ export default function PhoneCallModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.76rem', color: 'var(--text-secondary)', marginBottom: '3px', fontWeight: '600' }}>
-                  Mobile Number <span style={{ color: '#f87171' }}>*</span>
+                <label style={{ display: 'block', fontSize: '0.76rem', color: 'var(--text-sub)', marginBottom: '3px', fontWeight: '600' }}>
+                  Mobile Number <span style={{ color: '#e11d48' }}>*</span>
                 </label>
                 <input
                   type="tel"
@@ -276,21 +272,21 @@ export default function PhoneCallModal({ isOpen, onClose }) {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    borderRadius: 'var(--radius-sm)',
-                    background: 'var(--apple-bg-input)',
-                    border: formError ? '1px solid #ef4444' : '1px solid var(--border-subtle)',
-                    color: '#fff',
+                    borderRadius: '10px',
+                    background: '#ffffff',
+                    border: formError ? '1px solid #e11d48' : '1px solid rgba(0, 0, 0, 0.12)',
+                    color: 'var(--text-heading)',
                     fontSize: '0.88rem',
                     outline: 'none'
                   }}
                 />
                 {formError && (
-                  <p style={{ color: '#f87171', fontSize: '0.72rem', marginTop: '3px' }}>{formError}</p>
+                  <p style={{ color: '#e11d48', fontSize: '0.72rem', marginTop: '3px' }}>{formError}</p>
                 )}
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.76rem', color: 'var(--text-secondary)', marginBottom: '3px', fontWeight: '600' }}>
+                <label style={{ display: 'block', fontSize: '0.76rem', color: 'var(--text-sub)', marginBottom: '3px', fontWeight: '600' }}>
                   Target Batch
                 </label>
                 <select
@@ -299,10 +295,10 @@ export default function PhoneCallModal({ isOpen, onClose }) {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    borderRadius: 'var(--radius-sm)',
-                    background: '#090f1d',
-                    border: '1px solid var(--border-subtle)',
-                    color: '#fff',
+                    borderRadius: '10px',
+                    background: '#ffffff',
+                    border: '1px solid rgba(0, 0, 0, 0.12)',
+                    color: 'var(--text-heading)',
                     fontSize: '0.88rem',
                     outline: 'none'
                   }}
@@ -337,11 +333,11 @@ export default function PhoneCallModal({ isOpen, onClose }) {
             gap: '8px',
             marginTop: '16px',
             paddingTop: '12px',
-            borderTop: '1px solid var(--border-subtle)',
+            borderTop: '1px solid rgba(0, 0, 0, 0.08)',
             fontSize: '0.74rem',
-            color: 'var(--text-tertiary)'
+            color: 'var(--text-muted)'
           }}>
-            <MapPin size={14} color="var(--accent-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
+            <MapPin size={14} color="#d97706" style={{ flexShrink: 0, marginTop: '2px' }} />
             <span>
               {siteConfig.location.addressLine1}, {siteConfig.location.addressLine2}, {siteConfig.location.city} - {siteConfig.location.pincode}
             </span>

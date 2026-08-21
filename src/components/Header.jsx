@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PhoneCall, Menu, X, ChevronRight, Sparkles } from 'lucide-react';
+import { PhoneCall, Menu, X, ChevronRight } from 'lucide-react';
 import siteConfig from '../data/site-config.json';
 
 export default function Header({ onOpenCallModal }) {
@@ -21,8 +21,8 @@ export default function Header({ onOpenCallModal }) {
       {/* Apple Floating Island Navigation Container */}
       <div className="floating-navbar-wrapper">
         <header className="floating-navbar" style={{
-          background: scrolled ? 'rgba(9, 14, 28, 0.88)' : 'rgba(11, 17, 32, 0.72)',
-          boxShadow: scrolled ? '0 20px 48px -8px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.15)' : '0 16px 36px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1)'
+          background: scrolled ? 'rgba(255, 255, 255, 0.94)' : 'rgba(255, 255, 255, 0.85)',
+          boxShadow: scrolled ? '0 20px 48px -8px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.08)' : '0 14px 34px -8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06)'
         }}>
           
           {/* Brand Logo & Name */}
@@ -36,8 +36,8 @@ export default function Header({ onOpenCallModal }) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 14px rgba(0, 0, 0, 0.45)',
-              border: '1px solid rgba(255, 255, 255, 0.3)'
+              boxShadow: '0 2px 10px rgba(0, 0, 0, 0.08)',
+              border: '1px solid rgba(0, 0, 0, 0.08)'
             }}>
               <img 
                 src="/assets/logo.svg" 
@@ -50,7 +50,7 @@ export default function Header({ onOpenCallModal }) {
                 <span style={{
                   fontSize: '1.2rem',
                   fontWeight: '900',
-                  color: '#ffffff',
+                  color: 'var(--text-heading)',
                   letterSpacing: '-0.02em',
                   lineHeight: '1'
                 }}>
@@ -113,9 +113,9 @@ export default function Header({ onOpenCallModal }) {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
               style={{
-                background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid var(--border-glass-bright)',
-                color: '#fff',
+                background: 'rgba(0, 0, 0, 0.05)',
+                border: '1px solid rgba(0, 0, 0, 0.1)',
+                color: 'var(--text-heading)',
                 padding: '6px',
                 borderRadius: '8px',
                 cursor: 'pointer',
@@ -131,22 +131,21 @@ export default function Header({ onOpenCallModal }) {
         </header>
       </div>
 
-      {/* Mobile Drawer (Apple Frosted Sheet) */}
+      {/* Mobile Drawer (Apple Frosted Light Sheet) */}
       {mobileMenuOpen && (
         <div style={{
           position: 'fixed',
           top: '84px',
           left: '16px',
           right: '16px',
-          zIndex: 99,
-          background: 'rgba(9, 15, 30, 0.94)',
+          zIndex: 999,
+          background: 'rgba(255, 255, 255, 0.96)',
           backdropFilter: 'blur(30px) saturate(200%)',
           WebkitBackdropFilter: 'blur(30px) saturate(200%)',
           borderRadius: '24px',
-          border: '1px solid var(--border-glass-bright)',
-          borderTop: '1px solid var(--border-specular-top)',
+          border: '1px solid rgba(0, 0, 0, 0.1)',
           padding: '18px',
-          boxShadow: '0 20px 48px rgba(0, 0, 0, 0.85)',
+          boxShadow: '0 20px 48px rgba(0, 0, 0, 0.15)',
           animation: 'appleScaleIn 200ms var(--spring-snappy)'
         }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -156,13 +155,13 @@ export default function Header({ onOpenCallModal }) {
                 href={item.href}
                 onClick={closeMenu}
                 style={{
-                  color: '#fff',
+                  color: 'var(--text-heading)',
                   textDecoration: 'none',
                   fontSize: '0.96rem',
-                  fontWeight: '600',
+                  fontWeight: '700',
                   padding: '10px 14px',
                   borderRadius: '12px',
-                  background: 'rgba(255, 255, 255, 0.04)',
+                  background: 'rgba(0, 0, 0, 0.03)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between'
