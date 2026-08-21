@@ -28,21 +28,17 @@ export default function Header({ onOpenCallModal }) {
           {/* Brand Logo & Name */}
           <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
             <div style={{
-              width: '38px',
-              height: '38px',
-              borderRadius: '10px',
-              background: '#ffffff',
-              padding: '3px',
+              width: '44px',
+              height: '44px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 2px 10px rgba(0, 0, 0, 0.08)',
-              border: '1px solid rgba(0, 0, 0, 0.08)'
+              flexShrink: 0
             }}>
               <img 
-                src="/assets/logo.svg" 
+                src="/assets/logo.png" 
                 alt="SCIMEE Logo" 
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
               />
             </div>
             <div>
