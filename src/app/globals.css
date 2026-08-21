@@ -74,6 +74,7 @@ html {
   scroll-behavior: smooth;
   color-scheme: light;
   background-color: var(--canvas-white);
+  overflow-x: hidden;
 }
 
 body {
@@ -83,6 +84,8 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.6;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 /* Apple Ambient Canvas Lighting (Light Theme) */
@@ -107,7 +110,7 @@ body {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 16px;
 }
 
 @media (min-width: 768px) {
@@ -121,15 +124,22 @@ body {
    ========================================================================== */
 
 .bento-section-canvas {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
   border-radius: var(--radius-section);
   border: 1px solid var(--border-glass);
   box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.9);
-  padding: clamp(24px, 5vw, 44px);
-  margin-bottom: clamp(32px, 5vw, 56px);
+  padding: clamp(18px, 4vw, 44px);
+  margin-bottom: clamp(24px, 4.5vw, 56px);
   position: relative;
+}
+
+@media (max-width: 480px) {
+  .bento-section-canvas {
+    border-radius: 24px;
+    padding: 18px 14px;
+  }
 }
 
 .bento-card {
@@ -162,20 +172,27 @@ body {
 
 .floating-navbar-wrapper {
   position: sticky;
-  top: 14px;
+  top: 10px;
   z-index: 1000;
   width: 100%;
-  padding: 0 16px;
+  padding: 0 12px;
   display: flex;
   justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .floating-navbar-wrapper {
+    top: 14px;
+    padding: 0 16px;
+  }
 }
 
 .floating-navbar {
   width: 100%;
   max-width: 1100px;
-  height: 64px;
+  height: 60px;
   border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(32px) saturate(210%);
   -webkit-backdrop-filter: blur(32px) saturate(210%);
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -183,8 +200,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 18px;
+  padding: 0 14px;
   transition: all 250ms var(--spring-snappy);
+}
+
+@media (min-width: 768px) {
+  .floating-navbar {
+    height: 64px;
+    padding: 0 18px;
+  }
 }
 
 .nav-link {
@@ -430,7 +454,7 @@ body {
 .grid-responsive-2 {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 16px;
 }
 @media (min-width: 768px) {
   .grid-responsive-2 { grid-template-columns: repeat(2, 1fr); gap: 24px; }
@@ -439,10 +463,10 @@ body {
 .grid-responsive-3 {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 18px;
+  gap: 14px;
 }
 @media (min-width: 640px) {
-  .grid-responsive-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-responsive-3 { grid-template-columns: repeat(2, 1fr); gap: 16px; }
 }
 @media (min-width: 1024px) {
   .grid-responsive-3 { grid-template-columns: repeat(3, 1fr); gap: 22px; }
@@ -450,10 +474,13 @@ body {
 
 .grid-responsive-4 {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
-@media (min-width: 640px) {
+@media (min-width: 480px) {
+  .grid-responsive-4 { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+}
+@media (min-width: 768px) {
   .grid-responsive-4 { grid-template-columns: repeat(3, 1fr); gap: 16px; }
 }
 @media (min-width: 1024px) {

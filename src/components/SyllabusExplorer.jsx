@@ -324,7 +324,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
 
                     {isExpanded && (
                       <div style={{
-                        padding: '14px 18px 18px 56px',
+                        padding: 'clamp(12px, 3vw, 16px) clamp(14px, 4vw, 24px)',
                         background: '#f8fafc',
                         borderTop: '1px solid var(--border-glass)',
                         fontSize: '0.88rem',
