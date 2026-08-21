@@ -1,295 +1,266 @@
 {
-  "title": "Official NEET (UG) 2026 Syllabus",
-  "subtitle": "National Medical Commission (NMC) & National Testing Agency (NTA) Curriculum",
-  "noticeDate": "22nd December 2025 / 08th January 2026",
-  "officialRef": "NMC Public Notice U-14023/19/NEET (UG Exam)/UGMEB",
-  "summary": {
-    "totalUnits": 50,
-    "physicsUnits": 20,
-    "chemistryUnits": 20,
-    "biologyUnits": 10
-  },
-  "subjects": [
+  "exams": [
     {
-      "id": "physics",
-      "name": "Physics",
-      "totalUnits": 20,
-      "maxMarks": 180,
-      "icon": "atom",
-      "color": "blue",
-      "description": "20 Units covering Mechanics, Electrodynamics, Thermodynamics, Optics, Modern Physics & Experimental Skills.",
-      "units": [
+      "id": "neet",
+      "name": "NEET-UG 2026",
+      "badge": "NMC / NTA Official",
+      "title": "Official NEET (UG) 2026 Curriculum",
+      "subtitle": "National Medical Commission (NMC) & National Testing Agency (NTA) 50-Unit Medical Entrance Syllabus",
+      "markingScheme": "720 Total Marks (Physics 180, Chemistry 180, Biology 360) • +4 for correct, -1 for incorrect",
+      "subjects": [
         {
-          "unitNumber": 1,
-          "name": "Physics and Measurement",
-          "topics": "Units of measurements, System of Units, SI Units, fundamental and derived units, least count, significant figures, Errors in measurements, Dimensions of Physics quantities, dimensional analysis, and its applications."
+          "id": "physics",
+          "name": "Physics",
+          "totalUnits": 20,
+          "maxMarks": 180,
+          "icon": "atom",
+          "units": [
+            { "unitNumber": 1, "name": "Physics and Measurement", "topics": "Units of measurements, System of Units, SI Units, fundamental and derived units, least count, significant figures, Errors in measurements, Dimensions of Physics quantities, dimensional analysis, and its applications." },
+            { "unitNumber": 2, "name": "Kinematics", "topics": "Frame of reference, motion in a straight line, Position-time graph, speed and velocity, Uniform and non-uniform motion, average and instantaneous velocity, uniformly accelerated motion, velocity-time, position-time graph, Scalars and Vectors, Relative Velocity, Motion in a plane, Projectile Motion, Uniform Circular Motion." },
+            { "unitNumber": 3, "name": "Laws of Motion", "topics": "Force and inertia, Newton's laws of motion, Momentum, Impulse, Law of conservation of linear momentum, Equilibrium of concurrent forces, Static and Kinetic friction, rolling friction, Dynamics of uniform circular motion, centripetal force and applications." },
+            { "unitNumber": 4, "name": "Work, Energy, and Power", "topics": "Work done by constant force and variable force; kinetic and potential energies, work-energy theorem, power. Potential energy of spring, conservation of mechanical energy, conservative and non-conservative forces; motion in a vertical circle, Elastic and inelastic collisions in 1D and 2D." },
+            { "unitNumber": 5, "name": "Rotational Motion", "topics": "Centre of mass of two-particle system and rigid body; moment of force, torque, angular momentum, conservation of angular momentum; Moment of inertia, radius of gyration, parallel and perpendicular axes theorems, equations of rotational motion." },
+            { "unitNumber": 6, "name": "Gravitation", "topics": "Universal law of gravitation, Acceleration due to gravity (variation with altitude and depth), Kepler's laws, Gravitational potential energy, gravitational potential, Escape velocity, Motion of satellite, orbital velocity, time period and energy." },
+            { "unitNumber": 7, "name": "Properties of Solids and Liquids", "topics": "Elastic behaviour, Hooke's Law, Young's modulus, bulk modulus, shear modulus, Pressure in fluid, Pascal's law, Viscosity, Stokes' law, terminal velocity, Bernoulli's principle, Surface energy, surface tension, capillary rise, Heat, calorimetry, latent heat, Heat transfer." },
+            { "unitNumber": 8, "name": "Thermodynamics", "topics": "Thermal equilibrium, zeroth law of thermodynamics, concept of temperature, Heat, work, internal energy, First law of thermodynamics, isothermal and adiabatic processes, Second law of thermodynamics: reversible and irreversible processes." },
+            { "unitNumber": 9, "name": "Kinetic Theory of Gases", "topics": "Equation of state of perfect gas, work done on compressing gas, kinetic theory of gases: assumptions, concept of pressure, RMS speed of gas molecules, degrees of freedom, law of equipartition of energy, mean free path, Avogadro's number." },
+            { "unitNumber": 10, "name": "Oscillations and Waves", "topics": "Periodic motion, time period, frequency, Simple harmonic motion (SHM) and its equation, phase, oscillations of spring, energy in SHM, simple pendulum. Wave motion, longitudinal and transverse waves, speed of travelling wave, superposition of waves, standing waves, beats." },
+            { "unitNumber": 11, "name": "Electrostatics", "topics": "Electric charges, Coulomb's law, forces between multiple charges, superposition principle, continuous charge distribution. Electric field, electric dipole, torque in uniform field, Gauss's law and applications, Electric potential, capacitors in series and parallel, energy stored in capacitor." },
+            { "unitNumber": 12, "name": "Current Electricity", "topics": "Electric current, drift velocity, mobility, Ohm's law, electrical resistance, V-I characteristics, series and parallel combinations, temperature dependence, internal resistance, emf of cell, Kirchhoff's laws, Wheatstone bridge, Metre Bridge." },
+            { "unitNumber": 13, "name": "Magnetic Effects of Current and Magnetism", "topics": "Biot-Savart law, Ampere's law, solenoid. Force on moving charge in magnetic and electric fields, force on current conductor, torque on current loop: moving coil galvanometer. Bar magnet as equivalent solenoid, magnetic dipole moment, magnetic properties (dia, para, ferro)." },
+            { "unitNumber": 14, "name": "Electromagnetic Induction and Alternating Currents", "topics": "Faraday's law, induced emf and current, Lenz's law, eddy currents, self and mutual inductance. Alternating currents, peak and RMS value, reactance and impedance, LCR series circuit, resonance, power in AC circuits, AC generator and transformer." },
+            { "unitNumber": 15, "name": "Electromagnetic Waves", "topics": "Displacement current, electromagnetic waves and characteristics, transverse nature, electromagnetic spectrum (radio, micro, infrared, visible, ultraviolet, X-rays, gamma rays) and applications." },
+            { "unitNumber": 16, "name": "Optics", "topics": "Reflection of light, spherical mirrors, mirror formula, Refraction, thin lens formula, lens maker formula, total internal reflection, magnification, power of lens, refraction through prism, microscope and telescope. Wave optics: wavefront, Huygens principle, interference, Young's double slit experiment, diffraction, polarization." },
+            { "unitNumber": 17, "name": "Dual Nature of Matter and Radiation", "topics": "Dual nature of radiation, Photoelectric effect, Hertz and Lenard's observations, Einstein's photoelectric equation, particle nature of light, Matter waves, de Broglie relation." },
+            { "unitNumber": 18, "name": "Atoms and Nuclei", "topics": "Alpha-particle scattering experiment, Rutherford's atom model, Bohr model, hydrogen spectrum. Composition and size of nucleus, atomic masses, mass-energy relation, mass defect, binding energy per nucleon, nuclear fission and fusion." },
+            { "unitNumber": 19, "name": "Electronic Devices", "topics": "Semiconductors, semiconductor diode, I-V characteristics in forward/reverse bias, diode as rectifier, I-V characteristics of LED, photodiode, solar cell, Zener diode as voltage regulator, Logic gates (OR, AND, NOT, NAND, NOR)." },
+            { "unitNumber": 20, "name": "Experimental Skills", "topics": "Vernier calipers, Screw gauge, Simple pendulum, Metre scale principle of moments, Young's modulus, Surface tension, Co-efficient of viscosity, Speed of sound, Specific heat capacity, Resistivity of wire, Ohm's law, Galvanometer resistance, Focal length of mirrors/lenses, Prism angle of deviation, Refractive index of glass slab, p-n junction diode curves, Zener diode, Identification of components." }
+          ]
         },
         {
-          "unitNumber": 2,
-          "name": "Kinematics",
-          "topics": "Frame of reference, motion in a straight line, Position-time graph, speed and velocity, Uniform and non-uniform motion, average and instantaneous velocity, uniformly accelerated motion, velocity-time, position-time graph, Scalars and Vectors, Vector addition/subtraction, scalar and vector products, Unit Vector, Resolution of Vector, Relative Velocity, Motion in a plane, Projectile Motion, Uniform Circular Motion."
+          "id": "chemistry",
+          "name": "Chemistry",
+          "totalUnits": 20,
+          "maxMarks": 180,
+          "icon": "flask-conical",
+          "units": [
+            { "unitNumber": 1, "name": "Some Basic Concepts in Chemistry", "topics": "Matter and its nature, Dalton's atomic theory, Concept of atom, molecule, element, compound, Laws of chemical combination, Atomic and molecular masses, mole concept, empirical and molecular formulae, Chemical equations and stoichiometry." },
+            { "unitNumber": 2, "name": "Atomic Structure", "topics": "Nature of electromagnetic radiation, photoelectric effect, hydrogen spectrum, Bohr model, de Broglie relationship, Heisenberg uncertainty principle, quantum mechanics, quantum numbers, shapes of s, p, d orbitals, Aufbau principle, Pauli's exclusion principle, Hund's rule, electronic configuration." },
+            { "unitNumber": 3, "name": "Chemical Bonding and Molecular Structure", "topics": "Ionic and covalent bonds, lattice enthalpy, electronegativity, Fajan's rule, dipole moment, VSEPR theory, Valence Bond theory, hybridization (s, p, d orbitals), Molecular Orbital Theory (MOT), hydrogen bonding." },
+            { "unitNumber": 4, "name": "Chemical Thermodynamics", "topics": "System and surroundings, state functions, First law of thermodynamics, heat, work, enthalpy, Hess's law, Enthalpies of bond dissociation, combustion, formation, phase transition. Second law of thermodynamics, entropy, Gibbs energy, spontaneity criteria." },
+            { "unitNumber": 5, "name": "Solutions", "topics": "Concentration terms (molality, molarity, mole fraction), Raoult's law, ideal and non-ideal solutions, Colligative properties: relative lowering of vapour pressure, elevation of boiling point, depression of freezing point, osmotic pressure, van't Hoff factor." },
+            { "unitNumber": 6, "name": "Equilibrium", "topics": "Dynamic equilibrium, physical equilibria, Law of chemical equilibrium, Kp and Kc, Le Chatelier's principle. Ionic equilibrium: acids and bases (Arrhenius, Bronsted-Lowry, Lewis), pH scale, common ion effect, hydrolysis of salts, solubility product, buffer solutions." },
+            { "unitNumber": 7, "name": "Redox Reactions and Electrochemistry", "topics": "Oxidation number, balancing redox reactions, electrolytic and metallic conduction, Kohlrausch's law, Galvanic cells, standard electrode potential, Nernst equation, Gibbs energy of cell reaction, dry cells, fuel cells." },
+            { "unitNumber": 8, "name": "Chemical Kinetics", "topics": "Rate of reaction, factors affecting rate, order and molecularity, integrated rate equations (zero and first order), half-life, Arrhenius equation, activation energy, collision theory." },
+            { "unitNumber": 9, "name": "Classification of Elements & Periodicity", "topics": "Modern periodic law, periodic table trends in atomic/ionic radii, ionization enthalpy, electron gain enthalpy, valence, oxidation states, chemical reactivity." },
+            { "unitNumber": 10, "name": "p-Block Elements (Group 13 to 18)", "topics": "Electronic configuration and general trends in physical and chemical properties across periods and down groups, unique behaviour of first element in each group." },
+            { "unitNumber": 11, "name": "d- and f-Block Elements", "topics": "Transition elements: electronic configuration, oxidation states, atomic radii, catalytic properties, magnetic properties, alloy formation, K2Cr2O7 and KMnO4. Lanthanoids and Actinoids: configuration, oxidation states, lanthanoid contraction." },
+            { "unitNumber": 12, "name": "Coordination Compounds", "topics": "Werner's theory, ligands, coordination number, denticity, chelation, IUPAC nomenclature, isomerism, Valence Bond Theory, Crystal Field Theory, colour and magnetic properties." },
+            { "unitNumber": 13, "name": "Purification & Characterisation of Organic Compounds", "topics": "Crystallization, sublimation, distillation, chromatography. Qualitative analysis (detection of N, S, P, halogens). Quantitative estimation of C, H, N, halogens, S, P. Empirical and molecular formula calculations." },
+            { "unitNumber": 14, "name": "Some Basic Principles of Organic Chemistry", "topics": "Tetravalency of carbon, hybridization, structural and stereoisomerism, IUPAC nomenclature, carbocations, carbanions, free radicals, electrophiles, nucleophiles, inductive effect, resonance, hyperconjugation." },
+            { "unitNumber": 15, "name": "Hydrocarbons", "topics": "Alkanes (conformations, halogenation), Alkenes (geometrical isomerism, electrophilic addition, Markownikoff's rule, ozonolysis), Alkynes (acidity, addition reactions), Aromatic hydrocarbons (benzene structure, electrophilic substitution, Friedel-Crafts reaction)." },
+            { "unitNumber": 16, "name": "Organic Compounds Containing Halogens", "topics": "Nature of C-X bond, mechanisms of substitution reactions (SN1, SN2), environmental effects of chloroform, iodoform, freons, DDT." },
+            { "unitNumber": 17, "name": "Organic Compounds Containing Oxygen", "topics": "Alcohols, Phenols and Ethers: preparation, dehydration, electrophilic substitution, Reimer-Tiemann. Aldehydes and Ketones: nucleophilic addition, Grignard, aldol condensation, Cannizzaro, haloform test. Carboxylic Acids: acidity." },
+            { "unitNumber": 18, "name": "Organic Compounds Containing Nitrogen", "topics": "Amines: classification, structure, basic character, diazotization. Diazonium Salts: synthetic importance in organic chemistry." },
+            { "unitNumber": 19, "name": "Biomolecules", "topics": "Carbohydrates (monosaccharides, disaccharides, polysaccharides), Proteins (amino acids, peptide bond, primary/secondary/tertiary structures, denaturation), Vitamins, Nucleic Acids (DNA & RNA structure and functions), Hormones." },
+            { "unitNumber": 20, "name": "Principles Related to Practical Chemistry", "topics": "Detection of functional groups (hydroxyl, carbonyl, carboxyl, amino), preparation of Mohr's salt, potash alum, acetanilide, iodoform. Titrimetric exercises (oxalic acid vs KMnO4, Mohr's salt vs KMnO4). Qualitative salt analysis of cations and anions." }
+          ]
         },
         {
-          "unitNumber": 3,
-          "name": "Laws of Motion",
-          "topics": "Force and inertia, Newton's First, Second and Third laws of motion, Momentum, Impulses, Law of conservation of linear momentum, Equilibrium of concurrent forces, Static and Kinetic friction, laws of friction, rolling friction, Dynamics of uniform circular motion: centripetal force and applications (level and banked road)."
-        },
-        {
-          "unitNumber": 4,
-          "name": "Work, Energy, and Power",
-          "topics": "Work done by constant force and variable force; kinetic and potential energies, work-energy theorem, power. Potential energy of spring, conservation of mechanical energy, conservative and non-conservative forces; motion in a vertical circle, Elastic and inelastic collisions in 1D and 2D."
-        },
-        {
-          "unitNumber": 5,
-          "name": "Rotational Motion",
-          "topics": "Centre of mass of two-particle system and rigid body; moment of a force, torque, angular momentum, conservation of angular momentum; Moment of inertia, radius of gyration, parallel and perpendicular axes theorems, Equilibrium of rigid bodies, equations of rotational motion, comparison of linear and rotational motions."
-        },
-        {
-          "unitNumber": 6,
-          "name": "Gravitation",
-          "topics": "Universal law of gravitation, Acceleration due to gravity (variation with altitude and depth), Kepler's laws of planetary motion, Gravitational potential energy, gravitational potential, Escape velocity, Motion of a satellite, orbital velocity, time period and energy of satellite."
-        },
-        {
-          "unitNumber": 7,
-          "name": "Properties of Solids and Liquids",
-          "topics": "Elastic behaviour, Stress-strain relationship, Hooke's Law, Young's, bulk, and shear modulus, Pressure due to fluid column, Pascal's law, Viscosity, Stokes' law, terminal velocity, streamline/turbulent flow, critical velocity, Bernoulli's principle, Surface energy, surface tension, angle of contact, capillary rise, Heat, temperature, thermal expansion, specific heat capacity, calorimetry, latent heat, Heat transfer: conduction, convection, radiation."
-        },
-        {
-          "unitNumber": 8,
-          "name": "Thermodynamics",
-          "topics": "Thermal equilibrium, zeroth law of thermodynamics, concept of temperature, Heat, work, internal energy, First law of thermodynamics, isothermal and adiabatic processes, Second law of thermodynamics: reversible and irreversible processes."
-        },
-        {
-          "unitNumber": 9,
-          "name": "Kinetic Theory of Gases",
-          "topics": "Equation of state of perfect gas, work done on compressing a gas, Kinetic theory of gases: assumptions, concept of pressure, RMS speed of gas molecules, Degrees of freedom, Law of equipartition of energy, specific heat capacities, Mean free path, Avogadro's number."
-        },
-        {
-          "unitNumber": 10,
-          "name": "Oscillations and Waves",
-          "topics": "Periodic motion, time period, frequency, displacement, Simple harmonic motion (SHM) and equation, phase, oscillations of a spring, Simple pendulum, Wave motion: longitudinal and transverse waves, speed of wave, Principle of superposition, reflection of waves, Standing waves in strings and organ pipes, harmonics, Beats."
-        },
-        {
-          "unitNumber": 11,
-          "name": "Electrostatics",
-          "topics": "Electric charges, Conservation of charge, Coulomb's law, superposition principle, Electric field, field lines, Electric dipole, torque on dipole, Electric flux, Gauss's law and applications (wire, sheet, spherical shell), Electric potential, potential difference, equipotential surfaces, Conductors and insulators, Dielectrics, capacitors and capacitances, series and parallel combination, energy stored in capacitor."
-        },
-        {
-          "unitNumber": 12,
-          "name": "Current Electricity",
-          "topics": "Electric current, Drift velocity, mobility, Ohm's law, Electrical resistance, V-I characteristics, Series and parallel combinations of resistors, Temperature dependence of resistance, Internal resistance, EMF and terminal potential difference, Kirchhoff's laws and applications, Wheatstone bridge, Metre Bridge."
-        },
-        {
-          "unitNumber": 13,
-          "name": "Magnetic Effects of Current and Magnetism",
-          "topics": "Biot-Savart law and circular loop application, Ampere's law (straight wire and solenoid), Force on moving charge in magnetic and electric fields, Force between parallel conductors, Torque on current loop, Moving coil galvanometer, conversion to ammeter and voltmeter, Magnetic dipole moment, Bar magnet, magnetic field lines, Para-, dia- and ferromagnetic substances, effect of temperature on magnetic properties."
-        },
-        {
-          "unitNumber": 14,
-          "name": "Electromagnetic Induction and Alternating Currents",
-          "topics": "Electromagnetic induction: Faraday's law, Lenz's law, Eddy currents, Self and mutual inductance, Alternating currents, peak and RMS value, reactance and impedance, LCR series circuit, resonance, power in AC circuits, wattless current, AC generator and transformer."
-        },
-        {
-          "unitNumber": 15,
-          "name": "Electromagnetic Waves",
-          "topics": "Displacement current, Characteristics and transverse nature of electromagnetic waves, Electromagnetic spectrum (radio, microwaves, infrared, visible, ultraviolet, X-rays, gamma rays), Applications of EM waves."
-        },
-        {
-          "unitNumber": 16,
-          "name": "Optics",
-          "topics": "Reflection of light, spherical mirrors, mirror formula, Refraction at plane and spherical surfaces, thin lens formula, lens maker formula, Total internal reflection and applications, Magnification, Power of a lens, combination of thin lenses, Refraction through prism, Microscope and Astronomical Telescope, Wave optics: wavefront, Huygens' principle, Interference, Young's double-slit experiment, Diffraction due to single slit, Polarization, Brewster's law."
-        },
-        {
-          "unitNumber": 17,
-          "name": "Dual Nature of Matter and Radiation",
-          "topics": "Dual nature of radiation, Photoelectric effect, Hertz and Lenard's observations, Einstein's photoelectric equation, Matter waves, de Broglie relation."
-        },
-        {
-          "unitNumber": 18,
-          "name": "Atoms and Nuclei",
-          "topics": "Alpha-particle scattering experiment, Rutherford's model, Bohr model, energy levels, hydrogen spectrum, Composition and size of nucleus, atomic masses, Mass-energy relation, mass defect, binding energy per nucleon, nuclear fission and fusion."
-        },
-        {
-          "unitNumber": 19,
-          "name": "Electronic Devices",
-          "topics": "Semiconductors, semiconductor diode, I-V characteristics in forward and reverse bias, diode as rectifier, LED, photodiode, solar cell, Zener diode as voltage regulator, Logic gates (OR, AND, NOT, NAND and NOR)."
-        },
-        {
-          "unitNumber": 20,
-          "name": "Experimental Skills (18 Practical Activities)",
-          "topics": "1. Vernier calipers 2. Screw gauge 3. Simple Pendulum 4. Metre Scale moments 5. Young's modulus 6. Surface tension by capillary rise 7. Co-efficient of Viscosity 8. Speed of sound in resonance tube 9. Specific heat capacity by mixtures 10. Resistivity using metre bridge 11. Resistance by Ohm's law 12. Galvanometer figure of merit 13. Focal length (Convex/Concave mirror & lens) 14. Triangular prism angle of deviation 15. Refractive index using travelling microscope 16. p-n junction diode curves 17. Zener diode breakdown voltage 18. Identification of Diode, LED, Resistor, Capacitor."
+          "id": "biology",
+          "name": "Biology",
+          "totalUnits": 10,
+          "maxMarks": 360,
+          "icon": "dna",
+          "units": [
+            { "unitNumber": 1, "name": "Diversity in Living World", "topics": "What is living? Biodiversity; Need for classification; Three domains of life; Taxonomy & Systematics; Concept of species and taxonomical hierarchy; Binomial nomenclature; Five kingdom classification: Monera, Protista, Fungi, Plantae and Animalia; Salient features and classification of Plants and Animals." },
+            { "unitNumber": 2, "name": "Structural Organisation in Animals and Plants", "topics": "Morphology and modifications; Tissues; Anatomy and functions of different parts of flowering plants: Root, stem, leaf, inflorescence, flower, fruit and seed. Animal tissues; Morphology, anatomy and functions of digestive, circulatory, respiratory, nervous and reproductive systems of frog." },
+            { "unitNumber": 3, "name": "Cell Structure and Function", "topics": "Cell theory and cell as the basic unit of life; Structure of prokaryotic and eukaryotic cell; Plant cell and animal cell; Cell envelope, cell membrane, cell wall; Cell organelles; Biomolecules: structure and function of proteins, carbohydrates, lipids, nucleic acids; Enzymes; Cell division: Cell cycle, mitosis and meiosis." },
+            { "unitNumber": 4, "name": "Plant Physiology", "topics": "Photosynthesis as a means of Autotrophic nutrition; Site of photosynthesis, pigments involved, Photochemical and biosynthetic phases of photosynthesis; Cyclic and non-cyclic photophosphorylation; Chemiosmotic hypothesis; Photorespiration; C3 and C4 pathways; Cellular respiration: Glycolysis, fermentation, TCA cycle and electron transport system; Plant growth and development." },
+            { "unitNumber": 5, "name": "Human Physiology", "topics": "Breathing and Respiration in humans; Body fluids and circulation: Blood groups, coagulation, human circulatory system, ECG; Excretory products and their elimination; Locomotion and Movement: skeletal system, joints, muscle contraction; Neural control and coordination: CNS, PNS, nerve impulse; Chemical coordination and regulation: Endocrine glands and hormones." },
+            { "unitNumber": 6, "name": "Reproduction", "topics": "Sexual reproduction in flowering plants: Flower structure, development of male and female gametophytes, pollination, double fertilization, post-fertilization events, apomixis, polyembryony. Human Reproduction: Male and female reproductive systems, gametogenesis, menstrual cycle, fertilization, pregnancy, embryonic development, parturition; Reproductive health." },
+            { "unitNumber": 7, "name": "Genetics and Evolution", "topics": "Heredity and variation: Mendelian inheritance, deviations from Mendelism (incomplete dominance, co-dominance, multiple alleles), Chromosome theory of inheritance, Sex determination, Linkage and crossing over, Mendelian disorders in humans. Molecular basis of inheritance: DNA, RNA, replication, transcription, genetic code, translation, gene expression, Human Genome Project, DNA fingerprinting. Evolution: Origin of life, biological evolution, Darwin's contribution, modern synthetic theory, Hardy-Weinberg principle." },
+            { "unitNumber": 8, "name": "Biology and Human Welfare", "topics": "Health and Disease: Pathogens, parasites causing human diseases (malaria, filariasis, ascariasis, typhoid, pneumonia, common cold, amoebiasis, ringworm), Basic concepts of immunology, vaccines, Cancer, HIV and AIDS; Adolescence, drug and alcohol abuse. Microbes in human welfare: In household food processing, industrial production, sewage treatment, energy generation and as biocontrol agents and biofertilizers." },
+            { "unitNumber": 9, "name": "Biotechnology and Its Applications", "topics": "Principles and process of Biotechnology: Genetic engineering (Recombinant DNA technology). Application of Biotechnology in health and agriculture: Human insulin and vaccine production, gene therapy, Genetically modified organisms (Bt crops), Transgenic Animals, Biosafety issues, biopiracy and patents." },
+            { "unitNumber": 10, "name": "Ecology and Environment", "topics": "Organisms and environment: Population interactions (mutualism, competition, predation, parasitism), population attributes (growth, birth rate and death rate, age distribution). Ecosystem: Patterns, components, productivity and decomposition, energy flow, pyramids of number, biomass, energy. Biodiversity and its conservation: Concept, patterns, importance, loss of biodiversity, conservation strategies (hotspots, endangered organisms, extinction, Red Data Book, biosphere reserves, national parks and sanctuaries)." }
+          ]
         }
       ]
     },
     {
-      "id": "chemistry",
-      "name": "Chemistry",
-      "totalUnits": 20,
-      "maxMarks": 180,
-      "icon": "flask-conical",
-      "color": "purple",
-      "description": "20 Units comprising Physical Chemistry (Units 1-8), Inorganic Chemistry (Units 9-12), Organic Chemistry (Units 13-19) and Practical Chemistry (Unit 20).",
-      "units": [
+      "id": "jee",
+      "name": "JEE (Main) 2026",
+      "badge": "NTA Official",
+      "title": "Official JEE (Main) 2026 Syllabus",
+      "subtitle": "National Testing Agency (NTA) Paper 1 (B.E./B.Tech.) 54-Unit Engineering Entrance Curriculum",
+      "markingScheme": "300 Total Marks (Mathematics 100, Physics 100, Chemistry 100) • +4 for correct, -1 for incorrect",
+      "subjects": [
         {
-          "unitNumber": 1,
-          "name": "Some Basic Concepts in Chemistry",
-          "topics": "Matter and its nature, Dalton's atomic theory, Laws of chemical combination, Atomic and molecular masses, mole concept, molar mass, percentage composition, empirical and molecular formulae, Chemical equations and stoichiometry."
+          "id": "mathematics",
+          "name": "Mathematics",
+          "totalUnits": 14,
+          "maxMarks": 100,
+          "icon": "calculator",
+          "units": [
+            { "unitNumber": 1, "name": "Sets, Relations and Functions", "topics": "Sets and their representation; Union, intersection and complement of sets and their algebraic properties; Power set; Relations, type of relations, equivalence relations, functions; one-one, into and onto functions, the composition of functions." },
+            { "unitNumber": 2, "name": "Complex Numbers and Quadratic Equations", "topics": "Complex numbers as ordered pairs of reals, Representation in the form a + ib and Argand diagram, algebra of complex numbers, modulus and argument. Quadratic equations in real and complex systems, relations between roots and coefficients, nature of roots, formation of quadratic equations." },
+            { "unitNumber": 3, "name": "Matrices and Determinants", "topics": "Matrices, algebra of matrices, type of matrices, determinants and matrices of order two and three, evaluation of determinants, area of triangles using determinants; Adjoint and inverse of square matrix; Test of consistency and solution of simultaneous linear equations in 2 or 3 variables." },
+            { "unitNumber": 4, "name": "Permutations and Combinations", "topics": "Fundamental principle of counting, permutations and combinations; Meaning of P(n, r) and C(n, r). Simple applications." },
+            { "unitNumber": 5, "name": "Binomial Theorem and Its Simple Applications", "topics": "Binomial theorem for a positive integral index, general term and middle term and simple applications." },
+            { "unitNumber": 6, "name": "Sequence and Series", "topics": "Arithmetic and Geometric progressions, insertion of arithmetic, geometric means between two given numbers, Relation between A.M and G.M." },
+            { "unitNumber": 7, "name": "Limit, Continuity and Differentiability", "topics": "Real-valued functions, algebra of functions; polynomial, rational, trigonometric, logarithmic and exponential functions; inverse functions. Graphs of simple functions. Limits, continuity and differentiability. Differentiation of sum, difference, product and quotient. Differentiation of composite and implicit functions; derivatives of order up to two. Applications of derivatives: Rate of change, monotonic functions, Maxima and minima." },
+            { "unitNumber": 8, "name": "Integral Calculus", "topics": "Integral as an anti-derivative, Fundamental integrals involving algebraic, trigonometric, exponential and logarithmic functions. Integration by substitution, by parts and by partial fractions. Evaluation of standard integrals. Fundamental theorem of calculus, properties of definite integrals, determining areas bounded by simple curves." },
+            { "unitNumber": 9, "name": "Differential Equations", "topics": "Ordinary differential equations, order and degree, solution by method of separation of variables, solution of homogeneous and linear differential equations of type dy/dx + p(x)y = q(x)." },
+            { "unitNumber": 10, "name": "Co-ordinate Geometry", "topics": "Cartesian system of coordinates in a plane, distance formula, section formula, locus, slope of a line, parallel/perpendicular lines. Straight line: various forms of equations, intersection, angle, concurrence, distance of a point from line, centroid, orthocentre, circumcentre. Circle and Conic sections: standard form of circle equation, radius and centre, diameter endpoints, points of intersection with lines, standard forms of parabola, ellipse and hyperbola." },
+            { "unitNumber": 11, "name": "Three Dimensional Geometry", "topics": "Coordinates of a point in space, distance between two points, section formula, direction ratios and direction cosines, angle between two intersecting lines. Equation of a line; Skew lines, shortest distance between them and its equation." },
+            { "unitNumber": 12, "name": "Vector Algebra", "topics": "Vectors and scalars, addition of vectors, components of a vector in 2D and 3D spaces, scalar and vector products (dot and cross products)." },
+            { "unitNumber": 13, "name": "Statistics and Probability", "topics": "Measures of dispersion: calculation of mean, median, mode of grouped/ungrouped data, standard deviation, variance and mean deviation. Probability: probability of an event, addition and multiplication theorems, Bayes' theorem, probability distribution of a random variable." },
+            { "unitNumber": 14, "name": "Trigonometry", "topics": "Trigonometrical identities and trigonometrical functions, inverse trigonometrical functions and their properties." }
+          ]
         },
         {
-          "unitNumber": 2,
-          "name": "Atomic Structure",
-          "topics": "Electromagnetic radiation, photoelectric effect, Hydrogen spectrum, Bohr model (postulates, energy, radii, limitations), de Broglie relation, Heisenberg uncertainty principle, Quantum mechanical model, orbitals, quantum numbers, Aufbau principle, Pauli exclusion, Hund's rule, electronic configuration."
+          "id": "physics",
+          "name": "Physics",
+          "totalUnits": 20,
+          "maxMarks": 100,
+          "icon": "atom",
+          "units": [
+            { "unitNumber": 1, "name": "Units and Measurements", "topics": "Units of measurements, System of units, SI Units, fundamental and derived units, least count, significant figures, Errors in measurements, Dimensions of Physics quantities, dimensional analysis and its applications." },
+            { "unitNumber": 2, "name": "Kinematics", "topics": "Frame of reference, motion in a straight line, speed and velocity, uniform and non-uniform motion, average speed and instantaneous velocity, uniformly accelerated motion, graphs, relative velocity, Motion in a plane, projectile motion, uniform circular motion." },
+            { "unitNumber": 3, "name": "Laws of Motion", "topics": "Force and inertia, Newton's first, second and third laws of motion, momentum, impulse. Law of conservation of linear momentum, equilibrium of concurrent forces. Static and kinetic friction, laws of friction, rolling friction. Dynamics of uniform circular motion, centripetal force (level and banked road)." },
+            { "unitNumber": 4, "name": "Work, Energy and Power", "topics": "Work done by constant force and variable force, kinetic and potential energies, work-energy theorem, power. Potential energy of spring, conservation of mechanical energy, conservative and non-conservative forces, motion in vertical circle, collisions in 1D and 2D." },
+            { "unitNumber": 5, "name": "Rotational Motion", "topics": "Centre of mass of two-particle system and rigid body. Moment of force, torque, angular momentum, conservation of angular momentum. Moment of inertia, radius of gyration, parallel and perpendicular axes theorems, equations of rotational motion." },
+            { "unitNumber": 6, "name": "Gravitation", "topics": "Universal law of gravitation. Acceleration due to gravity and variation with altitude/depth. Kepler's laws. Gravitational potential energy, gravitational potential. Escape velocity, satellite motion, orbital velocity, time period." },
+            { "unitNumber": 7, "name": "Properties of Solids and Liquids", "topics": "Elastic behaviour, stress-strain relationship, Hooke's Law, Young's, bulk and rigidity modulus. Pascal's law, viscosity, Stokes' law, terminal velocity, streamline/turbulent flow, Bernoulli's principle. Surface energy, surface tension, capillary rise. Heat, calorimetry, latent heat, heat transfer." },
+            { "unitNumber": 8, "name": "Thermodynamics", "topics": "Thermal equilibrium, zeroth law, heat, work, internal energy. First law of thermodynamics, isothermal and adiabatic processes. Second law: reversible and irreversible processes." },
+            { "unitNumber": 9, "name": "Kinetic Theory of Gases", "topics": "Equation of state, work done on compressing gas, kinetic theory assumptions, pressure concept, RMS speed, degrees of freedom, law of equipartition of energy, mean free path, Avogadro's number." },
+            { "unitNumber": 10, "name": "Oscillations and Waves", "topics": "Periodic motion, SHM and its equation, phase, spring oscillations, energy in SHM, simple pendulum. Wave motion, transverse and longitudinal waves, speed of wave, superposition principle, standing waves in strings/organ pipes, beats." },
+            { "unitNumber": 11, "name": "Electrostatics", "topics": "Coulomb's law, electric field, electric dipole and torque in uniform field, Gauss's law and applications (wire, plane sheet, spherical shell). Electric potential and potential energy, conductors/insulators, dielectrics, capacitors in series and parallel, energy in capacitor." },
+            { "unitNumber": 12, "name": "Current Electricity", "topics": "Drift velocity, mobility, Ohm's law, electrical resistance, resistivity, conductivity, temperature dependence, internal resistance, Kirchhoff's laws, Wheatstone bridge, Metre Bridge." },
+            { "unitNumber": 13, "name": "Magnetic Effects of Current & Magnetism", "topics": "Biot-Savart law, Ampere's law, solenoid. Force on moving charge and current conductor, torque on current loop, moving coil galvanometer. Bar magnet as equivalent solenoid, magnetic dipole moment, dia-, para-, and ferromagnetic materials." },
+            { "unitNumber": 14, "name": "Electromagnetic Induction & AC", "topics": "Faraday's law, Lenz's law, eddy currents, self and mutual inductance. Alternating currents, peak and RMS value, reactance, impedance, LCR series circuit, resonance, power in AC, AC generator, transformer." },
+            { "unitNumber": 15, "name": "Electromagnetic Waves", "topics": "Displacement current, characteristics of EM waves, transverse nature, EM spectrum (radio to gamma rays) and applications." },
+            { "unitNumber": 16, "name": "Optics", "topics": "Reflection, spherical mirrors, refraction, thin lens formula, lens maker formula, total internal reflection, magnification, power of lens, prism, microscope, telescope. Wave optics: wavefront, Huygens principle, interference, Young's double slit, diffraction, polarization, Brewster's law." },
+            { "unitNumber": 17, "name": "Dual Nature of Matter and Radiation", "topics": "Photoelectric effect, Hertz and Lenard's observations, Einstein's photoelectric equation, matter waves, de Broglie relation." },
+            { "unitNumber": 18, "name": "Atoms and Nuclei", "topics": "Rutherford's model, Bohr model, hydrogen spectrum. Composition and size of nucleus, mass defect, binding energy per nucleon, nuclear fission and fusion." },
+            { "unitNumber": 19, "name": "Electronic Devices", "topics": "Semiconductors, p-n junction diode forward/reverse bias, diode as rectifier, LED, photodiode, solar cell, Zener diode as voltage regulator, Logic gates (OR, AND, NOT, NAND, NOR)." },
+            { "unitNumber": 20, "name": "Experimental Skills", "topics": "Vernier calipers, screw gauge, simple pendulum, metre scale principle of moments, Young's modulus, surface tension, viscosity, resonance tube, specific heat, metre bridge resistivity, Ohm's law resistance, galvanometer figure of merit, focal lengths (mirrors/lenses), prism deviation, glass slab refractive index, p-n diode curves, Zener diode, component identification." }
+          ]
         },
         {
-          "unitNumber": 3,
-          "name": "Chemical Bonding and Molecular Structure",
-          "topics": "Ionic and covalent bonds, Lattice enthalpy, Electronegativity, Fajan's rule, dipole moment, VSEPR theory and shapes of molecules, Valence bond theory, hybridization (s, p, d orbitals), Resonance, Molecular Orbital Theory (LCAOs, sigma/pi bonds, bond order), Hydrogen bonding."
-        },
-        {
-          "unitNumber": 4,
-          "name": "Chemical Thermodynamics",
-          "topics": "System and surroundings, First law of thermodynamics (work, heat, internal energy, enthalpy), Heat capacity, Hess's law, Enthalpies of reaction, Second law of thermodynamics, Spontaneity, Entropy (delta S), Gibbs energy (delta G and delta G standard), Equilibrium constant."
-        },
-        {
-          "unitNumber": 5,
-          "name": "Solutions",
-          "topics": "Concentration terms (molality, molarity, mole fraction, %), Vapour pressure of solutions, Raoult's Law (ideal and non-ideal solutions), Colligative properties (lowering of vapour pressure, depression of freezing point, elevation of boiling point, osmotic pressure), Abnormal molar mass, van 't Hoff factor."
-        },
-        {
-          "unitNumber": 6,
-          "name": "Equilibrium",
-          "topics": "Dynamic equilibrium, Physical and chemical equilibria, Law of chemical equilibrium, Kp and Kc, Le Chatelier's principle, Ionic equilibrium: acids and bases (Arrhenius, Bronsted-Lowry, Lewis), pH scale, common ion effect, salt hydrolysis, solubility product, buffer solutions."
-        },
-        {
-          "unitNumber": 7,
-          "name": "Redox Reactions and Electrochemistry",
-          "topics": "Oxidation and reduction, oxidation numbers, balancing redox reactions, Electrolytic and metallic conduction, Kohlrausch's law, Electrochemical cells, electrode potentials, Nernst equation, Gibbs energy relation, Dry cell, lead accumulator, Fuel cells."
-        },
-        {
-          "unitNumber": 8,
-          "name": "Chemical Kinetics",
-          "topics": "Rate of reaction, factors affecting rate, order and molecularity, rate law, rate constant, zero and first-order reactions (characteristics and half-lives), Arrhenius theory, activation energy, collision theory."
-        },
-        {
-          "unitNumber": 9,
-          "name": "Classification of Elements & Periodicity",
-          "topics": "Modern periodic law and periodic table, s, p, d, f block elements, periodic trends in atomic/ionic radii, ionization enthalpy, electron gain enthalpy, valence, oxidation states, chemical reactivity."
-        },
-        {
-          "unitNumber": 10,
-          "name": "P-Block Elements (Group 13 to 18)",
-          "topics": "General Introduction: Electronic configuration and general trends in physical and chemical properties across periods and down groups; unique behaviour of first element in each group."
-        },
-        {
-          "unitNumber": 11,
-          "name": "d- and f-Block Elements",
-          "topics": "Transition Elements: electronic configuration, occurrence, physical properties, ionization enthalpy, oxidation states, atomic radii, color, catalytic behavior, magnetic properties, complex formation, K2Cr2O7 and KMnO4 preparation and properties. Inner Transition Elements: Lanthanoids (contraction) and Actinoids."
-        },
-        {
-          "unitNumber": 12,
-          "name": "Co-ordination Compounds",
-          "topics": "Werner's theory, ligands, coordination number, denticity, chelation, IUPAC nomenclature, isomerism, Valence bond approach, Crystal field theory (color and magnetic properties), Importance in qualitative analysis and biology."
-        },
-        {
-          "unitNumber": 13,
-          "name": "Purification & Characterisation of Organic Compounds",
-          "topics": "Purification: Crystallization, sublimation, distillation, differential extraction, chromatography. Qualitative analysis: Detection of N, S, P, and halogens. Quantitative analysis: Estimation of C, H, N, halogens, S, P, Empirical and molecular formulae calculations."
-        },
-        {
-          "unitNumber": 14,
-          "name": "Basic Principles of Organic Chemistry",
-          "topics": "Tetravalency of carbon, hybridization, IUPAC nomenclature, Homologous series, Isomerism (structural and stereoisomerism), Covalent bond fission (free radicals, carbocations, carbanions), Inductive effect, electromeric, resonance, hyperconjugation, Substitution, addition, elimination, rearrangement reactions."
-        },
-        {
-          "unitNumber": 15,
-          "name": "Hydrocarbons",
-          "topics": "Alkanes (conformations, halogenation mechanism), Alkenes (geometrical isomerism, electrophilic addition, Markovnikov rule, ozonolysis), Alkynes (acidity, addition reactions), Aromatic hydrocarbons (benzene structure, electrophilic substitution, Friedel-Crafts alkylation/acylation, directive influence)."
-        },
-        {
-          "unitNumber": 16,
-          "name": "Organic Compounds Containing Halogens",
-          "topics": "General methods of preparation, properties, reactions, Nature of C-X bond, Mechanisms of substitution reactions (SN1, SN2), Environmental effects of chloroform, iodoform, freons, and DDT."
-        },
-        {
-          "unitNumber": 17,
-          "name": "Organic Compounds Containing Oxygen",
-          "topics": "Alcohols, Phenols, and Ethers (preparation, dehydration, Reimer-Tiemann, Kolbe), Aldehydes and Ketones (nucleophilic addition, Grignard, aldol condensation, Cannizzaro, haloform test), Carboxylic Acids (acidic strength and factors)."
-        },
-        {
-          "unitNumber": 18,
-          "name": "Organic Compounds Containing Nitrogen",
-          "topics": "Amines (classification, nomenclature, basic character, identification of primary/secondary/tertiary amines), Diazonium Salts (synthetic importance in organic chemistry)."
-        },
-        {
-          "unitNumber": 19,
-          "name": "Biomolecules",
-          "topics": "Carbohydrates (aldoses, ketoses, monosaccharides, disaccharides, polysaccharides), Proteins (amino acids, peptide bond, primary/secondary/tertiary structures, denaturation, enzymes), Vitamins, Nucleic Acids (DNA & RNA structure and biological function), Hormones."
-        },
-        {
-          "unitNumber": 20,
-          "name": "Principles Related to Practical Chemistry",
-          "topics": "Detection of extra elements (N, S, Halogens) and functional groups (hydroxyl, carbonyl, carboxyl, amino), Inorganic preparations (Mohr's salt, potash alum), Organic preparations (acetanilide, p-nitro acetanilide, aniline yellow, iodoform), Titrimetric exercises (oxalic acid vs KMnO4, Mohr's salt vs KMnO4), Qualitative salt analysis (Cations: Pb2+, Cu2+, Al3+, Fe3+, Zn2+, Ni2+, Ca2+, Ba2+, Mg2+, NH4+; Anions: CO3 2-, S 2-, SO4 2-, NO3-, NO2-, Cl-, Br-, I-), Enthalpy experiments, Lyophilic/lyophobic sols, Chemical kinetics."
+          "id": "chemistry",
+          "name": "Chemistry",
+          "totalUnits": 20,
+          "maxMarks": 100,
+          "icon": "flask-conical",
+          "units": [
+            { "unitNumber": 1, "name": "Some Basic Concepts in Chemistry", "topics": "Matter, Dalton's atomic theory, atomic and molecular masses, mole concept, molar mass, empirical/molecular formula, stoichiometry." },
+            { "unitNumber": 2, "name": "Atomic Structure", "topics": "Photoelectric effect, Bohr model, de Broglie relation, Heisenberg uncertainty principle, quantum mechanical model, quantum numbers, orbital shapes, Aufbau/Pauli/Hund rules, electronic configurations." },
+            { "unitNumber": 3, "name": "Chemical Bonding and Molecular Structure", "topics": "Ionic and covalent bonds, lattice enthalpy, Fajan's rule, dipole moment, VSEPR theory, Valence Bond Theory, hybridization, Molecular Orbital Theory (MOT), hydrogen bonding." },
+            { "unitNumber": 4, "name": "Chemical Thermodynamics", "topics": "First law of thermodynamics, heat, work, internal energy, enthalpy, Hess's law. Second law of thermodynamics, entropy, Gibbs free energy, spontaneity criteria, equilibrium constant relation." },
+            { "unitNumber": 5, "name": "Solutions", "topics": "Concentration terms, Raoult's law, ideal and non-ideal solutions, Colligative properties (vapour pressure lowering, elevation of boiling point, depression of freezing point, osmotic pressure), van't Hoff factor." },
+            { "unitNumber": 6, "name": "Equilibrium", "topics": "Chemical equilibrium, Kp and Kc, Le Chatelier's principle. Ionic equilibrium: ionization of acids/bases, pH, common ion effect, salt hydrolysis, solubility product, buffer solutions." },
+            { "unitNumber": 7, "name": "Redox Reactions and Electrochemistry", "topics": "Oxidation numbers, redox balancing, electrolytic conductance, Kohlrausch's law, Galvanic cells, Nernst equation, Gibbs energy relation, batteries, fuel cells." },
+            { "unitNumber": 8, "name": "Chemical Kinetics", "topics": "Rate law, order and molecularity, zero and first-order integrated rate laws, half-life, Arrhenius equation, activation energy, collision theory." },
+            { "unitNumber": 9, "name": "Classification of Elements & Periodicity", "topics": "Modern periodic table trends in atomic radii, ionization enthalpy, electron gain enthalpy, valence, oxidation states, reactivity." },
+            { "unitNumber": 10, "name": "p-Block Elements (Group 13 to 18)", "topics": "Electronic configurations, periodic trends in physical/chemical properties, anomalous behaviour of first elements." },
+            { "unitNumber": 11, "name": "d- and f-Block Elements", "topics": "Transition elements characteristics, oxidation states, catalytic and magnetic properties, complex formation, K2Cr2O7 and KMnO4. Lanthanoids/Actinoids configurations and lanthanoid contraction." },
+            { "unitNumber": 12, "name": "Coordination Compounds", "topics": "Werner's theory, ligands, coordination number, IUPAC nomenclature, isomerism, Valence Bond and Crystal Field Theory, colour and magnetism." },
+            { "unitNumber": 13, "name": "Purification & Characterisation", "topics": "Crystallization, distillation, chromatography. Qualitative detection of N, S, halogens. Quantitative analysis of C, H, N, halogens, S, P. Formula calculations." },
+            { "unitNumber": 14, "name": "Basic Principles of Organic Chemistry", "topics": "Carbon hybridization, structural/stereoisomerism, IUPAC nomenclature, carbocations, carbanions, free radicals, inductive/resonance/hyperconjugation effects." },
+            { "unitNumber": 15, "name": "Hydrocarbons", "topics": "Alkanes (conformations, halogenation), Alkenes (Markownikoff rule, ozonolysis), Alkynes (acidity, additions), Aromatic hydrocarbons (benzene, electrophilic substitution, Friedel-Crafts)." },
+            { "unitNumber": 16, "name": "Organic Compounds Containing Halogens", "topics": "Nature of C-X bond, SN1 and SN2 mechanisms, environmental effects of chloroform, iodoform, freons, DDT." },
+            { "unitNumber": 17, "name": "Organic Compounds Containing Oxygen", "topics": "Alcohols, Phenols (Reimer-Tiemann), Ethers. Aldehydes & Ketones (nucleophilic addition, aldol condensation, Cannizzaro, haloform). Carboxylic acids." },
+            { "unitNumber": 18, "name": "Organic Compounds Containing Nitrogen", "topics": "Amines structure, classification, basicity. Diazonium salts preparation and synthetic applications." },
+            { "unitNumber": 19, "name": "Biomolecules", "topics": "Carbohydrates (monosaccharides, oligosaccharides), Proteins (amino acids, peptide bonds, denaturation), Nucleic acids (DNA/RNA), Vitamins, Hormones." },
+            { "unitNumber": 20, "name": "Principles of Practical Chemistry", "topics": "Functional group detection, preparation of inorganic/organic compounds (Mohr's salt, alum, iodoform), titrations with KMnO4, qualitative salt analysis." }
+          ]
         }
       ]
     },
     {
-      "id": "biology",
-      "name": "Biology",
-      "totalUnits": 10,
-      "maxMarks": 360,
-      "icon": "dna",
-      "color": "emerald",
-      "description": "10 Units covering Botany and Zoology: Diversity, Plant & Animal Anatomy, Cell Biology, Plant & Human Physiology, Reproduction, Genetics, Biotechnology & Ecology.",
-      "units": [
+      "id": "mhtcet",
+      "name": "MHT-CET 2026",
+      "badge": "SCERT Maharashtra",
+      "title": "Official MHT-CET 2026 Curriculum",
+      "subtitle": "State Common Entrance Test Cell Maharashtra Syllabus for Engineering, Technology, Pharmacy & Pharm.D",
+      "markingScheme": "Paper I: Mathematics (100 Marks) • Paper II: Physics & Chemistry (100 Marks) • Paper III: Biology (100 Marks) • 20% Std. XI + 80% Std. XII • No Negative Marking",
+      "subjects": [
         {
-          "unitNumber": 1,
-          "name": "Diversity in Living World",
-          "topics": "What is living?, Biodiversity, Taxonomy & Systematics, Binomial nomenclature, Five kingdom classification (Monera, Protista, Fungi, Lichens, Viruses, Viroids), Plant Kingdom (Algae, Bryophytes, Pteridophytes, Gymnosperms), Animal Kingdom (non-chordate up to phyla, chordate up to class)."
+          "id": "mathematics",
+          "name": "Mathematics",
+          "totalUnits": 2,
+          "maxMarks": 100,
+          "icon": "calculator",
+          "units": [
+            {
+              "unitNumber": 1,
+              "name": "Std. XI Prescribed Curriculum (20% Weightage - 10 Questions)",
+              "topics": "Trigonometry II, Straight Line, Circle, Probability, Complex Numbers, Permutations and Combinations, Functions, Limits, Continuity, Conic Section."
+            },
+            {
+              "unitNumber": 2,
+              "name": "Std. XII Complete Curriculum (80% Weightage - 40 Questions)",
+              "topics": "Mathematical Logic, Matrices, Trigonometric Functions, Pair of Straight Lines, Vectors, Three Dimensional Geometry, Line and Plane, Linear Programming, Differentiation, Applications of Derivatives, Indefinite Integration, Definite Integration, Application of Definite Integration, Differential Equations, Probability Distributions, Binomial Distribution."
+            }
+          ]
         },
         {
-          "unitNumber": 2,
-          "name": "Structural Organisation in Animals & Plants",
-          "topics": "Morphology and anatomy of flowering plants: Root, stem, leaf, inflorescence, flower, fruit, seed; Plant families (Malvaceae, Cruciferae, Leguminosae, Compositae, Gramineae); Animal tissues, Morphology and anatomy of systems of an insect (Frog)."
+          "id": "physics",
+          "name": "Physics",
+          "totalUnits": 2,
+          "maxMarks": 50,
+          "icon": "atom",
+          "units": [
+            {
+              "unitNumber": 1,
+              "name": "Std. XI Prescribed Curriculum (20% Weightage - 10 Questions)",
+              "topics": "Vectors, Error Analysis, Motion in a plane, Laws of Motion, Gravitation, Thermal properties of matter, Sound, Optics, Electrostatics, Semiconductors."
+            },
+            {
+              "unitNumber": 2,
+              "name": "Std. XII Complete Curriculum (80% Weightage - 40 Questions)",
+              "topics": "Rotational Dynamics, Mechanical Properties of Fluids, Kinetic Theory of Gases and Radiation, Thermodynamics, Oscillations, Superposition of Waves, Wave Optics, Electrostatics, Current Electricity, Magnetic Fields due to Electric Current, Magnetic Materials, Electromagnetic Induction, AC Circuits, Dual Nature of Radiation and Matter, Structure of Atoms and Nuclei, Semiconductor Devices."
+            }
+          ]
         },
         {
-          "unitNumber": 3,
-          "name": "Cell Structure and Function",
-          "topics": "Cell theory, prokaryotic and eukaryotic cell structure, Plant and animal cell, Cell organelles (Endomembrane system, mitochondria, ribosomes, plastids, nucleus, chromosomes), Biomolecules (proteins, carbohydrates, lipids, nucleic acids, enzymes), Cell division (Cell cycle, Mitosis, Meiosis and significance)."
+          "id": "chemistry",
+          "name": "Chemistry",
+          "totalUnits": 2,
+          "maxMarks": 50,
+          "icon": "flask-conical",
+          "units": [
+            {
+              "unitNumber": 1,
+              "name": "Std. XI Prescribed Curriculum (20% Weightage - 10 Questions)",
+              "topics": "Some Basic concepts of chemistry, Structure of atom, Chemical Bonding, Redox reactions, Elements of group 1 and 2, States of Matter (Gaseous and Liquids), Adsorption and colloids (Surface Chemistry), Hydrocarbons, Basic principles of organic chemistry, Chemistry in everyday life."
+            },
+            {
+              "unitNumber": 2,
+              "name": "Std. XII Complete Curriculum (80% Weightage - 40 Questions)",
+              "topics": "Solid State, Solutions, Ionic Equilibria, Chemical Thermodynamics, Electrochemistry, Chemical Kinetics, Elements of Groups 16, 17 and 18, Transition and Inner Transition Elements, Coordination Compounds, Halogen Derivatives, Alcohols, Phenols and Ethers, Aldehydes, Ketones and Carboxylic Acids, Amines, Biomolecules, Introduction to Polymer Chemistry, Green Chemistry and Nanochemistry."
+            }
+          ]
         },
         {
-          "unitNumber": 4,
-          "name": "Plant Physiology",
-          "topics": "Photosynthesis (light reactions, cyclic/non-cyclic photophosphorylation, Calvin C3 and Hatch-Slack C4 pathways, photorespiration), Cellular Respiration (glycolysis, fermentation, TCA cycle, electron transport system, respiratory quotient), Plant growth and development (seed germination, differentiation, hormones: auxin, gibberellin, cytokinin, ethylene, ABA)."
-        },
-        {
-          "unitNumber": 5,
-          "name": "Human Physiology",
-          "topics": "Breathing and Respiration (mechanism, gas transport, disorders), Body fluids and circulation (blood groups, cardiac cycle, ECG, disorders), Excretory products and elimination (nephron, urine formation, kidney regulation, dialysis), Locomotion and Movement (sliding filament theory, skeletal system, joints, disorders), Neural control (nerve impulse generation/conduction, CNS/PNS), Chemical coordination (endocrine glands, hormones, disorders)."
-        },
-        {
-          "unitNumber": 6,
-          "name": "Reproduction",
-          "topics": "Sexual reproduction in flowering plants (gametophyte development, pollination, double fertilization, seed and fruit formation, apomixis, polyembryony), Human Reproduction (male and female systems, gametogenesis, menstrual cycle, fertilization, pregnancy, parturition, lactation), Reproductive health (contraception, STD prevention, IVF, ZIFT, GIFT)."
-        },
-        {
-          "unitNumber": 7,
-          "name": "Genetics and Evolution",
-          "topics": "Mendelian inheritance, Deviations (incomplete dominance, co-dominance, multiple alleles, pleiotropy), Chromosome theory, Sex determination, Linkage and crossing over, Mendelian & chromosomal disorders (Down, Turner, Klinefelter syndromes), Molecular basis of inheritance (DNA/RNA, replication, transcription, genetic code, translation, Lac Operon, Human Genome Project, DNA fingerprinting), Evolution (origin of life, Darwinism, natural selection, Hardy-Weinberg principle, human evolution)."
-        },
-        {
-          "unitNumber": 8,
-          "name": "Biology and Human Welfare",
-          "topics": "Health and Disease (pathogens causing Malaria, Typhoid, Pneumonia, Amoebiasis, Dengue, Chikungunya), Immunology, vaccines, Cancer, HIV/AIDS, Drug and alcohol abuse, Tobacco abuse, Microbes in human welfare (household, industrial, sewage treatment, biofertilizers, biocontrol)."
-        },
-        {
-          "unitNumber": 9,
-          "name": "Biotechnology and Its Applications",
-          "topics": "Principles and processes of Biotechnology: Genetic engineering, Recombinant DNA technology, Applications in health and agriculture: Human insulin, gene therapy, Bt crops, Transgenic animals, Biosafety, Biopiracy and patents."
-        },
-        {
-          "unitNumber": 10,
-          "name": "Ecology and Environment",
-          "topics": "Organisms and environment: population interactions (mutualism, competition, predation, parasitism), population attributes, Ecosystem: productivity, decomposition, energy flow, ecological pyramids, Biodiversity and its conservation: patterns, importance, loss of biodiversity, hotspots, endangered species, Red Data Book, biosphere reserves, National parks and sanctuaries."
+          "id": "biology",
+          "name": "Biology",
+          "totalUnits": 2,
+          "maxMarks": 100,
+          "icon": "dna",
+          "units": [
+            {
+              "unitNumber": 1,
+              "name": "Std. XI Prescribed Curriculum (20% Weightage - 20 Questions)",
+              "topics": "Biomolecules, Respiration and Energy Transfer, Human Nutrition, Excretion and Osmoregulation."
+            },
+            {
+              "unitNumber": 2,
+              "name": "Std. XII Complete Curriculum (80% Weightage - 80 Questions)",
+              "topics": "Reproduction in Lower and Higher Plants, Reproduction in Lower and Higher Animals, Inheritance and Variation, Molecular Basis of Inheritance, Origin and Evolution of Life, Plant Water Relation, Plant Growth and Mineral Nutrition, Respiration and Circulation, Control and Coordination, Human Health and Diseases, Enhancement of Food Production, Biotechnology, Organisms and Populations, Ecosystems and Energy Flow, Biodiversity, Conservation and Environmental Issues."
+            }
+          ]
         }
       ]
     }

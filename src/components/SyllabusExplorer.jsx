@@ -1,44 +1,65 @@
 import React, { useState, useMemo } from 'react';
-import { BookOpen, Search, Dna, Atom, FlaskConical, ChevronDown, ChevronUp, FileText, PhoneCall } from 'lucide-react';
+import { BookOpen, Search, Dna, Atom, FlaskConical, Calculator, ChevronDown, ChevronUp, FileText, PhoneCall, Award, CheckCircle2 } from 'lucide-react';
 import syllabusData from '../data/syllabus.json';
 
 export default function SyllabusExplorer({ onOpenCallModal }) {
-  const [activeSubject, setActiveSubject] = useState('physics');
+  const [selectedExamId, setSelectedExamId] = useState('neet');
+  const [activeSubjectId, setActiveSubjectId] = useState('physics');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedUnit, setExpandedUnit] = useState(null);
 
+  // Active exam object
+  const activeExam = useMemo(() => {
+    return syllabusData.exams.find((e) => e.id === selectedExamId) || syllabusData.exams[0];
+  }, [selectedExamId]);
+
+  // Ensure activeSubjectId exists in activeExam
+  const currentSubject = useMemo(() => {
+    const found = activeExam.subjects.find((s) => s.id === activeSubjectId);
+    return found || activeExam.subjects[0];
+  }, [activeExam, activeSubjectId]);
+
+  const handleExamChange = (examId) => {
+    setSelectedExamId(examId);
+    setExpandedUnit(null);
+    setSearchQuery('');
+    const targetExam = syllabusData.exams.find((e) => e.id === examId);
+    if (targetExam && targetExam.subjects.length > 0) {
+      setActiveSubjectId(targetExam.subjects[0].id);
+    }
+  };
+
   const displayedUnits = useMemo(() => {
-    const subjectObj = syllabusData.subjects.find((s) => s.id === activeSubject);
-    if (!subjectObj) return [];
+    if (!currentSubject) return [];
 
     if (!searchQuery.trim()) {
-      return subjectObj.units;
+      return currentSubject.units;
     }
 
     const query = searchQuery.toLowerCase();
-    return subjectObj.units.filter((unit) => {
+    return currentSubject.units.filter((unit) => {
       return (
         unit.name.toLowerCase().includes(query) ||
         unit.topics.toLowerCase().includes(query) ||
         String(unit.unitNumber).includes(query)
       );
     });
-  }, [activeSubject, searchQuery]);
-
-  const activeSubjectData = syllabusData.subjects.find((s) => s.id === activeSubject);
+  }, [currentSubject, searchQuery]);
 
   const toggleUnit = (unitNumber) => {
     setExpandedUnit(expandedUnit === unitNumber ? null : unitNumber);
   };
 
-  const getSubjectIcon = (subjectId) => {
-    switch (subjectId) {
-      case 'physics':
+  const getSubjectIcon = (iconName) => {
+    switch (iconName) {
+      case 'atom':
         return <Atom size={16} />;
-      case 'chemistry':
+      case 'flask-conical':
         return <FlaskConical size={16} />;
-      case 'biology':
+      case 'dna':
         return <Dna size={16} />;
+      case 'calculator':
+        return <Calculator size={16} />;
       default:
         return <BookOpen size={16} />;
     }
@@ -53,7 +74,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
           <div style={{ textAlign: 'center', maxWidth: '850px', margin: '0 auto 28px' }}>
             <div className="badge-gold" style={{ marginBottom: '10px' }}>
               <FileText size={13} />
-              <span>Official NMC Curriculum</span>
+              <span>Official 2026 Curriculum</span>
             </div>
 
             <h2 style={{
@@ -64,15 +85,88 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
               marginBottom: '10px',
               color: 'var(--text-heading)'
             }}>
-              {syllabusData.title}
+              Entrance Examination Syllabus Explorer
             </h2>
 
             <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)' }}>
-              Complete 50-Unit Curriculum notified by the Under Graduate Medical Education Board (UGMEB / NMC) for NEET (UG) candidates.
+              Comprehensive topic-by-topic curriculum and marking schemes for <strong>NEET-UG</strong>, <strong>JEE (Main)</strong>, and <strong>MHT-CET</strong>.
             </p>
           </div>
 
-          {/* Apple Control Bar (Tabs + Search) */}
+          {/* Apple Multi-Exam Switcher (Segmented Pills) */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            gap: '8px',
+            marginBottom: '26px'
+          }}>
+            {syllabusData.exams.map((exam) => {
+              const isSelected = exam.id === selectedExamId;
+              return (
+                <button
+                  key={exam.id}
+                  onClick={() => handleExamChange(exam.id)}
+                  style={{
+                    padding: '10px 22px',
+                    borderRadius: 'var(--radius-pill)',
+                    border: isSelected ? '1px solid rgba(217, 119, 6, 0.4)' : '1px solid rgba(0, 0, 0, 0.08)',
+                    background: isSelected ? 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)' : '#ffffff',
+                    color: isSelected ? '#78350f' : 'var(--text-sub)',
+                    fontWeight: isSelected ? '800' : '600',
+                    fontSize: '0.92rem',
+                    cursor: 'pointer',
+                    boxShadow: isSelected ? '0 4px 14px rgba(217, 119, 6, 0.18)' : '0 2px 6px rgba(0, 0, 0, 0.03)',
+                    transition: 'all 150ms ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  <Award size={15} color={isSelected ? '#d97706' : 'var(--text-muted)'} />
+                  <span>{exam.name}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Exam Info & Marking Scheme Summary Banner */}
+          <div className="bento-card" style={{
+            padding: '18px 22px',
+            marginBottom: '20px',
+            borderRadius: '20px',
+            background: '#f8fafc',
+            borderLeft: '4px solid #d97706'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+              <span className="badge-gold" style={{ padding: '2px 8px', fontSize: '0.66rem' }}>
+                {activeExam.badge}
+              </span>
+              <h3 style={{ fontSize: '1.08rem', fontWeight: '800', color: 'var(--text-heading)', letterSpacing: '-0.01em' }}>
+                {activeExam.title}
+              </h3>
+            </div>
+            <p style={{ fontSize: '0.86rem', color: 'var(--text-sub)', marginBottom: '8px' }}>
+              {activeExam.subtitle}
+            </p>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontSize: '0.78rem',
+              color: '#92400e',
+              background: '#fffbeb',
+              padding: '4px 12px',
+              borderRadius: 'var(--radius-pill)',
+              border: '1px solid rgba(217, 119, 6, 0.2)',
+              fontWeight: '700'
+            }}>
+              <CheckCircle2 size={13} color="#d97706" />
+              <span>{activeExam.markingScheme}</span>
+            </div>
+          </div>
+
+          {/* Apple Subject Switcher & Search Bar */}
           <div className="bento-card" style={{
             padding: '16px 18px',
             marginBottom: '22px',
@@ -88,12 +182,12 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
               
               {/* Subject Selector Buttons */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                {syllabusData.subjects.map((sub) => {
-                  const isActive = sub.id === activeSubject;
+                {activeExam.subjects.map((sub) => {
+                  const isActive = sub.id === currentSubject.id;
                   return (
                     <button
                       key={sub.id}
-                      onClick={() => { setActiveSubject(sub.id); setExpandedUnit(null); }}
+                      onClick={() => { setActiveSubjectId(sub.id); setExpandedUnit(null); }}
                       style={{
                         padding: '8px 16px',
                         borderRadius: 'var(--radius-pill)',
@@ -110,7 +204,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                         transition: 'all 150ms ease'
                       }}
                     >
-                      {getSubjectIcon(sub.id)}
+                      {getSubjectIcon(sub.icon)}
                       <span>{sub.name}</span>
                       <span style={{
                         fontSize: '0.7rem',
@@ -120,7 +214,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                         borderRadius: '9999px',
                         fontWeight: '800'
                       }}>
-                        {sub.totalUnits}
+                        {sub.totalUnits} {sub.totalUnits === 1 ? 'Unit' : 'Units'}
                       </span>
                     </button>
                   );
@@ -132,7 +226,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                 <Search size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }} />
                 <input
                   type="text"
-                  placeholder={`Search ${activeSubjectData?.name || ''} units (e.g. Optics)...`}
+                  placeholder={`Search ${currentSubject?.name || ''} units (e.g. Calculus, Optics)...`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   style={{
@@ -163,7 +257,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                 border: '1px solid var(--border-glass)'
               }}>
                 <p style={{ color: 'var(--text-sub)', fontSize: '0.92rem' }}>
-                  No units found matching &quot;<strong>{searchQuery}</strong>&quot; in {activeSubjectData?.name}.
+                  No units found matching &quot;<strong>{searchQuery}</strong>&quot; in {activeExam.name} {currentSubject?.name}.
                 </p>
                 <button
                   onClick={() => setSearchQuery('')}
@@ -218,7 +312,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                           {unit.unitNumber}
                         </div>
                         <div style={{ fontSize: '0.94rem', fontWeight: '700', color: isExpanded ? '#78350f' : 'var(--text-heading)', letterSpacing: '-0.01em' }}>
-                          Unit {unit.unitNumber}: {unit.name}
+                          {activeExam.id === 'mhtcet' ? unit.name : `Unit ${unit.unitNumber}: ${unit.name}`}
                         </div>
                       </div>
 
@@ -238,7 +332,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                         lineHeight: '1.65'
                       }}>
                         <strong style={{ color: 'var(--text-heading)', display: 'block', marginBottom: '4px', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                          Topics &amp; Subtopics:
+                          Topics &amp; Key Focus Areas:
                         </strong>
                         <p>{unit.topics}</p>
                       </div>
@@ -262,10 +356,10 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
           }}>
             <div>
               <h4 style={{ fontSize: '1.02rem', fontWeight: '800', color: 'var(--text-heading)', marginBottom: '3px', letterSpacing: '-0.01em' }}>
-                Struggling with any specific NEET physics, chemistry, or biology unit?
+                Preparing for NEET, JEE Main, or MHT-CET 2026?
               </h4>
               <p style={{ fontSize: '0.84rem', color: 'var(--text-sub)' }}>
-                Get personal 1-on-1 concept drills and numerical problem-solving sessions at SCIMEE.
+                Get personal 1-on-1 concept drills, numerical solving, and NCERT / State Board mastery at SCIMEE.
               </p>
             </div>
 
