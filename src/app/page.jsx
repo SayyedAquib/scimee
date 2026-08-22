@@ -20,7 +20,9 @@ export default function HomePage() {
   const closeCallModal = () => setIsCallModalOpen(false);
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div
+      style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
+    >
       {/* Sticky Top Header */}
       <Header onOpenCallModal={openCallModal} />
 

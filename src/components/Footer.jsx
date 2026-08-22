@@ -1,62 +1,93 @@
 import React from 'react';
-import { PhoneCall, MapPin, Mail, Award, Heart, MessageCircle } from 'lucide-react';
+import { MapPin, MessageCircle } from 'lucide-react';
 import siteConfig from '../data/site-config.json';
+import { getWhatsAppUrl } from '../utils/whatsapp';
 
-export default function Footer({ onOpenCallModal }) {
+export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
   const currentYear = new Date().getFullYear();
-  const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(
-    siteConfig.contact.whatsappPrefillText
-  )}`;
+  const whatsappUrl = getWhatsAppUrl('general');
 
   return (
-    <footer style={{
-      background: '#f8fafc',
-      borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-      borderTopLeftRadius: '36px',
-      borderTopRightRadius: '36px',
-      boxShadow: '0 -10px 30px rgba(0, 0, 0, 0.03)',
-      paddingTop: '48px',
-      paddingBottom: '84px',
-      color: 'var(--text-sub)'
-    }}>
+    <footer
+      style={{
+        background: '#f8fafc',
+        borderTop: '1px solid rgba(0, 0, 0, 0.08)',
+        borderTopLeftRadius: '36px',
+        borderTopRightRadius: '36px',
+        boxShadow: '0 -10px 30px rgba(0, 0, 0, 0.03)',
+        paddingTop: '48px',
+        paddingBottom: '84px',
+        color: 'var(--text-sub)'
+      }}
+    >
       <div className="container-custom">
-        
         {/* Main Footer Columns */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-          gap: '32px',
-          marginBottom: '38px'
-        }}>
-          
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '32px',
+            marginBottom: '38px'
+          }}
+        >
           {/* Column 1: Institute Branding & Urdu Motto */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-              <div style={{
-                width: '46px',
-                height: '46px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0
-              }}>
-                <img 
-                  src="/assets/logo.png" 
-                  alt="SCIMEE Logo" 
+            <div
+              style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}
+            >
+              <div
+                style={{
+                  width: '46px',
+                  height: '46px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}
+              >
+                <img
+                  src="/assets/logo.png"
+                  alt="SCIMEE Logo"
+                  width="46"
+                  height="46"
                   style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
                 />
               </div>
-              <span style={{ fontSize: '1.3rem', fontWeight: '900', color: 'var(--text-heading)', letterSpacing: '-0.02em' }}>
+              <span
+                style={{
+                  fontSize: '1.3rem',
+                  fontWeight: '900',
+                  color: 'var(--text-heading)',
+                  letterSpacing: '-0.02em'
+                }}
+              >
                 {siteConfig.brand.name}
               </span>
             </div>
 
-            <p style={{ fontSize: '0.86rem', color: 'var(--text-sub)', lineHeight: '1.55', marginBottom: '14px' }}>
-              {siteConfig.brand.fullName} — Bhusawal&apos;s leading coaching institute for NEET-UG, IIT-JEE Foundation &amp; MHT-CET under <strong>{siteConfig.brand.founder}</strong>.
+            <p
+              style={{
+                fontSize: '0.86rem',
+                color: 'var(--text-sub)',
+                lineHeight: '1.55',
+                marginBottom: '14px'
+              }}
+            >
+              {siteConfig.brand.fullName} — Bhusawal&apos;s leading coaching institute for NEET-UG,
+              IIT-JEE Foundation &amp; MHT-CET under <strong>{siteConfig.brand.founder}</strong>.
             </p>
 
             <div className="bento-card-gold" style={{ padding: '10px 14px', borderRadius: '14px' }}>
-              <span className="urdu-font" style={{ fontSize: '1.15rem', color: '#92400e', display: 'block', marginBottom: '2px', fontWeight: '700' }}>
+              <span
+                className="urdu-font"
+                style={{
+                  fontSize: '1.15rem',
+                  color: '#92400e',
+                  display: 'block',
+                  marginBottom: '2px',
+                  fontWeight: '700'
+                }}
+              >
                 {siteConfig.brand.taglineUrdu}
               </span>
               <span style={{ fontSize: '0.72rem', color: '#b45309' }}>
@@ -67,7 +98,16 @@ export default function Footer({ onOpenCallModal }) {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: 'var(--text-heading)', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <h4
+              style={{
+                fontSize: '0.88rem',
+                fontWeight: '800',
+                color: 'var(--text-heading)',
+                marginBottom: '14px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.04em'
+              }}
+            >
               Quick Navigation
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -81,8 +121,12 @@ export default function Footer({ onOpenCallModal }) {
                       fontSize: '0.88rem',
                       transition: 'color 120ms ease'
                     }}
-                    onMouseOver={(e) => { e.currentTarget.style.color = '#b45309'; }}
-                    onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-sub)'; }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.color = '#b45309';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.color = 'var(--text-sub)';
+                    }}
                   >
                     {item.label}
                   </a>
@@ -93,7 +137,16 @@ export default function Footer({ onOpenCallModal }) {
 
           {/* Column 3: Helplines & Direct Calling */}
           <div>
-            <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: 'var(--text-heading)', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <h4
+              style={{
+                fontSize: '0.88rem',
+                fontWeight: '800',
+                color: 'var(--text-heading)',
+                marginBottom: '14px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.04em'
+              }}
+            >
               Direct Helplines
             </h4>
 
@@ -154,16 +207,41 @@ export default function Footer({ onOpenCallModal }) {
 
           {/* Column 4: Campus Location & Hours */}
           <div>
-            <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: 'var(--text-heading)', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <h4
+              style={{
+                fontSize: '0.88rem',
+                fontWeight: '800',
+                color: 'var(--text-heading)',
+                marginBottom: '14px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.04em'
+              }}
+            >
               Campus Address
             </h4>
 
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '0.86rem', lineHeight: '1.5', marginBottom: '10px' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '8px',
+                fontSize: '0.86rem',
+                lineHeight: '1.5',
+                marginBottom: '10px'
+              }}
+            >
               <MapPin size={16} color="#d97706" style={{ flexShrink: 0, marginTop: '3px' }} />
               <div>
-                <strong style={{ color: 'var(--text-heading)', display: 'block' }}>{siteConfig.location.addressLine1}</strong>
-                <span style={{ display: 'block', color: 'var(--text-sub)' }}>{siteConfig.location.addressLine2}</span>
-                <span style={{ display: 'block', color: 'var(--text-sub)' }}>{siteConfig.location.city} - {siteConfig.location.pincode}, {siteConfig.location.state}</span>
+                <strong style={{ color: 'var(--text-heading)', display: 'block' }}>
+                  {siteConfig.location.addressLine1}
+                </strong>
+                <span style={{ display: 'block', color: 'var(--text-sub)' }}>
+                  {siteConfig.location.addressLine2}
+                </span>
+                <span style={{ display: 'block', color: 'var(--text-sub)' }}>
+                  {siteConfig.location.city} - {siteConfig.location.pincode},{' '}
+                  {siteConfig.location.state}
+                </span>
               </div>
             </div>
 
@@ -171,29 +249,27 @@ export default function Footer({ onOpenCallModal }) {
               <strong>Hours:</strong> {siteConfig.contact.operatingHours.weekdays}
             </div>
           </div>
-
         </div>
 
         {/* Bottom Legal Bar */}
-        <div style={{
-          borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-          paddingTop: '18px',
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '10px',
-          fontSize: '0.78rem',
-          color: 'var(--text-muted)'
-        }}>
+        <div
+          style={{
+            borderTop: '1px solid rgba(0, 0, 0, 0.08)',
+            paddingTop: '18px',
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '10px',
+            fontSize: '0.78rem',
+            color: 'var(--text-muted)'
+          }}
+        >
           <div>
             &copy; {currentYear} {siteConfig.brand.fullName}. All rights reserved.
           </div>
-          <div>
-            Excellence in Medical Entrance Examination Coaching.
-          </div>
+          <div>Excellence in Medical Entrance Examination Coaching.</div>
         </div>
-
       </div>
     </footer>
   );

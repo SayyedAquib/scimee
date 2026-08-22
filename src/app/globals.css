@@ -1,13 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
-@import url('https://fonts.cdnfonts.com/css/jameel-noori-nastaleeq');
 
-@font-face {
-  font-family: 'Jameel Noori Nastaleeq';
-  src: url('https://fonts.cdnfonts.com/s/72895/JameelNooriNastaleeq.woff') format('woff'),
-       url('https://raw.githubusercontent.com/urdu-fonts/jameel-noori-nastaleeq/master/Jameel-Noori-Nastaleeq.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+.urdu-font {
+  font-family: 'Noto Nastaliq Urdu', 'Amiri', 'Traditional Arabic', serif;
+  direction: rtl;
 }
 
 /* ==========================================================================
@@ -22,7 +17,7 @@
   --canvas-elevated: rgba(255, 255, 255, 0.85);
   --canvas-elevated-hover: #ffffff;
   --canvas-input: #ffffff;
-  
+
   /* Luminous Accent Colors */
   --apple-gold: #d97706;
   --apple-gold-light: #b45309;
@@ -77,7 +72,12 @@ html {
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    'Plus Jakarta Sans',
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   background-color: var(--canvas-white);
   color: var(--text-title);
   min-height: 100vh;
@@ -93,7 +93,7 @@ section {
 
 /* Apple Ambient Canvas Lighting (Light Theme) */
 .apple-bg-mesh {
-  background: 
+  background:
     radial-gradient(ellipse 80% 50% at 50% -10%, rgba(245, 158, 11, 0.09), transparent 65%),
     radial-gradient(circle at 10% 25%, rgba(56, 189, 248, 0.07) 0%, transparent 40%),
     radial-gradient(circle at 90% 45%, rgba(16, 185, 129, 0.06) 0%, transparent 45%),
@@ -102,7 +102,9 @@ section {
 }
 
 .urdu-font {
-  font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', 'Urdu Typesetting', 'Mehr Nastaliq Web', 'Nafees Nastaleeq', 'Amiri', serif;
+  font-family:
+    'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', 'Urdu Typesetting', 'Mehr Nastaliq Web',
+    'Nafees Nastaleeq', 'Amiri', serif;
   direction: rtl;
   line-height: 1.85;
   letter-spacing: 0;
@@ -132,7 +134,9 @@ section {
   -webkit-backdrop-filter: blur(28px) saturate(180%);
   border-radius: var(--radius-section);
   border: 1px solid var(--border-glass);
-  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 20px 48px -12px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.9);
   padding: clamp(18px, 4vw, 44px);
   margin-bottom: clamp(24px, 4.5vw, 56px);
   position: relative;
@@ -166,7 +170,9 @@ section {
   background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 45%, #ffffff 100%);
   border-radius: var(--radius-card-lg);
   border: 1px solid var(--border-gold-specular);
-  box-shadow: 0 16px 36px rgba(217, 119, 6, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 16px 36px rgba(217, 119, 6, 0.12),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
 }
 
 /* ==========================================================================
@@ -247,15 +253,21 @@ section {
   border-radius: var(--radius-pill);
   border: 1px solid rgba(255, 255, 255, 0.6);
   cursor: pointer;
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
-  transition: transform 100ms ease, box-shadow 150ms ease;
+  box-shadow:
+    0 6px 20px rgba(245, 158, 11, 0.35),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+  transition:
+    transform 100ms ease,
+    box-shadow 150ms ease;
   text-decoration: none;
   user-select: none;
 }
 
 .btn-primary:hover {
   filter: brightness(1.03);
-  box-shadow: 0 10px 28px rgba(245, 158, 11, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 10px 28px rgba(245, 158, 11, 0.45),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
   transform: translateY(-1px);
 }
 
@@ -278,7 +290,10 @@ section {
   border: 1px solid rgba(0, 0, 0, 0.1);
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: transform 100ms ease, background 150ms ease, border-color 150ms ease;
+  transition:
+    transform 100ms ease,
+    background 150ms ease,
+    border-color 150ms ease;
   text-decoration: none;
   user-select: none;
 }
@@ -307,7 +322,9 @@ section {
   border-radius: var(--radius-pill);
   border: 1px solid rgba(255, 255, 255, 0.3);
   cursor: pointer;
-  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 6px 20px rgba(34, 197, 94, 0.3),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
   transition: transform 100ms ease;
   text-decoration: none;
   user-select: none;
@@ -430,27 +447,47 @@ section {
 }
 
 @keyframes appleFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes appleSlideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 @keyframes appleScaleIn {
-  from { opacity: 0; transform: scale(0.94) translateY(10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 /* Responsive Utilities */
 @media (min-width: 992px) {
-  .desktop-nav { display: flex !important; }
-  .mobile-toggle { display: none !important; }
+  .desktop-nav {
+    display: flex !important;
+  }
+  .mobile-toggle {
+    display: none !important;
+  }
 }
 @media (min-width: 768px) {
-  .mobile-action-bar { display: none !important; }
+  .mobile-action-bar {
+    display: none !important;
+  }
 }
 
 /* Grids */
@@ -460,7 +497,10 @@ section {
   gap: 16px;
 }
 @media (min-width: 768px) {
-  .grid-responsive-2 { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .grid-responsive-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
 }
 
 .grid-responsive-3 {
@@ -469,10 +509,16 @@ section {
   gap: 14px;
 }
 @media (min-width: 640px) {
-  .grid-responsive-3 { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .grid-responsive-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
 }
 @media (min-width: 1024px) {
-  .grid-responsive-3 { grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .grid-responsive-3 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
 }
 
 .grid-responsive-4 {
@@ -481,11 +527,20 @@ section {
   gap: 12px;
 }
 @media (min-width: 480px) {
-  .grid-responsive-4 { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .grid-responsive-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
 }
 @media (min-width: 768px) {
-  .grid-responsive-4 { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-responsive-4 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
 }
 @media (min-width: 1024px) {
-  .grid-responsive-4 { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .grid-responsive-4 {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
 }

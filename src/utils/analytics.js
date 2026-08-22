@@ -19,7 +19,7 @@ export function trackEvent(eventName, eventParams = {}) {
     if (import.meta.env.DEV) {
       console.log(`[SCIMEE Analytics] ${eventName}`, eventParams);
     }
-  } catch (err) {
+  } catch {
     // Silently fail to ensure user experience is never impacted
   }
 }

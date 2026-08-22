@@ -1,5 +1,15 @@
 import React from 'react';
-import { BookOpen, GraduationCap, ClipboardCheck, UserCheck, Users, ShieldCheck, ArrowRight, Shield, Award } from 'lucide-react';
+import {
+  BookOpen,
+  GraduationCap,
+  ClipboardCheck,
+  UserCheck,
+  Users,
+  ShieldCheck,
+  ArrowRight,
+  Shield,
+  Award
+} from 'lucide-react';
 import facilitiesData from '../data/facilities.json';
 
 export default function FacilitiesSection({ onOpenCallModal }) {
@@ -28,7 +38,6 @@ export default function FacilitiesSection({ onOpenCallModal }) {
     <section id="facilities" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
       <div className="container-custom">
         <div className="bento-section-canvas">
-          
           {/* Section Header */}
           <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 32px' }}>
             <div className="badge-emerald" style={{ marginBottom: '10px' }}>
@@ -36,14 +45,16 @@ export default function FacilitiesSection({ onOpenCallModal }) {
               <span>Infrastructure &amp; Pedagogy</span>
             </div>
 
-            <h2 style={{
-              fontSize: 'clamp(2rem, 4.5vw, 3rem)',
-              fontWeight: '900',
-              lineHeight: '1.12',
-              letterSpacing: '-0.03em',
-              marginBottom: '10px',
-              color: 'var(--text-heading)'
-            }}>
+            <h2
+              style={{
+                fontSize: 'clamp(2rem, 4.5vw, 3rem)',
+                fontWeight: '900',
+                lineHeight: '1.12',
+                letterSpacing: '-0.03em',
+                marginBottom: '10px',
+                color: 'var(--text-heading)'
+              }}
+            >
               {facilitiesData.sectionTitle || facilitiesData.title}
             </h2>
 
@@ -66,27 +77,46 @@ export default function FacilitiesSection({ onOpenCallModal }) {
                   alignItems: 'flex-start'
                 }}
               >
-                <div style={{
-                  width: '46px',
-                  height: '46px',
-                  borderRadius: '12px',
-                  background: '#f8fafc',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                  border: '1px solid rgba(0, 0, 0, 0.06)'
-                }}>
+                <div
+                  style={{
+                    width: '46px',
+                    height: '46px',
+                    borderRadius: '12px',
+                    background: '#f8fafc',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    border: '1px solid rgba(0, 0, 0, 0.06)'
+                  }}
+                >
                   {getIcon(feat.icon)}
                 </div>
 
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                    <h3 style={{ fontSize: '1.08rem', fontWeight: '800', color: 'var(--text-heading)', letterSpacing: '-0.01em' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      marginBottom: '4px'
+                    }}
+                  >
+                    <h3
+                      style={{
+                        fontSize: '1.08rem',
+                        fontWeight: '800',
+                        color: 'var(--text-heading)',
+                        letterSpacing: '-0.01em'
+                      }}
+                    >
                       {feat.title}
                     </h3>
                     {feat.tag && (
-                      <span className="badge-gold" style={{ fontSize: '0.62rem', padding: '1px 6px' }}>
+                      <span
+                        className="badge-gold"
+                        style={{ fontSize: '0.62rem', padding: '1px 6px' }}
+                      >
                         {feat.tag}
                       </span>
                     )}
@@ -100,24 +130,43 @@ export default function FacilitiesSection({ onOpenCallModal }) {
           </div>
 
           {/* Library & Reading Room Highlight Callout */}
-          <div className="bento-card-gold" style={{
-            padding: 'clamp(20px, 4vw, 30px)',
-            borderRadius: '24px',
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '18px'
-          }}>
+          <div
+            className="bento-card-gold"
+            style={{
+              padding: 'clamp(20px, 4vw, 30px)',
+              borderRadius: '24px',
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '18px'
+            }}
+          >
             <div style={{ maxWidth: '680px' }}>
               <span className="badge-gold" style={{ marginBottom: '6px' }}>
                 Special Campus Facility
               </span>
-              <h3 style={{ fontSize: 'clamp(1.25rem, 2.5vw, 1.7rem)', fontWeight: '900', color: '#78350f', marginBottom: '6px', letterSpacing: '-0.02em' }}>
+              <h3
+                style={{
+                  fontSize: 'clamp(1.25rem, 2.5vw, 1.7rem)',
+                  fontWeight: '900',
+                  color: '#78350f',
+                  marginBottom: '6px',
+                  letterSpacing: '-0.02em'
+                }}
+              >
                 Dedicated Quiet Reading Room &amp; Medical Reference Library
               </h3>
-              <p style={{ fontSize: '0.9rem', color: '#92400e', lineHeight: '1.55', fontWeight: '500' }}>
-                Distraction-free environment with individual study cubicles, NCERT line-by-line problem sets, and past 20-year NEET PYQ archives.
+              <p
+                style={{
+                  fontSize: '0.9rem',
+                  color: '#92400e',
+                  lineHeight: '1.55',
+                  fontWeight: '500'
+                }}
+              >
+                Distraction-free environment with individual study cubicles, NCERT line-by-line
+                problem sets, and past 20-year NEET PYQ archives.
               </p>
             </div>
 
@@ -130,7 +179,6 @@ export default function FacilitiesSection({ onOpenCallModal }) {
               <ArrowRight size={16} />
             </button>
           </div>
-
         </div>
       </div>
     </section>

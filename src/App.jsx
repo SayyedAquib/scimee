@@ -19,7 +19,10 @@ export default function App() {
   const closeCallModal = () => setIsCallModalOpen(false);
 
   return (
-    <div className="apple-bg-mesh" style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div
+      className="apple-bg-mesh"
+      style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
+    >
       {/* Offline / Online Network Connectivity Banner */}
       <NetworkStatus />
 

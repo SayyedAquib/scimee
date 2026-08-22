@@ -1,0 +1,6 @@
+node_modules
+dist
+.agents
+*.lock
+package-lock.json
+public/assets

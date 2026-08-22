@@ -15,7 +15,6 @@ export default function FAQSection({ onOpenCallModal }) {
     <section id="faq" style={{ paddingTop: '20px', paddingBottom: '30px' }}>
       <div className="container-custom" style={{ maxWidth: '920px' }}>
         <div className="bento-section-canvas">
-          
           {/* Section Header */}
           <div style={{ textAlign: 'center', marginBottom: '30px' }}>
             <div className="badge-gold" style={{ marginBottom: '10px' }}>
@@ -23,14 +22,16 @@ export default function FAQSection({ onOpenCallModal }) {
               <span>Got Questions?</span>
             </div>
 
-            <h2 style={{
-              fontSize: 'clamp(2rem, 4.5vw, 3rem)',
-              fontWeight: '900',
-              lineHeight: '1.12',
-              letterSpacing: '-0.03em',
-              marginBottom: '10px',
-              color: 'var(--text-heading)'
-            }}>
+            <h2
+              style={{
+                fontSize: 'clamp(2rem, 4.5vw, 3rem)',
+                fontWeight: '900',
+                lineHeight: '1.12',
+                letterSpacing: '-0.03em',
+                marginBottom: '10px',
+                color: 'var(--text-heading)'
+              }}
+            >
               {faqData.sectionTitle || faqData.title}
             </h2>
 
@@ -40,7 +41,9 @@ export default function FAQSection({ onOpenCallModal }) {
           </div>
 
           {/* FAQ Accordion List */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px' }}>
+          <div
+            style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px' }}
+          >
             {faqList.map((item, idx) => {
               const isOpen = openIndex === idx;
               return (
@@ -50,7 +53,9 @@ export default function FAQSection({ onOpenCallModal }) {
                   style={{
                     borderRadius: '18px',
                     overflow: 'hidden',
-                    border: isOpen ? '1px solid rgba(217, 119, 6, 0.4)' : '1px solid var(--border-glass)',
+                    border: isOpen
+                      ? '1px solid rgba(217, 119, 6, 0.4)'
+                      : '1px solid var(--border-glass)',
                     transition: 'border-color 150ms ease'
                   }}
                 >
@@ -70,35 +75,41 @@ export default function FAQSection({ onOpenCallModal }) {
                       cursor: 'pointer'
                     }}
                   >
-                    <span style={{
-                      fontSize: '0.96rem',
-                      fontWeight: '700',
-                      color: isOpen ? '#92400e' : 'var(--text-heading)',
-                      letterSpacing: '-0.01em'
-                    }}>
+                    <span
+                      style={{
+                        fontSize: '0.96rem',
+                        fontWeight: '700',
+                        color: isOpen ? '#92400e' : 'var(--text-heading)',
+                        letterSpacing: '-0.01em'
+                      }}
+                    >
                       {item.question}
                     </span>
-                    <div style={{
-                      color: isOpen ? '#d97706' : 'var(--text-muted)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0
-                    }}>
+                    <div
+                      style={{
+                        color: isOpen ? '#d97706' : 'var(--text-muted)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}
+                    >
                       {isOpen ? <ChevronUp size={17} /> : <ChevronDown size={17} />}
                     </div>
                   </button>
 
                   {isOpen && (
-                    <div style={{
-                      padding: '0 20px 18px 20px',
-                      background: '#fffbeb',
-                      color: 'var(--text-sub)',
-                      fontSize: '0.88rem',
-                      lineHeight: '1.65',
-                      borderTop: '1px solid rgba(217, 119, 6, 0.15)',
-                      paddingTop: '12px'
-                    }}>
+                    <div
+                      style={{
+                        padding: '0 20px 18px 20px',
+                        background: '#fffbeb',
+                        color: 'var(--text-sub)',
+                        fontSize: '0.88rem',
+                        lineHeight: '1.65',
+                        borderTop: '1px solid rgba(217, 119, 6, 0.15)',
+                        paddingTop: '12px'
+                      }}
+                    >
                       {item.answer}
                     </div>
                   )}
@@ -108,13 +119,15 @@ export default function FAQSection({ onOpenCallModal }) {
           </div>
 
           {/* Still Have Questions Callout */}
-          <div style={{
-            textAlign: 'center',
-            padding: '20px',
-            background: '#f8fafc',
-            borderRadius: '18px',
-            border: '1px dashed rgba(0, 0, 0, 0.12)'
-          }}>
+          <div
+            style={{
+              textAlign: 'center',
+              padding: '20px',
+              background: '#f8fafc',
+              borderRadius: '18px',
+              border: '1px dashed rgba(0, 0, 0, 0.12)'
+            }}
+          >
             <p style={{ color: 'var(--text-sub)', fontSize: '0.88rem', marginBottom: '12px' }}>
               Have more questions regarding admissions, batch timings, or fee structure?
             </p>
@@ -127,7 +140,6 @@ export default function FAQSection({ onOpenCallModal }) {
               <span>Speak with Admissions Counselor</span>
             </button>
           </div>
-
         </div>
       </div>
     </section>

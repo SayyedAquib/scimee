@@ -24,5 +24,11 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Run ESLint Health Check (Catch Missing Imports & Syntax Errors)
+        run: npm run lint
+
+      - name: Verify Code Formatting (Prettier Check)
+        run: npm run check-format
+
       - name: Verify Production Build
         run: npm run build

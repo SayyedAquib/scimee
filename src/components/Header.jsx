@@ -1,6 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { PhoneCall, Menu, X, ChevronRight } from 'lucide-react';
 import siteConfig from '../data/site-config.json';
+
+// Stable navigation items matching page sections
+const NAV_ITEMS = [
+  { label: 'About', href: '#about', id: 'about' },
+  { label: 'Results', href: '#results', id: 'results' },
+  { label: 'Courses', href: '#courses', id: 'courses' },
+  { label: 'Syllabus', href: '#syllabus', id: 'syllabus' },
+  { label: 'Facilities', href: '#facilities', id: 'facilities' },
+  { label: 'Location', href: '#location', id: 'location' },
+  { label: 'FAQ', href: '#faq', id: 'faq' }
+];
 
 export default function Header({ onOpenCallModal }) {
   const [scrolled, setScrolled] = useState(false);
@@ -13,21 +24,10 @@ export default function Header({ onOpenCallModal }) {
   const isClickScrollingRef = useRef(false);
   const clickTimeoutRef = useRef(null);
 
-  // Navigation items matching page sections
-  const navItems = [
-    { label: 'About', href: '#about', id: 'about' },
-    { label: 'Results', href: '#results', id: 'results' },
-    { label: 'Courses', href: '#courses', id: 'courses' },
-    { label: 'Syllabus', href: '#syllabus', id: 'syllabus' },
-    { label: 'Facilities', href: '#facilities', id: 'facilities' },
-    { label: 'Location', href: '#location', id: 'location' },
-    { label: 'FAQ', href: '#faq', id: 'faq' }
-  ];
-
   // Handle direct initial page load with URL hash (e.g. #syllabus)
   useEffect(() => {
     const initialHash = window.location.hash.replace('#', '');
-    if (initialHash && navItems.some((item) => item.id === initialHash)) {
+    if (initialHash && NAV_ITEMS.some((item) => item.id === initialHash)) {
       setActiveSection(initialHash);
       const targetEl = document.getElementById(initialHash);
       if (targetEl) {
@@ -67,7 +67,7 @@ export default function Header({ onOpenCallModal }) {
       }
       // 3. Middle sections based on viewport position
       else {
-        const sectionIds = navItems.map((item) => item.id);
+        const sectionIds = NAV_ITEMS.map((item) => item.id);
         for (let i = 0; i < sectionIds.length; i++) {
           const el = document.getElementById(sectionIds[i]);
           if (el) {
@@ -86,10 +86,11 @@ export default function Header({ onOpenCallModal }) {
       // Auto update URL hash in address bar seamlessly
       if (lastActiveSection !== detectedSection) {
         lastActiveSection = detectedSection;
-        const newUrl = detectedSection === 'about'
-          ? window.location.pathname + window.location.search
-          : `#${detectedSection}`;
-        
+        const newUrl =
+          detectedSection === 'about'
+            ? window.location.pathname + window.location.search
+            : `#${detectedSection}`;
+
         if (window.location.hash !== (detectedSection === 'about' ? '' : `#${detectedSection}`)) {
           window.history.replaceState(null, '', newUrl);
         }
@@ -106,7 +107,7 @@ export default function Header({ onOpenCallModal }) {
   }, []);
 
   // Recalculate sliding pill indicator position whenever activeSection changes or window resizes
-  const updateIndicator = () => {
+  const updateIndicator = useCallback(() => {
     const activeEl = navItemRefs.current[activeSection];
     const navEl = navRef.current;
 
@@ -120,20 +121,20 @@ export default function Header({ onOpenCallModal }) {
         opacity: 1
       });
     }
-  };
+  }, [activeSection]);
 
   useEffect(() => {
     updateIndicator();
     window.addEventListener('resize', updateIndicator);
     return () => window.removeEventListener('resize', updateIndicator);
-  }, [activeSection]);
+  }, [updateIndicator]);
 
   const closeMenu = () => setMobileMenuOpen(false);
 
   // Smooth click navigation
   const handleNavClick = (e, id) => {
     if (e) e.preventDefault();
-    
+
     setActiveSection(id);
     closeMenu();
 
@@ -165,53 +166,65 @@ export default function Header({ onOpenCallModal }) {
     <>
       {/* Apple Floating Island Navigation Container */}
       <div className="floating-navbar-wrapper">
-        <header className="floating-navbar" style={{
-          background: scrolled ? 'rgba(255, 255, 255, 0.94)' : 'rgba(255, 255, 255, 0.85)',
-          boxShadow: scrolled ? '0 20px 48px -8px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.08)' : '0 14px 34px -8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06)'
-        }}>
-          
+        <header
+          className="floating-navbar"
+          style={{
+            background: scrolled ? 'rgba(255, 255, 255, 0.94)' : 'rgba(255, 255, 255, 0.85)',
+            boxShadow: scrolled
+              ? '0 20px 48px -8px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.08)'
+              : '0 14px 34px -8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06)'
+          }}
+        >
           {/* Brand Logo & Name */}
           <a
             href="#about"
             onClick={(e) => handleNavClick(e, 'about')}
             style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}
           >
-            <div style={{
-              width: '44px',
-              height: '44px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0
-            }}>
-              <img 
-                src="/assets/logo.png" 
-                alt="SCIMEE Logo" 
+            <div
+              style={{
+                width: '44px',
+                height: '44px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}
+            >
+              <img
+                src="/assets/logo.png"
+                alt="SCIMEE Logo"
+                width="44"
+                height="44"
                 style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
               />
             </div>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{
-                  fontSize: '1.2rem',
-                  fontWeight: '900',
-                  color: 'var(--text-heading)',
-                  letterSpacing: '-0.02em',
-                  lineHeight: '1'
-                }}>
+                <span
+                  style={{
+                    fontSize: '1.2rem',
+                    fontWeight: '900',
+                    color: 'var(--text-heading)',
+                    letterSpacing: '-0.02em',
+                    lineHeight: '1'
+                  }}
+                >
                   {siteConfig.brand.name}
                 </span>
                 <span className="badge-gold" style={{ padding: '1px 6px', fontSize: '0.6rem' }}>
                   NEET 2026
                 </span>
               </div>
-              <p style={{
-                fontSize: '0.68rem',
-                color: 'var(--text-muted)',
-                fontWeight: '600',
-                lineHeight: 1,
-                marginTop: '2px'
-              }}>
+              <p
+                style={{
+                  fontSize: '0.68rem',
+                  color: 'var(--text-muted)',
+                  fontWeight: '600',
+                  lineHeight: 1,
+                  marginTop: '2px'
+                }}
+              >
                 By {siteConfig.brand.founder}
               </p>
             </div>
@@ -233,23 +246,25 @@ export default function Header({ onOpenCallModal }) {
             className="desktop-nav"
           >
             {/* Apple Smooth Sliding Pill Indicator */}
-            <div style={{
-              position: 'absolute',
-              top: '4px',
-              bottom: '4px',
-              left: `${indicatorStyle.left}px`,
-              width: `${indicatorStyle.width}px`,
-              opacity: indicatorStyle.opacity,
-              background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
-              border: '1px solid rgba(217, 119, 6, 0.35)',
-              borderRadius: 'var(--radius-pill)',
-              boxShadow: '0 2px 8px rgba(217, 119, 6, 0.15)',
-              transition: 'all 280ms cubic-bezier(0.16, 1, 0.3, 1)',
-              pointerEvents: 'none',
-              zIndex: 0
-            }} />
+            <div
+              style={{
+                position: 'absolute',
+                top: '4px',
+                bottom: '4px',
+                left: `${indicatorStyle.left}px`,
+                width: `${indicatorStyle.width}px`,
+                opacity: indicatorStyle.opacity,
+                background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
+                border: '1px solid rgba(217, 119, 6, 0.35)',
+                borderRadius: 'var(--radius-pill)',
+                boxShadow: '0 2px 8px rgba(217, 119, 6, 0.15)',
+                transition: 'all 280ms cubic-bezier(0.16, 1, 0.3, 1)',
+                pointerEvents: 'none',
+                zIndex: 0
+              }}
+            />
 
-            {navItems.map((item) => {
+            {NAV_ITEMS.map((item) => {
               const isActive = activeSection === item.id;
               return (
                 <a
@@ -276,7 +291,10 @@ export default function Header({ onOpenCallModal }) {
           </nav>
 
           {/* Desktop Call CTA */}
-          <div style={{ display: 'none', alignItems: 'center', gap: '10px' }} className="desktop-nav">
+          <div
+            style={{ display: 'none', alignItems: 'center', gap: '10px' }}
+            className="desktop-nav"
+          >
             <button
               onClick={onOpenCallModal}
               className="btn-primary"
@@ -288,7 +306,10 @@ export default function Header({ onOpenCallModal }) {
           </div>
 
           {/* Mobile Actions */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} className="mobile-toggle">
+          <div
+            style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+            className="mobile-toggle"
+          >
             <button
               onClick={onOpenCallModal}
               className="btn-primary"
@@ -317,29 +338,30 @@ export default function Header({ onOpenCallModal }) {
               {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
-
         </header>
       </div>
 
       {/* Mobile Drawer (Apple Frosted Light Sheet with Smooth Scroll) */}
       {mobileMenuOpen && (
-        <div style={{
-          position: 'fixed',
-          top: '84px',
-          left: '16px',
-          right: '16px',
-          zIndex: 999,
-          background: 'rgba(255, 255, 255, 0.96)',
-          backdropFilter: 'blur(30px) saturate(200%)',
-          WebkitBackdropFilter: 'blur(30px) saturate(200%)',
-          borderRadius: '24px',
-          border: '1px solid rgba(0, 0, 0, 0.1)',
-          padding: '18px',
-          boxShadow: '0 20px 48px rgba(0, 0, 0, 0.15)',
-          animation: 'appleScaleIn 200ms var(--spring-snappy)'
-        }}>
+        <div
+          style={{
+            position: 'fixed',
+            top: '84px',
+            left: '16px',
+            right: '16px',
+            zIndex: 999,
+            background: 'rgba(255, 255, 255, 0.96)',
+            backdropFilter: 'blur(30px) saturate(200%)',
+            WebkitBackdropFilter: 'blur(30px) saturate(200%)',
+            borderRadius: '24px',
+            border: '1px solid rgba(0, 0, 0, 0.1)',
+            padding: '18px',
+            boxShadow: '0 20px 48px rgba(0, 0, 0, 0.15)',
+            animation: 'appleScaleIn 200ms var(--spring-snappy)'
+          }}
+        >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {navItems.map((item) => {
+            {NAV_ITEMS.map((item) => {
               const isActive = activeSection === item.id;
               return (
                 <a
@@ -363,7 +385,14 @@ export default function Header({ onOpenCallModal }) {
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     {isActive && (
-                      <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#d97706' }} />
+                      <div
+                        style={{
+                          width: '6px',
+                          height: '6px',
+                          borderRadius: '50%',
+                          background: '#d97706'
+                        }}
+                      />
                     )}
                     <span>{item.label}</span>
                   </div>
@@ -374,7 +403,10 @@ export default function Header({ onOpenCallModal }) {
 
             <div style={{ paddingTop: '8px' }}>
               <button
-                onClick={() => { closeMenu(); onOpenCallModal(); }}
+                onClick={() => {
+                  closeMenu();
+                  onOpenCallModal();
+                }}
                 className="btn-primary"
                 style={{ width: '100%', padding: '11px', fontSize: '0.9rem' }}
               >

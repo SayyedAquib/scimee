@@ -31,9 +31,13 @@
     <link rel="apple-touch-icon" href="/assets/logo.png" />
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- Google Fonts Preconnect -->
+    <!-- High-Priority Critical Asset Preloading (CLS 0.00) -->
+    <link rel="preload" as="image" href="/assets/logo.png" fetchpriority="high" type="image/png" />
+
+    <!-- Google Fonts Preconnect & Optimized Font-Display Swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
     <!-- Google Search Rich Snippet Schema (JSON-LD) -->
     <script type="application/ld+json">

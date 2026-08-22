@@ -1,11 +1,9 @@
 import React from 'react';
-import { PhoneCall, MessageCircle, BookOpen } from 'lucide-react';
-import siteConfig from '../data/site-config.json';
+import { PhoneCall, MessageCircle } from 'lucide-react';
+import { getWhatsAppUrl } from '../utils/whatsapp';
 
 export default function MobileActionBar({ onOpenCallModal }) {
-  const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(
-    siteConfig.contact.whatsappPrefillText
-  )}`;
+  const whatsappUrl = getWhatsAppUrl('general');
 
   return (
     <div
@@ -24,14 +22,16 @@ export default function MobileActionBar({ onOpenCallModal }) {
       }}
       className="mobile-action-bar"
     >
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '8px',
-        maxWidth: '480px',
-        margin: '0 auto',
-        alignItems: 'stretch'
-      }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '8px',
+          maxWidth: '480px',
+          margin: '0 auto',
+          alignItems: 'stretch'
+        }}
+      >
         {/* Direct Call Button */}
         <button
           onClick={onOpenCallModal}

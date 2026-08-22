@@ -1,10 +1,20 @@
 import React, { useEffect } from 'react';
-import { Phone, PhoneCall, MessageCircle, Clock, MapPin, X, UserPlus, Download } from 'lucide-react';
+import {
+  Phone,
+  PhoneCall,
+  MessageCircle,
+  Clock,
+  MapPin,
+  X,
+  UserPlus,
+  Download
+} from 'lucide-react';
 import siteConfig from '../data/site-config.json';
 import { downloadVCard } from '../utils/vcard';
 import { trackEvent } from '../utils/analytics';
+import { getWhatsAppUrl } from '../utils/whatsapp';
 
-export default function PhoneCallModal({ isOpen, onClose }) {
+export default function PhoneCallModal({ isOpen, onClose, context = 'general' }) {
   // Handle escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -30,9 +40,7 @@ export default function PhoneCallModal({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(
-    siteConfig.contact.whatsappPrefillText
-  )}`;
+  const whatsappUrl = getWhatsAppUrl(context);
 
   const handleSaveContact = () => {
     trackEvent('save_contact_vcard_clicked', { source: 'admissions_modal' });
@@ -40,29 +48,42 @@ export default function PhoneCallModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="modal-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="call-modal-title">
-      <div 
-        className="modal-card" 
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div
+      className="modal-backdrop"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="call-modal-title"
+    >
+      <div className="modal-card" onClick={(e) => e.stopPropagation()}>
         {/* Apple Mobile Bottom Sheet Grab Handle */}
         <div className="modal-grab-handle" />
 
         {/* Modal Header */}
-        <div style={{
-          background: '#fffbeb',
-          padding: '20px 24px',
-          borderBottom: '1px solid rgba(217, 119, 6, 0.18)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          position: 'relative'
-        }}>
+        <div
+          style={{
+            background: '#fffbeb',
+            padding: '20px 24px',
+            borderBottom: '1px solid rgba(217, 119, 6, 0.18)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            position: 'relative'
+          }}
+        >
           <div>
             <div className="badge-gold" style={{ marginBottom: '4px' }}>
               Direct Admissions Line
             </div>
-            <h3 id="call-modal-title" style={{ fontSize: '1.2rem', fontWeight: '800', color: '#78350f', letterSpacing: '-0.02em' }}>
+            <h3
+              id="call-modal-title"
+              style={{
+                fontSize: '1.2rem',
+                fontWeight: '800',
+                color: '#78350f',
+                letterSpacing: '-0.02em'
+              }}
+            >
               Connect with SCIMEE
             </h3>
             <p style={{ fontSize: '0.8rem', color: '#92400e', marginTop: '2px' }}>
@@ -92,30 +113,43 @@ export default function PhoneCallModal({ isOpen, onClose }) {
         </div>
 
         {/* Modal Content */}
-        <div style={{ padding: '22px 24px', maxHeight: '78vh', overflowY: 'auto', background: '#ffffff' }}>
-          
+        <div
+          style={{
+            padding: '22px 24px',
+            maxHeight: '78vh',
+            overflowY: 'auto',
+            background: '#ffffff'
+          }}
+        >
           {/* Operating Hours Strip */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            background: '#f0f9ff',
-            border: '1px solid rgba(2, 132, 199, 0.2)',
-            padding: '9px 12px',
-            borderRadius: '12px',
-            marginBottom: '18px'
-          }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              background: '#f0f9ff',
+              border: '1px solid rgba(2, 132, 199, 0.2)',
+              padding: '9px 12px',
+              borderRadius: '12px',
+              marginBottom: '18px'
+            }}
+          >
             <Clock size={16} color="#0284c7" style={{ flexShrink: 0 }} />
             <div style={{ fontSize: '0.8rem', color: '#0369a1' }}>
-              <strong>Office Hours:</strong> {siteConfig.contact.operatingHours.weekdays} (Sun: {siteConfig.contact.operatingHours.sunday})
+              <strong>Office Hours:</strong> {siteConfig.contact.operatingHours.weekdays} (Sun:{' '}
+              {siteConfig.contact.operatingHours.sunday})
             </div>
           </div>
 
           {/* Instant 1-Tap Calling Controls */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
+          <div
+            style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}
+          >
             <a
               href={`tel:${siteConfig.contact.primaryPhone}`}
-              onClick={() => trackEvent('call_primary_clicked', { phone: siteConfig.contact.primaryPhone })}
+              onClick={() =>
+                trackEvent('call_primary_clicked', { phone: siteConfig.contact.primaryPhone })
+              }
               className="btn-primary"
               style={{
                 width: '100%',
@@ -140,7 +174,9 @@ export default function PhoneCallModal({ isOpen, onClose }) {
 
             <a
               href={`tel:${siteConfig.contact.secondaryPhone}`}
-              onClick={() => trackEvent('call_secondary_clicked', { phone: siteConfig.contact.secondaryPhone })}
+              onClick={() =>
+                trackEvent('call_secondary_clicked', { phone: siteConfig.contact.secondaryPhone })
+              }
               className="btn-secondary"
               style={{
                 width: '100%',
@@ -185,9 +221,7 @@ export default function PhoneCallModal({ isOpen, onClose }) {
                 <MessageCircle size={18} style={{ flexShrink: 0 }} />
                 <span>WhatsApp Enquiry</span>
               </span>
-              <span style={{ fontSize: '0.82rem', fontWeight: '800' }}>
-                Instant Reply &rarr;
-              </span>
+              <span style={{ fontSize: '0.82rem', fontWeight: '800' }}>Instant Reply &rarr;</span>
             </a>
 
             {/* 1-Tap Save Contact to Phonebook */}
@@ -215,22 +249,24 @@ export default function PhoneCallModal({ isOpen, onClose }) {
           </div>
 
           {/* Location Footnote */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '8px',
-            marginTop: '16px',
-            paddingTop: '14px',
-            borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-            fontSize: '0.76rem',
-            color: 'var(--text-muted)'
-          }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '8px',
+              marginTop: '16px',
+              paddingTop: '14px',
+              borderTop: '1px solid rgba(0, 0, 0, 0.08)',
+              fontSize: '0.76rem',
+              color: 'var(--text-muted)'
+            }}
+          >
             <MapPin size={14} color="#d97706" style={{ flexShrink: 0, marginTop: '2px' }} />
             <span>
-              {siteConfig.location.addressLine1}, {siteConfig.location.addressLine2}, {siteConfig.location.city} - {siteConfig.location.pincode}
+              {siteConfig.location.addressLine1}, {siteConfig.location.addressLine2},{' '}
+              {siteConfig.location.city} - {siteConfig.location.pincode}
             </span>
           </div>
-
         </div>
       </div>
     </div>
