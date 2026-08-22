@@ -1,0 +1,21 @@
+# ==============================================================================
+# SCIMEE EDGE CDN CACHING & SECURITY HEADERS (Netlify / Cloudflare)
+# ==============================================================================
+
+# 1. Permanent Immutable Caching for Hashed Static Assets (JS, CSS, Images, Fonts)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+# 2. Freshness Guarantee for HTML Entrypoints
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# 3. Universal Hardened Security Headers Across All Routes
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
