@@ -26,9 +26,12 @@
     <meta name="twitter:description" content="Leading NEET & Medical Entrance Coaching in Bhusawal. 45+ Medical Selections. By Ansari Rehan Ahmed." />
     <meta name="twitter:image" content="https://scimee.vercel.app/assets/logo.png" />
 
-    <!-- Favicon & PWA Web Manifest -->
-    <link rel="icon" type="image/png" href="/assets/logo.png" />
-    <link rel="apple-touch-icon" href="/assets/logo.png" />
+    <!-- Favicon & PWA Web Manifest for Google Search & Browsers -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/logo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="manifest" href="/manifest.json" />
 
     <!-- High-Priority Critical Asset Preloading (CLS 0.00) -->
@@ -44,6 +47,20 @@
     {
       "@context": "https://schema.org",
       "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://scimee.vercel.app/#website",
+          "url": "https://scimee.vercel.app/",
+          "name": "SCIMEE",
+          "alternateName": [
+            "SCIMEE Bhusawal",
+            "Sara Coaching Institute",
+            "Sara Coaching Institute of Medical Entrance Examination"
+          ],
+          "publisher": {
+            "@id": "https://scimee.vercel.app/#organization"
+          }
+        },
         {
           "@type": ["EducationalOrganization", "LocalBusiness"],
           "@id": "https://scimee.vercel.app/#organization",
