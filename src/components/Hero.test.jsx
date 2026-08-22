@@ -26,9 +26,11 @@ describe('Hero Component', () => {
     expect(syllabusLink).toHaveAttribute('href', '#syllabus');
   });
 
-  it('renders statistics counters and achievement badges', () => {
+  it('renders all 4 statistics counters and achievement badges', () => {
     render(<Hero onOpenCallModal={vi.fn()} />);
-    expect(screen.getAllByText(/NEET-UG/i)[0]).toBeInTheDocument();
-    expect(screen.getAllByText(/Bhusawal/i)[0]).toBeInTheDocument();
+    siteConfig.stats.forEach((stat) => {
+      expect(screen.getByText(stat.value)).toBeInTheDocument();
+      expect(screen.getByText(stat.label)).toBeInTheDocument();
+    });
   });
 });

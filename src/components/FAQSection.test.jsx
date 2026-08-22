@@ -8,17 +8,25 @@ import faqData from '../data/faq.json';
 describe('FAQSection Component', () => {
   const faqList = faqData.faqs || faqData.items || [];
 
-  it('renders all FAQ questions', () => {
+  it('renders all FAQ questions and initial open question 1', () => {
     render(<FAQSection onOpenCallModal={vi.fn()} />);
     faqList.forEach((faq) => {
       expect(screen.getByText(faq.question)).toBeInTheDocument();
     });
+    // First question is open by default
+    expect(screen.getByText(faqList[0].answer)).toBeInTheDocument();
   });
 
   it('toggles question answer visibility when accordion item is clicked', async () => {
     render(<FAQSection onOpenCallModal={vi.fn()} />);
-    const secondQuestionBtn = screen.getByText(faqList[1].question);
 
+    // Click first question to collapse it
+    const firstQuestionBtn = screen.getByText(faqList[0].question);
+    await userEvent.click(firstQuestionBtn);
+    expect(screen.queryByText(faqList[0].answer)).not.toBeInTheDocument();
+
+    // Click second question to expand it
+    const secondQuestionBtn = screen.getByText(faqList[1].question);
     await userEvent.click(secondQuestionBtn);
     expect(screen.getByText(faqList[1].answer)).toBeInTheDocument();
   });

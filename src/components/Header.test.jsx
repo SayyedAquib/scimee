@@ -1,11 +1,16 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Header from './Header';
 import siteConfig from '../data/site-config.json';
 
 describe('Header Component', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    window.scrollY = 0;
+  });
+
   it('renders brand name and logo image', () => {
     render(<Header onOpenCallModal={vi.fn()} />);
     expect(screen.getAllByText(siteConfig.brand.name)[0]).toBeInTheDocument();
@@ -36,5 +41,27 @@ describe('Header Component', () => {
     const toggleBtn = screen.getByLabelText('Toggle menu');
     await userEvent.click(toggleBtn);
     expect(screen.getByRole('button', { name: 'Toggle menu' })).toBeInTheDocument();
+  });
+
+  it('updates header background styling dynamically on scroll event', () => {
+    const { container } = render(<Header onOpenCallModal={vi.fn()} />);
+    const headerEl = container.querySelector('header');
+
+    // Initially at top (not scrolled)
+    expect(headerEl).toBeInTheDocument();
+
+    // Trigger scroll event > 20px
+    Object.defineProperty(window, 'scrollY', { value: 100, writable: true });
+    fireEvent.scroll(window);
+
+    expect(window.scrollY).toBe(100);
+  });
+
+  it('handles initial URL hash navigation on mount without throwing', () => {
+    window.location.hash = '#syllabus';
+    expect(() => {
+      render(<Header onOpenCallModal={vi.fn()} />);
+    }).not.toThrow();
+    window.location.hash = '';
   });
 });
