@@ -71,7 +71,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   color-scheme: light;
   background-color: var(--canvas-white);
   overflow-x: hidden;
@@ -86,6 +85,10 @@ body {
   line-height: 1.6;
   word-break: normal;
   overflow-wrap: break-word;
+}
+
+section {
+  scroll-margin-top: 85px;
 }
 
 /* Apple Ambient Canvas Lighting (Light Theme) */

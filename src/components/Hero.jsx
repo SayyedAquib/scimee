@@ -4,7 +4,7 @@ import siteConfig from '../data/site-config.json';
 
 export default function Hero({ onOpenCallModal }) {
   return (
-    <section style={{
+    <section id="about" style={{
       position: 'relative',
       paddingTop: 'clamp(36px, 6vw, 64px)',
       paddingBottom: 'clamp(48px, 8vw, 80px)',

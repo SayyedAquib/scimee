@@ -1,20 +1,165 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PhoneCall, Menu, X, ChevronRight } from 'lucide-react';
 import siteConfig from '../data/site-config.json';
 
 export default function Header({ onOpenCallModal }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('about');
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
 
+  const navRef = useRef(null);
+  const navItemRefs = useRef({});
+  const isClickScrollingRef = useRef(false);
+  const clickTimeoutRef = useRef(null);
+
+  // Navigation items matching page sections
+  const navItems = [
+    { label: 'About', href: '#about', id: 'about' },
+    { label: 'Results', href: '#results', id: 'results' },
+    { label: 'Courses', href: '#courses', id: 'courses' },
+    { label: 'Syllabus', href: '#syllabus', id: 'syllabus' },
+    { label: 'Facilities', href: '#facilities', id: 'facilities' },
+    { label: 'Location', href: '#location', id: 'location' },
+    { label: 'FAQ', href: '#faq', id: 'faq' }
+  ];
+
+  // Handle direct initial page load with URL hash (e.g. #syllabus)
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const initialHash = window.location.hash.replace('#', '');
+    if (initialHash && navItems.some((item) => item.id === initialHash)) {
+      setActiveSection(initialHash);
+      const targetEl = document.getElementById(initialHash);
+      if (targetEl) {
+        setTimeout(() => {
+          const navOffset = 80;
+          const elementPosition = targetEl.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }, 100);
+      }
+    }
   }, []);
 
+  // Bulletproof viewport-based active section & URL tracker
+  useEffect(() => {
+    let lastActiveSection = '';
+
+    const handleScroll = () => {
+      const isScrolledNow = window.scrollY > 20;
+      setScrolled(isScrolledNow);
+
+      if (isClickScrollingRef.current) return;
+
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      let detectedSection = 'about';
+
+      // 1. Top of page
+      if (scrollY < 140) {
+        detectedSection = 'about';
+      }
+      // 2. Bottom of page (FAQ)
+      else if (windowHeight + scrollY >= docHeight - 100) {
+        detectedSection = 'faq';
+      }
+      // 3. Middle sections based on viewport position
+      else {
+        const sectionIds = navItems.map((item) => item.id);
+        for (let i = 0; i < sectionIds.length; i++) {
+          const el = document.getElementById(sectionIds[i]);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            // Trigger point is 180px from viewport top (below floating navbar)
+            if (rect.top <= 180 && rect.bottom > 180) {
+              detectedSection = sectionIds[i];
+              break;
+            }
+          }
+        }
+      }
+
+      setActiveSection(detectedSection);
+
+      // Auto update URL hash in address bar seamlessly
+      if (lastActiveSection !== detectedSection) {
+        lastActiveSection = detectedSection;
+        const newUrl = detectedSection === 'about'
+          ? window.location.pathname + window.location.search
+          : `#${detectedSection}`;
+        
+        if (window.location.hash !== (detectedSection === 'about' ? '' : `#${detectedSection}`)) {
+          window.history.replaceState(null, '', newUrl);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    };
+  }, []);
+
+  // Recalculate sliding pill indicator position whenever activeSection changes or window resizes
+  const updateIndicator = () => {
+    const activeEl = navItemRefs.current[activeSection];
+    const navEl = navRef.current;
+
+    if (activeEl && navEl) {
+      const navRect = navEl.getBoundingClientRect();
+      const activeRect = activeEl.getBoundingClientRect();
+
+      setIndicatorStyle({
+        left: activeRect.left - navRect.left,
+        width: activeRect.width,
+        opacity: 1
+      });
+    }
+  };
+
+  useEffect(() => {
+    updateIndicator();
+    window.addEventListener('resize', updateIndicator);
+    return () => window.removeEventListener('resize', updateIndicator);
+  }, [activeSection]);
+
   const closeMenu = () => setMobileMenuOpen(false);
+
+  // Smooth click navigation
+  const handleNavClick = (e, id) => {
+    if (e) e.preventDefault();
+    
+    setActiveSection(id);
+    closeMenu();
+
+    // Lock automatic scroll tracker for 700ms during click transit
+    isClickScrollingRef.current = true;
+    if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+
+    const targetEl = document.getElementById(id);
+    if (targetEl) {
+      const navOffset = 80;
+      const elementPosition = targetEl.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+
+      const newUrl = id === 'about' ? window.location.pathname + window.location.search : `#${id}`;
+      window.history.replaceState(null, '', newUrl);
+    }
+
+    clickTimeoutRef.current = setTimeout(() => {
+      isClickScrollingRef.current = false;
+    }, 700);
+  };
 
   return (
     <>
@@ -26,7 +171,11 @@ export default function Header({ onOpenCallModal }) {
         }}>
           
           {/* Brand Logo & Name */}
-          <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+          <a
+            href="#about"
+            onClick={(e) => handleNavClick(e, 'about')}
+            style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}
+          >
             <div style={{
               width: '44px',
               height: '44px',
@@ -68,17 +217,62 @@ export default function Header({ onOpenCallModal }) {
             </div>
           </a>
 
-          {/* Desktop Nav Links (Apple Pill Items) */}
-          <nav style={{ display: 'none', alignItems: 'center', gap: '4px' }} className="desktop-nav">
-            {siteConfig.navigation.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="nav-link"
-              >
-                {item.label}
-              </a>
-            ))}
+          {/* Desktop Nav with Dynamic Sliding Pill Active Indicator */}
+          <nav
+            ref={navRef}
+            style={{
+              display: 'none',
+              alignItems: 'center',
+              gap: '2px',
+              position: 'relative',
+              background: 'rgba(0, 0, 0, 0.03)',
+              padding: '4px',
+              borderRadius: 'var(--radius-pill)',
+              border: '1px solid rgba(0, 0, 0, 0.04)'
+            }}
+            className="desktop-nav"
+          >
+            {/* Apple Smooth Sliding Pill Indicator */}
+            <div style={{
+              position: 'absolute',
+              top: '4px',
+              bottom: '4px',
+              left: `${indicatorStyle.left}px`,
+              width: `${indicatorStyle.width}px`,
+              opacity: indicatorStyle.opacity,
+              background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
+              border: '1px solid rgba(217, 119, 6, 0.35)',
+              borderRadius: 'var(--radius-pill)',
+              boxShadow: '0 2px 8px rgba(217, 119, 6, 0.15)',
+              transition: 'all 280ms cubic-bezier(0.16, 1, 0.3, 1)',
+              pointerEvents: 'none',
+              zIndex: 0
+            }} />
+
+            {navItems.map((item) => {
+              const isActive = activeSection === item.id;
+              return (
+                <a
+                  key={item.id}
+                  ref={(el) => (navItemRefs.current[item.id] = el)}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.id)}
+                  className="nav-link"
+                  style={{
+                    position: 'relative',
+                    zIndex: 1,
+                    color: isActive ? '#92400e' : 'var(--text-sub)',
+                    fontWeight: isActive ? '800' : '600',
+                    fontSize: '0.84rem',
+                    padding: '6px 14px',
+                    borderRadius: 'var(--radius-pill)',
+                    transition: 'color 180ms ease'
+                  }}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
           </nav>
 
           {/* Desktop Call CTA */}
@@ -86,7 +280,7 @@ export default function Header({ onOpenCallModal }) {
             <button
               onClick={onOpenCallModal}
               className="btn-primary"
-              style={{ padding: '8px 18px', fontSize: '0.82rem' }}
+              style={{ padding: '8px 18px', fontSize: '0.82rem', height: '38px' }}
             >
               <PhoneCall size={14} />
               <span>Call Helpline</span>
@@ -98,7 +292,7 @@ export default function Header({ onOpenCallModal }) {
             <button
               onClick={onOpenCallModal}
               className="btn-primary"
-              style={{ padding: '6px 12px', fontSize: '0.76rem' }}
+              style={{ padding: '6px 12px', fontSize: '0.76rem', height: '34px' }}
               aria-label="Call Helpline"
             >
               <PhoneCall size={13} />
@@ -127,7 +321,7 @@ export default function Header({ onOpenCallModal }) {
         </header>
       </div>
 
-      {/* Mobile Drawer (Apple Frosted Light Sheet) */}
+      {/* Mobile Drawer (Apple Frosted Light Sheet with Smooth Scroll) */}
       {mobileMenuOpen && (
         <div style={{
           position: 'fixed',
@@ -145,28 +339,38 @@ export default function Header({ onOpenCallModal }) {
           animation: 'appleScaleIn 200ms var(--spring-snappy)'
         }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {siteConfig.navigation.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={closeMenu}
-                style={{
-                  color: 'var(--text-heading)',
-                  textDecoration: 'none',
-                  fontSize: '0.96rem',
-                  fontWeight: '700',
-                  padding: '10px 14px',
-                  borderRadius: '12px',
-                  background: 'rgba(0, 0, 0, 0.03)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <span>{item.label}</span>
-                <ChevronRight size={15} color="var(--text-muted)" />
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const isActive = activeSection === item.id;
+              return (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.id)}
+                  style={{
+                    color: isActive ? '#92400e' : 'var(--text-heading)',
+                    textDecoration: 'none',
+                    fontSize: '0.96rem',
+                    fontWeight: isActive ? '800' : '600',
+                    padding: '10px 14px',
+                    borderRadius: '12px',
+                    background: isActive ? '#fffbeb' : 'rgba(0, 0, 0, 0.03)',
+                    border: isActive ? '1px solid rgba(217, 119, 6, 0.3)' : '1px solid transparent',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    transition: 'all 150ms ease'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    {isActive && (
+                      <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#d97706' }} />
+                    )}
+                    <span>{item.label}</span>
+                  </div>
+                  <ChevronRight size={15} color={isActive ? '#d97706' : 'var(--text-muted)'} />
+                </a>
+              );
+            })}
 
             <div style={{ paddingTop: '8px' }}>
               <button
