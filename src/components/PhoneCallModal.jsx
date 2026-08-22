@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Phone, PhoneCall, MessageCircle, Clock, MapPin, X, CheckCircle2, ArrowRight } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { Phone, PhoneCall, MessageCircle, Clock, MapPin, X } from 'lucide-react';
 import siteConfig from '../data/site-config.json';
 
 export default function PhoneCallModal({ isOpen, onClose }) {
-  const [callbackRequested, setCallbackRequested] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [studentName, setStudentName] = useState('');
-  const [selectedCourse, setSelectedCourse] = useState('NEET Repeater');
-  const [formError, setFormError] = useState('');
-
   // Handle escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -33,24 +27,6 @@ export default function PhoneCallModal({ isOpen, onClose }) {
   }, [isOpen]);
 
   if (!isOpen) return null;
-
-  const handleCallbackSubmit = (e) => {
-    e.preventDefault();
-    if (!phoneNumber || phoneNumber.trim().length < 10) {
-      setFormError('Please enter a valid 10-digit mobile number.');
-      return;
-    }
-    setFormError('');
-    setCallbackRequested(true);
-  };
-
-  const resetAndClose = () => {
-    setCallbackRequested(false);
-    setPhoneNumber('');
-    setStudentName('');
-    setFormError('');
-    onClose();
-  };
 
   const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(
     siteConfig.contact.whatsappPrefillText
@@ -88,7 +64,7 @@ export default function PhoneCallModal({ isOpen, onClose }) {
           </div>
 
           <button
-            onClick={resetAndClose}
+            onClick={onClose}
             aria-label="Close dialog"
             style={{
               background: 'rgba(0, 0, 0, 0.06)',
@@ -124,12 +100,12 @@ export default function PhoneCallModal({ isOpen, onClose }) {
           }}>
             <Clock size={16} color="#0284c7" style={{ flexShrink: 0 }} />
             <div style={{ fontSize: '0.8rem', color: '#0369a1' }}>
-              <strong>Hours:</strong> {siteConfig.contact.operatingHours.weekdays} (Sun: {siteConfig.contact.operatingHours.sunday})
+              <strong>Office Hours:</strong> {siteConfig.contact.operatingHours.weekdays} (Sun: {siteConfig.contact.operatingHours.sunday})
             </div>
           </div>
 
-          {/* Instant 1-Tap Calling Controls (Unified Row Dimensions) */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
+          {/* Instant 1-Tap Calling Controls */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
             <a
               href={`tel:${siteConfig.contact.primaryPhone}`}
               className="btn-primary"
@@ -205,147 +181,15 @@ export default function PhoneCallModal({ isOpen, onClose }) {
             </a>
           </div>
 
-          {/* Apple Divider */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            margin: '18px 0',
-            color: 'var(--text-muted)',
-            fontSize: '0.74rem',
-            letterSpacing: '0.05em'
-          }}>
-            <div style={{ flex: 1, height: '1px', background: 'rgba(0,0,0,0.08)' }} />
-            <span>OR REQUEST A CALLBACK</span>
-            <div style={{ flex: 1, height: '1px', background: 'rgba(0,0,0,0.08)' }} />
-          </div>
-
-          {/* Callback Form */}
-          {callbackRequested ? (
-            <div style={{
-              background: '#ecfdf5',
-              border: '1px solid rgba(5, 150, 105, 0.3)',
-              borderRadius: '16px',
-              padding: '18px',
-              textAlign: 'center'
-            }}>
-              <CheckCircle2 size={32} color="#059669" style={{ margin: '0 auto 8px' }} />
-              <h4 style={{ color: '#065f46', fontSize: '1rem', fontWeight: '800', marginBottom: '4px' }}>
-                Callback Request Received!
-              </h4>
-              <p style={{ fontSize: '0.82rem', color: '#047857' }}>
-                Our faculty counselor will call you shortly at <strong>{phoneNumber}</strong>.
-              </p>
-              <button
-                onClick={resetAndClose}
-                className="btn-secondary"
-                style={{ marginTop: '12px', width: '100%', padding: '10px', height: '42px' }}
-              >
-                Done
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleCallbackSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <div>
-                <label style={{ display: 'block', fontSize: '0.76rem', color: 'var(--text-sub)', marginBottom: '3px', fontWeight: '600' }}>
-                  Student / Parent Name (Optional)
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Mohd Rehan"
-                  value={studentName}
-                  onChange={(e) => setStudentName(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '10px 12px',
-                    borderRadius: '10px',
-                    background: '#ffffff',
-                    border: '1px solid rgba(0, 0, 0, 0.12)',
-                    color: 'var(--text-heading)',
-                    fontSize: '0.88rem',
-                    outline: 'none'
-                  }}
-                />
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontSize: '0.76rem', color: 'var(--text-sub)', marginBottom: '3px', fontWeight: '600' }}>
-                  Mobile Number <span style={{ color: '#e11d48' }}>*</span>
-                </label>
-                <input
-                  type="tel"
-                  required
-                  placeholder="10-digit Phone Number"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '10px 12px',
-                    borderRadius: '10px',
-                    background: '#ffffff',
-                    border: formError ? '1px solid #e11d48' : '1px solid rgba(0, 0, 0, 0.12)',
-                    color: 'var(--text-heading)',
-                    fontSize: '0.88rem',
-                    outline: 'none'
-                  }}
-                />
-                {formError && (
-                  <p style={{ color: '#e11d48', fontSize: '0.72rem', marginTop: '3px' }}>{formError}</p>
-                )}
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontSize: '0.76rem', color: 'var(--text-sub)', marginBottom: '3px', fontWeight: '600' }}>
-                  Target Batch
-                </label>
-                <select
-                  value={selectedCourse}
-                  onChange={(e) => setSelectedCourse(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '10px 12px',
-                    borderRadius: '10px',
-                    background: '#ffffff',
-                    border: '1px solid rgba(0, 0, 0, 0.12)',
-                    color: 'var(--text-heading)',
-                    fontSize: '0.88rem',
-                    outline: 'none'
-                  }}
-                >
-                  <option value="NEET Repeater">NEET Repeater / Dropper Batch</option>
-                  <option value="NEET 11th/12th Integrated">NEET 11th &amp; 12th Integrated</option>
-                  <option value="Pre-Foundation 5th-10th">Pre-Foundation (Class 5th - 10th)</option>
-                  <option value="MHT-CET / JEE">MHT-CET &amp; JEE Foundation</option>
-                </select>
-              </div>
-
-              <button
-                type="submit"
-                className="btn-primary"
-                style={{
-                  width: '100%',
-                  marginTop: '4px',
-                  padding: '11px',
-                  fontSize: '0.92rem',
-                  height: '46px',
-                  borderRadius: '12px'
-                }}
-              >
-                <span>Request Call Back</span>
-                <ArrowRight size={15} />
-              </button>
-            </form>
-          )}
-
           {/* Location Footnote */}
           <div style={{
             display: 'flex',
             alignItems: 'flex-start',
             gap: '8px',
             marginTop: '16px',
-            paddingTop: '12px',
+            paddingTop: '14px',
             borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-            fontSize: '0.74rem',
+            fontSize: '0.76rem',
             color: 'var(--text-muted)'
           }}>
             <MapPin size={14} color="#d97706" style={{ flexShrink: 0, marginTop: '2px' }} />
