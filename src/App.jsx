@@ -10,6 +10,7 @@ import FAQSection from './components/FAQSection';
 import Footer from './components/Footer';
 import PhoneCallModal from './components/PhoneCallModal';
 import MobileActionBar from './components/MobileActionBar';
+import NetworkStatus from './components/NetworkStatus';
 
 export default function App() {
   const [isCallModalOpen, setIsCallModalOpen] = useState(false);
@@ -19,6 +20,9 @@ export default function App() {
 
   return (
     <div className="apple-bg-mesh" style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* Offline / Online Network Connectivity Banner */}
+      <NetworkStatus />
+
       {/* Apple Floating Island Top Header */}
       <Header onOpenCallModal={openCallModal} />
 

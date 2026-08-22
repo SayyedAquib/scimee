@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
-import { Phone, PhoneCall, MessageCircle, Clock, MapPin, X } from 'lucide-react';
+import { Phone, PhoneCall, MessageCircle, Clock, MapPin, X, UserPlus, Download } from 'lucide-react';
 import siteConfig from '../data/site-config.json';
+import { downloadVCard } from '../utils/vcard';
+import { trackEvent } from '../utils/analytics';
 
 export default function PhoneCallModal({ isOpen, onClose }) {
   // Handle escape key
@@ -31,6 +33,11 @@ export default function PhoneCallModal({ isOpen, onClose }) {
   const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(
     siteConfig.contact.whatsappPrefillText
   )}`;
+
+  const handleSaveContact = () => {
+    trackEvent('save_contact_vcard_clicked', { source: 'admissions_modal' });
+    downloadVCard();
+  };
 
   return (
     <div className="modal-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="call-modal-title">
@@ -108,6 +115,7 @@ export default function PhoneCallModal({ isOpen, onClose }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
             <a
               href={`tel:${siteConfig.contact.primaryPhone}`}
+              onClick={() => trackEvent('call_primary_clicked', { phone: siteConfig.contact.primaryPhone })}
               className="btn-primary"
               style={{
                 width: '100%',
@@ -132,6 +140,7 @@ export default function PhoneCallModal({ isOpen, onClose }) {
 
             <a
               href={`tel:${siteConfig.contact.secondaryPhone}`}
+              onClick={() => trackEvent('call_secondary_clicked', { phone: siteConfig.contact.secondaryPhone })}
               className="btn-secondary"
               style={{
                 width: '100%',
@@ -158,6 +167,7 @@ export default function PhoneCallModal({ isOpen, onClose }) {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent('whatsapp_enquiry_clicked', { source: 'admissions_modal' })}
               className="btn-whatsapp"
               style={{
                 width: '100%',
@@ -179,6 +189,29 @@ export default function PhoneCallModal({ isOpen, onClose }) {
                 Instant Reply &rarr;
               </span>
             </a>
+
+            {/* 1-Tap Save Contact to Phonebook */}
+            <button
+              onClick={handleSaveContact}
+              className="btn-secondary"
+              style={{
+                width: '100%',
+                padding: '12px 18px',
+                height: '46px',
+                fontSize: '0.88rem',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                background: '#f8fafc',
+                border: '1px dashed rgba(0, 0, 0, 0.16)'
+              }}
+            >
+              <UserPlus size={16} color="#0284c7" />
+              <span>Save Rehan Sir (SCIMEE) to Phonebook</span>
+              <Download size={14} color="var(--text-muted)" />
+            </button>
           </div>
 
           {/* Location Footnote */}

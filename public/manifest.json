@@ -1,0 +1,24 @@
+{
+  "name": "SCIMEE - Sara Coaching Institute of Medical Entrance Examination",
+  "short_name": "SCIMEE",
+  "description": "Premier NEET-UG, IIT-JEE Foundation & MHT-CET medical coaching institute in Bhusawal by Ansari Rehan Ahmed.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

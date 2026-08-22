@@ -94,18 +94,24 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
           </div>
 
           {/* Apple Multi-Exam Switcher (Segmented Pills) */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            gap: '8px',
-            marginBottom: '26px'
-          }}>
+          <div 
+            role="tablist" 
+            aria-label="Exam Syllabus Selection"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              gap: '8px',
+              marginBottom: '26px'
+            }}
+          >
             {syllabusData.exams.map((exam) => {
               const isSelected = exam.id === selectedExamId;
               return (
                 <button
                   key={exam.id}
+                  role="tab"
+                  aria-selected={isSelected}
                   onClick={() => handleExamChange(exam.id)}
                   style={{
                     padding: '10px 22px',
