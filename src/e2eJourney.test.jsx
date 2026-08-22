@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import App from './App';
@@ -31,10 +31,12 @@ describe('End-to-End User Conversion Journey', () => {
     fireEvent.change(searchInput, { target: { value: 'Optics' } });
     expect(screen.getByText(/Optics/i)).toBeInTheDocument();
 
-    // 4. User scrolls to FAQ and expands second question
-    const secondQuestion = screen.getByText(/How do I enroll or book a counseling session\?/i);
-    fireEvent.click(secondQuestion);
-    expect(screen.getAllByText(/Khadka Square/i)[0]).toBeInTheDocument();
+    // 4. User scrolls to FAQ and expands third question
+    const counselingFaq = screen.getByText(
+      /Does Rehan Sir provide personal admission counseling after NEET results\?/i
+    );
+    fireEvent.click(counselingFaq);
+    expect(screen.getByText(/Following the declaration of NEET results/i)).toBeInTheDocument();
 
     // 5. User clicks "Call Now" in Floating Action Bar / Hero
     const heroCallBtn = screen.getByRole('button', { name: /Direct Call Helpline/i });
@@ -43,7 +45,7 @@ describe('End-to-End User Conversion Journey', () => {
     // Modal dialog is open with Rehan Sir contact details
     const dialog = screen.getByRole('dialog');
     expect(dialog).toBeInTheDocument();
-    expect(screen.getByText(/Rehan Sir/i)).toBeInTheDocument();
+    expect(within(dialog).getAllByText(/Rehan Sir/i)[0]).toBeInTheDocument();
 
     // 6. User clicks Save Contact to download vCard
     const saveContactBtn = screen.getByRole('button', { name: /Save Rehan Sir/i });

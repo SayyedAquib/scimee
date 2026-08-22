@@ -6,7 +6,7 @@ import CourseExplorer from './CourseExplorer';
 import coursesData from '../data/courses.json';
 
 describe('CourseExplorer Component', () => {
-  it('renders all program category tabs', () => {
+  it('renders all program category tabs including Post-NEET Counseling', () => {
     render(<CourseExplorer onOpenCallModal={vi.fn()} />);
     coursesData.programs.forEach((program) => {
       expect(screen.getAllByRole('button', { name: program.name })[0]).toBeInTheDocument();
@@ -21,6 +21,19 @@ describe('CourseExplorer Component', () => {
     await userEvent.click(secondTab);
     expect(screen.getAllByText(secondProgram.badge)[0]).toBeInTheDocument();
     expect(screen.getByText(new RegExp(secondProgram.target, 'i'))).toBeInTheDocument();
+  });
+
+  it('switches to Post-NEET Admission Counseling tab and shows 1-on-1 highlights', async () => {
+    render(<CourseExplorer onOpenCallModal={vi.fn()} />);
+    const counselingTab = screen.getAllByRole('button', {
+      name: /Post-NEET Admission & Choice-Filling Counseling/i
+    })[0];
+
+    await userEvent.click(counselingTab);
+    expect(screen.getByText(/NEET Qualified Aspirants & Parents/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Comprehensive Score & Rank evaluation for AIQ \(15%\)/i)
+    ).toBeInTheDocument();
   });
 
   it('triggers onOpenCallModal when Course CTA is clicked', async () => {

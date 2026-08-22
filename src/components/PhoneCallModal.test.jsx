@@ -22,6 +22,12 @@ describe('PhoneCallModal Component', () => {
     ).toBeInTheDocument();
   });
 
+  it('renders tailored counseling header when context is counseling', () => {
+    render(<PhoneCallModal isOpen={true} onClose={vi.fn()} context="post-neet-counseling" />);
+    expect(screen.getByText(/1-on-1 Admission Counseling/i)).toBeInTheDocument();
+    expect(screen.getByText(/Consult Rehan Sir \(Parents & Students\)/i)).toBeInTheDocument();
+  });
+
   it('locks background scroll when modal opens and unlocks on close', () => {
     const { unmount } = render(<PhoneCallModal isOpen={true} onClose={vi.fn()} />);
     expect(document.body.style.overflow).toBe('hidden');

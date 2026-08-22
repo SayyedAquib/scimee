@@ -41,6 +41,25 @@
       "ctaText": "Enquire for 11th/12th Batch"
     },
     {
+      "id": "post-neet-counseling",
+      "name": "Post-NEET Admission & Choice-Filling Counseling",
+      "target": "NEET Qualified Aspirants & Parents",
+      "duration": "Personalized 1-on-1 Sessions",
+      "badge": "1-on-1 Expert Guidance",
+      "featured": true,
+      "description": "Exclusive one-on-one medical college admission counseling by Ansari Rehan Ahmed for students and parents. Complete rank analysis, preference form choice-filling, and round-by-round strategy.",
+      "highlights": [
+        "Comprehensive Score & Rank evaluation for AIQ (15%) and Maharashtra State (85%) Quota",
+        "Strategic step-by-step preference & choice filling for MBBS, BDS, BAMS, BHMS & Allied Sciences",
+        "Category-wise cutoff prediction and Government vs. Private college optimization",
+        "Complete roadmap for CAP Rounds (Round 1, 2, 3 & Mop-Up / Stray Vacancy rounds)",
+        "In-person dedicated consultation with student and parents by prior appointment"
+      ],
+      "subjects": ["MBBS", "BDS", "BAMS", "BHMS", "Veterinary & Allied Health Sciences"],
+      "eligibility": "NEET-UG Qualified candidates and their parents (By Appointment)",
+      "ctaText": "Book 1-on-1 Counseling Session"
+    },
+    {
       "id": "pre-foundation",
       "name": "Pre-Foundation (Class 5th to 10th)",
       "target": "School Students (5th - 10th)",

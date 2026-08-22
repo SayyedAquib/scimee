@@ -19,6 +19,16 @@ describe('WhatsApp Routing Utility (getWhatsAppUrl)', () => {
     expect(decodedMessage).toContain('SCIMEE admissions');
   });
 
+  it('contextually tailors message for Post-NEET Admission Counseling', () => {
+    const url = getWhatsAppUrl('post-neet-counseling');
+    const decodedMessage = decodeURIComponent(url.split('text=')[1]);
+    expect(decodedMessage).toContain('As-salamu alaykum Rehan Sir');
+    expect(decodedMessage).toContain(
+      'Post-NEET Medical College Admission & Choice Filling Counseling'
+    );
+    expect(decodedMessage).toContain('for my son/daughter');
+  });
+
   it('contextually tailors message for Repeater / Dropper batch', () => {
     const url = getWhatsAppUrl('repeater');
     const decodedMessage = decodeURIComponent(url.split('text=')[1]);

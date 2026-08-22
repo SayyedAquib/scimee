@@ -73,7 +73,13 @@ export default function PhoneCallModal({ isOpen, onClose, context = 'general' })
         >
           <div>
             <div className="badge-gold" style={{ marginBottom: '4px' }}>
-              Direct Admissions Line
+              {typeof context === 'string' &&
+              (context.includes('counseling') ||
+                context.includes('counselling') ||
+                context.includes('choice') ||
+                context.includes('post-neet'))
+                ? '1-on-1 Admission Counseling'
+                : 'Direct Admissions Line'}
             </div>
             <h3
               id="call-modal-title"
@@ -84,10 +90,22 @@ export default function PhoneCallModal({ isOpen, onClose, context = 'general' })
                 letterSpacing: '-0.02em'
               }}
             >
-              Connect with SCIMEE
+              {typeof context === 'string' &&
+              (context.includes('counseling') ||
+                context.includes('counselling') ||
+                context.includes('choice') ||
+                context.includes('post-neet'))
+                ? 'Consult Rehan Sir (Parents & Students)'
+                : 'Connect with SCIMEE'}
             </h3>
             <p style={{ fontSize: '0.8rem', color: '#92400e', marginTop: '2px' }}>
-              Sara Coaching Institute of Medical Entrance Examination
+              {typeof context === 'string' &&
+              (context.includes('counseling') ||
+                context.includes('counselling') ||
+                context.includes('choice') ||
+                context.includes('post-neet'))
+                ? 'Post-NEET Medical College Choice-Filling & Rank Analysis'
+                : 'Sara Coaching Institute of Medical Entrance Examination'}
             </p>
           </div>
 

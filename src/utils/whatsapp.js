@@ -15,6 +15,14 @@ export function getWhatsAppUrl(context = 'general') {
     if (lower.includes('repeater') || lower.includes('dropper')) {
       message =
         'As-salamu alaykum Rehan Sir, I would like to enquire about the NEET Repeater / Dropper Batch (12th Pass) admissions and fee structure.';
+    } else if (
+      lower.includes('counseling') ||
+      lower.includes('counselling') ||
+      lower.includes('choice') ||
+      lower.includes('post-neet')
+    ) {
+      message =
+        'As-salamu alaykum Rehan Sir, I would like to schedule a 1-on-1 Post-NEET Medical College Admission & Choice Filling Counseling session with you for my son/daughter.';
     } else if (lower.includes('11') || lower.includes('12') || lower.includes('integrated')) {
       message =
         'As-salamu alaykum Rehan Sir, I would like to enquire about the Class 11th & 12th NEET Integrated Two-Year batch.';
