@@ -32,10 +32,11 @@ export default function Hero({ onOpenCallModal }) {
             <span
               className="urdu-font"
               style={{
-                fontSize: '1.35rem',
+                fontSize: '1.05rem',
                 color: '#92400e',
                 fontWeight: '700',
-                lineHeight: '1.2'
+                lineHeight: '1.4',
+                whiteSpace: 'nowrap'
               }}
             >
               {siteConfig.brand.taglineUrdu}

@@ -77,20 +77,32 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
               IIT-JEE Foundation &amp; MHT-CET under <strong>{siteConfig.brand.founder}</strong>.
             </p>
 
-            <div className="bento-card-gold" style={{ padding: '10px 14px', borderRadius: '14px' }}>
+            <div
+              className="bento-card-gold"
+              style={{ padding: '12px 14px', borderRadius: '14px', overflow: 'hidden' }}
+            >
               <span
                 className="urdu-font"
                 style={{
-                  fontSize: '1.15rem',
+                  fontSize: '0.94rem',
                   color: '#92400e',
                   display: 'block',
-                  marginBottom: '2px',
-                  fontWeight: '700'
+                  marginBottom: '4px',
+                  fontWeight: '700',
+                  lineHeight: '1.4',
+                  whiteSpace: 'nowrap'
                 }}
               >
                 {siteConfig.brand.taglineUrdu}
               </span>
-              <span style={{ fontSize: '0.72rem', color: '#b45309' }}>
+              <span
+                style={{
+                  fontSize: '0.72rem',
+                  color: '#b45309',
+                  display: 'block',
+                  lineHeight: '1.4'
+                }}
+              >
                 {siteConfig.brand.taglineEn || siteConfig.brand.taglineEnglish}
               </span>
             </div>
