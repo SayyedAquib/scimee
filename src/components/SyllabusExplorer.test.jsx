@@ -23,11 +23,33 @@ describe('SyllabusExplorer Component', () => {
     }
   });
 
+  it('switches subjects within the active exam (e.g. Physics -> Chemistry)', async () => {
+    render(<SyllabusExplorer onOpenCallModal={vi.fn()} />);
+    const chemistryBtn = screen.getByRole('button', { name: /Chemistry/i });
+    await userEvent.click(chemistryBtn);
+    expect(
+      screen.getByText(/Some Basic Concepts of Chemistry|Atomic Structure/i)
+    ).toBeInTheDocument();
+  });
+
   it('filters syllabus units by search query input', async () => {
     render(<SyllabusExplorer onOpenCallModal={vi.fn()} />);
     const searchInput = screen.getByPlaceholderText(/Search/i);
     await userEvent.type(searchInput, 'Kinematics');
     expect(screen.getByText(/Kinematics/i)).toBeInTheDocument();
+  });
+
+  it('displays empty state and restores units when Clear Search is clicked', async () => {
+    render(<SyllabusExplorer onOpenCallModal={vi.fn()} />);
+    const searchInput = screen.getByPlaceholderText(/Search/i);
+    await userEvent.type(searchInput, 'NonExistentTopicQueryXYZ');
+
+    expect(screen.getByText(/No units found matching/i)).toBeInTheDocument();
+    const clearBtn = screen.getByRole('button', { name: /Clear Search/i });
+    await userEvent.click(clearBtn);
+
+    expect(screen.queryByText(/No units found matching/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/Physics and Measurement/i)).toBeInTheDocument();
   });
 
   it('expands unit details when accordion unit header is clicked', async () => {

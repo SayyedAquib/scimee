@@ -22,6 +22,14 @@ describe('PhoneCallModal Component', () => {
     ).toBeInTheDocument();
   });
 
+  it('locks background scroll when modal opens and unlocks on close', () => {
+    const { unmount } = render(<PhoneCallModal isOpen={true} onClose={vi.fn()} />);
+    expect(document.body.style.overflow).toBe('hidden');
+
+    unmount();
+    expect(document.body.style.overflow).toBe('unset');
+  });
+
   it('calls onClose when close button is clicked', async () => {
     const handleClose = vi.fn();
     render(<PhoneCallModal isOpen={true} onClose={handleClose} />);
