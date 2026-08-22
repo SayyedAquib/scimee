@@ -32,5 +32,8 @@ jobs:
       - name: Verify Code Formatting (Prettier Check)
         run: npm run check-format
 
+      - name: Run Automated Test Suite (Vitest & React Testing Library)
+        run: npm test
+
       - name: Verify Production Build
         run: npm run build

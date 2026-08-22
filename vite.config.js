@@ -7,6 +7,12 @@ export default defineConfig({
     port: 3000,
     open: false
   },
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+    setupFiles: './src/test/setup.js',
+    css: false
+  },
   build: {
     outDir: 'dist',
     sourcemap: false,
