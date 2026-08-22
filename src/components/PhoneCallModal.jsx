@@ -128,22 +128,25 @@ export default function PhoneCallModal({ isOpen, onClose }) {
             </div>
           </div>
 
-          {/* Instant 1-Tap Calling Controls */}
+          {/* Instant 1-Tap Calling Controls (Unified Row Dimensions) */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
             <a
               href={`tel:${siteConfig.contact.primaryPhone}`}
               className="btn-primary"
               style={{
                 width: '100%',
-                padding: '13px 18px',
-                fontSize: '0.98rem',
+                padding: '12px 18px',
+                height: '48px',
+                fontSize: '0.94rem',
+                borderRadius: '12px',
                 display: 'flex',
+                alignItems: 'center',
                 justifyContent: 'space-between',
                 textDecoration: 'none'
               }}
             >
               <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <PhoneCall size={18} />
+                <PhoneCall size={18} style={{ flexShrink: 0 }} />
                 <span>Call Primary Line</span>
               </span>
               <span style={{ fontWeight: '900', letterSpacing: '0.02em' }}>
@@ -157,14 +160,17 @@ export default function PhoneCallModal({ isOpen, onClose }) {
               style={{
                 width: '100%',
                 padding: '12px 18px',
+                height: '48px',
                 fontSize: '0.94rem',
+                borderRadius: '12px',
                 display: 'flex',
+                alignItems: 'center',
                 justifyContent: 'space-between',
                 textDecoration: 'none'
               }}
             >
               <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Phone size={17} color="#d97706" />
+                <Phone size={17} color="#d97706" style={{ flexShrink: 0 }} />
                 <span>Secondary Line</span>
               </span>
               <span style={{ fontWeight: '700', letterSpacing: '0.02em' }}>
@@ -180,14 +186,17 @@ export default function PhoneCallModal({ isOpen, onClose }) {
               style={{
                 width: '100%',
                 padding: '12px 18px',
+                height: '48px',
                 fontSize: '0.94rem',
+                borderRadius: '12px',
                 display: 'flex',
+                alignItems: 'center',
                 justifyContent: 'space-between',
                 textDecoration: 'none'
               }}
             >
               <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <MessageCircle size={18} />
+                <MessageCircle size={18} style={{ flexShrink: 0 }} />
                 <span>WhatsApp Enquiry</span>
               </span>
               <span style={{ fontSize: '0.82rem', fontWeight: '800' }}>
@@ -230,7 +239,7 @@ export default function PhoneCallModal({ isOpen, onClose }) {
               <button
                 onClick={resetAndClose}
                 className="btn-secondary"
-                style={{ marginTop: '12px', width: '100%', padding: '9px' }}
+                style={{ marginTop: '12px', width: '100%', padding: '10px', height: '42px' }}
               >
                 Done
               </button>
@@ -317,7 +326,9 @@ export default function PhoneCallModal({ isOpen, onClose }) {
                   width: '100%',
                   marginTop: '4px',
                   padding: '11px',
-                  fontSize: '0.92rem'
+                  fontSize: '0.92rem',
+                  height: '46px',
+                  borderRadius: '12px'
                 }}
               >
                 <span>Request Call Back</span>

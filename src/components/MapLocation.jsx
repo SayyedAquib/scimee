@@ -78,7 +78,7 @@ export default function MapLocation({ onOpenCallModal }) {
                 </div>
               </div>
 
-              {/* Action Buttons */}
+              {/* Action Buttons (Unified Heights & Symmetry) */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                 <a
                   href={googleMapsUrl}
@@ -88,23 +88,35 @@ export default function MapLocation({ onOpenCallModal }) {
                   style={{
                     padding: '10px 18px',
                     fontSize: '0.86rem',
-                    textDecoration: 'none'
+                    height: '42px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    textDecoration: 'none',
+                    flex: '1 1 170px'
                   }}
                 >
-                  <Navigation size={14} />
+                  <Navigation size={14} style={{ flexShrink: 0 }} />
                   <span>Open in Google Maps</span>
-                  <ExternalLink size={12} />
+                  <ExternalLink size={12} style={{ flexShrink: 0 }} />
                 </a>
 
                 <button
                   onClick={onOpenCallModal}
                   className="btn-secondary"
                   style={{
-                    padding: '10px 16px',
-                    fontSize: '0.86rem'
+                    padding: '10px 18px',
+                    fontSize: '0.86rem',
+                    height: '42px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    flex: '1 1 150px'
                   }}
                 >
-                  <PhoneCall size={14} />
+                  <PhoneCall size={14} style={{ flexShrink: 0 }} />
                   <span>Call Institute</span>
                 </button>
               </div>

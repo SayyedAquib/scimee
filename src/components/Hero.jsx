@@ -77,7 +77,7 @@ export default function Hero({ onOpenCallModal }) {
             Under the mentorship of <strong style={{ color: 'var(--text-heading)' }}>{siteConfig.brand.founder}</strong>, we prepare medical aspirants through conceptual clarity, weekly OMR examination drills, and dedicated on-campus reading room facilities.
           </p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons (Unified Symmetry) */}
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
@@ -90,12 +90,16 @@ export default function Hero({ onOpenCallModal }) {
               onClick={onOpenCallModal}
               className="btn-primary"
               style={{
-                padding: '14px 28px',
-                fontSize: '1rem',
-                minWidth: '220px'
+                padding: '13px 24px',
+                fontSize: '0.94rem',
+                height: '48px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
               }}
             >
-              <PhoneCall size={18} />
+              <PhoneCall size={17} style={{ flexShrink: 0 }} />
               <span>Direct Call Helpline</span>
             </button>
 
@@ -103,11 +107,16 @@ export default function Hero({ onOpenCallModal }) {
               href="#results"
               className="btn-secondary"
               style={{
-                padding: '14px 24px',
-                fontSize: '0.96rem'
+                padding: '13px 24px',
+                fontSize: '0.94rem',
+                height: '48px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
               }}
             >
-              <Trophy size={17} color="#d97706" />
+              <Trophy size={17} color="#d97706" style={{ flexShrink: 0 }} />
               <span>100% NEET 2026 Results</span>
             </a>
 
@@ -115,11 +124,16 @@ export default function Hero({ onOpenCallModal }) {
               href="#syllabus"
               className="btn-secondary"
               style={{
-                padding: '14px 22px',
-                fontSize: '0.94rem'
+                padding: '13px 24px',
+                fontSize: '0.94rem',
+                height: '48px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
               }}
             >
-              <BookOpen size={17} color="#0284c7" />
+              <BookOpen size={17} color="#0284c7" style={{ flexShrink: 0 }} />
               <span>NMC 2026 Syllabus</span>
             </a>
           </div>
