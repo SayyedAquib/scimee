@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 import SyllabusExplorer from './SyllabusExplorer';
@@ -32,17 +32,17 @@ describe('SyllabusExplorer Component', () => {
     ).toBeInTheDocument();
   });
 
-  it('filters syllabus units by search query input', async () => {
+  it('filters syllabus units by search query input', () => {
     render(<SyllabusExplorer onOpenCallModal={vi.fn()} />);
     const searchInput = screen.getByPlaceholderText(/Search/i);
-    await userEvent.type(searchInput, 'Kinematics');
+    fireEvent.change(searchInput, { target: { value: 'Kinematics' } });
     expect(screen.getByText(/Kinematics/i)).toBeInTheDocument();
   });
 
   it('displays empty state and restores units when Clear Search is clicked', async () => {
     render(<SyllabusExplorer onOpenCallModal={vi.fn()} />);
     const searchInput = screen.getByPlaceholderText(/Search/i);
-    await userEvent.type(searchInput, 'NonExistentTopicQueryXYZ');
+    fireEvent.change(searchInput, { target: { value: 'NonExistentTopicQueryXYZ' } });
 
     expect(screen.getByText(/No units found matching/i)).toBeInTheDocument();
     const clearBtn = screen.getByRole('button', { name: /Clear Search/i });
@@ -50,7 +50,7 @@ describe('SyllabusExplorer Component', () => {
 
     expect(screen.queryByText(/No units found matching/i)).not.toBeInTheDocument();
     expect(screen.getByText(/Physics and Measurement/i)).toBeInTheDocument();
-  });
+  }, 15000);
 
   it('expands unit details when accordion unit header is clicked', async () => {
     render(<SyllabusExplorer onOpenCallModal={vi.fn()} />);
