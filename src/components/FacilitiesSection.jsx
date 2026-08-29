@@ -8,13 +8,18 @@ import {
   ShieldCheck,
   ArrowRight,
   Shield,
-  Award
+  Award,
+  Laptop,
+  ExternalLink
 } from 'lucide-react';
 import facilitiesData from '../data/facilities.json';
+import { getCbtUrl, openCbtPortal } from '../utils/cbt';
 
 export default function FacilitiesSection({ onOpenCallModal }) {
   const getIcon = (iconName) => {
     switch (iconName) {
+      case 'laptop':
+        return <Laptop size={22} color="#059669" />;
       case 'book-open':
         return <BookOpen size={22} color="#d97706" />;
       case 'graduation-cap':
@@ -129,55 +134,136 @@ export default function FacilitiesSection({ onOpenCallModal }) {
             ))}
           </div>
 
-          {/* Library & Reading Room Highlight Callout */}
+          {/* CBT Online Test Simulator & Reading Room Grid */}
           <div
-            className="bento-card-gold"
             style={{
-              padding: 'clamp(20px, 4vw, 30px)',
-              borderRadius: '24px',
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              justifyContent: 'space-between',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
               gap: '18px'
             }}
           >
-            <div style={{ maxWidth: '680px' }}>
-              <span className="badge-gold" style={{ marginBottom: '6px' }}>
-                Special Campus Facility
-              </span>
-              <h3
+            {/* CBT Simulator Highlight Callout */}
+            <div
+              className="bento-card-emerald"
+              style={{
+                padding: 'clamp(20px, 3.5vw, 28px)',
+                borderRadius: '24px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                gap: '16px'
+              }}
+            >
+              <div>
+                <span className="badge-emerald" style={{ marginBottom: '8px' }}>
+                  <Laptop size={13} />
+                  <span>Digital Assessment Lab</span>
+                </span>
+                <h3
+                  style={{
+                    fontSize: 'clamp(1.2rem, 2.2vw, 1.5rem)',
+                    fontWeight: '900',
+                    color: '#065f46',
+                    marginBottom: '6px',
+                    letterSpacing: '-0.02em'
+                  }}
+                >
+                  NTA NEET Computer-Based Test (CBT) Simulator
+                </h3>
+                <p
+                  style={{
+                    fontSize: '0.88rem',
+                    color: '#047857',
+                    lineHeight: '1.55',
+                    fontWeight: '500'
+                  }}
+                >
+                  Experience the exact 5-state question palette, +4/-1 scoring, sectional timer, and
+                  200,000+ curated MCQ bank from top reference sources.
+                </p>
+              </div>
+
+              <a
+                href={getCbtUrl('/tests')}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  openCbtPortal('/tests', 'facilities_card');
+                }}
+                className="btn-whatsapp"
                 style={{
-                  fontSize: 'clamp(1.25rem, 2.5vw, 1.7rem)',
-                  fontWeight: '900',
-                  color: '#78350f',
-                  marginBottom: '6px',
-                  letterSpacing: '-0.02em'
+                  padding: '11px 20px',
+                  fontSize: '0.88rem',
+                  textDecoration: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  width: 'fit-content'
                 }}
               >
-                Dedicated Quiet Reading Room &amp; Medical Reference Library
-              </h3>
-              <p
-                style={{
-                  fontSize: '0.9rem',
-                  color: '#92400e',
-                  lineHeight: '1.55',
-                  fontWeight: '500'
-                }}
-              >
-                Distraction-free environment with individual study cubicles, NCERT line-by-line
-                problem sets, and past 20-year NEET PYQ archives.
-              </p>
+                <span>Start Free Mock Exam</span>
+                <ExternalLink size={15} />
+              </a>
             </div>
 
-            <button
-              onClick={onOpenCallModal}
-              className="btn-primary"
-              style={{ padding: '12px 24px', fontSize: '0.92rem' }}
+            {/* Library & Reading Room Highlight Callout */}
+            <div
+              className="bento-card-gold"
+              style={{
+                padding: 'clamp(20px, 3.5vw, 28px)',
+                borderRadius: '24px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                gap: '16px'
+              }}
             >
-              <span>Book a Campus Visit</span>
-              <ArrowRight size={16} />
-            </button>
+              <div>
+                <span className="badge-gold" style={{ marginBottom: '8px' }}>
+                  Special Campus Facility
+                </span>
+                <h3
+                  style={{
+                    fontSize: 'clamp(1.2rem, 2.2vw, 1.5rem)',
+                    fontWeight: '900',
+                    color: '#78350f',
+                    marginBottom: '6px',
+                    letterSpacing: '-0.02em'
+                  }}
+                >
+                  Dedicated Quiet Reading Room &amp; Medical Library
+                </h3>
+                <p
+                  style={{
+                    fontSize: '0.88rem',
+                    color: '#92400e',
+                    lineHeight: '1.55',
+                    fontWeight: '500'
+                  }}
+                >
+                  Distraction-free environment with individual study cubicles, NCERT line-by-line
+                  problem sets, and past 20-year NEET PYQ archives.
+                </p>
+              </div>
+
+              <button
+                onClick={onOpenCallModal}
+                className="btn-primary"
+                style={{
+                  padding: '11px 20px',
+                  fontSize: '0.88rem',
+                  width: 'fit-content',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                <span>Book a Campus Visit</span>
+                <ArrowRight size={15} />
+              </button>
+            </div>
           </div>
         </div>
       </div>

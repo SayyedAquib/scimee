@@ -7,6 +7,7 @@ import ToppersSection from '../components/ToppersSection';
 import CourseExplorer from '../components/CourseExplorer';
 import SyllabusExplorer from '../components/SyllabusExplorer';
 import FacilitiesSection from '../components/FacilitiesSection';
+import CbtShowcaseSection from '../components/CbtShowcaseSection';
 import MapLocation from '../components/MapLocation';
 import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
@@ -33,6 +34,7 @@ export default function HomePage() {
         <CourseExplorer onOpenCallModal={openCallModal} />
         <SyllabusExplorer onOpenCallModal={openCallModal} />
         <FacilitiesSection onOpenCallModal={openCallModal} />
+        <CbtShowcaseSection />
         <MapLocation onOpenCallModal={openCallModal} />
         <FAQSection onOpenCallModal={openCallModal} />
       </main>

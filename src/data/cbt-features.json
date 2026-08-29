@@ -1,0 +1,69 @@
+{
+  "sectionBadge": "Digital Assessment Platform",
+  "sectionTitle": "Official NTA NEET Computer-Based Test (CBT) Simulator",
+  "sectionSubtitle": "Simulate actual test-day pressure with the official 5-state question palette, 200,000+ curated MCQs, timed auto-submit, and instantaneous performance telemetry.",
+  "metrics": [
+    {
+      "value": "200,000+",
+      "label": "Questions Indexed",
+      "subtext": "Diagram, Assertion & Match MCQs"
+    },
+    {
+      "value": "5-State",
+      "label": "Official NTA Palette",
+      "subtext": "+4 / -1 Exact Evaluation Logic"
+    },
+    {
+      "value": "720 Marks",
+      "label": "Full Mock Series",
+      "subtext": "Physics, Chemistry, Botany & Zoology"
+    },
+    { "value": "Live", "label": "AI Proctoring", "subtext": "Webcam Lock & Auto-Submit Timer" }
+  ],
+  "features": [
+    {
+      "id": "palette",
+      "title": "Official 5-State Question Palette",
+      "tag": "NTA Standard",
+      "description": "Master the official examination interface before test day. Understand critical NTA scoring rules (e.g. 'Answered & Marked for Review' counts for final evaluation).",
+      "bulletPoints": [
+        "Not Visited & Not Answered tracking",
+        "Answered (+4 / -1 Evaluated)",
+        "Marked for Review & Answered+Review flags"
+      ]
+    },
+    {
+      "id": "question-bank",
+      "title": "200,000+ Multi-Format Question Architecture",
+      "tag": "Curated Bank",
+      "description": "Extensive library spanning high-yield botany/zoology diagrams, physics numerical assertion-reasoning, and chemistry match-the-column matrices.",
+      "bulletPoints": [
+        "NCERT Fingertips & Standard Textbook MCQs",
+        "Past 10-Year NEET PYQ Archives (2015–2024)",
+        "NMC 2026 Updated Syllabus Weightage"
+      ]
+    },
+    {
+      "id": "proctoring",
+      "title": "Live AI Proctoring & Timed Test Hall",
+      "tag": "Exam Discipline",
+      "description": "Build real exam stamina and time management skills under authentic examination pressure with secure browser lock and countdown timer.",
+      "bulletPoints": [
+        "3 Hours 20 Minutes Auto-Submit Timer",
+        "Sectional Switching (Physics Sec A/B, Chemistry, Biology)",
+        "Offline Fault Tolerance & Auto-Sync Recovery"
+      ]
+    },
+    {
+      "id": "telemetry",
+      "title": "Instant Diagnostic Scorecard & Analytics",
+      "tag": "Performance AI",
+      "description": "Receive comprehensive post-test breakdown within seconds. Identify weak chapters, negative marking penalties, and pace bottlenecks.",
+      "bulletPoints": [
+        "Subject-wise accuracy and time-per-question telemetry",
+        "Negative mark loss analysis (+4 / -1 impact)",
+        "Step-by-step solution keys and chapter revisions"
+      ]
+    }
+  ]
+}

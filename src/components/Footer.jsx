@@ -1,7 +1,8 @@
 import React from 'react';
-import { MapPin, MessageCircle } from 'lucide-react';
+import { MapPin, MessageCircle, Laptop, ExternalLink } from 'lucide-react';
 import siteConfig from '../data/site-config.json';
 import { getWhatsAppUrl } from '../utils/whatsapp';
+import { getCbtUrl, openCbtPortal } from '../utils/cbt';
 
 export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
   const currentYear = new Date().getFullYear();
@@ -108,7 +109,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
             </div>
           </div>
 
-          {/* Column 2: Quick Links */}
+          {/* Column 2: Quick Links & CBT Portals */}
           <div>
             <h4
               style={{
@@ -122,7 +123,15 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
             >
               Quick Navigation
             </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <ul
+              style={{
+                listStyle: 'none',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px',
+                marginBottom: '16px'
+              }}
+            >
               {siteConfig.navigation.map((item) => (
                 <li key={item.label}>
                   <a
@@ -144,6 +153,70 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                   </a>
                 </li>
               ))}
+            </ul>
+
+            <h4
+              style={{
+                fontSize: '0.82rem',
+                fontWeight: '800',
+                color: '#065f46',
+                marginBottom: '10px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.04em',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px'
+              }}
+            >
+              <Laptop size={14} color="#059669" />
+              <span>Student Portals</span>
+            </h4>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <li>
+                <a
+                  href={getCbtUrl('/tests')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openCbtPortal('/tests', 'footer_mock_tests');
+                  }}
+                  style={{
+                    color: '#047857',
+                    textDecoration: 'none',
+                    fontSize: '0.86rem',
+                    fontWeight: '700',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '5px'
+                  }}
+                >
+                  <span>NEET CBT Mock Tests</span>
+                  <ExternalLink size={12} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href={getCbtUrl('/login')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openCbtPortal('/login', 'footer_login');
+                  }}
+                  style={{
+                    color: 'var(--text-sub)',
+                    textDecoration: 'none',
+                    fontSize: '0.86rem',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '5px'
+                  }}
+                >
+                  <span>Student Portal Login</span>
+                  <ExternalLink size={12} />
+                </a>
+              </li>
             </ul>
           </div>
 

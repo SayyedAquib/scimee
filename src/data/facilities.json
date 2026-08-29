@@ -3,6 +3,13 @@
   "sectionSubtitle": "A disciplined learning ecosystem combining cutting-edge testing, personalized mentorship, and dedicated study infrastructure.",
   "items": [
     {
+      "id": "cbt-simulator",
+      "title": "Official NTA NEET CBT Exam Simulator",
+      "icon": "laptop",
+      "description": "Pixel-accurate NTA Computer-Based Test platform with 5-state question palette, 200,000+ curated question bank, timed auto-submit, and instantaneous performance telemetry.",
+      "tag": "Digital Testing"
+    },
+    {
       "id": "reading-room",
       "title": "Dedicated Library & Quiet Reading Room",
       "icon": "book-open",

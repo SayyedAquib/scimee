@@ -35,7 +35,14 @@ describe('End-to-End User Conversion Journey', () => {
     fireEvent.click(counselingFaq);
     expect(screen.getByText(/Following the declaration of NEET results/i)).toBeInTheDocument();
 
-    // 5. User clicks "Call Now" in Floating Action Bar / Hero
+    // 5. User inspects NTA CBT Exam Simulator section
+    expect(
+      screen.getByRole('heading', { name: /Official NTA NEET Computer-Based Test/i })
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Authentic 5-State Question Palette/i)).toBeInTheDocument();
+    expect(screen.getByText(/200,000\+ Multi-Format Question Architecture/i)).toBeInTheDocument();
+
+    // 6. User clicks "Call Now" in Floating Action Bar / Hero
     const heroCallBtn = screen.getByRole('button', { name: /Direct Call Helpline/i });
     await userEvent.click(heroCallBtn);
 
@@ -45,7 +52,7 @@ describe('End-to-End User Conversion Journey', () => {
     expect(within(dialog).getByText(/Connect with SCIMEE/i)).toBeInTheDocument();
     expect(within(dialog).getByText(/Call Primary Line/i)).toBeInTheDocument();
 
-    // 6. User closes dialog via close button
+    // 7. User closes dialog via close button
     const closeBtn = screen.getByLabelText('Close dialog');
     await userEvent.click(closeBtn);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();

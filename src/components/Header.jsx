@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { PhoneCall, Menu, X, ChevronRight } from 'lucide-react';
+import { PhoneCall, Menu, X, ChevronRight, Laptop, ExternalLink } from 'lucide-react';
 import siteConfig from '../data/site-config.json';
+import { getCbtUrl, openCbtPortal } from '../utils/cbt';
 
 // Stable navigation items matching page sections
 const NAV_ITEMS = [
@@ -290,11 +291,42 @@ export default function Header({ onOpenCallModal }) {
             })}
           </nav>
 
-          {/* Desktop Call CTA */}
+          {/* Desktop Actions */}
           <div
             style={{ display: 'none', alignItems: 'center', gap: '10px' }}
             className="desktop-nav"
           >
+            <a
+              href={getCbtUrl('/')}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                e.preventDefault();
+                openCbtPortal('/', 'header_desktop');
+              }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '7px',
+                padding: '8px 14px',
+                fontSize: '0.82rem',
+                height: '38px',
+                borderRadius: 'var(--radius-pill)',
+                background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
+                border: '1px solid rgba(16, 185, 129, 0.35)',
+                color: '#065f46',
+                fontWeight: '700',
+                textDecoration: 'none',
+                boxShadow: '0 2px 8px rgba(16, 185, 129, 0.1)',
+                transition: 'all 150ms ease'
+              }}
+              title="Launch SCIMEE NTA NEET CBT Online Test Simulator"
+            >
+              <Laptop size={14} color="#059669" />
+              <span>CBT Portal</span>
+              <ExternalLink size={12} style={{ opacity: 0.8 }} />
+            </a>
+
             <button
               onClick={onOpenCallModal}
               className="btn-primary"
@@ -400,6 +432,48 @@ export default function Header({ onOpenCallModal }) {
                 </a>
               );
             })}
+
+            <a
+              href={getCbtUrl('/tests')}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                closeMenu();
+                openCbtPortal('/tests', 'header_mobile_drawer');
+              }}
+              style={{
+                color: '#065f46',
+                textDecoration: 'none',
+                fontSize: '0.92rem',
+                fontWeight: '800',
+                padding: '11px 14px',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
+                border: '1px solid rgba(16, 185, 129, 0.35)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginTop: '4px'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Laptop size={17} color="#059669" />
+                <span>CBT Online Mock Tests</span>
+                <span
+                  style={{
+                    fontSize: '0.65rem',
+                    background: '#059669',
+                    color: '#fff',
+                    padding: '2px 6px',
+                    borderRadius: '6px',
+                    fontWeight: '800'
+                  }}
+                >
+                  NTA Live
+                </span>
+              </div>
+              <ExternalLink size={14} color="#059669" />
+            </a>
 
             <div style={{ paddingTop: '8px' }}>
               <button

@@ -544,3 +544,40 @@ section {
     gap: 20px;
   }
 }
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS & SAFE AREA INSETS (320px – 480px)
+   ========================================================================== */
+
+@media (max-width: 380px) {
+  .container-custom {
+    padding: 0 10px;
+  }
+
+  .floating-navbar {
+    height: 54px;
+    padding: 0 10px;
+  }
+
+  .bento-section-canvas {
+    padding: 16px 10px;
+    border-radius: 18px;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-whatsapp {
+    font-size: 0.82rem;
+    padding: 10px 14px;
+  }
+}
+
+.mobile-action-bar {
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 72px;
+  }
+}

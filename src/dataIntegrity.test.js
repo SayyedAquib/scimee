@@ -5,6 +5,7 @@ import syllabusData from './data/syllabus.json';
 import toppersData from './data/toppers.json';
 import facilitiesData from './data/facilities.json';
 import faqData from './data/faq.json';
+import cbtFeaturesData from './data/cbt-features.json';
 
 describe('JSON Data Integrity & Schema Validation', () => {
   describe('site-config.json', () => {
@@ -122,6 +123,21 @@ describe('JSON Data Integrity & Schema Validation', () => {
       faqData.faqs.forEach((faq) => {
         expect(faq.question.trim().length).toBeGreaterThan(5);
         expect(faq.answer.trim().length).toBeGreaterThan(15);
+      });
+    });
+  });
+
+  describe('cbt-features.json', () => {
+    it('validates CBT portal feature schema, metrics, and bullet points', () => {
+      expect(cbtFeaturesData.sectionTitle).toContain('CBT');
+      expect(cbtFeaturesData.metrics.length).toBe(4);
+      expect(cbtFeaturesData.features.length).toBe(4);
+
+      cbtFeaturesData.features.forEach((feature) => {
+        expect(feature.title).toBeTruthy();
+        expect(feature.tag).toBeTruthy();
+        expect(feature.description.length).toBeGreaterThan(20);
+        expect(feature.bulletPoints.length).toBeGreaterThanOrEqual(3);
       });
     });
   });

@@ -1,6 +1,7 @@
 import React from 'react';
-import { PhoneCall, Trophy, BookOpen } from 'lucide-react';
+import { PhoneCall, Trophy, BookOpen, Laptop, ExternalLink } from 'lucide-react';
 import siteConfig from '../data/site-config.json';
+import { getCbtUrl, openCbtPortal } from '../utils/cbt';
 
 export default function Hero({ onOpenCallModal }) {
   return (
@@ -15,51 +16,81 @@ export default function Hero({ onOpenCallModal }) {
     >
       <div className="container-custom" style={{ position: 'relative', zIndex: 1 }}>
         <div style={{ maxWidth: '960px', margin: '0 auto', textAlign: 'center' }}>
-          {/* Apple Ornate Urdu Tagline Pill (Light Theme) */}
+          {/* Header Badges Row */}
           <div
             style={{
-              display: 'inline-flex',
+              display: 'flex',
+              flexWrap: 'wrap',
               alignItems: 'center',
-              gap: '12px',
-              background: '#fffbeb',
-              border: '1px solid rgba(217, 119, 6, 0.28)',
-              padding: '8px 22px',
-              borderRadius: 'var(--radius-pill)',
-              marginBottom: '24px',
-              boxShadow: '0 4px 16px rgba(245, 158, 11, 0.12)'
+              justifyContent: 'center',
+              gap: '10px',
+              marginBottom: '24px'
             }}
           >
-            <span
-              className="urdu-font"
-              style={{
-                fontSize: '1.05rem',
-                color: '#92400e',
-                fontWeight: '700',
-                lineHeight: '1.4',
-                whiteSpace: 'nowrap'
-              }}
-            >
-              {siteConfig.brand.taglineUrdu}
-            </span>
+            {/* Apple Ornate Urdu Tagline Pill (Light Theme) */}
             <div
               style={{
-                width: '5px',
-                height: '5px',
-                borderRadius: '50%',
-                background: 'var(--apple-gold)'
-              }}
-            />
-            <span
-              style={{
-                fontSize: '0.75rem',
-                fontWeight: '800',
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase',
-                color: '#b45309'
+                display: 'inline-flex',
+                alignItems: 'center',
+                background: '#fffbeb',
+                border: '1px solid rgba(217, 119, 6, 0.28)',
+                padding: '8px 22px',
+                borderRadius: 'var(--radius-pill)',
+                boxShadow: '0 4px 16px rgba(245, 158, 11, 0.12)'
               }}
             >
-              Bhusawal Medical Entrance
-            </span>
+              <span
+                className="urdu-font"
+                style={{
+                  fontSize: '1.05rem',
+                  color: '#92400e',
+                  fontWeight: '700',
+                  lineHeight: '1.4',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                {siteConfig.brand.taglineUrdu}
+              </span>
+            </div>
+
+            {/* Apple CBT Online Simulator Live Pill */}
+            <a
+              href={getCbtUrl('/tests')}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                e.preventDefault();
+                openCbtPortal('/tests', 'hero_top_pill');
+              }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
+                border: '1px solid rgba(16, 185, 129, 0.35)',
+                padding: '7px 16px',
+                borderRadius: 'var(--radius-pill)',
+                textDecoration: 'none',
+                boxShadow: '0 4px 14px rgba(16, 185, 129, 0.12)',
+                transition: 'all 180ms ease'
+              }}
+              title="Launch SCIMEE NTA NEET CBT Online Test Simulator"
+            >
+              <span
+                style={{
+                  width: '7px',
+                  height: '7px',
+                  borderRadius: '50%',
+                  background: '#10b981',
+                  display: 'inline-block'
+                }}
+              />
+              <Laptop size={14} color="#059669" />
+              <span style={{ fontSize: '0.78rem', fontWeight: '800', color: '#065f46' }}>
+                NTA NEET CBT Simulator Live
+              </span>
+              <ExternalLink size={12} color="#047857" style={{ opacity: 0.8 }} />
+            </a>
           </div>
 
           {/* Luminous Apple Keynote Display Title (Deep Charcoal / Black) */}
