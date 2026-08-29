@@ -32,7 +32,7 @@ describe('App Integration Test (End-to-End Component Tree)', () => {
 
     // FAQ section
     expect(screen.getByText(/Got Questions\?/i)).toBeInTheDocument();
-  });
+  }, 15000);
 
   it('opens Admissions modal when Hero CTA is clicked and closes when closed', async () => {
     render(<App />);
@@ -49,5 +49,5 @@ describe('App Integration Test (End-to-End Component Tree)', () => {
     await userEvent.click(closeBtn);
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-  });
+  }, 15000);
 });

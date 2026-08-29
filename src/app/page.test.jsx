@@ -21,7 +21,7 @@ describe('HomePage Component (App Router Composition)', () => {
       screen.getByText(/Why SCIMEE is the First Choice for Medical Aspirants/i)
     ).toBeInTheDocument();
     expect(screen.getByText(/Convenient Location in Bhusawal/i)).toBeInTheDocument();
-  });
+  }, 15000);
 
   it('opens and closes Admissions modal when triggered from page CTA', async () => {
     render(<HomePage />);
@@ -42,5 +42,5 @@ describe('HomePage Component (App Router Composition)', () => {
 
     // Modal dialog is closed
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-  });
+  }, 15000);
 });

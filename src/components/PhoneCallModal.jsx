@@ -1,16 +1,6 @@
 import React, { useEffect } from 'react';
-import {
-  Phone,
-  PhoneCall,
-  MessageCircle,
-  Clock,
-  MapPin,
-  X,
-  UserPlus,
-  Download
-} from 'lucide-react';
+import { Phone, PhoneCall, MessageCircle, Clock, MapPin, X } from 'lucide-react';
 import siteConfig from '../data/site-config.json';
-import { downloadVCard } from '../utils/vcard';
 import { trackEvent } from '../utils/analytics';
 import { getWhatsAppUrl } from '../utils/whatsapp';
 
@@ -41,11 +31,6 @@ export default function PhoneCallModal({ isOpen, onClose, context = 'general' })
   if (!isOpen) return null;
 
   const whatsappUrl = getWhatsAppUrl(context);
-
-  const handleSaveContact = () => {
-    trackEvent('save_contact_vcard_clicked', { source: 'admissions_modal' });
-    downloadVCard();
-  };
 
   return (
     <div
@@ -241,29 +226,6 @@ export default function PhoneCallModal({ isOpen, onClose, context = 'general' })
               </span>
               <span style={{ fontSize: '0.82rem', fontWeight: '800' }}>Instant Reply &rarr;</span>
             </a>
-
-            {/* 1-Tap Save Contact to Phonebook */}
-            <button
-              onClick={handleSaveContact}
-              className="btn-secondary"
-              style={{
-                width: '100%',
-                padding: '12px 18px',
-                height: '46px',
-                fontSize: '0.88rem',
-                borderRadius: '12px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                background: '#f8fafc',
-                border: '1px dashed rgba(0, 0, 0, 0.16)'
-              }}
-            >
-              <UserPlus size={16} color="#0284c7" />
-              <span>Save Rehan Sir (SCIMEE) to Phonebook</span>
-              <Download size={14} color="var(--text-muted)" />
-            </button>
           </div>
 
           {/* Location Footnote */}

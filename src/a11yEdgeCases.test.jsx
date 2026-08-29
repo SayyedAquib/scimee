@@ -5,7 +5,6 @@ import PhoneCallModal from './components/PhoneCallModal';
 import SyllabusExplorer from './components/SyllabusExplorer';
 import { trackEvent } from './utils/analytics';
 import { getWhatsAppUrl } from './utils/whatsapp';
-import { downloadVCard } from './utils/vcard';
 import siteConfig from './data/site-config.json';
 
 describe('Accessibility (a11y) & Utility Edge Cases', () => {
@@ -84,18 +83,6 @@ describe('Accessibility (a11y) & Utility Edge Cases', () => {
       const url = getWhatsAppUrl('repeater');
       expect(url).toContain('Repeater');
       expect(url).toContain('As-salamu');
-    });
-  });
-
-  describe('vCard Generator Edge Cases', () => {
-    it('executes download and cleans up DOM elements cleanly without leaving leaked links', () => {
-      const appendChildSpy = vi.spyOn(document.body, 'appendChild');
-      const removeChildSpy = vi.spyOn(document.body, 'removeChild');
-
-      downloadVCard();
-
-      expect(appendChildSpy).toHaveBeenCalledTimes(1);
-      expect(removeChildSpy).toHaveBeenCalledTimes(1);
     });
   });
 });
