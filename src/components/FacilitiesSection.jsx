@@ -37,7 +37,18 @@ export default function FacilitiesSection({ onOpenCallModal }) {
     }
   };
 
-  const facilitiesList = facilitiesData.items || facilitiesData.features || [];
+  const facilitiesList = Array.isArray(facilitiesData?.items)
+    ? facilitiesData.items
+    : Array.isArray(facilitiesData?.features)
+      ? facilitiesData.features
+      : [];
+
+  const sectionTitle =
+    facilitiesData?.sectionTitle ?? facilitiesData?.title ?? 'State-of-the-Art Learning Ecosystem';
+  const sectionSubtitle =
+    facilitiesData?.sectionSubtitle ??
+    facilitiesData?.subtitle ??
+    'A distraction-free, results-driven atmosphere engineered for serious medical aspirants.';
 
   return (
     <section id="facilities" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
@@ -60,19 +71,17 @@ export default function FacilitiesSection({ onOpenCallModal }) {
                 color: 'var(--text-heading)'
               }}
             >
-              {facilitiesData.sectionTitle || facilitiesData.title}
+              {sectionTitle}
             </h2>
 
-            <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)' }}>
-              {facilitiesData.sectionSubtitle || facilitiesData.subtitle}
-            </p>
+            <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)' }}>{sectionSubtitle}</p>
           </div>
 
           {/* Feature Cards Grid (Apple Bento Grid) */}
           <div className="grid-responsive-2" style={{ marginBottom: '32px' }}>
-            {facilitiesList.map((feat) => (
+            {facilitiesList.map((feat, idx) => (
               <div
-                key={feat.id}
+                key={feat?.id ?? idx}
                 className="bento-card"
                 style={{
                   padding: '24px',
@@ -95,7 +104,7 @@ export default function FacilitiesSection({ onOpenCallModal }) {
                     border: '1px solid rgba(0, 0, 0, 0.06)'
                   }}
                 >
-                  {getIcon(feat.icon)}
+                  {getIcon(feat?.icon)}
                 </div>
 
                 <div>
@@ -115,9 +124,9 @@ export default function FacilitiesSection({ onOpenCallModal }) {
                         letterSpacing: '-0.01em'
                       }}
                     >
-                      {feat.title}
+                      {feat?.title}
                     </h3>
-                    {feat.tag && (
+                    {feat?.tag && (
                       <span
                         className="badge-gold"
                         style={{ fontSize: '0.62rem', padding: '1px 6px' }}
@@ -127,7 +136,7 @@ export default function FacilitiesSection({ onOpenCallModal }) {
                     )}
                   </div>
                   <p style={{ fontSize: '0.88rem', color: 'var(--text-sub)', lineHeight: '1.6' }}>
-                    {feat.description}
+                    {feat?.description}
                   </p>
                 </div>
               </div>
@@ -150,36 +159,75 @@ export default function FacilitiesSection({ onOpenCallModal }) {
                 borderRadius: '24px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
-                gap: '16px'
+                justifyContent: 'space-between'
               }}
             >
               <div>
-                <span className="badge-emerald" style={{ marginBottom: '8px' }}>
-                  <Laptop size={13} />
-                  <span>Digital Assessment Lab</span>
-                </span>
-                <h3
+                <div
                   style={{
-                    fontSize: 'clamp(1.2rem, 2.2vw, 1.5rem)',
-                    fontWeight: '900',
-                    color: '#065f46',
-                    marginBottom: '6px',
-                    letterSpacing: '-0.02em'
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '8px',
+                    marginBottom: '8px'
                   }}
                 >
-                  NTA NEET Computer-Based Test (CBT) Simulator
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '5px',
+                      background: 'rgba(5, 150, 105, 0.12)',
+                      border: '1px solid rgba(5, 150, 105, 0.3)',
+                      color: '#065f46',
+                      fontWeight: '800',
+                      fontSize: '0.72rem',
+                      padding: '3px 10px',
+                      borderRadius: 'var(--radius-pill)',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.04em'
+                    }}
+                  >
+                    <Laptop size={12} />
+                    <span>NTA Exam Replica</span>
+                  </span>
+
+                  <span
+                    style={{
+                      fontSize: '0.7rem',
+                      fontWeight: '800',
+                      color: '#047857',
+                      background: '#ecfdf5',
+                      padding: '2px 8px',
+                      borderRadius: '6px'
+                    }}
+                  >
+                    AI Analytics
+                  </span>
+                </div>
+
+                <h3
+                  style={{
+                    fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+                    fontWeight: '900',
+                    color: '#065f46',
+                    letterSpacing: '-0.02em',
+                    marginBottom: '6px'
+                  }}
+                >
+                  SCIMEE NTA NEET CBT Online Portal
                 </h3>
+
                 <p
                   style={{
                     fontSize: '0.88rem',
                     color: '#047857',
                     lineHeight: '1.55',
-                    fontWeight: '500'
+                    marginBottom: '16px'
                   }}
                 >
-                  Experience the exact 5-state question palette, +4/-1 scoring, sectional timer, and
-                  200,000+ curated MCQ bank from top reference sources.
+                  Real-time exam screen, authentic 5-state question palette, negative marking
+                  telemetry, subject wise timers, and 200,000+ chapterwise NEET-UG test bank.
                 </p>
               </div>
 
@@ -188,27 +236,27 @@ export default function FacilitiesSection({ onOpenCallModal }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => {
-                  e.preventDefault();
-                  openCbtPortal('/tests', 'facilities_card');
+                  e?.preventDefault?.();
+                  openCbtPortal('/tests', 'facilities_cbt_card');
                 }}
-                className="btn-whatsapp"
+                className="btn-emerald"
                 style={{
+                  width: '100%',
                   padding: '11px 20px',
                   fontSize: '0.88rem',
-                  textDecoration: 'none',
-                  display: 'inline-flex',
+                  display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  width: 'fit-content'
+                  textDecoration: 'none'
                 }}
               >
-                <span>Start Free Mock Exam</span>
+                <span>Launch CBT Online Simulator</span>
                 <ExternalLink size={15} />
               </a>
             </div>
 
-            {/* Library & Reading Room Highlight Callout */}
+            {/* Reading Room Highlight Callout */}
             <div
               className="bento-card-gold"
               style={{
@@ -216,47 +264,53 @@ export default function FacilitiesSection({ onOpenCallModal }) {
                 borderRadius: '24px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
-                gap: '16px'
+                justifyContent: 'space-between'
               }}
             >
               <div>
-                <span className="badge-gold" style={{ marginBottom: '8px' }}>
-                  Special Campus Facility
+                <span
+                  className="badge-gold"
+                  style={{ marginBottom: '8px', display: 'inline-block' }}
+                >
+                  On-Campus Facility
                 </span>
+
                 <h3
                   style={{
-                    fontSize: 'clamp(1.2rem, 2.2vw, 1.5rem)',
+                    fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
                     fontWeight: '900',
                     color: '#78350f',
-                    marginBottom: '6px',
-                    letterSpacing: '-0.02em'
+                    letterSpacing: '-0.02em',
+                    marginBottom: '6px'
                   }}
                 >
-                  Dedicated Quiet Reading Room &amp; Medical Library
+                  Dedicated Quiet Study &amp; Reading Room
                 </h3>
+
                 <p
                   style={{
                     fontSize: '0.88rem',
                     color: '#92400e',
                     lineHeight: '1.55',
-                    fontWeight: '500'
+                    marginBottom: '16px'
                   }}
                 >
-                  Distraction-free environment with individual study cubicles, NCERT line-by-line
-                  problem sets, and past 20-year NEET PYQ archives.
+                  Air-conditioned silent study space equipped with reference medical textbooks,
+                  curated question banks, individual desks, and personal doubt resolution by Rehan
+                  Sir.
                 </p>
               </div>
 
               <button
-                onClick={onOpenCallModal}
+                onClick={() => onOpenCallModal?.()}
                 className="btn-primary"
                 style={{
+                  width: '100%',
                   padding: '11px 20px',
                   fontSize: '0.88rem',
-                  width: 'fit-content',
-                  display: 'inline-flex',
+                  display: 'flex',
                   alignItems: 'center',
+                  justifyContent: 'center',
                   gap: '8px'
                 }}
               >

@@ -5,10 +5,21 @@ import faqData from '../data/faq.json';
 export default function FAQSection({ onOpenCallModal }) {
   const [openIndex, setOpenIndex] = useState(0);
 
-  const faqList = faqData.faqs || faqData.items || [];
+  const faqList = Array.isArray(faqData?.faqs)
+    ? faqData.faqs
+    : Array.isArray(faqData?.items)
+      ? faqData.items
+      : [];
+
+  const sectionTitle = faqData?.sectionTitle ?? faqData?.title ?? 'Frequently Asked Questions';
+  const sectionSubtitle =
+    faqData?.sectionSubtitle ??
+    faqData?.subtitle ??
+    'Got questions about admissions, batches, tests, or hostel facilities? We are here to help.';
 
   const toggleIndex = (idx) => {
-    setOpenIndex(openIndex === idx ? null : idx);
+    if (idx === undefined || idx === null) return;
+    setOpenIndex((prev) => (prev === idx ? null : idx));
   };
 
   return (
@@ -32,12 +43,10 @@ export default function FAQSection({ onOpenCallModal }) {
                 color: 'var(--text-heading)'
               }}
             >
-              {faqData.sectionTitle || faqData.title}
+              {sectionTitle}
             </h2>
 
-            <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)' }}>
-              {faqData.sectionSubtitle || faqData.subtitle}
-            </p>
+            <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)' }}>{sectionSubtitle}</p>
           </div>
 
           {/* FAQ Accordion List */}
@@ -48,7 +57,7 @@ export default function FAQSection({ onOpenCallModal }) {
               const isOpen = openIndex === idx;
               return (
                 <div
-                  key={idx}
+                  key={item?.id ?? idx}
                   className="bento-card"
                   style={{
                     borderRadius: '18px',
@@ -83,7 +92,7 @@ export default function FAQSection({ onOpenCallModal }) {
                         letterSpacing: '-0.01em'
                       }}
                     >
-                      {item.question}
+                      {item?.question}
                     </span>
                     <div
                       style={{
@@ -110,7 +119,7 @@ export default function FAQSection({ onOpenCallModal }) {
                         paddingTop: '12px'
                       }}
                     >
-                      {item.answer}
+                      {item?.answer}
                     </div>
                   )}
                 </div>
@@ -132,7 +141,7 @@ export default function FAQSection({ onOpenCallModal }) {
               Have more questions regarding admissions, batch timings, or fee structure?
             </p>
             <button
-              onClick={onOpenCallModal}
+              onClick={() => onOpenCallModal?.()}
               className="btn-secondary"
               style={{ padding: '8px 18px', fontSize: '0.84rem' }}
             >

@@ -1,9 +1,17 @@
 import './globals.css';
 import siteConfig from '../data/site-config.json';
 
+const brandName = siteConfig?.brand?.name ?? 'SCIMEE';
+const brandFullName =
+  siteConfig?.brand?.fullName ?? 'Sara Coaching Institute of Medical Entrance Examination';
+const founder = siteConfig?.brand?.founder ?? 'Ansari Rehan Ahmed';
+const shortDescription =
+  siteConfig?.brand?.shortDescription ?? 'NEET-UG & Medical Entrance Coaching in Bhusawal.';
+const primaryPhoneFormatted = siteConfig?.contact?.primaryPhoneFormatted ?? '+91 9175013140';
+
 export const metadata = {
-  title: `${siteConfig.brand.name} - ${siteConfig.brand.fullName} | Bhusawal`,
-  description: `${siteConfig.brand.shortDescription} By ${siteConfig.brand.founder}. 45+ doctors placed in MBBS, BDS, BAMS. 100% qualify rate. Call ${siteConfig.contact.primaryPhoneFormatted}.`,
+  title: `${brandName} - ${brandFullName} | Bhusawal`,
+  description: `${shortDescription} By ${founder}. 45+ doctors placed in MBBS, BDS, BAMS. 100% qualify rate. Call ${primaryPhoneFormatted}.`,
   keywords: [
     'SCIMEE',
     'SCIMEE Bhusawal',
@@ -16,28 +24,28 @@ export const metadata = {
     'Foundation 5th to 10th Bhusawal',
     'NEET Syllabus 2026'
   ],
-  authors: [{ name: siteConfig.brand.founder }],
-  creator: siteConfig.brand.name,
+  authors: [{ name: founder }],
+  creator: brandName,
   openGraph: {
     type: 'website',
     locale: 'en_IN',
     url: 'https://scimee.in',
-    title: `${siteConfig.brand.name} - NEET UG & Medical Entrance Coaching | Bhusawal`,
-    description: `100% NEET Qualification Rate (16/16 qualified). 45+ Doctors in Medical Field. Under the guidance of ${siteConfig.brand.founder}.`,
-    siteName: siteConfig.brand.name,
+    title: `${brandName} - NEET UG & Medical Entrance Coaching | Bhusawal`,
+    description: `100% NEET Qualification Rate (16/16 qualified). 45+ Doctors in Medical Field. Under the guidance of ${founder}.`,
+    siteName: brandName,
     images: [
       {
-        url: '/assets/logo.svg',
+        url: '/assets/logo.png',
         width: 800,
         height: 800,
-        alt: `${siteConfig.brand.name} Logo`
+        alt: `${brandName} Logo`
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${siteConfig.brand.name} - ${siteConfig.brand.fullName}`,
-    description: `Leading NEET & Medical Entrance Coaching in Bhusawal. 45+ Medical Selections. By ${siteConfig.brand.founder}.`
+    title: `${brandName} - ${brandFullName}`,
+    description: `Leading NEET & Medical Entrance Coaching in Bhusawal. 45+ Medical Selections. By ${founder}.`
   }
 };
 
@@ -45,7 +53,7 @@ export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#060913'
+  themeColor: '#ffffff'
 };
 
 export default function RootLayout({ children }) {

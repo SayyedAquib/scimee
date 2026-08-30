@@ -4,6 +4,10 @@ import siteConfig from '../data/site-config.json';
 import { getCbtUrl, openCbtPortal } from '../utils/cbt';
 
 export default function Hero({ onOpenCallModal }) {
+  const taglineUrdu = siteConfig?.brand?.taglineUrdu ?? 'ہم جذبہِ تعمیر جہاں لے کے اٹھے ہیں';
+  const founder = siteConfig?.brand?.founder ?? 'Ansari Rehan Ahmed';
+  const statsList = Array.isArray(siteConfig?.stats) ? siteConfig.stats : [];
+
   return (
     <section
       id="about"
@@ -49,7 +53,7 @@ export default function Hero({ onOpenCallModal }) {
                   whiteSpace: 'nowrap'
                 }}
               >
-                {siteConfig.brand.taglineUrdu}
+                {taglineUrdu}
               </span>
             </div>
 
@@ -59,7 +63,7 @@ export default function Hero({ onOpenCallModal }) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => {
-                e.preventDefault();
+                e?.preventDefault?.();
                 openCbtPortal('/tests', 'hero_top_pill');
               }}
               style={{
@@ -129,9 +133,9 @@ export default function Hero({ onOpenCallModal }) {
             }}
           >
             Under the mentorship of{' '}
-            <strong style={{ color: 'var(--text-heading)' }}>{siteConfig.brand.founder}</strong>, we
-            prepare medical aspirants through conceptual clarity, weekly OMR examination drills, and
-            dedicated on-campus reading room facilities.
+            <strong style={{ color: 'var(--text-heading)' }}>{founder}</strong>, we prepare medical
+            aspirants through conceptual clarity, weekly OMR examination drills, and dedicated
+            on-campus reading room facilities.
           </p>
 
           {/* CTA Buttons (Unified Symmetry) */}
@@ -146,7 +150,7 @@ export default function Hero({ onOpenCallModal }) {
             }}
           >
             <button
-              onClick={onOpenCallModal}
+              onClick={() => onOpenCallModal?.()}
               className="btn-primary"
               style={{
                 padding: '13px 24px',
@@ -199,11 +203,11 @@ export default function Hero({ onOpenCallModal }) {
 
           {/* Apple Bento Metric Cards (4 Columns) */}
           <div className="grid-responsive-4" style={{ textAlign: 'left' }}>
-            {siteConfig.stats.map((stat, idx) => {
+            {statsList.map((stat, idx) => {
               const isGold = idx === 1;
               return (
                 <div
-                  key={stat.id}
+                  key={stat?.id ?? idx}
                   className={isGold ? 'bento-card-gold' : 'bento-card'}
                   style={{
                     padding: '22px 18px',
@@ -220,7 +224,7 @@ export default function Hero({ onOpenCallModal }) {
                       marginBottom: '6px'
                     }}
                   >
-                    {stat.value}
+                    {stat?.value}
                   </div>
                   <div
                     style={{
@@ -231,7 +235,7 @@ export default function Hero({ onOpenCallModal }) {
                       letterSpacing: '-0.01em'
                     }}
                   >
-                    {stat.label}
+                    {stat?.label}
                   </div>
                   <div
                     style={{
@@ -240,7 +244,7 @@ export default function Hero({ onOpenCallModal }) {
                       lineHeight: '1.3'
                     }}
                   >
-                    {stat.subtext}
+                    {stat?.subtext}
                   </div>
                 </div>
               );

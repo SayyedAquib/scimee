@@ -39,7 +39,7 @@ describe('End-to-End User Conversion Journey', () => {
     expect(
       screen.getByRole('heading', { name: /Official NTA NEET Computer-Based Test/i })
     ).toBeInTheDocument();
-    expect(screen.getByText(/Authentic 5-State Question Palette/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Authentic 5-State Question Palette/i)[0]).toBeInTheDocument();
     expect(screen.getByText(/200,000\+ Multi-Format Question Architecture/i)).toBeInTheDocument();
 
     // 6. User clicks "Call Now" in Floating Action Bar / Hero

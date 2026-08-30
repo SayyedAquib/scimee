@@ -7,40 +7,88 @@ import { getWhatsAppUrl } from '../utils/whatsapp';
 export default function PhoneCallModal({ isOpen, onClose, context = 'general' }) {
   // Handle escape key
   useEffect(() => {
+    // Early return if modal is closed
+    if (!isOpen) return;
+
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && isOpen) {
-        onClose();
+      if (e?.key === 'Escape') {
+        onClose?.();
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+
+    try {
+      window?.addEventListener?.('keydown', handleKeyDown);
+    } catch {
+      // Listener fallback
+    }
+
+    return () => {
+      try {
+        window?.removeEventListener?.('keydown', handleKeyDown);
+      } catch {
+        // Cleanup safety
+      }
+    };
   }, [isOpen, onClose]);
 
   // Lock background scroll
   useEffect(() => {
+    if (typeof document === 'undefined' || !document?.body?.style) return;
+
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
+
     return () => {
-      document.body.style.overflow = 'unset';
+      if (document?.body?.style) {
+        document.body.style.overflow = 'unset';
+      }
     };
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  // Early return if modal is not active
+  if (!isOpen) {
+    return null;
+  }
 
-  const whatsappUrl = getWhatsAppUrl(context);
+  const safeContext = typeof context === 'string' ? context : 'general';
+  const whatsappUrl = getWhatsAppUrl(safeContext);
+
+  const isCounseling =
+    safeContext.includes('counseling') ||
+    safeContext.includes('counselling') ||
+    safeContext.includes('choice') ||
+    safeContext.includes('post-neet');
+
+  const primaryPhone = siteConfig?.contact?.primaryPhone ?? '9175013140';
+  const primaryPhoneFormatted = siteConfig?.contact?.primaryPhoneFormatted ?? '+91 9175013140';
+  const secondaryPhone = siteConfig?.contact?.secondaryPhone ?? '9226134986';
+  const secondaryPhoneFormatted = siteConfig?.contact?.secondaryPhoneFormatted ?? '+91 9226134986';
+  const operatingHoursWeekdays =
+    siteConfig?.contact?.operatingHours?.weekdays ?? '8:00 AM – 8:30 PM';
+  const operatingHoursSunday = siteConfig?.contact?.operatingHours?.sunday ?? '9:00 AM – 4:00 PM';
+  const addressLine1 = siteConfig?.location?.addressLine1 ?? 'Beside Kali Matti Ground';
+  const addressLine2 =
+    siteConfig?.location?.addressLine2 ?? 'Opposite Sunrise Apartment, Khadka Square';
+  const city = siteConfig?.location?.city ?? 'Bhusawal';
+  const pincode = siteConfig?.location?.pincode ?? '425201';
 
   return (
     <div
       className="modal-backdrop"
-      onClick={onClose}
+      onClick={() => onClose?.()}
       role="dialog"
       aria-modal="true"
       aria-labelledby="call-modal-title"
     >
-      <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="modal-card"
+        onClick={(e) => {
+          e?.stopPropagation?.();
+        }}
+      >
         {/* Apple Mobile Bottom Sheet Grab Handle */}
         <div className="modal-grab-handle" />
 
@@ -58,13 +106,7 @@ export default function PhoneCallModal({ isOpen, onClose, context = 'general' })
         >
           <div>
             <div className="badge-gold" style={{ marginBottom: '4px' }}>
-              {typeof context === 'string' &&
-              (context.includes('counseling') ||
-                context.includes('counselling') ||
-                context.includes('choice') ||
-                context.includes('post-neet'))
-                ? '1-on-1 Admission Counseling'
-                : 'Direct Admissions Line'}
+              {isCounseling ? '1-on-1 Admission Counseling' : 'Direct Admissions Line'}
             </div>
             <h3
               id="call-modal-title"
@@ -75,27 +117,17 @@ export default function PhoneCallModal({ isOpen, onClose, context = 'general' })
                 letterSpacing: '-0.02em'
               }}
             >
-              {typeof context === 'string' &&
-              (context.includes('counseling') ||
-                context.includes('counselling') ||
-                context.includes('choice') ||
-                context.includes('post-neet'))
-                ? 'Consult Rehan Sir (Parents & Students)'
-                : 'Connect with SCIMEE'}
+              {isCounseling ? 'Consult Rehan Sir (Parents & Students)' : 'Connect with SCIMEE'}
             </h3>
             <p style={{ fontSize: '0.8rem', color: '#92400e', marginTop: '2px' }}>
-              {typeof context === 'string' &&
-              (context.includes('counseling') ||
-                context.includes('counselling') ||
-                context.includes('choice') ||
-                context.includes('post-neet'))
+              {isCounseling
                 ? 'Post-NEET Medical College Choice-Filling & Rank Analysis'
                 : 'Sara Coaching Institute of Medical Entrance Examination'}
             </p>
           </div>
 
           <button
-            onClick={onClose}
+            onClick={() => onClose?.()}
             aria-label="Close dialog"
             style={{
               background: 'rgba(0, 0, 0, 0.06)',
@@ -139,8 +171,7 @@ export default function PhoneCallModal({ isOpen, onClose, context = 'general' })
           >
             <Clock size={16} color="#0284c7" style={{ flexShrink: 0 }} />
             <div style={{ fontSize: '0.8rem', color: '#0369a1' }}>
-              <strong>Office Hours:</strong> {siteConfig.contact.operatingHours.weekdays} (Sun:{' '}
-              {siteConfig.contact.operatingHours.sunday})
+              <strong>Office Hours:</strong> {operatingHoursWeekdays} (Sun: {operatingHoursSunday})
             </div>
           </div>
 
@@ -149,10 +180,8 @@ export default function PhoneCallModal({ isOpen, onClose, context = 'general' })
             style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}
           >
             <a
-              href={`tel:${siteConfig.contact.primaryPhone}`}
-              onClick={() =>
-                trackEvent('call_primary_clicked', { phone: siteConfig.contact.primaryPhone })
-              }
+              href={`tel:${primaryPhone}`}
+              onClick={() => trackEvent('call_primary_clicked', { phone: primaryPhone })}
               className="btn-primary"
               style={{
                 width: '100%',
@@ -171,15 +200,13 @@ export default function PhoneCallModal({ isOpen, onClose, context = 'general' })
                 <span>Call Primary Line</span>
               </span>
               <span style={{ fontWeight: '900', letterSpacing: '0.02em' }}>
-                {siteConfig.contact.primaryPhoneFormatted}
+                {primaryPhoneFormatted}
               </span>
             </a>
 
             <a
-              href={`tel:${siteConfig.contact.secondaryPhone}`}
-              onClick={() =>
-                trackEvent('call_secondary_clicked', { phone: siteConfig.contact.secondaryPhone })
-              }
+              href={`tel:${secondaryPhone}`}
+              onClick={() => trackEvent('call_secondary_clicked', { phone: secondaryPhone })}
               className="btn-secondary"
               style={{
                 width: '100%',
@@ -198,7 +225,7 @@ export default function PhoneCallModal({ isOpen, onClose, context = 'general' })
                 <span>Secondary Line</span>
               </span>
               <span style={{ fontWeight: '700', letterSpacing: '0.02em' }}>
-                {siteConfig.contact.secondaryPhoneFormatted}
+                {secondaryPhoneFormatted}
               </span>
             </a>
 
@@ -243,8 +270,7 @@ export default function PhoneCallModal({ isOpen, onClose, context = 'general' })
           >
             <MapPin size={14} color="#d97706" style={{ flexShrink: 0, marginTop: '2px' }} />
             <span>
-              {siteConfig.location.addressLine1}, {siteConfig.location.addressLine2},{' '}
-              {siteConfig.location.city} - {siteConfig.location.pincode}
+              {addressLine1}, {addressLine2}, {city} - {pincode}
             </span>
           </div>
         </div>

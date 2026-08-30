@@ -34,7 +34,7 @@ export default function MobileActionBar({ onOpenCallModal }) {
       >
         {/* Direct Call Button */}
         <button
-          onClick={onOpenCallModal}
+          onClick={() => onOpenCallModal?.()}
           className="btn-primary"
           style={{
             padding: '10px 8px',

@@ -3,10 +3,13 @@ import { CheckCircle2, ArrowRight, GraduationCap } from 'lucide-react';
 import coursesData from '../data/courses.json';
 
 export default function CourseExplorer({ onOpenCallModal }) {
-  const [selectedId, setSelectedId] = useState(coursesData.programs[0].id);
+  const programsList = Array.isArray(coursesData?.programs) ? coursesData.programs : [];
+  const initialSelectedId = programsList[0]?.id ?? 'neet-repeater';
 
-  const activeCourse =
-    coursesData.programs.find((p) => p.id === selectedId) || coursesData.programs[0];
+  const [selectedId, setSelectedId] = useState(initialSelectedId);
+
+  const activeCourse = programsList.find((p) => p?.id === selectedId) || programsList[0] || {};
+  const highlightsList = Array.isArray(activeCourse?.highlights) ? activeCourse.highlights : [];
 
   return (
     <section id="courses" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
@@ -29,11 +32,12 @@ export default function CourseExplorer({ onOpenCallModal }) {
                 color: 'var(--text-heading)'
               }}
             >
-              {coursesData.sectionTitle}
+              {coursesData?.sectionTitle ?? 'Excellence Programs Tailored for Medical Entrance'}
             </h2>
 
             <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)' }}>
-              {coursesData.sectionSubtitle}
+              {coursesData?.sectionSubtitle ??
+                'From foundation building in 5th grade to intensive repeater batches.'}
             </p>
           </div>
 
@@ -47,12 +51,13 @@ export default function CourseExplorer({ onOpenCallModal }) {
               marginBottom: '30px'
             }}
           >
-            {coursesData.programs.map((program) => {
-              const isSelected = program.id === selectedId;
+            {programsList.map((program, idx) => {
+              const programId = program?.id ?? `prog-${idx}`;
+              const isSelected = programId === selectedId;
               return (
                 <button
-                  key={program.id}
-                  onClick={() => setSelectedId(program.id)}
+                  key={programId}
+                  onClick={() => setSelectedId(programId)}
                   style={{
                     padding: '9px 18px',
                     borderRadius: 'var(--radius-pill)',
@@ -73,7 +78,7 @@ export default function CourseExplorer({ onOpenCallModal }) {
                     gap: '7px'
                   }}
                 >
-                  {program.featured && (
+                  {program?.featured && (
                     <span
                       style={{
                         width: '6px',
@@ -83,7 +88,7 @@ export default function CourseExplorer({ onOpenCallModal }) {
                       }}
                     />
                   )}
-                  <span>{program.name}</span>
+                  <span>{program?.name}</span>
                 </button>
               );
             })}
@@ -124,9 +129,9 @@ export default function CourseExplorer({ onOpenCallModal }) {
                       marginBottom: '6px'
                     }}
                   >
-                    <span className="badge-gold">{activeCourse.badge}</span>
+                    <span className="badge-gold">{activeCourse?.badge}</span>
                     <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-                      • {activeCourse.target}
+                      • {activeCourse?.target}
                     </span>
                   </div>
                   <h3
@@ -137,52 +142,47 @@ export default function CourseExplorer({ onOpenCallModal }) {
                       letterSpacing: '-0.02em'
                     }}
                   >
-                    {activeCourse.name}
+                    {activeCourse?.name}
                   </h3>
                 </div>
 
                 <button
-                  onClick={onOpenCallModal}
+                  onClick={() => onOpenCallModal?.()}
                   className="btn-primary"
                   style={{ padding: '11px 22px', fontSize: '0.9rem' }}
                 >
-                  <span>{activeCourse.ctaText}</span>
+                  <span>{activeCourse?.ctaText ?? 'Enquire for Batch'}</span>
                   <ArrowRight size={15} />
                 </button>
               </div>
 
               <p style={{ fontSize: '0.98rem', color: 'var(--text-sub)', lineHeight: '1.6' }}>
-                {activeCourse.description}
+                {activeCourse?.description}
               </p>
 
               {/* Highlights Grid */}
               <div>
                 <h4
                   style={{
-                    fontSize: '0.86rem',
+                    fontSize: '0.88rem',
                     fontWeight: '800',
                     color: 'var(--text-heading)',
-                    marginBottom: '12px',
                     textTransform: 'uppercase',
-                    letterSpacing: '0.04em'
+                    letterSpacing: '0.04em',
+                    marginBottom: '14px'
                   }}
                 >
-                  Key Curriculum &amp; Pedagogy
+                  Key Program Highlights &amp; Inclusions:
                 </h4>
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))',
-                    gap: '10px'
-                  }}
-                >
-                  {activeCourse.highlights.map((highlight, idx) => (
+
+                <div className="grid-responsive-2">
+                  {highlightsList.map((highlight, idx) => (
                     <div
                       key={idx}
                       style={{
                         display: 'flex',
                         alignItems: 'flex-start',
-                        gap: '9px',
+                        gap: '10px',
                         background: '#f8fafc',
                         padding: '12px 14px',
                         borderRadius: '14px',
@@ -190,7 +190,7 @@ export default function CourseExplorer({ onOpenCallModal }) {
                       }}
                     >
                       <CheckCircle2
-                        size={16}
+                        size={17}
                         color="#059669"
                         style={{ flexShrink: 0, marginTop: '2px' }}
                       />
@@ -198,7 +198,7 @@ export default function CourseExplorer({ onOpenCallModal }) {
                         style={{
                           fontSize: '0.86rem',
                           color: 'var(--text-title)',
-                          lineHeight: '1.4'
+                          lineHeight: '1.5'
                         }}
                       >
                         {highlight}
@@ -224,11 +224,13 @@ export default function CourseExplorer({ onOpenCallModal }) {
               >
                 <div>
                   <strong style={{ color: 'var(--text-sub)' }}>Subjects Covered:</strong>{' '}
-                  {activeCourse.subjects.join(', ')}
+                  {Array.isArray(activeCourse?.subjects)
+                    ? activeCourse.subjects.join(', ')
+                    : 'Physics, Chemistry, Biology'}
                 </div>
                 <div>
                   <strong style={{ color: 'var(--text-sub)' }}>Eligibility:</strong>{' '}
-                  {activeCourse.eligibility}
+                  {activeCourse?.eligibility ?? '10th / 11th / 12th Pass Aspirants'}
                 </div>
               </div>
             </div>

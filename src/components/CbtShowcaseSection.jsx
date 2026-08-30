@@ -29,6 +29,16 @@ export default function CbtShowcaseSection() {
     }
   };
 
+  const metricsList = Array.isArray(cbtData?.metrics) ? cbtData.metrics : [];
+  const featuresList = Array.isArray(cbtData?.features) ? cbtData.features : [];
+
+  const sectionBadge = cbtData?.sectionBadge ?? 'Digital Assessment Platform';
+  const sectionTitle =
+    cbtData?.sectionTitle ?? 'Official NTA NEET Computer-Based Test (CBT) Simulator';
+  const sectionSubtitle =
+    cbtData?.sectionSubtitle ??
+    'Simulate actual test-day pressure with the official 5-state question palette, 200,000+ curated MCQs, timed auto-submit, and instantaneous performance telemetry.';
+
   return (
     <section id="cbt-portal" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
       <div className="container-custom">
@@ -37,7 +47,7 @@ export default function CbtShowcaseSection() {
           <div style={{ textAlign: 'center', maxWidth: '840px', margin: '0 auto 36px' }}>
             <div className="badge-emerald" style={{ marginBottom: '12px' }}>
               <Laptop size={13} />
-              <span>{cbtData.sectionBadge}</span>
+              <span>{sectionBadge}</span>
             </div>
 
             <h2
@@ -50,21 +60,21 @@ export default function CbtShowcaseSection() {
                 color: 'var(--text-heading)'
               }}
             >
-              {cbtData.sectionTitle}
+              {sectionTitle}
             </h2>
 
             <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)', lineHeight: '1.6' }}>
-              {cbtData.sectionSubtitle}
+              {sectionSubtitle}
             </p>
           </div>
 
           {/* Quick Telemetry Metric Bento Badges (4 Columns) */}
           <div className="grid-responsive-4" style={{ marginBottom: '32px', textAlign: 'left' }}>
-            {cbtData.metrics.map((metric, idx) => {
+            {metricsList.map((metric, idx) => {
               const isEmerald = idx === 0 || idx === 1;
               return (
                 <div
-                  key={idx}
+                  key={metric?.id ?? idx}
                   className={isEmerald ? 'bento-card-emerald' : 'bento-card'}
                   style={{
                     padding: '20px 18px',
@@ -81,7 +91,7 @@ export default function CbtShowcaseSection() {
                       marginBottom: '6px'
                     }}
                   >
-                    {metric.value}
+                    {metric?.value}
                   </div>
                   <div
                     style={{
@@ -92,7 +102,7 @@ export default function CbtShowcaseSection() {
                       letterSpacing: '-0.01em'
                     }}
                   >
-                    {metric.label}
+                    {metric?.label}
                   </div>
                   <div
                     style={{
@@ -101,7 +111,7 @@ export default function CbtShowcaseSection() {
                       lineHeight: '1.3'
                     }}
                   >
-                    {metric.subtext}
+                    {metric?.subtext}
                   </div>
                 </div>
               );
@@ -372,9 +382,9 @@ export default function CbtShowcaseSection() {
 
           {/* 4 Feature Cards (Apple Bento Grid) */}
           <div className="grid-responsive-2" style={{ marginBottom: '32px' }}>
-            {cbtData.features.map((feat) => (
+            {featuresList.map((feat, idx) => (
               <div
-                key={feat.id}
+                key={feat?.id ?? idx}
                 className="bento-card"
                 style={{
                   padding: '24px',
@@ -407,10 +417,10 @@ export default function CbtShowcaseSection() {
                         border: '1px solid rgba(0, 0, 0, 0.06)'
                       }}
                     >
-                      {getFeatureIcon(feat.id)}
+                      {getFeatureIcon(feat?.id)}
                     </div>
                     <span className="badge-emerald" style={{ fontSize: '0.66rem' }}>
-                      {feat.tag}
+                      {feat?.tag}
                     </span>
                   </div>
 
@@ -423,7 +433,7 @@ export default function CbtShowcaseSection() {
                       letterSpacing: '-0.01em'
                     }}
                   >
-                    {feat.title}
+                    {feat?.title}
                   </h3>
 
                   <p
@@ -434,26 +444,27 @@ export default function CbtShowcaseSection() {
                       marginBottom: '14px'
                     }}
                   >
-                    {feat.description}
+                    {feat?.description}
                   </p>
 
                   {/* Bullet Points */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {feat.bulletPoints.map((bp, i) => (
-                      <div
-                        key={i}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          fontSize: '0.82rem',
-                          color: 'var(--text-title)'
-                        }}
-                      >
-                        <CheckCircle2 size={14} color="#059669" style={{ flexShrink: 0 }} />
-                        <span>{bp}</span>
-                      </div>
-                    ))}
+                    {Array.isArray(feat?.bulletPoints) &&
+                      feat.bulletPoints.map((bp, i) => (
+                        <div
+                          key={i}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            fontSize: '0.82rem',
+                            color: 'var(--text-title)'
+                          }}
+                        >
+                          <CheckCircle2 size={14} color="#059669" style={{ flexShrink: 0 }} />
+                          <span>{bp}</span>
+                        </div>
+                      ))}
                   </div>
                 </div>
               </div>
@@ -504,12 +515,12 @@ export default function CbtShowcaseSection() {
 
             <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px' }}>
               <a
-                href={getCbtUrl(CBT_ROUTES.TESTS)}
+                href={getCbtUrl(CBT_ROUTES?.TESTS ?? '/tests')}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => {
-                  e.preventDefault();
-                  openCbtPortal(CBT_ROUTES.TESTS, 'cbt_showcase_action_primary');
+                  e?.preventDefault?.();
+                  openCbtPortal(CBT_ROUTES?.TESTS ?? '/tests', 'cbt_showcase_action_primary');
                 }}
                 className="btn-whatsapp"
                 style={{
@@ -527,12 +538,12 @@ export default function CbtShowcaseSection() {
               </a>
 
               <a
-                href={getCbtUrl(CBT_ROUTES.LOGIN)}
+                href={getCbtUrl(CBT_ROUTES?.LOGIN ?? '/login')}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => {
-                  e.preventDefault();
-                  openCbtPortal(CBT_ROUTES.LOGIN, 'cbt_showcase_action_login');
+                  e?.preventDefault?.();
+                  openCbtPortal(CBT_ROUTES?.LOGIN ?? '/login', 'cbt_showcase_action_login');
                 }}
                 className="btn-secondary"
                 style={{

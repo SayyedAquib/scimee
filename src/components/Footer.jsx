@@ -8,6 +8,32 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
   const currentYear = new Date().getFullYear();
   const whatsappUrl = getWhatsAppUrl('general');
 
+  const brandName = siteConfig?.brand?.name ?? 'SCIMEE';
+  const brandFullName =
+    siteConfig?.brand?.fullName ??
+    'Sara Coaching Institute of Medical Entrance Examination (SCIMEE)';
+  const founder = siteConfig?.brand?.founder ?? 'Ansari Rehan Ahmed';
+  const taglineUrdu = siteConfig?.brand?.taglineUrdu ?? 'ہم جذبہِ تعمیر جہاں لے کے اٹھے ہیں';
+  const taglineEn =
+    siteConfig?.brand?.taglineEn ??
+    siteConfig?.brand?.taglineEnglish ??
+    'We have risen with the spirit to build the world.';
+
+  const navList = Array.isArray(siteConfig?.navigation) ? siteConfig.navigation : [];
+  const primaryPhone = siteConfig?.contact?.primaryPhone ?? '9175013140';
+  const primaryPhoneFormatted = siteConfig?.contact?.primaryPhoneFormatted ?? '+91 9175013140';
+  const secondaryPhone = siteConfig?.contact?.secondaryPhone ?? '9226134986';
+  const secondaryPhoneFormatted = siteConfig?.contact?.secondaryPhoneFormatted ?? '+91 9226134986';
+
+  const addressLine1 = siteConfig?.location?.addressLine1 ?? 'Beside Kali Matti Ground';
+  const addressLine2 =
+    siteConfig?.location?.addressLine2 ?? 'Opposite Sunrise Apartment, Khadka Square';
+  const city = siteConfig?.location?.city ?? 'Bhusawal';
+  const pincode = siteConfig?.location?.pincode ?? '425201';
+  const state = siteConfig?.location?.state ?? 'Maharashtra';
+  const operatingHoursWeekdays =
+    siteConfig?.contact?.operatingHours?.weekdays ?? '8:00 AM – 8:30 PM';
+
   return (
     <footer
       style={{
@@ -62,7 +88,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                   letterSpacing: '-0.02em'
                 }}
               >
-                {siteConfig.brand.name}
+                {brandName}
               </span>
             </div>
 
@@ -74,8 +100,8 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                 marginBottom: '14px'
               }}
             >
-              {siteConfig.brand.fullName} — Bhusawal&apos;s leading coaching institute for NEET-UG,
-              IIT-JEE Foundation &amp; MHT-CET under <strong>{siteConfig.brand.founder}</strong>.
+              {brandFullName} — Bhusawal&apos;s leading coaching institute for NEET-UG, IIT-JEE
+              Foundation &amp; MHT-CET under <strong>{founder}</strong>.
             </p>
 
             <div
@@ -94,7 +120,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                   whiteSpace: 'nowrap'
                 }}
               >
-                {siteConfig.brand.taglineUrdu}
+                {taglineUrdu}
               </span>
               <span
                 style={{
@@ -104,7 +130,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                   lineHeight: '1.4'
                 }}
               >
-                {siteConfig.brand.taglineEn || siteConfig.brand.taglineEnglish}
+                {taglineEn}
               </span>
             </div>
           </div>
@@ -132,10 +158,10 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                 marginBottom: '16px'
               }}
             >
-              {siteConfig.navigation.map((item) => (
-                <li key={item.label}>
+              {navList.map((item, idx) => (
+                <li key={item?.label ?? idx}>
                   <a
-                    href={item.href}
+                    href={item?.href}
                     style={{
                       color: 'var(--text-sub)',
                       textDecoration: 'none',
@@ -143,13 +169,17 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                       transition: 'color 120ms ease'
                     }}
                     onMouseOver={(e) => {
-                      e.currentTarget.style.color = '#b45309';
+                      if (e?.currentTarget?.style) {
+                        e.currentTarget.style.color = '#b45309';
+                      }
                     }}
                     onMouseOut={(e) => {
-                      e.currentTarget.style.color = 'var(--text-sub)';
+                      if (e?.currentTarget?.style) {
+                        e.currentTarget.style.color = 'var(--text-sub)';
+                      }
                     }}
                   >
-                    {item.label}
+                    {item?.label}
                   </a>
                 </li>
               ))}
@@ -178,7 +208,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => {
-                    e.preventDefault();
+                    e?.preventDefault?.();
                     openCbtPortal('/tests', 'footer_mock_tests');
                   }}
                   style={{
@@ -201,7 +231,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => {
-                    e.preventDefault();
+                    e?.preventDefault?.();
                     openCbtPortal('/login', 'footer_login');
                   }}
                   style={{
@@ -241,7 +271,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                   Primary Admissions Helpline:
                 </span>
                 <a
-                  href={`tel:${siteConfig.contact.primaryPhone}`}
+                  href={`tel:${primaryPhone}`}
                   style={{
                     fontSize: '1.05rem',
                     fontWeight: '800',
@@ -249,7 +279,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                     textDecoration: 'none'
                   }}
                 >
-                  {siteConfig.contact.primaryPhoneFormatted}
+                  {primaryPhoneFormatted}
                 </a>
               </div>
 
@@ -258,7 +288,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                   Secondary Office Line:
                 </span>
                 <a
-                  href={`tel:${siteConfig.contact.secondaryPhone}`}
+                  href={`tel:${secondaryPhone}`}
                   style={{
                     fontSize: '0.98rem',
                     fontWeight: '700',
@@ -266,7 +296,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                     textDecoration: 'none'
                   }}
                 >
-                  {siteConfig.contact.secondaryPhoneFormatted}
+                  {secondaryPhoneFormatted}
                 </a>
               </div>
 
@@ -318,20 +348,17 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
               <MapPin size={16} color="#d97706" style={{ flexShrink: 0, marginTop: '3px' }} />
               <div>
                 <strong style={{ color: 'var(--text-heading)', display: 'block' }}>
-                  {siteConfig.location.addressLine1}
+                  {addressLine1}
                 </strong>
+                <span style={{ display: 'block', color: 'var(--text-sub)' }}>{addressLine2}</span>
                 <span style={{ display: 'block', color: 'var(--text-sub)' }}>
-                  {siteConfig.location.addressLine2}
-                </span>
-                <span style={{ display: 'block', color: 'var(--text-sub)' }}>
-                  {siteConfig.location.city} - {siteConfig.location.pincode},{' '}
-                  {siteConfig.location.state}
+                  {city} - {pincode}, {state}
                 </span>
               </div>
             </div>
 
             <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-              <strong>Hours:</strong> {siteConfig.contact.operatingHours.weekdays}
+              <strong>Hours:</strong> {operatingHoursWeekdays}
             </div>
           </div>
         </div>
@@ -351,7 +378,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
           }}
         >
           <div>
-            &copy; {currentYear} {siteConfig.brand.fullName}. All rights reserved.
+            &copy; {currentYear} {brandFullName}. All rights reserved.
           </div>
           <div>Excellence in Medical Entrance Examination Coaching.</div>
         </div>

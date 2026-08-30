@@ -2,37 +2,56 @@ import React, { useState, useEffect } from 'react';
 import { WifiOff, Wifi } from 'lucide-react';
 
 export default function NetworkStatus() {
-  const [isOnline, setIsOnline] = useState(
-    typeof navigator !== 'undefined' ? navigator.onLine : true
-  );
+  const [isOnline, setIsOnline] = useState(() => {
+    if (typeof navigator === 'undefined') return true;
+    return navigator?.onLine ?? true;
+  });
   const [wasOffline, setWasOffline] = useState(false);
   const [showRestored, setShowRestored] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    let timer = null;
+
     const handleOnline = () => {
       setIsOnline(true);
       if (wasOffline) {
         setShowRestored(true);
-        const timer = setTimeout(() => setShowRestored(false), 3500);
-        return () => clearTimeout(timer);
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => setShowRestored(false), 3500);
       }
     };
 
     const handleOffline = () => {
       setIsOnline(false);
       setWasOffline(true);
+      if (timer) clearTimeout(timer);
+      setShowRestored(false);
     };
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    try {
+      window?.addEventListener?.('online', handleOnline);
+      window?.addEventListener?.('offline', handleOffline);
+    } catch {
+      // Graceful fallback
+    }
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      if (timer) clearTimeout(timer);
+      try {
+        window?.removeEventListener?.('online', handleOnline);
+        window?.removeEventListener?.('offline', handleOffline);
+      } catch {
+        // Cleanup safety
+      }
     };
   }, [wasOffline]);
 
-  if (isOnline && !showRestored) return null;
+  // Early return if online and no restored toast needs to be shown
+  if (isOnline && !showRestored) {
+    return null;
+  }
 
   return (
     <div

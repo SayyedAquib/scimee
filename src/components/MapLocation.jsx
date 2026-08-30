@@ -3,8 +3,23 @@ import { MapPin, Navigation, Clock, PhoneCall, ExternalLink } from 'lucide-react
 import siteConfig from '../data/site-config.json';
 
 export default function MapLocation({ onOpenCallModal }) {
-  const googleMapsUrl = siteConfig.location.googleMapsUrl;
-  const embedUrl = siteConfig.location.googleMapsEmbed;
+  const googleMapsUrl =
+    siteConfig?.location?.googleMapsUrl ?? 'https://maps.google.com/?cid=12140685933939634997';
+  const embedUrl =
+    siteConfig?.location?.googleMapsEmbed ??
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.8727407005477!2d75.76615707596853!3d21.002246788842607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd90f0003bba2a7%3A0xa87ca52b97dc3335!2sSCIMEE%20(Medical%20Entrance%20Examination)!5e0!3m2!1sen!2sin!4v1740000000000!5m2!1sen!2sin';
+
+  const brandFullName =
+    siteConfig?.brand?.fullName ??
+    'Sara Coaching Institute of Medical Entrance Examination (SCIMEE)';
+  const addressLine1 = siteConfig?.location?.addressLine1 ?? 'Beside Kali Matti Ground';
+  const addressLine2 =
+    siteConfig?.location?.addressLine2 ?? 'Opposite Sunrise Apartment, Khadka Square';
+  const city = siteConfig?.location?.city ?? 'Bhusawal';
+  const state = siteConfig?.location?.state ?? 'Maharashtra';
+  const pincode = siteConfig?.location?.pincode ?? '425201';
+  const operatingHoursWeekdays =
+    siteConfig?.contact?.operatingHours?.weekdays ?? '8:00 AM – 8:30 PM';
 
   return (
     <section id="location" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
@@ -70,7 +85,7 @@ export default function MapLocation({ onOpenCallModal }) {
                     letterSpacing: '-0.02em'
                   }}
                 >
-                  {siteConfig.brand.fullName}
+                  {brandFullName}
                 </h3>
 
                 <div
@@ -86,14 +101,13 @@ export default function MapLocation({ onOpenCallModal }) {
                     <MapPin size={17} color="#d97706" style={{ flexShrink: 0, marginTop: '3px' }} />
                     <div>
                       <strong style={{ color: 'var(--text-heading)', display: 'block' }}>
-                        {siteConfig.location.addressLine1}
+                        {addressLine1}
                       </strong>
                       <span style={{ display: 'block', color: 'var(--text-sub)' }}>
-                        {siteConfig.location.addressLine2}
+                        {addressLine2}
                       </span>
                       <span style={{ display: 'block', color: 'var(--text-sub)' }}>
-                        {siteConfig.location.city}, {siteConfig.location.state} -{' '}
-                        {siteConfig.location.pincode}
+                        {city}, {state} - {pincode}
                       </span>
                     </div>
                   </div>
@@ -103,7 +117,7 @@ export default function MapLocation({ onOpenCallModal }) {
                   >
                     <Clock size={16} color="#0284c7" style={{ flexShrink: 0 }} />
                     <div>
-                      <strong>Office Hours:</strong> {siteConfig.contact.operatingHours.weekdays}
+                      <strong>Office Hours:</strong> {operatingHoursWeekdays}
                     </div>
                   </div>
                 </div>
@@ -134,7 +148,7 @@ export default function MapLocation({ onOpenCallModal }) {
                 </a>
 
                 <button
-                  onClick={onOpenCallModal}
+                  onClick={() => onOpenCallModal?.()}
                   className="btn-secondary"
                   style={{
                     padding: '10px 18px',

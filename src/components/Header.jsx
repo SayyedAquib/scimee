@@ -4,7 +4,7 @@ import siteConfig from '../data/site-config.json';
 import { getCbtUrl, openCbtPortal } from '../utils/cbt';
 
 // Stable navigation items matching page sections
-const NAV_ITEMS = [
+const NAV_ITEMS = Object.freeze([
   { label: 'About', href: '#about', id: 'about' },
   { label: 'Results', href: '#results', id: 'results' },
   { label: 'Courses', href: '#courses', id: 'courses' },
@@ -12,7 +12,7 @@ const NAV_ITEMS = [
   { label: 'Facilities', href: '#facilities', id: 'facilities' },
   { label: 'Location', href: '#location', id: 'location' },
   { label: 'FAQ', href: '#faq', id: 'faq' }
-];
+]);
 
 export default function Header({ onOpenCallModal }) {
   const [scrolled, setScrolled] = useState(false);
@@ -27,34 +27,42 @@ export default function Header({ onOpenCallModal }) {
 
   // Handle direct initial page load with URL hash (e.g. #syllabus)
   useEffect(() => {
-    const initialHash = window.location.hash.replace('#', '');
-    if (initialHash && NAV_ITEMS.some((item) => item.id === initialHash)) {
-      setActiveSection(initialHash);
-      const targetEl = document.getElementById(initialHash);
-      if (targetEl) {
-        setTimeout(() => {
-          const navOffset = 80;
-          const elementPosition = targetEl.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - navOffset;
-          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-        }, 100);
+    if (typeof window === 'undefined') return;
+
+    try {
+      const initialHash = window?.location?.hash?.replace('#', '') ?? '';
+      if (initialHash && NAV_ITEMS.some((item) => item.id === initialHash)) {
+        setActiveSection(initialHash);
+        const targetEl = document?.getElementById?.(initialHash);
+        if (targetEl) {
+          setTimeout(() => {
+            const navOffset = 80;
+            const elementPosition = targetEl?.getBoundingClientRect?.()?.top ?? 0;
+            const offsetPosition = elementPosition + (window?.pageYOffset ?? 0) - navOffset;
+            window?.scrollTo?.({ top: offsetPosition, behavior: 'smooth' });
+          }, 100);
+        }
       }
+    } catch (err) {
+      // Safe fallback
     }
   }, []);
 
   // Bulletproof viewport-based active section & URL tracker
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     let lastActiveSection = '';
 
     const handleScroll = () => {
-      const isScrolledNow = window.scrollY > 20;
+      const isScrolledNow = (window?.scrollY ?? 0) > 20;
       setScrolled(isScrolledNow);
 
       if (isClickScrollingRef.current) return;
 
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const docHeight = document.documentElement.scrollHeight;
+      const scrollY = window?.scrollY ?? 0;
+      const windowHeight = window?.innerHeight ?? 0;
+      const docHeight = document?.documentElement?.scrollHeight ?? 0;
 
       let detectedSection = 'about';
 
@@ -70,11 +78,10 @@ export default function Header({ onOpenCallModal }) {
       else {
         const sectionIds = NAV_ITEMS.map((item) => item.id);
         for (let i = 0; i < sectionIds.length; i++) {
-          const el = document.getElementById(sectionIds[i]);
+          const el = document?.getElementById?.(sectionIds[i]);
           if (el) {
-            const rect = el.getBoundingClientRect();
-            // Trigger point is 180px from viewport top (below floating navbar)
-            if (rect.top <= 180 && rect.bottom > 180) {
+            const rect = el?.getBoundingClientRect?.();
+            if (rect && rect.top <= 180 && rect.bottom > 180) {
               detectedSection = sectionIds[i];
               break;
             }
@@ -89,52 +96,81 @@ export default function Header({ onOpenCallModal }) {
         lastActiveSection = detectedSection;
         const newUrl =
           detectedSection === 'about'
-            ? window.location.pathname + window.location.search
+            ? (window?.location?.pathname ?? '/') + (window?.location?.search ?? '')
             : `#${detectedSection}`;
 
-        if (window.location.hash !== (detectedSection === 'about' ? '' : `#${detectedSection}`)) {
-          window.history.replaceState(null, '', newUrl);
+        if (window?.location?.hash !== (detectedSection === 'about' ? '' : `#${detectedSection}`)) {
+          window?.history?.replaceState?.(null, '', newUrl);
         }
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    try {
+      window?.addEventListener?.('scroll', handleScroll, { passive: true });
+      handleScroll();
+    } catch {
+      // Fallback
+    }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      try {
+        window?.removeEventListener?.('scroll', handleScroll);
+      } catch {
+        // Cleanup safety
+      }
       if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
     };
   }, []);
 
   // Recalculate sliding pill indicator position whenever activeSection changes or window resizes
   const updateIndicator = useCallback(() => {
-    const activeEl = navItemRefs.current[activeSection];
-    const navEl = navRef.current;
+    const activeEl = navItemRefs?.current?.[activeSection];
+    const navEl = navRef?.current;
 
-    if (activeEl && navEl) {
-      const navRect = navEl.getBoundingClientRect();
-      const activeRect = activeEl.getBoundingClientRect();
+    // Early return if active element or nav container not mounted
+    if (!activeEl || !navEl) {
+      return;
+    }
 
-      setIndicatorStyle({
-        left: activeRect.left - navRect.left,
-        width: activeRect.width,
-        opacity: 1
-      });
+    try {
+      const navRect = navEl?.getBoundingClientRect?.();
+      const activeRect = activeEl?.getBoundingClientRect?.();
+
+      if (navRect && activeRect) {
+        setIndicatorStyle({
+          left: activeRect.left - navRect.left,
+          width: activeRect.width,
+          opacity: 1
+        });
+      }
+    } catch {
+      // Fallback
     }
   }, [activeSection]);
 
   useEffect(() => {
     updateIndicator();
-    window.addEventListener('resize', updateIndicator);
-    return () => window.removeEventListener('resize', updateIndicator);
+    try {
+      window?.addEventListener?.('resize', updateIndicator);
+    } catch {
+      // Fallback
+    }
+    return () => {
+      try {
+        window?.removeEventListener?.('resize', updateIndicator);
+      } catch {
+        // Cleanup safety
+      }
+    };
   }, [updateIndicator]);
 
   const closeMenu = () => setMobileMenuOpen(false);
 
   // Smooth click navigation
   const handleNavClick = (e, id) => {
-    if (e) e.preventDefault();
+    e?.preventDefault?.();
+
+    if (!id || typeof id !== 'string') return;
 
     setActiveSection(id);
     closeMenu();
@@ -143,25 +179,38 @@ export default function Header({ onOpenCallModal }) {
     isClickScrollingRef.current = true;
     if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
 
-    const targetEl = document.getElementById(id);
-    if (targetEl) {
-      const navOffset = 80;
-      const elementPosition = targetEl.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+    try {
+      const targetEl = document?.getElementById?.(id);
+      if (targetEl) {
+        const navOffset = 80;
+        const elementPosition = targetEl?.getBoundingClientRect?.()?.top ?? 0;
+        const offsetPosition = elementPosition + (window?.pageYOffset ?? 0) - navOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+        window?.scrollTo?.({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
 
-      const newUrl = id === 'about' ? window.location.pathname + window.location.search : `#${id}`;
-      window.history.replaceState(null, '', newUrl);
+        const newUrl =
+          id === 'about'
+            ? (window?.location?.pathname ?? '/') + (window?.location?.search ?? '')
+            : `#${id}`;
+        window?.history?.replaceState?.(null, '', newUrl);
+      }
+    } catch (err) {
+      if (import.meta?.env?.DEV) {
+        console.warn('Scroll navigation failed:', err);
+      }
     }
 
     clickTimeoutRef.current = setTimeout(() => {
       isClickScrollingRef.current = false;
     }, 700);
   };
+
+  const brandName = siteConfig?.brand?.name ?? 'SCIMEE';
+  const brandFounder = siteConfig?.brand?.founder ?? 'Ansari Rehan Ahmed';
+  const primaryPhoneFormatted = siteConfig?.contact?.primaryPhoneFormatted ?? '+91 9175013140';
 
   return (
     <>
@@ -211,7 +260,7 @@ export default function Header({ onOpenCallModal }) {
                     lineHeight: '1'
                   }}
                 >
-                  {siteConfig.brand.name}
+                  {brandName}
                 </span>
                 <span className="badge-gold" style={{ padding: '1px 6px', fontSize: '0.6rem' }}>
                   NEET 2026
@@ -226,7 +275,7 @@ export default function Header({ onOpenCallModal }) {
                   marginTop: '2px'
                 }}
               >
-                By {siteConfig.brand.founder}
+                By {brandFounder}
               </p>
             </div>
           </a>
@@ -252,9 +301,9 @@ export default function Header({ onOpenCallModal }) {
                 position: 'absolute',
                 top: '4px',
                 bottom: '4px',
-                left: `${indicatorStyle.left}px`,
-                width: `${indicatorStyle.width}px`,
-                opacity: indicatorStyle.opacity,
+                left: `${indicatorStyle?.left ?? 0}px`,
+                width: `${indicatorStyle?.width ?? 0}px`,
+                opacity: indicatorStyle?.opacity ?? 0,
                 background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
                 border: '1px solid rgba(217, 119, 6, 0.35)',
                 borderRadius: 'var(--radius-pill)',
@@ -266,13 +315,17 @@ export default function Header({ onOpenCallModal }) {
             />
 
             {NAV_ITEMS.map((item) => {
-              const isActive = activeSection === item.id;
+              const isActive = activeSection === item?.id;
               return (
                 <a
-                  key={item.id}
-                  ref={(el) => (navItemRefs.current[item.id] = el)}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.id)}
+                  key={item?.id}
+                  ref={(el) => {
+                    if (item?.id) {
+                      navItemRefs.current[item.id] = el;
+                    }
+                  }}
+                  href={item?.href}
+                  onClick={(e) => handleNavClick(e, item?.id)}
                   className="nav-link"
                   style={{
                     position: 'relative',
@@ -285,7 +338,7 @@ export default function Header({ onOpenCallModal }) {
                     transition: 'color 180ms ease'
                   }}
                 >
-                  {item.label}
+                  {item?.label}
                 </a>
               );
             })}
@@ -301,7 +354,7 @@ export default function Header({ onOpenCallModal }) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => {
-                e.preventDefault();
+                e?.preventDefault?.();
                 openCbtPortal('/', 'header_desktop');
               }}
               style={{
@@ -328,7 +381,7 @@ export default function Header({ onOpenCallModal }) {
             </a>
 
             <button
-              onClick={onOpenCallModal}
+              onClick={() => onOpenCallModal?.()}
               className="btn-primary"
               style={{ padding: '8px 18px', fontSize: '0.82rem', height: '38px' }}
             >
@@ -343,7 +396,7 @@ export default function Header({ onOpenCallModal }) {
             className="mobile-toggle"
           >
             <button
-              onClick={onOpenCallModal}
+              onClick={() => onOpenCallModal?.()}
               className="btn-primary"
               style={{ padding: '6px 12px', fontSize: '0.76rem', height: '34px' }}
               aria-label="Call Helpline"
@@ -394,12 +447,12 @@ export default function Header({ onOpenCallModal }) {
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {NAV_ITEMS.map((item) => {
-              const isActive = activeSection === item.id;
+              const isActive = activeSection === item?.id;
               return (
                 <a
-                  key={item.id}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.id)}
+                  key={item?.id}
+                  href={item?.href}
+                  onClick={(e) => handleNavClick(e, item?.id)}
                   style={{
                     color: isActive ? '#92400e' : 'var(--text-heading)',
                     textDecoration: 'none',
@@ -426,7 +479,7 @@ export default function Header({ onOpenCallModal }) {
                         }}
                       />
                     )}
-                    <span>{item.label}</span>
+                    <span>{item?.label}</span>
                   </div>
                   <ChevronRight size={15} color={isActive ? '#d97706' : 'var(--text-muted)'} />
                 </a>
@@ -437,7 +490,8 @@ export default function Header({ onOpenCallModal }) {
               href={getCbtUrl('/tests')}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => {
+              onClick={(e) => {
+                e?.preventDefault?.();
                 closeMenu();
                 openCbtPortal('/tests', 'header_mobile_drawer');
               }}
@@ -479,13 +533,13 @@ export default function Header({ onOpenCallModal }) {
               <button
                 onClick={() => {
                   closeMenu();
-                  onOpenCallModal();
+                  onOpenCallModal?.();
                 }}
                 className="btn-primary"
                 style={{ width: '100%', padding: '11px', fontSize: '0.9rem' }}
               >
                 <PhoneCall size={16} />
-                <span>Call {siteConfig.contact.primaryPhoneFormatted}</span>
+                <span>Call {primaryPhoneFormatted}</span>
               </button>
             </div>
           </div>

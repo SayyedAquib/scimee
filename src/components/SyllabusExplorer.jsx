@@ -16,51 +16,60 @@ import {
 import syllabusData from '../data/syllabus.json';
 
 export default function SyllabusExplorer({ onOpenCallModal }) {
-  const [selectedExamId, setSelectedExamId] = useState('neet');
+  const examsList = Array.isArray(syllabusData?.exams) ? syllabusData.exams : [];
+  const defaultExamId = examsList[0]?.id ?? 'neet';
+
+  const [selectedExamId, setSelectedExamId] = useState(defaultExamId);
   const [activeSubjectId, setActiveSubjectId] = useState('physics');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedUnit, setExpandedUnit] = useState(null);
 
-  // Active exam object
+  // Active exam object with safe fallback
   const activeExam = useMemo(() => {
-    return syllabusData.exams.find((e) => e.id === selectedExamId) || syllabusData.exams[0];
-  }, [selectedExamId]);
+    return examsList.find((e) => e?.id === selectedExamId) || examsList[0] || {};
+  }, [examsList, selectedExamId]);
+
+  const examSubjects = Array.isArray(activeExam?.subjects) ? activeExam.subjects : [];
 
   // Ensure activeSubjectId exists in activeExam
   const currentSubject = useMemo(() => {
-    const found = activeExam.subjects.find((s) => s.id === activeSubjectId);
-    return found || activeExam.subjects[0];
-  }, [activeExam, activeSubjectId]);
+    const found = examSubjects.find((s) => s?.id === activeSubjectId);
+    return found || examSubjects[0] || {};
+  }, [examSubjects, activeSubjectId]);
 
   const handleExamChange = (examId) => {
+    if (!examId || typeof examId !== 'string') return;
     setSelectedExamId(examId);
     setExpandedUnit(null);
     setSearchQuery('');
-    const targetExam = syllabusData.exams.find((e) => e.id === examId);
-    if (targetExam && targetExam.subjects.length > 0) {
-      setActiveSubjectId(targetExam.subjects[0].id);
+    const targetExam = examsList.find((e) => e?.id === examId);
+    if (targetExam && Array.isArray(targetExam?.subjects) && targetExam.subjects.length > 0) {
+      setActiveSubjectId(targetExam.subjects[0]?.id ?? 'physics');
     }
   };
 
-  const displayedUnits = useMemo(() => {
-    if (!currentSubject) return [];
+  const currentUnits = Array.isArray(currentSubject?.units) ? currentSubject.units : [];
 
-    if (!searchQuery.trim()) {
-      return currentSubject.units;
+  const displayedUnits = useMemo(() => {
+    if (!currentUnits.length) return [];
+
+    if (!searchQuery?.trim()) {
+      return currentUnits;
     }
 
-    const query = searchQuery.toLowerCase();
-    return currentSubject.units.filter((unit) => {
-      return (
-        unit.name.toLowerCase().includes(query) ||
-        unit.topics.toLowerCase().includes(query) ||
-        String(unit.unitNumber).includes(query)
-      );
+    const query = searchQuery.trim().toLowerCase();
+    return currentUnits.filter((unit) => {
+      if (!unit) return false;
+      const unitName = String(unit?.name ?? '').toLowerCase();
+      const unitTopics = String(unit?.topics ?? '').toLowerCase();
+      const unitNum = String(unit?.unitNumber ?? '');
+      return unitName.includes(query) || unitTopics.includes(query) || unitNum.includes(query);
     });
-  }, [currentSubject, searchQuery]);
+  }, [currentUnits, searchQuery]);
 
   const toggleUnit = (unitNumber) => {
-    setExpandedUnit(expandedUnit === unitNumber ? null : unitNumber);
+    if (unitNumber === undefined || unitNumber === null) return;
+    setExpandedUnit((prev) => (prev === unitNumber ? null : unitNumber));
   };
 
   const getSubjectIcon = (iconName) => {
@@ -120,14 +129,15 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
               marginBottom: '26px'
             }}
           >
-            {syllabusData.exams.map((exam) => {
-              const isSelected = exam.id === selectedExamId;
+            {examsList.map((exam, idx) => {
+              const examId = exam?.id ?? `exam-${idx}`;
+              const isSelected = examId === selectedExamId;
               return (
                 <button
-                  key={exam.id}
+                  key={examId}
                   role="tab"
                   aria-selected={isSelected}
-                  onClick={() => handleExamChange(exam.id)}
+                  onClick={() => handleExamChange(examId)}
                   style={{
                     padding: '10px 22px',
                     borderRadius: 'var(--radius-pill)',
@@ -151,7 +161,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                   }}
                 >
                   <Award size={15} color={isSelected ? '#d97706' : 'var(--text-muted)'} />
-                  <span>{exam.name}</span>
+                  <span>{exam?.name}</span>
                 </button>
               );
             })}
@@ -170,7 +180,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
               <span className="badge-gold" style={{ padding: '2px 8px', fontSize: '0.66rem' }}>
-                {activeExam.badge}
+                {activeExam?.badge}
               </span>
               <h3
                 style={{
@@ -180,11 +190,11 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                   letterSpacing: '-0.01em'
                 }}
               >
-                {activeExam.title}
+                {activeExam?.title}
               </h3>
             </div>
             <p style={{ fontSize: '0.86rem', color: 'var(--text-sub)', marginBottom: '8px' }}>
-              {activeExam.subtitle}
+              {activeExam?.subtitle}
             </p>
             <div
               style={{
@@ -201,7 +211,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
               }}
             >
               <CheckCircle2 size={13} color="#d97706" />
-              <span>{activeExam.markingScheme}</span>
+              <span>{activeExam?.markingScheme}</span>
             </div>
           </div>
 
@@ -225,13 +235,14 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
             >
               {/* Subject Selector Buttons */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                {activeExam.subjects.map((sub) => {
-                  const isActive = sub.id === currentSubject.id;
+                {examSubjects.map((sub, idx) => {
+                  const subId = sub?.id ?? `sub-${idx}`;
+                  const isActive = subId === currentSubject?.id;
                   return (
                     <button
-                      key={sub.id}
+                      key={subId}
                       onClick={() => {
-                        setActiveSubjectId(sub.id);
+                        setActiveSubjectId(subId);
                         setExpandedUnit(null);
                       }}
                       style={{
@@ -252,8 +263,8 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                         transition: 'all 150ms ease'
                       }}
                     >
-                      {getSubjectIcon(sub.icon)}
-                      <span>{sub.name}</span>
+                      {getSubjectIcon(sub?.icon)}
+                      <span>{sub?.name}</span>
                       <span
                         style={{
                           fontSize: '0.7rem',
@@ -264,7 +275,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                           fontWeight: '800'
                         }}
                       >
-                        {sub.totalUnits} {sub.totalUnits === 1 ? 'Unit' : 'Units'}
+                        {sub?.totalUnits} {sub?.totalUnits === 1 ? 'Unit' : 'Units'}
                       </span>
                     </button>
                   );
@@ -289,7 +300,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                   type="text"
                   placeholder={`Search ${currentSubject?.name || ''} units (e.g. Calculus, Optics)...`}
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => setSearchQuery(e?.target?.value ?? '')}
                   style={{
                     width: '100%',
                     padding: '9px 14px 9px 38px',
@@ -322,7 +333,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
               >
                 <p style={{ color: 'var(--text-sub)', fontSize: '0.92rem' }}>
                   No units found matching &quot;<strong>{searchQuery}</strong>&quot; in{' '}
-                  {activeExam.name} {currentSubject?.name}.
+                  {activeExam?.name} {currentSubject?.name}.
                 </p>
                 <button
                   onClick={() => setSearchQuery('')}
@@ -333,11 +344,12 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                 </button>
               </div>
             ) : (
-              displayedUnits.map((unit) => {
-                const isExpanded = expandedUnit === unit.unitNumber;
+              displayedUnits.map((unit, idx) => {
+                const unitKey = unit?.unitNumber ?? idx;
+                const isExpanded = expandedUnit === unit?.unitNumber;
                 return (
                   <div
-                    key={unit.unitNumber}
+                    key={unitKey}
                     className="bento-card"
                     style={{
                       borderRadius: '18px',
@@ -348,7 +360,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                     }}
                   >
                     <button
-                      onClick={() => toggleUnit(unit.unitNumber)}
+                      onClick={() => toggleUnit(unit?.unitNumber)}
                       style={{
                         width: '100%',
                         padding: '14px 18px',
@@ -378,7 +390,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                             flexShrink: 0
                           }}
                         >
-                          {unit.unitNumber}
+                          {unit?.unitNumber}
                         </div>
                         <div
                           style={{
@@ -388,9 +400,9 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                             letterSpacing: '-0.01em'
                           }}
                         >
-                          {activeExam.id === 'mhtcet'
-                            ? unit.name
-                            : `Unit ${unit.unitNumber}: ${unit.name}`}
+                          {activeExam?.id === 'mhtcet'
+                            ? unit?.name
+                            : `Unit ${unit?.unitNumber}: ${unit?.name}`}
                         </div>
                       </div>
 
@@ -432,7 +444,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                         >
                           Topics &amp; Key Focus Areas:
                         </strong>
-                        <p>{unit.topics}</p>
+                        <p>{unit?.topics}</p>
                       </div>
                     )}
                   </div>
@@ -474,7 +486,7 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
             </div>
 
             <button
-              onClick={onOpenCallModal}
+              onClick={() => onOpenCallModal?.()}
               className="btn-primary"
               style={{ padding: '10px 20px', fontSize: '0.86rem' }}
             >

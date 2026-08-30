@@ -15,9 +15,17 @@ import toppersData from '../data/toppers.json';
 export default function ToppersSection({ onOpenCallModal }) {
   const [activeFilter, setActiveFilter] = useState('all');
 
-  const filteredStudents = toppersData.students.filter((student) => {
-    if (activeFilter === 'top') return student.score >= 350;
-    if (activeFilter === 'rank1') return student.score >= 500;
+  const studentsList = Array.isArray(toppersData?.students) ? toppersData.students : [];
+  const subjectToppersList = Array.isArray(toppersData?.subjectToppers)
+    ? toppersData.subjectToppers
+    : [];
+  const examYear = toppersData?.year ?? '2026';
+
+  const filteredStudents = studentsList.filter((student) => {
+    if (!student) return false;
+    const score = Number(student?.score ?? 0);
+    if (activeFilter === 'top') return score >= 350;
+    if (activeFilter === 'rank1') return score >= 500;
     return true;
   });
 
@@ -47,7 +55,7 @@ export default function ToppersSection({ onOpenCallModal }) {
         <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 36px' }}>
           <div className="badge-gold" style={{ marginBottom: '12px' }}>
             <Trophy size={13} />
-            <span>NEET UG {toppersData.year} Results</span>
+            <span>NEET UG {examYear} Results</span>
           </div>
 
           <h2
@@ -121,13 +129,13 @@ export default function ToppersSection({ onOpenCallModal }) {
                   fontWeight: '700'
                 }}
               >
-                100% Qualification Success Rate in NEET UG {toppersData.year}
+                100% Qualification Success Rate in NEET UG {examYear}
               </p>
             </div>
           </div>
 
           <button
-            onClick={onOpenCallModal}
+            onClick={() => onOpenCallModal?.()}
             className="btn-primary"
             style={{ padding: '12px 24px', fontSize: '0.94rem' }}
           >
@@ -152,9 +160,9 @@ export default function ToppersSection({ onOpenCallModal }) {
           </h3>
 
           <div className="grid-responsive-3">
-            {toppersData.subjectToppers.map((st) => (
+            {subjectToppersList.map((st, idx) => (
               <div
-                key={st.subject}
+                key={st?.subject ?? idx}
                 className="bento-card"
                 style={{
                   padding: '24px 20px',
@@ -176,7 +184,7 @@ export default function ToppersSection({ onOpenCallModal }) {
                     border: '1px solid rgba(0, 0, 0, 0.06)'
                   }}
                 >
-                  {getSubjectIcon(st.icon)}
+                  {getSubjectIcon(st?.icon)}
                 </div>
                 <div>
                   <div
@@ -188,7 +196,7 @@ export default function ToppersSection({ onOpenCallModal }) {
                       letterSpacing: '0.05em'
                     }}
                   >
-                    {st.subject} Topper
+                    {st?.subject} Topper
                   </div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
                     <span
@@ -200,14 +208,14 @@ export default function ToppersSection({ onOpenCallModal }) {
                         lineHeight: '1.1'
                       }}
                     >
-                      {st.score}
+                      {st?.score}
                     </span>
                     <span style={{ fontSize: '0.9rem', color: 'var(--text-sub)' }}>
-                      /{st.total}
+                      /{st?.total}
                     </span>
                   </div>
                   <div style={{ fontSize: '0.74rem', color: 'var(--text-sub)', marginTop: '2px' }}>
-                    {st.tagline}
+                    {st?.tagline}
                   </div>
                 </div>
               </div>
@@ -280,12 +288,13 @@ export default function ToppersSection({ onOpenCallModal }) {
 
         {/* Student Cards Grid */}
         <div className="grid-responsive-4">
-          {filteredStudents.map((student) => {
-            const isRank1 = student.score >= 500;
+          {filteredStudents.map((student, idx) => {
+            const score = Number(student?.score ?? 0);
+            const isRank1 = score >= 500;
 
             return (
               <div
-                key={student.id}
+                key={student?.id ?? idx}
                 className={isRank1 ? 'bento-card-gold' : 'bento-card'}
                 style={{
                   padding: '22px 16px',
@@ -352,7 +361,7 @@ export default function ToppersSection({ onOpenCallModal }) {
                     letterSpacing: '-0.01em'
                   }}
                 >
-                  {student.name}
+                  {student?.name}
                 </h4>
 
                 {/* Score */}
@@ -366,7 +375,7 @@ export default function ToppersSection({ onOpenCallModal }) {
                     letterSpacing: '-0.03em'
                   }}
                 >
-                  {student.score}
+                  {student?.score}
                 </div>
 
                 {/* Badge */}
@@ -383,7 +392,7 @@ export default function ToppersSection({ onOpenCallModal }) {
                   }}
                 >
                   <CheckCircle2 size={11} color="#059669" />
-                  <span>{student.badge}</span>
+                  <span>{student?.badge}</span>
                 </div>
               </div>
             );

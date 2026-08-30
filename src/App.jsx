@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ToppersSection from './components/ToppersSection';
@@ -15,9 +15,16 @@ import NetworkStatus from './components/NetworkStatus';
 
 export default function App() {
   const [isCallModalOpen, setIsCallModalOpen] = useState(false);
+  const [modalContext, setModalContext] = useState('general');
 
-  const openCallModal = () => setIsCallModalOpen(true);
-  const closeCallModal = () => setIsCallModalOpen(false);
+  const openCallModal = useCallback((ctx = 'general') => {
+    setModalContext(typeof ctx === 'string' ? ctx : 'general');
+    setIsCallModalOpen(true);
+  }, []);
+
+  const closeCallModal = useCallback(() => {
+    setIsCallModalOpen(false);
+  }, []);
 
   return (
     <div
@@ -28,28 +35,28 @@ export default function App() {
       <NetworkStatus />
 
       {/* Apple Floating Island Top Header */}
-      <Header onOpenCallModal={openCallModal} />
+      <Header onOpenCallModal={() => openCallModal('header')} />
 
       {/* Main Sections */}
       <main style={{ flex: '1' }}>
-        <Hero onOpenCallModal={openCallModal} />
-        <ToppersSection onOpenCallModal={openCallModal} />
-        <CourseExplorer onOpenCallModal={openCallModal} />
-        <SyllabusExplorer onOpenCallModal={openCallModal} />
-        <FacilitiesSection onOpenCallModal={openCallModal} />
+        <Hero onOpenCallModal={() => openCallModal('hero')} />
+        <ToppersSection onOpenCallModal={() => openCallModal('toppers')} />
+        <CourseExplorer onOpenCallModal={() => openCallModal('courses')} />
+        <SyllabusExplorer onOpenCallModal={() => openCallModal('syllabus')} />
+        <FacilitiesSection onOpenCallModal={() => openCallModal('facilities')} />
         <CbtShowcaseSection />
-        <MapLocation onOpenCallModal={openCallModal} />
-        <FAQSection onOpenCallModal={openCallModal} />
+        <MapLocation onOpenCallModal={() => openCallModal('location')} />
+        <FAQSection onOpenCallModal={() => openCallModal('faq')} />
       </main>
 
       {/* Footer */}
-      <Footer onOpenCallModal={openCallModal} />
+      <Footer onOpenCallModal={() => openCallModal('footer')} />
 
       {/* Direct Phone Call Popup Modal (Apple Sheet) */}
-      <PhoneCallModal isOpen={isCallModalOpen} onClose={closeCallModal} />
+      <PhoneCallModal isOpen={isCallModalOpen} onClose={closeCallModal} context={modalContext} />
 
       {/* Sticky Bottom Action Bar for Mobile */}
-      <MobileActionBar onOpenCallModal={openCallModal} />
+      <MobileActionBar onOpenCallModal={() => openCallModal('mobile_bar')} />
     </div>
   );
 }
