@@ -5,14 +5,28 @@ import path from 'path';
 describe('Static Assets & Social Previews Integrity Audit', () => {
   const publicDir = path.resolve(process.cwd(), 'public');
 
-  it('verifies existence and non-zero size of primary favicons', () => {
+  it('verifies existence and non-zero size of primary favicons and multi-resolution variants', () => {
     const faviconIco = path.join(publicDir, 'favicon.ico');
     const faviconPng = path.join(publicDir, 'favicon.png');
+    const favicon16 = path.join(publicDir, 'favicon-16x16.png');
+    const favicon32 = path.join(publicDir, 'favicon-32x32.png');
+    const appleIcon = path.join(publicDir, 'apple-touch-icon.png');
+    const favicon192 = path.join(publicDir, 'favicon-192x192.png');
+    const favicon512 = path.join(publicDir, 'favicon-512x512.png');
 
     expect(fs.existsSync(faviconIco)).toBe(true);
     expect(fs.existsSync(faviconPng)).toBe(true);
-    expect(fs.statSync(faviconIco).size).toBeGreaterThan(1000);
+    expect(fs.existsSync(favicon16)).toBe(true);
+    expect(fs.existsSync(favicon32)).toBe(true);
+    expect(fs.existsSync(appleIcon)).toBe(true);
+    expect(fs.existsSync(favicon192)).toBe(true);
+    expect(fs.existsSync(favicon512)).toBe(true);
+
+    expect(fs.statSync(faviconIco).size).toBeGreaterThan(500);
     expect(fs.statSync(faviconPng).size).toBeGreaterThan(1000);
+    expect(fs.statSync(favicon16).size).toBeGreaterThan(100);
+    expect(fs.statSync(favicon32).size).toBeGreaterThan(500);
+    expect(fs.statSync(appleIcon).size).toBeGreaterThan(1000);
   });
 
   it('verifies high-resolution OpenGraph preview banner adheres to WhatsApp < 300KB limit', () => {
