@@ -57,4 +57,11 @@ describe('SEO, Social Link Previews & OpenGraph Meta Tags (index.html)', () => {
     const stats = fs.statSync(assetPath);
     expect(stats.size).toBeGreaterThan(1000);
   });
+
+  it('contains live Google Analytics 4 (gtag.js) script with Measurement ID G-DP9LT3BX5P', () => {
+    expect(htmlContent).toContain(
+      '<script async src="https://www.googletagmanager.com/gtag/js?id=G-DP9LT3BX5P"></script>'
+    );
+    expect(htmlContent).toContain("gtag('config', 'G-DP9LT3BX5P');");
+  });
 });
