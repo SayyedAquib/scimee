@@ -1,7 +1,6 @@
 import { trackEvent } from './analytics';
-import siteConfig from '../data/site-config.json';
 
-export const DEFAULT_CBT_URL = 'https://cbt-frontend-pied.vercel.app';
+export const DEFAULT_CBT_URL = 'https://cbtneet.vercel.app';
 
 export const CBT_ROUTES = Object.freeze({
   HOME: '/',

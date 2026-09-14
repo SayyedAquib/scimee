@@ -71,6 +71,7 @@
     { "label": "Courses", "href": "#courses" },
     { "label": "NEET Syllabus", "href": "#syllabus" },
     { "label": "Facilities", "href": "#facilities" },
+    { "label": "CBT Simulator", "href": "#cbt-portal" },
     { "label": "Location", "href": "#location" },
     { "label": "FAQ", "href": "#faq" }
   ]

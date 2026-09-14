@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import RootLayout, { metadata, viewport } from './layout';
+import RootLayout from './layout';
+import { metadata, viewport } from './metadata';
 import siteConfig from '../data/site-config.json';
 
 describe('RootLayout Component & Next Metadata', () => {

@@ -51,8 +51,8 @@ export default function CourseExplorer({ onOpenCallModal }) {
               marginBottom: '30px'
             }}
           >
-            {programsList.map((program, idx) => {
-              const programId = program?.id ?? `prog-${idx}`;
+            {programsList.map((program) => {
+              const programId = program?.id;
               const isSelected = programId === selectedId;
               return (
                 <button
@@ -72,7 +72,8 @@ export default function CourseExplorer({ onOpenCallModal }) {
                     boxShadow: isSelected
                       ? '0 2px 10px rgba(217, 119, 6, 0.15)'
                       : '0 2px 6px rgba(0, 0, 0, 0.03)',
-                    transition: 'all 150ms ease',
+                    transition:
+                      'background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '7px'
@@ -176,9 +177,9 @@ export default function CourseExplorer({ onOpenCallModal }) {
                 </h4>
 
                 <div className="grid-responsive-2">
-                  {highlightsList.map((highlight, idx) => (
+                  {highlightsList.map((highlight) => (
                     <div
-                      key={idx}
+                      key={highlight}
                       style={{
                         display: 'flex',
                         alignItems: 'flex-start',

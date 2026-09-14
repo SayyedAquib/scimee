@@ -1,90 +1,66 @@
 import React, { useState, useMemo } from 'react';
-import {
-  BookOpen,
-  Search,
-  Dna,
-  Atom,
-  FlaskConical,
-  Calculator,
-  ChevronDown,
-  ChevronUp,
-  FileText,
-  PhoneCall,
-  Award,
-  CheckCircle2
-} from 'lucide-react';
+import { FileText, PhoneCall, Award, CheckCircle2 } from 'lucide-react';
 import syllabusData from '../data/syllabus.json';
+import SyllabusUnitCard from './syllabus/SyllabusUnitCard';
+import SyllabusSubjectBar from './syllabus/SyllabusSubjectBar';
+
+const EXAMS_LIST = Array.isArray(syllabusData?.exams) ? syllabusData.exams : [];
+const DEFAULT_EXAM_ID = EXAMS_LIST[0]?.id ?? 'neet';
 
 export default function SyllabusExplorer({ onOpenCallModal }) {
-  const examsList = Array.isArray(syllabusData?.exams) ? syllabusData.exams : [];
-  const defaultExamId = examsList[0]?.id ?? 'neet';
+  const examsList = EXAMS_LIST;
 
-  const [selectedExamId, setSelectedExamId] = useState(defaultExamId);
+  const [selectedExamId, setSelectedExamId] = useState(DEFAULT_EXAM_ID);
   const [activeSubjectId, setActiveSubjectId] = useState('physics');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedUnit, setExpandedUnit] = useState(null);
 
   // Active exam object with safe fallback
   const activeExam = useMemo(() => {
-    return examsList.find((e) => e?.id === selectedExamId) || examsList[0] || {};
-  }, [examsList, selectedExamId]);
+    return EXAMS_LIST.find((e) => e?.id === selectedExamId) || EXAMS_LIST[0] || {};
+  }, [selectedExamId]);
 
   const examSubjects = Array.isArray(activeExam?.subjects) ? activeExam.subjects : [];
 
   // Ensure activeSubjectId exists in activeExam
   const currentSubject = useMemo(() => {
-    const found = examSubjects.find((s) => s?.id === activeSubjectId);
-    return found || examSubjects[0] || {};
-  }, [examSubjects, activeSubjectId]);
+    const subjects = Array.isArray(activeExam?.subjects) ? activeExam.subjects : [];
+    const found = subjects.find((s) => s?.id === activeSubjectId);
+    return found || subjects[0] || {};
+  }, [activeExam, activeSubjectId]);
 
   const handleExamChange = (examId) => {
     if (!examId || typeof examId !== 'string') return;
     setSelectedExamId(examId);
     setExpandedUnit(null);
     setSearchQuery('');
-    const targetExam = examsList.find((e) => e?.id === examId);
+    const targetExam = EXAMS_LIST.find((e) => e?.id === examId);
     if (targetExam && Array.isArray(targetExam?.subjects) && targetExam.subjects.length > 0) {
       setActiveSubjectId(targetExam.subjects[0]?.id ?? 'physics');
     }
   };
 
-  const currentUnits = Array.isArray(currentSubject?.units) ? currentSubject.units : [];
-
   const displayedUnits = useMemo(() => {
-    if (!currentUnits.length) return [];
+    const units = Array.isArray(currentSubject?.units) ? currentSubject.units : [];
+    if (!units.length) return [];
 
     if (!searchQuery?.trim()) {
-      return currentUnits;
+      return units;
     }
 
     const query = searchQuery.trim().toLowerCase();
-    return currentUnits.filter((unit) => {
+    return units.filter((unit) => {
       if (!unit) return false;
       const unitName = String(unit?.name ?? '').toLowerCase();
       const unitTopics = String(unit?.topics ?? '').toLowerCase();
       const unitNum = String(unit?.unitNumber ?? '');
       return unitName.includes(query) || unitTopics.includes(query) || unitNum.includes(query);
     });
-  }, [currentUnits, searchQuery]);
+  }, [currentSubject, searchQuery]);
 
   const toggleUnit = (unitNumber) => {
     if (unitNumber === undefined || unitNumber === null) return;
     setExpandedUnit((prev) => (prev === unitNumber ? null : unitNumber));
-  };
-
-  const getSubjectIcon = (iconName) => {
-    switch (iconName) {
-      case 'atom':
-        return <Atom size={16} />;
-      case 'flask-conical':
-        return <FlaskConical size={16} />;
-      case 'dna':
-        return <Dna size={16} />;
-      case 'calculator':
-        return <Calculator size={16} />;
-      default:
-        return <BookOpen size={16} />;
-    }
   };
 
   return (
@@ -129,8 +105,8 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
               marginBottom: '26px'
             }}
           >
-            {examsList.map((exam, idx) => {
-              const examId = exam?.id ?? `exam-${idx}`;
+            {examsList.map((exam) => {
+              const examId = exam?.id;
               const isSelected = examId === selectedExamId;
               return (
                 <button
@@ -154,7 +130,8 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                     boxShadow: isSelected
                       ? '0 4px 14px rgba(217, 119, 6, 0.18)'
                       : '0 2px 6px rgba(0, 0, 0, 0.03)',
-                    transition: 'all 150ms ease',
+                    transition:
+                      'background 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px'
@@ -216,106 +193,16 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
           </div>
 
           {/* Apple Subject Switcher & Search Bar */}
-          <div
-            className="bento-card"
-            style={{
-              padding: '16px 18px',
-              marginBottom: '22px',
-              borderRadius: '20px'
+          <SyllabusSubjectBar
+            examSubjects={examSubjects}
+            currentSubject={currentSubject}
+            onSelectSubject={(id) => {
+              setActiveSubjectId(id);
+              setExpandedUnit(null);
             }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '14px'
-              }}
-            >
-              {/* Subject Selector Buttons */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                {examSubjects.map((sub, idx) => {
-                  const subId = sub?.id ?? `sub-${idx}`;
-                  const isActive = subId === currentSubject?.id;
-                  return (
-                    <button
-                      key={subId}
-                      onClick={() => {
-                        setActiveSubjectId(subId);
-                        setExpandedUnit(null);
-                      }}
-                      style={{
-                        padding: '8px 16px',
-                        borderRadius: 'var(--radius-pill)',
-                        border: isActive
-                          ? '1px solid rgba(217, 119, 6, 0.4)'
-                          : '1px solid rgba(0, 0, 0, 0.08)',
-                        background: isActive ? '#fffbeb' : '#f8fafc',
-                        color: isActive ? '#b45309' : 'var(--text-sub)',
-                        fontWeight: isActive ? '800' : '600',
-                        fontSize: '0.86rem',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '7px',
-                        boxShadow: isActive ? '0 2px 8px rgba(217, 119, 6, 0.15)' : 'none',
-                        transition: 'all 150ms ease'
-                      }}
-                    >
-                      {getSubjectIcon(sub?.icon)}
-                      <span>{sub?.name}</span>
-                      <span
-                        style={{
-                          fontSize: '0.7rem',
-                          background: isActive ? '#d97706' : 'rgba(0, 0, 0, 0.08)',
-                          color: isActive ? '#ffffff' : 'var(--text-sub)',
-                          padding: '1px 6px',
-                          borderRadius: '9999px',
-                          fontWeight: '800'
-                        }}
-                      >
-                        {sub?.totalUnits} {sub?.totalUnits === 1 ? 'Unit' : 'Units'}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Live Search Input */}
-              <div
-                style={{ position: 'relative', minWidth: '240px', flex: '1', maxWidth: '360px' }}
-              >
-                <Search
-                  size={16}
-                  color="var(--text-muted)"
-                  style={{
-                    position: 'absolute',
-                    left: '14px',
-                    top: '50%',
-                    transform: 'translateY(-50%)'
-                  }}
-                />
-                <input
-                  type="text"
-                  placeholder={`Search ${currentSubject?.name || ''} units (e.g. Calculus, Optics)...`}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e?.target?.value ?? '')}
-                  style={{
-                    width: '100%',
-                    padding: '9px 14px 9px 38px',
-                    borderRadius: 'var(--radius-pill)',
-                    background: '#ffffff',
-                    border: '1px solid rgba(0, 0, 0, 0.12)',
-                    color: 'var(--text-heading)',
-                    fontSize: '0.86rem',
-                    outline: 'none',
-                    boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.03)'
-                  }}
-                />
-              </div>
-            </div>
-          </div>
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+          />
 
           {/* Units List */}
           <div
@@ -344,112 +231,15 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
                 </button>
               </div>
             ) : (
-              displayedUnits.map((unit, idx) => {
-                const unitKey = unit?.unitNumber ?? idx;
-                const isExpanded = expandedUnit === unit?.unitNumber;
-                return (
-                  <div
-                    key={unitKey}
-                    className="bento-card"
-                    style={{
-                      borderRadius: '18px',
-                      overflow: 'hidden',
-                      border: isExpanded
-                        ? '1px solid rgba(217, 119, 6, 0.4)'
-                        : '1px solid var(--border-glass)'
-                    }}
-                  >
-                    <button
-                      onClick={() => toggleUnit(unit?.unitNumber)}
-                      style={{
-                        width: '100%',
-                        padding: '14px 18px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        background: isExpanded ? '#fffbeb' : '#ffffff',
-                        border: 'none',
-                        color: 'var(--text-heading)',
-                        textAlign: 'left',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <div
-                          style={{
-                            width: '28px',
-                            height: '28px',
-                            borderRadius: '8px',
-                            background: isExpanded ? '#fef3c7' : '#f1f5f9',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '0.76rem',
-                            fontWeight: '900',
-                            color: '#b45309',
-                            flexShrink: 0
-                          }}
-                        >
-                          {unit?.unitNumber}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: '0.94rem',
-                            fontWeight: '700',
-                            color: isExpanded ? '#78350f' : 'var(--text-heading)',
-                            letterSpacing: '-0.01em'
-                          }}
-                        >
-                          {activeExam?.id === 'mhtcet'
-                            ? unit?.name
-                            : `Unit ${unit?.unitNumber}: ${unit?.name}`}
-                        </div>
-                      </div>
-
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          color: 'var(--text-muted)'
-                        }}
-                      >
-                        <span style={{ fontSize: '0.78rem' }}>
-                          {isExpanded ? 'Hide' : 'View Topics'}
-                        </span>
-                        {isExpanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
-                      </div>
-                    </button>
-
-                    {isExpanded && (
-                      <div
-                        style={{
-                          padding: 'clamp(12px, 3vw, 16px) clamp(14px, 4vw, 24px)',
-                          background: '#f8fafc',
-                          borderTop: '1px solid var(--border-glass)',
-                          fontSize: '0.88rem',
-                          color: 'var(--text-sub)',
-                          lineHeight: '1.65'
-                        }}
-                      >
-                        <strong
-                          style={{
-                            color: 'var(--text-heading)',
-                            display: 'block',
-                            marginBottom: '4px',
-                            fontSize: '0.8rem',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.04em'
-                          }}
-                        >
-                          Topics &amp; Key Focus Areas:
-                        </strong>
-                        <p>{unit?.topics}</p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })
+              displayedUnits.map((unit) => (
+                <SyllabusUnitCard
+                  key={unit?.unitNumber}
+                  unit={unit}
+                  isExpanded={expandedUnit === unit?.unitNumber}
+                  onToggle={toggleUnit}
+                  examId={activeExam?.id}
+                />
+              ))
             )}
           </div>
 

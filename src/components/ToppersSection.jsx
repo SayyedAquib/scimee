@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
-import {
-  Trophy,
-  Award,
-  Sparkles,
-  CheckCircle2,
-  User,
-  Dna,
-  Atom,
-  FlaskConical,
-  Star
-} from 'lucide-react';
+import { Trophy, Sparkles } from 'lucide-react';
 import toppersData from '../data/toppers.json';
+import SubjectTopperCard from './toppers/SubjectTopperCard';
+import StudentResultCard from './toppers/StudentResultCard';
 
 export default function ToppersSection({ onOpenCallModal }) {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -28,19 +20,6 @@ export default function ToppersSection({ onOpenCallModal }) {
     if (activeFilter === 'rank1') return score >= 500;
     return true;
   });
-
-  const getSubjectIcon = (iconName) => {
-    switch (iconName) {
-      case 'dna':
-        return <Dna size={26} color="#059669" />;
-      case 'atom':
-        return <Atom size={26} color="#0284c7" />;
-      case 'flask-conical':
-        return <FlaskConical size={26} color="#9333ea" />;
-      default:
-        return <Award size={26} color="#d97706" />;
-    }
-  };
 
   return (
     <section
@@ -160,65 +139,8 @@ export default function ToppersSection({ onOpenCallModal }) {
           </h3>
 
           <div className="grid-responsive-3">
-            {subjectToppersList.map((st, idx) => (
-              <div
-                key={st?.subject ?? idx}
-                className="bento-card"
-                style={{
-                  padding: '24px 20px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '16px'
-                }}
-              >
-                <div
-                  style={{
-                    width: '52px',
-                    height: '52px',
-                    borderRadius: '14px',
-                    background: 'rgba(0, 0, 0, 0.03)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                    border: '1px solid rgba(0, 0, 0, 0.06)'
-                  }}
-                >
-                  {getSubjectIcon(st?.icon)}
-                </div>
-                <div>
-                  <div
-                    style={{
-                      fontSize: '0.74rem',
-                      color: 'var(--text-muted)',
-                      fontWeight: '800',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em'
-                    }}
-                  >
-                    {st?.subject} Topper
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
-                    <span
-                      style={{
-                        fontSize: '1.9rem',
-                        fontWeight: '900',
-                        color: 'var(--text-heading)',
-                        letterSpacing: '-0.03em',
-                        lineHeight: '1.1'
-                      }}
-                    >
-                      {st?.score}
-                    </span>
-                    <span style={{ fontSize: '0.9rem', color: 'var(--text-sub)' }}>
-                      /{st?.total}
-                    </span>
-                  </div>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--text-sub)', marginTop: '2px' }}>
-                    {st?.tagline}
-                  </div>
-                </div>
-              </div>
+            {subjectToppersList.map((st) => (
+              <SubjectTopperCard key={st?.subject || st?.name} topper={st} />
             ))}
           </div>
         </div>
@@ -276,7 +198,8 @@ export default function ToppersSection({ onOpenCallModal }) {
                     fontWeight: isSelected ? '800' : '600',
                     cursor: 'pointer',
                     boxShadow: isSelected ? '0 2px 8px rgba(0, 0, 0, 0.08)' : 'none',
-                    transition: 'all 150ms ease'
+                    transition:
+                      'background-color 150ms ease, color 150ms ease, box-shadow 150ms ease'
                   }}
                 >
                   {tab.label}
@@ -288,115 +211,9 @@ export default function ToppersSection({ onOpenCallModal }) {
 
         {/* Student Cards Grid */}
         <div className="grid-responsive-4">
-          {filteredStudents.map((student, idx) => {
-            const score = Number(student?.score ?? 0);
-            const isRank1 = score >= 500;
-
-            return (
-              <div
-                key={student?.id ?? idx}
-                className={isRank1 ? 'bento-card-gold' : 'bento-card'}
-                style={{
-                  padding: '22px 16px',
-                  textAlign: 'center',
-                  borderRadius: '20px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}
-              >
-                {/* Top Rank Pill */}
-                {isRank1 && (
-                  <div
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                      background: 'linear-gradient(135deg, #fef08a 0%, #fbbf24 100%)',
-                      color: '#78350f',
-                      fontSize: '0.64rem',
-                      fontWeight: '900',
-                      padding: '2px 10px',
-                      borderRadius: 'var(--radius-pill)',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.04em',
-                      boxShadow: '0 2px 8px rgba(245, 158, 11, 0.3)',
-                      marginBottom: '10px'
-                    }}
-                  >
-                    <Star size={10} fill="#78350f" />
-                    <span>Top Scorer</span>
-                  </div>
-                )}
-
-                {/* Avatar Ring */}
-                <div
-                  style={{
-                    width: '50px',
-                    height: '50px',
-                    borderRadius: '50%',
-                    margin: isRank1 ? '0 auto 10px' : '6px auto 10px',
-                    background: isRank1 ? '#fef3c7' : '#f8fafc',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    border: isRank1 ? '1.5px solid #d97706' : '1px solid rgba(0, 0, 0, 0.08)'
-                  }}
-                >
-                  <User size={24} color={isRank1 ? '#b45309' : 'var(--text-muted)'} />
-                </div>
-
-                {/* Name */}
-                <h4
-                  style={{
-                    fontSize: '0.98rem',
-                    fontWeight: '800',
-                    color: 'var(--text-heading)',
-                    marginBottom: '4px',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    maxWidth: '100%',
-                    letterSpacing: '-0.01em'
-                  }}
-                >
-                  {student?.name}
-                </h4>
-
-                {/* Score */}
-                <div
-                  style={{
-                    fontSize: 'clamp(1.7rem, 3.4vw, 2.1rem)',
-                    fontWeight: '900',
-                    color: isRank1 ? '#b45309' : '#e11d48',
-                    lineHeight: '1.05',
-                    marginBottom: '6px',
-                    letterSpacing: '-0.03em'
-                  }}
-                >
-                  {student?.score}
-                </div>
-
-                {/* Badge */}
-                <div
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    fontSize: '0.72rem',
-                    color: 'var(--text-sub)',
-                    background: 'rgba(0, 0, 0, 0.03)',
-                    padding: '3px 8px',
-                    borderRadius: '6px'
-                  }}
-                >
-                  <CheckCircle2 size={11} color="#059669" />
-                  <span>{student?.badge}</span>
-                </div>
-              </div>
-            );
-          })}
+          {filteredStudents.map((student) => (
+            <StudentResultCard key={student?.id || student?.name} student={student} />
+          ))}
         </div>
       </div>
     </section>

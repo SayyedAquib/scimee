@@ -12,7 +12,9 @@
     "format": "prettier --write src",
     "check-format": "prettier --check src",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "doctor": "react-doctor",
+    "doctor:verbose": "react-doctor . --verbose"
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -33,6 +35,7 @@
     "globals": "^15.15.0",
     "happy-dom": "^20.11.6",
     "prettier": "^3.5.0",
+    "react-doctor": "^0.9.14",
     "vite": "^6.2.0",
     "vitest": "^3.0.7"
   },

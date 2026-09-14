@@ -180,13 +180,16 @@ section {
    ========================================================================== */
 
 .floating-navbar-wrapper {
-  position: sticky;
+  position: fixed;
   top: 10px;
+  left: 0;
+  right: 0;
   z-index: 1000;
   width: 100%;
   padding: 0 12px;
   display: flex;
   justify-content: center;
+  pointer-events: none;
 }
 
 @media (min-width: 768px) {
@@ -196,7 +199,18 @@ section {
   }
 }
 
+main {
+  padding-top: 76px;
+}
+
+@media (min-width: 768px) {
+  main {
+    padding-top: 84px;
+  }
+}
+
 .floating-navbar {
+  pointer-events: auto;
   width: 100%;
   max-width: 1100px;
   height: 60px;

@@ -76,7 +76,8 @@ export default function Hero({ onOpenCallModal }) {
                 borderRadius: 'var(--radius-pill)',
                 textDecoration: 'none',
                 boxShadow: '0 4px 14px rgba(16, 185, 129, 0.12)',
-                transition: 'all 180ms ease'
+                transition:
+                  'background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease'
               }}
               title="Launch SCIMEE NTA NEET CBT Online Test Simulator"
             >

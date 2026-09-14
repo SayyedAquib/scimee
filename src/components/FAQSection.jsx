@@ -57,7 +57,7 @@ export default function FAQSection({ onOpenCallModal }) {
               const isOpen = openIndex === idx;
               return (
                 <div
-                  key={item?.id ?? idx}
+                  key={item?.id || item?.question}
                   className="bento-card"
                   style={{
                     borderRadius: '18px',

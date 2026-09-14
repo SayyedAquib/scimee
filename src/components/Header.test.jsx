@@ -24,6 +24,7 @@ describe('Header Component', () => {
     expect(screen.getByText('Courses')).toBeInTheDocument();
     expect(screen.getByText('Syllabus')).toBeInTheDocument();
     expect(screen.getByText('Facilities')).toBeInTheDocument();
+    expect(screen.getByText('CBT Simulator')).toBeInTheDocument();
     expect(screen.getByText('Location')).toBeInTheDocument();
     expect(screen.getByText('FAQ')).toBeInTheDocument();
   });
@@ -63,5 +64,12 @@ describe('Header Component', () => {
       render(<Header onOpenCallModal={vi.fn()} />);
     }).not.toThrow();
     window.location.hash = '';
+  });
+
+  it('detects and links to cbt-portal section', () => {
+    const { container } = render(<Header onOpenCallModal={vi.fn()} />);
+    const cbtLink = container.querySelector('a[href="#cbt-portal"]');
+    expect(cbtLink).toBeInTheDocument();
+    expect(cbtLink).toHaveTextContent('CBT Simulator');
   });
 });

@@ -190,6 +190,7 @@ export default function MapLocation({ onOpenCallModal }) {
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="strict-origin-when-cross-origin"
+                sandbox="allow-scripts allow-popups allow-forms allow-popups-to-escape-sandbox"
               />
             </div>
           </div>

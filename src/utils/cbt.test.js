@@ -8,12 +8,15 @@ describe('CBT Portal Integration Utility (src/utils/cbt.js)', () => {
   });
 
   it('exports default CBT portal url correctly', () => {
-    expect(DEFAULT_CBT_URL).toBe('https://cbt-frontend-pied.vercel.app');
+    expect(DEFAULT_CBT_URL).toBe('https://cbtneet.vercel.app');
   });
 
   it('resolves root CBT URL with fallback or env', () => {
     const url = getCbtUrl();
-    expect(url).toContain('cbt-frontend-pied.vercel.app');
+    const expectedBase =
+      (typeof import.meta !== 'undefined' && import.meta?.env?.VITE_CBT_PORTAL_URL) ||
+      DEFAULT_CBT_URL;
+    expect(url).toBe(expectedBase);
   });
 
   it('normalizes path correctly without double slashes', () => {

@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { PhoneCall, Menu, X, ChevronRight, Laptop, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { PhoneCall, Menu, X } from 'lucide-react';
 import siteConfig from '../data/site-config.json';
-import { getCbtUrl, openCbtPortal } from '../utils/cbt';
+import HeaderDesktopNav from './header/HeaderDesktopNav';
+import HeaderMobileDrawer from './header/HeaderMobileDrawer';
+import { useHeaderNavigation } from './header/useHeaderNavigation';
 
 // Stable navigation items matching page sections
 const NAV_ITEMS = Object.freeze([
@@ -10,202 +12,21 @@ const NAV_ITEMS = Object.freeze([
   { label: 'Courses', href: '#courses', id: 'courses' },
   { label: 'Syllabus', href: '#syllabus', id: 'syllabus' },
   { label: 'Facilities', href: '#facilities', id: 'facilities' },
+  { label: 'CBT Simulator', href: '#cbt-portal', id: 'cbt-portal' },
   { label: 'Location', href: '#location', id: 'location' },
   { label: 'FAQ', href: '#faq', id: 'faq' }
 ]);
 
 export default function Header({ onOpenCallModal }) {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('about');
-  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
-
-  const navRef = useRef(null);
-  const navItemRefs = useRef({});
-  const isClickScrollingRef = useRef(false);
-  const clickTimeoutRef = useRef(null);
-
-  // Handle direct initial page load with URL hash (e.g. #syllabus)
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    try {
-      const initialHash = window?.location?.hash?.replace('#', '') ?? '';
-      if (initialHash && NAV_ITEMS.some((item) => item.id === initialHash)) {
-        setActiveSection(initialHash);
-        const targetEl = document?.getElementById?.(initialHash);
-        if (targetEl) {
-          setTimeout(() => {
-            const navOffset = 80;
-            const elementPosition = targetEl?.getBoundingClientRect?.()?.top ?? 0;
-            const offsetPosition = elementPosition + (window?.pageYOffset ?? 0) - navOffset;
-            window?.scrollTo?.({ top: offsetPosition, behavior: 'smooth' });
-          }, 100);
-        }
-      }
-    } catch (err) {
-      // Safe fallback
-    }
-  }, []);
-
-  // Bulletproof viewport-based active section & URL tracker
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    let lastActiveSection = '';
-
-    const handleScroll = () => {
-      const isScrolledNow = (window?.scrollY ?? 0) > 20;
-      setScrolled(isScrolledNow);
-
-      if (isClickScrollingRef.current) return;
-
-      const scrollY = window?.scrollY ?? 0;
-      const windowHeight = window?.innerHeight ?? 0;
-      const docHeight = document?.documentElement?.scrollHeight ?? 0;
-
-      let detectedSection = 'about';
-
-      // 1. Top of page
-      if (scrollY < 140) {
-        detectedSection = 'about';
-      }
-      // 2. Bottom of page (FAQ)
-      else if (windowHeight + scrollY >= docHeight - 100) {
-        detectedSection = 'faq';
-      }
-      // 3. Middle sections based on viewport position
-      else {
-        const sectionIds = NAV_ITEMS.map((item) => item.id);
-        for (let i = 0; i < sectionIds.length; i++) {
-          const el = document?.getElementById?.(sectionIds[i]);
-          if (el) {
-            const rect = el?.getBoundingClientRect?.();
-            if (rect && rect.top <= 180 && rect.bottom > 180) {
-              detectedSection = sectionIds[i];
-              break;
-            }
-          }
-        }
-      }
-
-      setActiveSection(detectedSection);
-
-      // Auto update URL hash in address bar seamlessly
-      if (lastActiveSection !== detectedSection) {
-        lastActiveSection = detectedSection;
-        const newUrl =
-          detectedSection === 'about'
-            ? (window?.location?.pathname ?? '/') + (window?.location?.search ?? '')
-            : `#${detectedSection}`;
-
-        if (window?.location?.hash !== (detectedSection === 'about' ? '' : `#${detectedSection}`)) {
-          window?.history?.replaceState?.(null, '', newUrl);
-        }
-      }
-    };
-
-    try {
-      window?.addEventListener?.('scroll', handleScroll, { passive: true });
-      handleScroll();
-    } catch {
-      // Fallback
-    }
-
-    return () => {
-      try {
-        window?.removeEventListener?.('scroll', handleScroll);
-      } catch {
-        // Cleanup safety
-      }
-      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
-    };
-  }, []);
-
-  // Recalculate sliding pill indicator position whenever activeSection changes or window resizes
-  const updateIndicator = useCallback(() => {
-    const activeEl = navItemRefs?.current?.[activeSection];
-    const navEl = navRef?.current;
-
-    // Early return if active element or nav container not mounted
-    if (!activeEl || !navEl) {
-      return;
-    }
-
-    try {
-      const navRect = navEl?.getBoundingClientRect?.();
-      const activeRect = activeEl?.getBoundingClientRect?.();
-
-      if (navRect && activeRect) {
-        setIndicatorStyle({
-          left: activeRect.left - navRect.left,
-          width: activeRect.width,
-          opacity: 1
-        });
-      }
-    } catch {
-      // Fallback
-    }
-  }, [activeSection]);
-
-  useEffect(() => {
-    updateIndicator();
-    try {
-      window?.addEventListener?.('resize', updateIndicator);
-    } catch {
-      // Fallback
-    }
-    return () => {
-      try {
-        window?.removeEventListener?.('resize', updateIndicator);
-      } catch {
-        // Cleanup safety
-      }
-    };
-  }, [updateIndicator]);
+  const { scrolled, activeSection, indicatorStyle, navRef, navItemRefs, handleNavClick } =
+    useHeaderNavigation(NAV_ITEMS);
 
   const closeMenu = () => setMobileMenuOpen(false);
 
-  // Smooth click navigation
-  const handleNavClick = (e, id) => {
-    e?.preventDefault?.();
-
-    if (!id || typeof id !== 'string') return;
-
-    setActiveSection(id);
+  const onNavClick = (e, id) => {
     closeMenu();
-
-    // Lock automatic scroll tracker for 700ms during click transit
-    isClickScrollingRef.current = true;
-    if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
-
-    try {
-      const targetEl = document?.getElementById?.(id);
-      if (targetEl) {
-        const navOffset = 80;
-        const elementPosition = targetEl?.getBoundingClientRect?.()?.top ?? 0;
-        const offsetPosition = elementPosition + (window?.pageYOffset ?? 0) - navOffset;
-
-        window?.scrollTo?.({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-
-        const newUrl =
-          id === 'about'
-            ? (window?.location?.pathname ?? '/') + (window?.location?.search ?? '')
-            : `#${id}`;
-        window?.history?.replaceState?.(null, '', newUrl);
-      }
-    } catch (err) {
-      if (import.meta?.env?.DEV) {
-        console.warn('Scroll navigation failed:', err);
-      }
-    }
-
-    clickTimeoutRef.current = setTimeout(() => {
-      isClickScrollingRef.current = false;
-    }, 700);
+    handleNavClick(e, id);
   };
 
   const brandName = siteConfig?.brand?.name ?? 'SCIMEE';
@@ -228,7 +49,7 @@ export default function Header({ onOpenCallModal }) {
           {/* Brand Logo & Name */}
           <a
             href="#about"
-            onClick={(e) => handleNavClick(e, 'about')}
+            onClick={(e) => onNavClick(e, 'about')}
             style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}
           >
             <div
@@ -281,105 +102,20 @@ export default function Header({ onOpenCallModal }) {
           </a>
 
           {/* Desktop Nav with Dynamic Sliding Pill Active Indicator */}
-          <nav
-            ref={navRef}
-            style={{
-              display: 'none',
-              alignItems: 'center',
-              gap: '2px',
-              position: 'relative',
-              background: 'rgba(0, 0, 0, 0.03)',
-              padding: '4px',
-              borderRadius: 'var(--radius-pill)',
-              border: '1px solid rgba(0, 0, 0, 0.04)'
-            }}
-            className="desktop-nav"
-          >
-            {/* Apple Smooth Sliding Pill Indicator */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '4px',
-                bottom: '4px',
-                left: `${indicatorStyle?.left ?? 0}px`,
-                width: `${indicatorStyle?.width ?? 0}px`,
-                opacity: indicatorStyle?.opacity ?? 0,
-                background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
-                border: '1px solid rgba(217, 119, 6, 0.35)',
-                borderRadius: 'var(--radius-pill)',
-                boxShadow: '0 2px 8px rgba(217, 119, 6, 0.15)',
-                transition: 'all 280ms cubic-bezier(0.16, 1, 0.3, 1)',
-                pointerEvents: 'none',
-                zIndex: 0
-              }}
-            />
-
-            {NAV_ITEMS.map((item) => {
-              const isActive = activeSection === item?.id;
-              return (
-                <a
-                  key={item?.id}
-                  ref={(el) => {
-                    if (item?.id) {
-                      navItemRefs.current[item.id] = el;
-                    }
-                  }}
-                  href={item?.href}
-                  onClick={(e) => handleNavClick(e, item?.id)}
-                  className="nav-link"
-                  style={{
-                    position: 'relative',
-                    zIndex: 1,
-                    color: isActive ? '#92400e' : 'var(--text-sub)',
-                    fontWeight: isActive ? '800' : '600',
-                    fontSize: '0.84rem',
-                    padding: '6px 14px',
-                    borderRadius: 'var(--radius-pill)',
-                    transition: 'color 180ms ease'
-                  }}
-                >
-                  {item?.label}
-                </a>
-              );
-            })}
-          </nav>
+          <HeaderDesktopNav
+            navRef={navRef}
+            indicatorStyle={indicatorStyle}
+            navItems={NAV_ITEMS}
+            activeSection={activeSection}
+            navItemRefs={navItemRefs}
+            onNavClick={onNavClick}
+          />
 
           {/* Desktop Actions */}
           <div
             style={{ display: 'none', alignItems: 'center', gap: '10px' }}
             className="desktop-nav"
           >
-            <a
-              href={getCbtUrl('/')}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => {
-                e?.preventDefault?.();
-                openCbtPortal('/', 'header_desktop');
-              }}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '7px',
-                padding: '8px 14px',
-                fontSize: '0.82rem',
-                height: '38px',
-                borderRadius: 'var(--radius-pill)',
-                background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
-                border: '1px solid rgba(16, 185, 129, 0.35)',
-                color: '#065f46',
-                fontWeight: '700',
-                textDecoration: 'none',
-                boxShadow: '0 2px 8px rgba(16, 185, 129, 0.1)',
-                transition: 'all 150ms ease'
-              }}
-              title="Launch SCIMEE NTA NEET CBT Online Test Simulator"
-            >
-              <Laptop size={14} color="#059669" />
-              <span>CBT Portal</span>
-              <ExternalLink size={12} style={{ opacity: 0.8 }} />
-            </a>
-
             <button
               onClick={() => onOpenCallModal?.()}
               className="btn-primary"
@@ -427,124 +163,15 @@ export default function Header({ onOpenCallModal }) {
       </div>
 
       {/* Mobile Drawer (Apple Frosted Light Sheet with Smooth Scroll) */}
-      {mobileMenuOpen && (
-        <div
-          style={{
-            position: 'fixed',
-            top: '84px',
-            left: '16px',
-            right: '16px',
-            zIndex: 999,
-            background: 'rgba(255, 255, 255, 0.96)',
-            backdropFilter: 'blur(30px) saturate(200%)',
-            WebkitBackdropFilter: 'blur(30px) saturate(200%)',
-            borderRadius: '24px',
-            border: '1px solid rgba(0, 0, 0, 0.1)',
-            padding: '18px',
-            boxShadow: '0 20px 48px rgba(0, 0, 0, 0.15)',
-            animation: 'appleScaleIn 200ms var(--spring-snappy)'
-          }}
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {NAV_ITEMS.map((item) => {
-              const isActive = activeSection === item?.id;
-              return (
-                <a
-                  key={item?.id}
-                  href={item?.href}
-                  onClick={(e) => handleNavClick(e, item?.id)}
-                  style={{
-                    color: isActive ? '#92400e' : 'var(--text-heading)',
-                    textDecoration: 'none',
-                    fontSize: '0.96rem',
-                    fontWeight: isActive ? '800' : '600',
-                    padding: '10px 14px',
-                    borderRadius: '12px',
-                    background: isActive ? '#fffbeb' : 'rgba(0, 0, 0, 0.03)',
-                    border: isActive ? '1px solid rgba(217, 119, 6, 0.3)' : '1px solid transparent',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    transition: 'all 150ms ease'
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    {isActive && (
-                      <div
-                        style={{
-                          width: '6px',
-                          height: '6px',
-                          borderRadius: '50%',
-                          background: '#d97706'
-                        }}
-                      />
-                    )}
-                    <span>{item?.label}</span>
-                  </div>
-                  <ChevronRight size={15} color={isActive ? '#d97706' : 'var(--text-muted)'} />
-                </a>
-              );
-            })}
-
-            <a
-              href={getCbtUrl('/tests')}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => {
-                e?.preventDefault?.();
-                closeMenu();
-                openCbtPortal('/tests', 'header_mobile_drawer');
-              }}
-              style={{
-                color: '#065f46',
-                textDecoration: 'none',
-                fontSize: '0.92rem',
-                fontWeight: '800',
-                padding: '11px 14px',
-                borderRadius: '12px',
-                background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
-                border: '1px solid rgba(16, 185, 129, 0.35)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginTop: '4px'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Laptop size={17} color="#059669" />
-                <span>CBT Online Mock Tests</span>
-                <span
-                  style={{
-                    fontSize: '0.65rem',
-                    background: '#059669',
-                    color: '#fff',
-                    padding: '2px 6px',
-                    borderRadius: '6px',
-                    fontWeight: '800'
-                  }}
-                >
-                  NTA Live
-                </span>
-              </div>
-              <ExternalLink size={14} color="#059669" />
-            </a>
-
-            <div style={{ paddingTop: '8px' }}>
-              <button
-                onClick={() => {
-                  closeMenu();
-                  onOpenCallModal?.();
-                }}
-                className="btn-primary"
-                style={{ width: '100%', padding: '11px', fontSize: '0.9rem' }}
-              >
-                <PhoneCall size={16} />
-                <span>Call {primaryPhoneFormatted}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <HeaderMobileDrawer
+        isOpen={mobileMenuOpen}
+        activeSection={activeSection}
+        navItems={NAV_ITEMS}
+        onNavClick={onNavClick}
+        onClose={closeMenu}
+        onOpenCallModal={onOpenCallModal}
+        primaryPhoneFormatted={primaryPhoneFormatted}
+      />
     </>
   );
 }

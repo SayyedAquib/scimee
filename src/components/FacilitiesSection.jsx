@@ -1,42 +1,10 @@
 import React from 'react';
-import {
-  BookOpen,
-  GraduationCap,
-  ClipboardCheck,
-  UserCheck,
-  Users,
-  ShieldCheck,
-  ArrowRight,
-  Shield,
-  Award,
-  Laptop,
-  ExternalLink
-} from 'lucide-react';
+import { Shield, ArrowRight, Laptop, ExternalLink } from 'lucide-react';
 import facilitiesData from '../data/facilities.json';
 import { getCbtUrl, openCbtPortal } from '../utils/cbt';
+import FacilityCard from './facilities/FacilityCard';
 
 export default function FacilitiesSection({ onOpenCallModal }) {
-  const getIcon = (iconName) => {
-    switch (iconName) {
-      case 'laptop':
-        return <Laptop size={22} color="#059669" />;
-      case 'book-open':
-        return <BookOpen size={22} color="#d97706" />;
-      case 'graduation-cap':
-        return <GraduationCap size={22} color="#0284c7" />;
-      case 'clipboard-check':
-        return <ClipboardCheck size={22} color="#059669" />;
-      case 'user-check':
-        return <UserCheck size={22} color="#9333ea" />;
-      case 'users':
-        return <Users size={22} color="#d97706" />;
-      case 'shield-check':
-        return <ShieldCheck size={22} color="#059669" />;
-      default:
-        return <Award size={22} color="#d97706" />;
-    }
-  };
-
   const facilitiesList = Array.isArray(facilitiesData?.items)
     ? facilitiesData.items
     : Array.isArray(facilitiesData?.features)
@@ -79,67 +47,8 @@ export default function FacilitiesSection({ onOpenCallModal }) {
 
           {/* Feature Cards Grid (Apple Bento Grid) */}
           <div className="grid-responsive-2" style={{ marginBottom: '32px' }}>
-            {facilitiesList.map((feat, idx) => (
-              <div
-                key={feat?.id ?? idx}
-                className="bento-card"
-                style={{
-                  padding: '24px',
-                  borderRadius: '20px',
-                  display: 'flex',
-                  gap: '16px',
-                  alignItems: 'flex-start'
-                }}
-              >
-                <div
-                  style={{
-                    width: '46px',
-                    height: '46px',
-                    borderRadius: '12px',
-                    background: '#f8fafc',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                    border: '1px solid rgba(0, 0, 0, 0.06)'
-                  }}
-                >
-                  {getIcon(feat?.icon)}
-                </div>
-
-                <div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                      marginBottom: '4px'
-                    }}
-                  >
-                    <h3
-                      style={{
-                        fontSize: '1.08rem',
-                        fontWeight: '800',
-                        color: 'var(--text-heading)',
-                        letterSpacing: '-0.01em'
-                      }}
-                    >
-                      {feat?.title}
-                    </h3>
-                    {feat?.tag && (
-                      <span
-                        className="badge-gold"
-                        style={{ fontSize: '0.62rem', padding: '1px 6px' }}
-                      >
-                        {feat.tag}
-                      </span>
-                    )}
-                  </div>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--text-sub)', lineHeight: '1.6' }}>
-                    {feat?.description}
-                  </p>
-                </div>
-              </div>
+            {facilitiesList.map((feat) => (
+              <FacilityCard key={feat?.id || feat?.title} feat={feat} />
             ))}
           </div>
 
