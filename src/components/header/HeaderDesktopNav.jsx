@@ -37,7 +37,6 @@ export default function HeaderDesktopNav({
           border: '1px solid rgba(217, 119, 6, 0.35)',
           borderRadius: 'var(--radius-pill)',
           boxShadow: '0 2px 8px rgba(217, 119, 6, 0.15)',
-          willChange: 'transform, opacity',
           transition:
             'transform 280ms cubic-bezier(0.16, 1, 0.3, 1), width 280ms cubic-bezier(0.16, 1, 0.3, 1), opacity 280ms cubic-bezier(0.16, 1, 0.3, 1)',
           pointerEvents: 'none',
