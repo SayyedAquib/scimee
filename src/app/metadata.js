@@ -28,23 +28,24 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: 'https://scimee.in',
+    url: 'https://scimee.vercel.app/',
     title: `${brandName} - NEET UG & Medical Entrance Coaching | Bhusawal`,
     description: `100% NEET Qualification Rate (16/16 qualified). 45+ Doctors in Medical Field. Under the guidance of ${founder}.`,
     siteName: brandName,
     images: [
       {
-        url: '/assets/logo.png',
-        width: 800,
-        height: 800,
-        alt: `${brandName} Logo`
+        url: 'https://scimee.vercel.app/assets/og-preview.jpg',
+        width: 1200,
+        height: 630,
+        alt: `${brandName} - Sara Coaching Institute of Medical Entrance Examination`
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
     title: `${brandName} - ${brandFullName}`,
-    description: `Leading NEET & Medical Entrance Coaching in Bhusawal. 45+ Medical Selections. By ${founder}.`
+    description: `Leading NEET & Medical Entrance Coaching in Bhusawal. 45+ Medical Selections. By ${founder}.`,
+    images: ['https://scimee.vercel.app/assets/og-preview.jpg']
   }
 };
 

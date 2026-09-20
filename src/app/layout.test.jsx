@@ -21,6 +21,15 @@ describe('RootLayout Component & Next Metadata', () => {
     expect(viewport.maximumScale).toBe(5);
   });
 
+  it('uses the live production URL and social preview asset consistently in metadata', () => {
+    expect(metadata.openGraph.url).toBe('https://scimee.vercel.app/');
+    expect(metadata.openGraph.images[0].url).toBe(
+      'https://scimee.vercel.app/assets/og-preview.jpg'
+    );
+    expect(metadata.twitter.card).toBe('summary_large_image');
+    expect(metadata.twitter.images).toEqual(['https://scimee.vercel.app/assets/og-preview.jpg']);
+  });
+
   it('renders html and body shell wrapping child components', () => {
     render(
       <RootLayout>
