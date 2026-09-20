@@ -14,7 +14,9 @@ describe('SEO, Social Link Previews & OpenGraph Meta Tags (index.html)', () => {
 
   it('contains full OpenGraph metadata for WhatsApp, Facebook, and LinkedIn link previews', () => {
     expect(htmlContent).toMatch(/property=["']og:type["']\s+content=["']website["']/);
-    expect(htmlContent).toMatch(/property=["']og:url["']\s+content=["']https:\/\/scimee\.vercel\.app\/["']/);
+    expect(htmlContent).toMatch(
+      /property=["']og:url["']\s+content=["']https:\/\/scimee\.vercel\.app\/["']/
+    );
     expect(htmlContent).toContain('property="og:title"');
     expect(htmlContent).toContain('property="og:description"');
     expect(htmlContent).toMatch(
