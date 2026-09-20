@@ -13,28 +13,28 @@ describe('SEO, Social Link Previews & OpenGraph Meta Tags (index.html)', () => {
   });
 
   it('contains full OpenGraph metadata for WhatsApp, Facebook, and LinkedIn link previews', () => {
-    expect(htmlContent).toContain('property="og:type" content="website"');
-    expect(htmlContent).toContain('property="og:url" content="https://scimee.vercel.app/"');
+    expect(htmlContent).toMatch(/property=["']og:type["']\s+content=["']website["']/);
+    expect(htmlContent).toMatch(/property=["']og:url["']\s+content=["']https:\/\/scimee\.vercel\.app\/["']/);
     expect(htmlContent).toContain('property="og:title"');
     expect(htmlContent).toContain('property="og:description"');
-    expect(htmlContent).toContain(
-      'property="og:image" content="https://scimee.vercel.app/assets/og-preview.jpg"'
+    expect(htmlContent).toMatch(
+      /property=["']og:image["']\s+content=["']https:\/\/scimee\.vercel\.app\/assets\/og-preview\.jpg["']/
     );
-    expect(htmlContent).toContain(
-      'property="og:image:secure_url" content="https://scimee.vercel.app/assets/og-preview.jpg"'
+    expect(htmlContent).toMatch(
+      /property=["']og:image:secure_url["']\s+content=["']https:\/\/scimee\.vercel\.app\/assets\/og-preview\.jpg["']/
     );
-    expect(htmlContent).toContain('property="og:image:width" content="1200"');
-    expect(htmlContent).toContain('property="og:image:height" content="630"');
-    expect(htmlContent).toContain('property="og:site_name" content="SCIMEE"');
-    expect(htmlContent).toContain('property="og:locale" content="en_IN"');
+    expect(htmlContent).toMatch(/property=["']og:image:width["']\s+content=["']1200["']/);
+    expect(htmlContent).toMatch(/property=["']og:image:height["']\s+content=["']630["']/);
+    expect(htmlContent).toMatch(/property=["']og:site_name["']\s+content=["']SCIMEE["']/);
+    expect(htmlContent).toMatch(/property=["']og:locale["']\s+content=["']en_IN["']/);
   });
 
   it('contains Twitter summary_large_image card metadata for rich Twitter/X previews', () => {
-    expect(htmlContent).toContain('name="twitter:card" content="summary_large_image"');
+    expect(htmlContent).toMatch(/name=["']twitter:card["']\s+content=["']summary_large_image["']/);
     expect(htmlContent).toContain('name="twitter:title"');
     expect(htmlContent).toContain('name="twitter:description"');
-    expect(htmlContent).toContain(
-      'name="twitter:image" content="https://scimee.vercel.app/assets/og-preview.jpg"'
+    expect(htmlContent).toMatch(
+      /name=["']twitter:image["']\s+content=["']https:\/\/scimee\.vercel\.app\/assets\/og-preview\.jpg["']/
     );
   });
 
