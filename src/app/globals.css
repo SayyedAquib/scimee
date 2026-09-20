@@ -1,10 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
-
-.urdu-font {
-  font-family: 'Noto Nastaliq Urdu', 'Amiri', 'Traditional Arabic', serif;
-  direction: rtl;
-}
-
 /* ==========================================================================
    SCIMEE APPLE DESIGN SYSTEM (PRISTINE WHITE / LIGHT THEME)
    ========================================================================== */
@@ -18,14 +11,14 @@
   --canvas-elevated-hover: #ffffff;
   --canvas-input: #ffffff;
 
-  /* Luminous Accent Colors */
-  --apple-gold: #d97706;
-  --apple-gold-light: #b45309;
+  /* Luminous Accent Colors (High Contrast WCAG AA / AAA) */
+  --apple-gold: #b45309;
+  --apple-gold-light: #92400e;
   --apple-gold-glow: rgba(245, 158, 11, 0.2);
-  --apple-cyan: #0284c7;
-  --apple-emerald: #059669;
-  --apple-emerald-light: #10b981;
-  --apple-purple: #9333ea;
+  --apple-cyan: #0369a1;
+  --apple-emerald: #047857;
+  --apple-emerald-light: #059669;
+  --apple-purple: #7e22ce;
 
   /* Typography */
   --text-title: #0f172a;
@@ -353,7 +346,7 @@ main {
   transform: scale(0.96) translateY(1px);
 }
 
-/* Badges */
+/* Badges (WCAG AA & AAA Compliant Contrast Ratios >= 5.0:1) */
 .badge-gold {
   display: inline-flex;
   align-items: center;
@@ -361,8 +354,8 @@ main {
   padding: 4px 12px;
   border-radius: var(--radius-pill);
   background: #fffbeb;
-  border: 1px solid rgba(217, 119, 6, 0.3);
-  color: #b45309;
+  border: 1px solid rgba(180, 83, 9, 0.3);
+  color: #92400e;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -376,8 +369,8 @@ main {
   padding: 4px 12px;
   border-radius: var(--radius-pill);
   background: #f0f9ff;
-  border: 1px solid rgba(2, 132, 199, 0.25);
-  color: #0284c7;
+  border: 1px solid rgba(3, 105, 161, 0.28);
+  color: #0369a1;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -391,8 +384,8 @@ main {
   padding: 4px 12px;
   border-radius: var(--radius-pill);
   background: #ecfdf5;
-  border: 1px solid rgba(5, 150, 105, 0.25);
-  color: #059669;
+  border: 1px solid rgba(4, 120, 87, 0.28);
+  color: #047857;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.04em;

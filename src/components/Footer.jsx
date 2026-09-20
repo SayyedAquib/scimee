@@ -58,7 +58,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                 }}
               >
                 <img
-                  src="/assets/logo.png"
+                  src="/assets/logo.svg"
                   alt="SCIMEE Logo"
                   width="46"
                   height="46"

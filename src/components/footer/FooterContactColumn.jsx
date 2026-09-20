@@ -21,7 +21,7 @@ export default function FooterContactColumn({ contact, location }) {
     <>
       {/* Column 3: Helplines & Direct Calling */}
       <div>
-        <h4
+        <h3
           style={{
             fontSize: '0.88rem',
             fontWeight: '800',
@@ -32,7 +32,7 @@ export default function FooterContactColumn({ contact, location }) {
           }}
         >
           Direct Helplines
-        </h4>
+        </h3>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <div>
@@ -91,7 +91,7 @@ export default function FooterContactColumn({ contact, location }) {
 
       {/* Column 4: Campus Location & Hours */}
       <div>
-        <h4
+        <h3
           style={{
             fontSize: '0.88rem',
             fontWeight: '800',
@@ -102,7 +102,7 @@ export default function FooterContactColumn({ contact, location }) {
           }}
         >
           Campus Address
-        </h4>
+        </h3>
 
         <div
           style={{

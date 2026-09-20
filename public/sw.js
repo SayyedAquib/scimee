@@ -7,6 +7,7 @@ const CACHE_NAME = 'scimee-cache-v1';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
+  '/assets/logo.svg',
   '/assets/logo.png',
   '/manifest.json'
 ];

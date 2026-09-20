@@ -63,7 +63,7 @@ export default function Header({ onOpenCallModal }) {
               }}
             >
               <img
-                src="/assets/logo.png"
+                src="/assets/logo.svg"
                 alt="SCIMEE Logo"
                 width="44"
                 height="44"

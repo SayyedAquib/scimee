@@ -5,7 +5,7 @@ import { getCbtUrl, openCbtPortal } from '../../utils/cbt';
 export default function FooterNavigationColumn({ navList }) {
   return (
     <div>
-      <h4
+      <h3
         style={{
           fontSize: '0.88rem',
           fontWeight: '800',
@@ -16,7 +16,7 @@ export default function FooterNavigationColumn({ navList }) {
         }}
       >
         Quick Navigation
-      </h4>
+      </h3>
       <ul
         style={{
           listStyle: 'none',
@@ -63,7 +63,7 @@ export default function FooterNavigationColumn({ navList }) {
         ))}
       </ul>
 
-      <h4
+      <h3
         style={{
           fontSize: '0.82rem',
           fontWeight: '800',
@@ -78,7 +78,7 @@ export default function FooterNavigationColumn({ navList }) {
       >
         <Laptop size={14} color="#059669" />
         <span>Student Portals</span>
-      </h4>
+      </h3>
       <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <li>
           <a

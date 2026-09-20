@@ -57,7 +57,7 @@ export default function SyllabusSubjectBar({
                     ? '1px solid rgba(217, 119, 6, 0.4)'
                     : '1px solid rgba(0, 0, 0, 0.08)',
                   background: isActive ? '#fffbeb' : '#f8fafc',
-                  color: isActive ? '#b45309' : 'var(--text-sub)',
+                  color: isActive ? '#92400e' : 'var(--text-sub)',
                   fontWeight: isActive ? '800' : '600',
                   fontSize: '0.86rem',
                   cursor: 'pointer',
@@ -74,7 +74,7 @@ export default function SyllabusSubjectBar({
                 <span
                   style={{
                     fontSize: '0.7rem',
-                    background: isActive ? '#d97706' : 'rgba(0, 0, 0, 0.08)',
+                    background: isActive ? '#92400e' : 'rgba(0, 0, 0, 0.08)',
                     color: isActive ? '#ffffff' : 'var(--text-sub)',
                     padding: '1px 6px',
                     borderRadius: '9999px',

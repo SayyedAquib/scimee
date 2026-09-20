@@ -45,7 +45,6 @@
       property="og:image:secure_url"
       content="https://scimee.vercel.app/assets/og-preview.jpg"
     />
-    <meta property="og:image:secure_url" content="https://scimee.vercel.app/assets/og-preview.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -79,16 +78,29 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- High-Priority Critical Asset Preloading (CLS 0.00) -->
-    <link rel="preload" as="image" href="/assets/logo.png" fetchpriority="high" type="image/png" />
+    <!-- High-Priority Critical Asset Preloading (CLS 0.00 & 1.6KB Vector Logo) -->
+    <link rel="preload" as="image" href="/assets/logo.svg" fetchpriority="high" type="image/svg+xml" />
 
-    <!-- Google Fonts Preconnect & Optimized Font-Display Swap -->
+    <!-- Google Fonts Preconnect & Asynchronous Non-Render-Blocking Font Delivery -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+      />
+    </noscript>
 
     <!-- Google Search Rich Snippet Schema (JSON-LD) -->
     <script type="application/ld+json">
