@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+coverage/
+
+# Lock files (large, not useful for AI context)
+package-lock.json
+skills-lock.json
+
+# Generated/binary assets
+*.png
+*.jpg
+*.jpeg
+*.ico
+*.woff
+*.woff2
+*.svg
+*.webp
+
+# Git internals
+.git/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Antigravity internals
+.gemini/
+
+# Google Search Console verification
+public/google*.html
