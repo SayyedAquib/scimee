@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 export default function SyllabusUnitCard({ unit, isExpanded, onToggle, examId }) {
   const unitTitle = examId === 'mhtcet' ? unit?.name : `Unit ${unit?.unitNumber}: ${unit?.name}`;
@@ -67,7 +67,13 @@ export default function SyllabusUnitCard({ unit, isExpanded, onToggle, examId })
           }}
         >
           <span style={{ fontSize: '0.78rem' }}>{isExpanded ? 'Hide' : 'View Topics'}</span>
-          {isExpanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+          <ChevronDown
+            size={15}
+            style={{
+              transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+              transition: 'transform 220ms var(--spring-snappy)'
+            }}
+          />
         </div>
       </button>
 
@@ -79,7 +85,8 @@ export default function SyllabusUnitCard({ unit, isExpanded, onToggle, examId })
             borderTop: '1px solid var(--border-glass)',
             fontSize: '0.88rem',
             color: 'var(--text-sub)',
-            lineHeight: '1.65'
+            lineHeight: '1.65',
+            animation: 'appleAccordionOpen 220ms var(--spring-snappy)'
           }}
         >
           <strong

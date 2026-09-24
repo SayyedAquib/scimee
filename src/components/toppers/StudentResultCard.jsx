@@ -5,6 +5,47 @@ export default function StudentResultCard({ student }) {
   const score = Number(student?.score ?? 0);
   const isRank1 = score >= 500;
 
+  // Visual tier hierarchy for immediate scannability
+  const scoreColor = (() => {
+    if (score >= 500) return '#b45309'; // Luminous Gold
+    if (score >= 380) return '#d97706'; // Deep Amber (Top Performer)
+    if (score >= 350) return '#ea580c'; // Warm Orange (Merit List)
+    return '#047857'; // Emerald Green (Qualified)
+  })();
+
+  const badgeStyle = (() => {
+    if (score >= 500) {
+      return {
+        background: '#fffbeb',
+        color: '#92400e',
+        border: '1px solid rgba(217, 119, 6, 0.3)',
+        iconColor: '#b45309'
+      };
+    }
+    if (score >= 380) {
+      return {
+        background: '#fff7ed',
+        color: '#c2410c',
+        border: '1px solid rgba(234, 88, 12, 0.25)',
+        iconColor: '#ea580c'
+      };
+    }
+    if (score >= 350) {
+      return {
+        background: '#fef3c7',
+        color: '#92400e',
+        border: '1px solid rgba(245, 158, 11, 0.25)',
+        iconColor: '#d97706'
+      };
+    }
+    return {
+      background: '#ecfdf5',
+      color: '#065f46',
+      border: '1px solid rgba(16, 185, 129, 0.25)',
+      iconColor: '#059669'
+    };
+  })();
+
   return (
     <div
       className={isRank1 ? 'bento-card-gold' : 'bento-card'}
@@ -81,7 +122,7 @@ export default function StudentResultCard({ student }) {
         style={{
           fontSize: 'clamp(1.7rem, 3.4vw, 2.1rem)',
           fontWeight: '900',
-          color: isRank1 ? '#b45309' : '#e11d48',
+          color: scoreColor,
           lineHeight: '1.05',
           marginBottom: '6px',
           letterSpacing: '-0.03em'
@@ -97,13 +138,15 @@ export default function StudentResultCard({ student }) {
           alignItems: 'center',
           gap: '4px',
           fontSize: '0.72rem',
-          color: 'var(--text-sub)',
-          background: 'rgba(0, 0, 0, 0.03)',
-          padding: '3px 8px',
-          borderRadius: '6px'
+          fontWeight: '700',
+          padding: '3px 10px',
+          borderRadius: 'var(--radius-pill)',
+          background: badgeStyle.background,
+          color: badgeStyle.color,
+          border: badgeStyle.border
         }}
       >
-        <CheckCircle2 size={11} color="#059669" />
+        <CheckCircle2 size={11} color={badgeStyle.iconColor} />
         <span>{student?.badge}</span>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, ChevronUp, PhoneCall } from 'lucide-react';
+import { HelpCircle, ChevronDown, PhoneCall } from 'lucide-react';
 import faqData from '../data/faq.json';
 
 export default function FAQSection({ onOpenCallModal }) {
@@ -103,7 +103,13 @@ export default function FAQSection({ onOpenCallModal }) {
                         flexShrink: 0
                       }}
                     >
-                      {isOpen ? <ChevronUp size={17} /> : <ChevronDown size={17} />}
+                      <ChevronDown
+                        size={17}
+                        style={{
+                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                          transition: 'transform 220ms var(--spring-snappy)'
+                        }}
+                      />
                     </div>
                   </button>
 
@@ -116,7 +122,8 @@ export default function FAQSection({ onOpenCallModal }) {
                         fontSize: '0.88rem',
                         lineHeight: '1.65',
                         borderTop: '1px solid rgba(217, 119, 6, 0.15)',
-                        paddingTop: '12px'
+                        paddingTop: '12px',
+                        animation: 'appleAccordionOpen 220ms var(--spring-snappy)'
                       }}
                     >
                       {item?.answer}

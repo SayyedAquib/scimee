@@ -62,6 +62,34 @@ html {
   color-scheme: light;
   background-color: var(--canvas-white);
   overflow-x: hidden;
+  scroll-behavior: smooth;
+  font-optical-sizing: auto;
+}
+
+/* Accessible Keyboard Focus Indicators */
+:focus-visible {
+  outline: 2px solid var(--apple-gold);
+  outline-offset: 2px;
+  border-radius: var(--radius-inner);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--apple-gold);
+  outline-offset: 2px;
+}
+
+/* Motion Safety / Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 body {
@@ -131,7 +159,7 @@ section {
     0 20px 48px -12px rgba(0, 0, 0, 0.06),
     0 0 0 1px rgba(255, 255, 255, 0.9);
   padding: clamp(18px, 4vw, 44px);
-  margin-bottom: clamp(24px, 4.5vw, 56px);
+  margin-bottom: clamp(18px, 3.2vw, 38px);
   position: relative;
 }
 
@@ -147,13 +175,16 @@ section {
   border-radius: var(--radius-card);
   border: 1px solid var(--border-glass);
   box-shadow: var(--shadow-card);
-  transition: all 240ms var(--spring-snappy);
+  transition:
+    transform 220ms var(--spring-snappy),
+    box-shadow 220ms ease,
+    border-color 220ms ease;
   overflow: hidden;
   position: relative;
 }
 
 .bento-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   background: #ffffff;
   border-color: var(--border-glass-bright);
   box-shadow: var(--shadow-card-hover);
@@ -166,6 +197,17 @@ section {
   box-shadow:
     0 16px 36px rgba(217, 119, 6, 0.12),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  transition:
+    transform 220ms var(--spring-snappy),
+    box-shadow 220ms ease;
+}
+
+.bento-card-gold:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 22px 46px rgba(217, 119, 6, 0.18),
+    0 0 24px rgba(245, 158, 11, 0.2),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.95);
 }
 
 /* ==========================================================================
@@ -264,8 +306,9 @@ main {
     0 6px 20px rgba(245, 158, 11, 0.35),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
   transition:
-    transform 100ms ease,
-    box-shadow 150ms ease;
+    transform 200ms var(--spring-snappy),
+    box-shadow 200ms ease,
+    filter 150ms ease;
   text-decoration: none;
   user-select: none;
 }
@@ -281,6 +324,7 @@ main {
 .btn-primary:active {
   transform: scale(0.96) translateY(1px);
   box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
+  transition-duration: 50ms;
 }
 
 .btn-secondary {
@@ -298,9 +342,10 @@ main {
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition:
-    transform 100ms ease,
+    transform 200ms var(--spring-snappy),
     background 150ms ease,
-    border-color 150ms ease;
+    border-color 150ms ease,
+    box-shadow 200ms ease;
   text-decoration: none;
   user-select: none;
 }
@@ -315,6 +360,7 @@ main {
 .btn-secondary:active {
   transform: scale(0.96) translateY(1px);
   background: #f1f5f9;
+  transition-duration: 50ms;
 }
 
 .btn-whatsapp {
@@ -332,7 +378,10 @@ main {
   box-shadow:
     0 6px 20px rgba(34, 197, 94, 0.3),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
-  transition: transform 100ms ease;
+  transition:
+    transform 200ms var(--spring-snappy),
+    box-shadow 200ms ease,
+    filter 150ms ease;
   text-decoration: none;
   user-select: none;
 }
@@ -344,6 +393,7 @@ main {
 
 .btn-whatsapp:active {
   transform: scale(0.96) translateY(1px);
+  transition-duration: 50ms;
 }
 
 /* Badges (WCAG AA & AAA Compliant Contrast Ratios >= 5.0:1) */
@@ -479,6 +529,17 @@ main {
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes appleAccordionOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

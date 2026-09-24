@@ -32,6 +32,8 @@ function resolveModalData(context, config) {
 
 export default function PhoneCallModal({ isOpen, onClose, context }) {
   const onCloseRef = useRef(onClose);
+  const touchStartY = useRef(null);
+
   useEffect(() => {
     onCloseRef.current = onClose;
   }, [onClose]);
@@ -62,6 +64,21 @@ export default function PhoneCallModal({ isOpen, onClose, context }) {
       }
     };
   }, [isOpen]);
+
+  const handleTouchStart = (e) => {
+    touchStartY.current = e?.touches?.[0]?.clientY ?? null;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartY.current === null) return;
+    const endY = e?.changedTouches?.[0]?.clientY ?? touchStartY.current;
+    const diff = endY - touchStartY.current;
+    // Dismiss bottom sheet if dragged downwards by > 50px
+    if (diff > 50) {
+      onClose?.();
+    }
+    touchStartY.current = null;
+  };
 
   if (!isOpen) {
     return null;
@@ -102,7 +119,12 @@ export default function PhoneCallModal({ isOpen, onClose, context }) {
         }}
         tabIndex={-1}
       />
-      <div className="modal-card" style={{ position: 'relative', zIndex: 1 }}>
+      <div
+        className="modal-card"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        style={{ position: 'relative', zIndex: 1 }}
+      >
         {/* Apple Mobile Bottom Sheet Grab Handle */}
         <div className="modal-grab-handle" />
 

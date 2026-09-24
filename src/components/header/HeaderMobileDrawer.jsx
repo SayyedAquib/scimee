@@ -11,10 +11,29 @@ export default function HeaderMobileDrawer({
   onOpenCallModal,
   primaryPhoneFormatted
 }) {
+  const touchStartY = React.useRef(null);
+
+  const handleTouchStart = (e) => {
+    touchStartY.current = e?.touches?.[0]?.clientY ?? null;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartY.current === null) return;
+    const endY = e?.changedTouches?.[0]?.clientY ?? touchStartY.current;
+    const diff = endY - touchStartY.current;
+    // Dismiss if swiped up towards navbar by > 30px or pulled down by > 60px
+    if (diff < -30 || diff > 60) {
+      onClose?.();
+    }
+    touchStartY.current = null;
+  };
+
   if (!isOpen) return null;
 
   return (
     <div
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       style={{
         position: 'fixed',
         top: '84px',
@@ -26,11 +45,23 @@ export default function HeaderMobileDrawer({
         WebkitBackdropFilter: 'blur(30px) saturate(200%)',
         borderRadius: '24px',
         border: '1px solid rgba(0, 0, 0, 0.1)',
-        padding: '18px',
+        padding: '14px 18px 18px',
         boxShadow: '0 20px 48px rgba(0, 0, 0, 0.15)',
         animation: 'appleScaleIn 200ms var(--spring-snappy)'
       }}
     >
+      {/* Mobile Swipe / Grab Handle */}
+      <div
+        style={{
+          width: '36px',
+          height: '4px',
+          borderRadius: 'var(--radius-pill)',
+          background: 'rgba(0, 0, 0, 0.18)',
+          margin: '0 auto 10px',
+          cursor: 'grab'
+        }}
+        aria-hidden="true"
+      />
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         {navItems.map((item) => {
           const isActive = activeSection === item?.id;
