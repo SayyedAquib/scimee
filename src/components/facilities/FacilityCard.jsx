@@ -34,7 +34,7 @@ export default function FacilityCard({ feat }) {
 
   return (
     <div
-      className="bento-card"
+      className="bento-card facility-card"
       style={{
         padding: '24px',
         borderRadius: '20px',
@@ -44,6 +44,7 @@ export default function FacilityCard({ feat }) {
       }}
     >
       <div
+        className="facility-icon-box"
         style={{
           width: '46px',
           height: '46px',
@@ -53,7 +54,9 @@ export default function FacilityCard({ feat }) {
           alignItems: 'center',
           justifyContent: 'center',
           flexShrink: 0,
-          border: '1px solid rgba(0, 0, 0, 0.06)'
+          border: '1px solid rgba(0, 0, 0, 0.06)',
+          transition:
+            'transform 200ms var(--spring-snappy), background-color 200ms ease, box-shadow 200ms ease'
         }}
       >
         {getIcon(feat?.icon)}

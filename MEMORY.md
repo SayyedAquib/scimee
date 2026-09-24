@@ -17,12 +17,22 @@
   - Added `:focus-visible` golden indicator for keyboard accessibility.
   - Added `font-optical-sizing: auto` and `scroll-behavior: smooth` to `html`.
   - Refined tactile button press response: instant 50ms pointer-down response, 200ms spring release (`--spring-snappy`).
-  - Elevated card hover states (`.bento-card`, `.bento-card-gold`) with continuous depth and specular glow.
+  - Elevated card hover states (`.bento-card`, `.bento-card-gold`) with continuous depth, specular glow, and top inset reflection.
   - Balanced section vertical spacing on `.bento-section-canvas` (`clamp(18px, 3.2vw, 38px)`).
   - Implemented visual hierarchy for Topper results cards (`StudentResultCard.jsx`): gold (`#b45309`), deep amber (`#d97706`), warm orange (`#ea580c`), emerald (`#047857`) replacing uniform red, with tinted badges.
   - Added `@keyframes appleAccordionOpen` and spring chevron rotation for `FAQSection.jsx` and `SyllabusUnitCard.jsx`.
   - Added mobile grab handle indicator and touch swipe dismissal gestures to `HeaderMobileDrawer.jsx` and `PhoneCallModal.jsx`.
-  - All 126 Vitest tests passing across 27 suites, zero ESLint issues, 100% Prettier compliant, clean production build.
+  - Added hairline top reading scroll progress bar (`ScrollProgress.jsx`) with specular gold gradient.
+  - Added floating glassmorphic Back-to-Top circular action (`ScrollToTop.jsx`) with Apple blur and smooth return.
+  - Added organic radar pulse animation (`@keyframes applePulseRadar`) to Hero CBT simulator live pill with reduced-motion fallback.
+  - Added curated brand text highlight (`::selection` & `::-moz-selection`) in soft gold.
+  - Added tabular numerals (`font-variant-numeric: tabular-nums`) for scores, stats, and badges.
+  - Added Apple 44×44px minimum touch targets on mobile interactive buttons and navigation links.
+  - Added smooth cross-fade (`appleFadeIn`) for course explorer tab switching.
+  - Added global `/` keyboard shortcut and subtle `[ / ]` badge to the syllabus search input.
+  - Added interactive hover elevation to CBT 5-state palette items and facility icon containers.
+  - Added tactile "Copy Address" quick action in Campus Location with 2-second green confirmation feedback.
+  - 100/100 on React Doctor diagnostics (`npm run doctor`), all 131 Vitest tests passing across 29 test suites, zero ESLint issues, 100% Prettier compliant, clean production build.
 - Complete documentation suite created: PRD.md, AGENTS.md, DESIGN.md, ARCHITECTURE.md, RULES.md, DECISIONS.md, TESTING.md, MEMORY.md.
 
 ## Known Problems

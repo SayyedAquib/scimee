@@ -63,6 +63,7 @@ export default function CbtPaletteBanner() {
         }}
       >
         <div
+          className="cbt-palette-item"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -99,6 +100,7 @@ export default function CbtPaletteBanner() {
         </div>
 
         <div
+          className="cbt-palette-item"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -134,6 +136,7 @@ export default function CbtPaletteBanner() {
         </div>
 
         <div
+          className="cbt-palette-item"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -169,6 +172,7 @@ export default function CbtPaletteBanner() {
         </div>
 
         <div
+          className="cbt-palette-item"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -204,6 +208,7 @@ export default function CbtPaletteBanner() {
         </div>
 
         <div
+          className="cbt-palette-item"
           style={{
             display: 'flex',
             alignItems: 'center',

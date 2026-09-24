@@ -8,6 +8,38 @@ export default function SyllabusSubjectBar({
   searchQuery,
   onSearchChange
 }) {
+  const inputRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleKeyDown = (e) => {
+      if (
+        e?.key === '/' &&
+        document.activeElement?.tagName !== 'INPUT' &&
+        document.activeElement?.tagName !== 'TEXTAREA'
+      ) {
+        e?.preventDefault?.();
+        inputRef.current?.focus?.();
+        inputRef.current?.scrollIntoView?.({ behavior: 'smooth', block: 'center' });
+      }
+    };
+
+    try {
+      window.addEventListener('keydown', handleKeyDown);
+    } catch {
+      // Fallback
+    }
+
+    return () => {
+      try {
+        window.removeEventListener('keydown', handleKeyDown);
+      } catch {
+        // Fallback
+      }
+    };
+  }, []);
+
   const getSubjectIcon = (iconName) => {
     switch (iconName) {
       case 'atom':
@@ -101,13 +133,14 @@ export default function SyllabusSubjectBar({
             }}
           />
           <input
+            ref={inputRef}
             type="text"
             placeholder={`Search ${currentSubject?.name || ''} units (e.g. Calculus, Optics)...`}
             value={searchQuery}
             onChange={(e) => onSearchChange(e?.target?.value ?? '')}
             style={{
               width: '100%',
-              padding: '9px 14px 9px 38px',
+              padding: '9px 38px 9px 38px',
               borderRadius: 'var(--radius-pill)',
               background: '#ffffff',
               border: '1px solid rgba(0, 0, 0, 0.12)',
@@ -117,6 +150,28 @@ export default function SyllabusSubjectBar({
               boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.03)'
             }}
           />
+          {!searchQuery && (
+            <kbd
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                right: '12px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                fontSize: '0.68rem',
+                fontWeight: '700',
+                color: 'var(--text-tertiary)',
+                background: 'rgba(0, 0, 0, 0.04)',
+                border: '1px solid rgba(0, 0, 0, 0.08)',
+                padding: '1px 6px',
+                borderRadius: '5px',
+                fontFamily: 'inherit',
+                pointerEvents: 'none'
+              }}
+            >
+              /
+            </kbd>
+          )}
         </div>
       </div>
     </div>

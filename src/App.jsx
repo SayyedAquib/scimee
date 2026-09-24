@@ -12,6 +12,8 @@ import Footer from './components/Footer';
 import PhoneCallModal from './components/PhoneCallModal';
 import MobileActionBar from './components/MobileActionBar';
 import NetworkStatus from './components/NetworkStatus';
+import ScrollProgress from './components/ScrollProgress';
+import ScrollToTop from './components/ScrollToTop';
 
 export default function App() {
   const [isCallModalOpen, setIsCallModalOpen] = useState(false);
@@ -31,6 +33,9 @@ export default function App() {
       className="apple-bg-mesh"
       style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
     >
+      {/* Specular Hairline Reading Scroll Progress */}
+      <ScrollProgress />
+
       {/* Offline / Online Network Connectivity Banner */}
       <NetworkStatus />
 
@@ -54,6 +59,9 @@ export default function App() {
 
       {/* Direct Phone Call Popup Modal (Apple Sheet) */}
       <PhoneCallModal isOpen={isCallModalOpen} onClose={closeCallModal} context={modalContext} />
+
+      {/* Floating Glassmorphic Back to Top Action */}
+      <ScrollToTop />
 
       {/* Sticky Bottom Action Bar for Mobile */}
       <MobileActionBar onOpenCallModal={() => openCallModal('mobile_bar')} />

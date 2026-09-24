@@ -39,4 +39,21 @@ describe('MapLocation Component', () => {
     expect(iframe).toBeInTheDocument();
     expect(iframe).toHaveAttribute('src', siteConfig.location.googleMapsEmbed);
   });
+
+  it('copies address and shows Copied! confirmation when Copy Address button is clicked', async () => {
+    Object.defineProperty(navigator, 'clipboard', {
+      value: {
+        writeText: vi.fn().mockImplementation(() => Promise.resolve())
+      },
+      writable: true,
+      configurable: true
+    });
+
+    render(<MapLocation onOpenCallModal={vi.fn()} />);
+    const copyBtn = screen.getByRole('button', { name: /Copy Address/i });
+    await userEvent.click(copyBtn);
+
+    expect(navigator.clipboard.writeText).toHaveBeenCalled();
+    expect(screen.getByText(/Copied!/i)).toBeInTheDocument();
+  });
 });

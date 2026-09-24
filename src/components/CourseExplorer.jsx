@@ -97,10 +97,12 @@ export default function CourseExplorer({ onOpenCallModal }) {
 
           {/* Active Course Bento Card */}
           <div
+            key={selectedId}
             className="bento-card"
             style={{
               padding: 'clamp(22px, 4.5vw, 36px)',
-              borderRadius: '24px'
+              borderRadius: '24px',
+              animation: 'appleFadeIn 220ms ease'
             }}
           >
             <div

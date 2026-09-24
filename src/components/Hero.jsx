@@ -81,15 +81,7 @@ export default function Hero({ onOpenCallModal }) {
               }}
               title="Launch SCIMEE NTA NEET CBT Online Test Simulator"
             >
-              <span
-                style={{
-                  width: '7px',
-                  height: '7px',
-                  borderRadius: '50%',
-                  background: '#10b981',
-                  display: 'inline-block'
-                }}
-              />
+              <span className="live-radar-dot" />
               <Laptop size={14} color="#059669" />
               <span style={{ fontSize: '0.78rem', fontWeight: '800', color: '#065f46' }}>
                 NTA NEET CBT Simulator Live

@@ -1,8 +1,9 @@
-import React from 'react';
-import { MapPin, Navigation, Clock, PhoneCall, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { MapPin, Navigation, Clock, PhoneCall, ExternalLink, Copy, Check } from 'lucide-react';
 import siteConfig from '../data/site-config.json';
 
 export default function MapLocation({ onOpenCallModal }) {
+  const [copied, setCopied] = useState(false);
   const googleMapsUrl =
     siteConfig?.location?.googleMapsUrl ?? 'https://maps.google.com/?cid=12140685933939634997';
   const embedUrl =
@@ -20,6 +21,19 @@ export default function MapLocation({ onOpenCallModal }) {
   const pincode = siteConfig?.location?.pincode ?? '425201';
   const operatingHoursWeekdays =
     siteConfig?.contact?.operatingHours?.weekdays ?? '8:00 AM – 8:30 PM';
+
+  const handleCopyAddress = async () => {
+    const fullAddress = `${brandFullName}, ${addressLine1}, ${addressLine2}, ${city}, ${state} - ${pincode}`;
+    try {
+      if (typeof navigator !== 'undefined' && navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(fullAddress);
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2200);
+    } catch {
+      // Fallback
+    }
+  };
 
   return (
     <section id="location" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
@@ -139,13 +153,45 @@ export default function MapLocation({ onOpenCallModal }) {
                     justifyContent: 'center',
                     gap: '6px',
                     textDecoration: 'none',
-                    flex: '1 1 170px'
+                    flex: '1 1 160px'
                   }}
                 >
                   <Navigation size={14} style={{ flexShrink: 0 }} />
                   <span>Open in Google Maps</span>
                   <ExternalLink size={12} style={{ flexShrink: 0 }} />
                 </a>
+
+                <button
+                  type="button"
+                  onClick={handleCopyAddress}
+                  className="btn-secondary"
+                  style={{
+                    padding: '10px 16px',
+                    fontSize: '0.86rem',
+                    height: '42px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    flex: '1 1 135px',
+                    color: copied ? '#047857' : 'var(--text-title)',
+                    borderColor: copied ? 'rgba(16, 185, 129, 0.4)' : undefined,
+                    background: copied ? '#ecfdf5' : undefined
+                  }}
+                  title="Copy campus address to clipboard"
+                >
+                  {copied ? (
+                    <>
+                      <Check size={14} color="#059669" style={{ flexShrink: 0 }} />
+                      <span style={{ fontWeight: '800' }}>Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={14} color="#d97706" style={{ flexShrink: 0 }} />
+                      <span>Copy Address</span>
+                    </>
+                  )}
+                </button>
 
                 <button
                   onClick={() => onOpenCallModal?.()}
@@ -158,7 +204,7 @@ export default function MapLocation({ onOpenCallModal }) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '6px',
-                    flex: '1 1 150px'
+                    flex: '1 1 140px'
                   }}
                 >
                   <PhoneCall size={14} style={{ flexShrink: 0 }} />
