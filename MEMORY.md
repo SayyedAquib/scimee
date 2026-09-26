@@ -24,6 +24,9 @@
 
 ## Recently Completed
 
+- **Desktop Navigation Sliding Pill Indicator Fix (`HeaderDesktopNav.jsx`)**:
+  - Replaced the distorted `width: 1px` + `scaleX(width)` transform with direct dynamic `width` (`${indicatorStyle.width}px`) and pure `translate3d(left, 0, 0)` translation.
+  - Eliminated horizontal border-radius stretching (which previously scaled the pill's border-radius by 68x into a distorted ellipse) and box-shadow blur elongation, restoring crisp, rounded squircle pill borders.
 - **PageSpeed Insights 100/100 Mobile TBT & Payload Optimization (ADR 10)**:
   - **Scheduler Bundling (`vite.config.js`)**: Included `scheduler` in `vendor-react` chunk to eliminate split `vendor-Bb8JjhAW.js` (saving 259 ms of CPU task time).
   - **True Deferred Component Mounting (`App.jsx`)**: Lazy components only mount upon interaction or after a 2,500 ms idle callback, reducing mobile TTI from 5.0s to ~1.2s and keeping `gtag.js` outside the TBT accounting window.
