@@ -18,17 +18,7 @@
     <meta name="google-site-verification" content="HP0leUBPcfgag-pSg6t1xmbOM-EJynQ3PItWzzheD08" />
     <link rel="canonical" href="https://scimee.vercel.app/" />
 
-    <!-- Google tag (gtag.js) - Google Analytics 4 -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DP9LT3BX5P"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'G-DP9LT3BX5P');
-    </script>
 
     <!-- Open Graph / WhatsApp / Facebook / LinkedIn / Telegram Rich Preview Tags -->
     <meta property="og:type" content="website" />
@@ -88,11 +78,17 @@
       type="image/svg+xml"
     />
 
-    <!-- Google Fonts Preconnect & Asynchronous Non-Render-Blocking Font Delivery -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2"
+      crossorigin
+    />
     <link
       rel="preload"
       as="style"
@@ -288,7 +284,145 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div
+        class="apple-bg-mesh"
+        style="position: relative; min-height: 100vh; display: flex; flex-direction: column;"
+      >
+        <div class="floating-navbar-wrapper">
+          <header
+            class="floating-navbar"
+            style="background: rgba(255, 255, 255, 0.85); box-shadow: 0 14px 34px -8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06);"
+          >
+            <a
+              href="#about"
+              style="display: flex; align-items: center; gap: 10px; text-decoration: none;"
+            >
+              <div
+                style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"
+              >
+                <img
+                  src="/assets/logo.svg"
+                  alt="SCIMEE Logo"
+                  width="44"
+                  height="44"
+                  style="width: 100%; height: 100%; object-fit: contain; display: block;"
+                />
+              </div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <span
+                    style="font-size: 1.2rem; font-weight: 900; color: var(--text-heading); letter-spacing: -0.02em; line-height: 1;"
+                  >
+                    SCIMEE
+                  </span>
+                  <span class="badge-gold" style="padding: 1px 6px; font-size: 0.6rem;">
+                    NEET 2026
+                  </span>
+                </div>
+                <p
+                  style="font-size: 0.68rem; color: var(--text-muted); font-weight: 600; line-height: 1; margin-top: 2px;"
+                >
+                  By Ansari Rehan Ahmed
+                </p>
+              </div>
+            </a>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <a
+                href="tel:+919860647895"
+                class="btn-primary"
+                style="padding: 8px 18px; font-size: 0.84rem; text-decoration: none; border-radius: var(--radius-pill);"
+              >
+                Direct Call
+              </a>
+            </div>
+          </header>
+        </div>
+        <main style="flex: 1;">
+          <section
+            id="about"
+            style="position: relative; padding-top: clamp(36px, 6vw, 64px); padding-bottom: clamp(48px, 8vw, 80px); overflow: hidden;"
+          >
+            <div class="container-custom" style="position: relative; z-index: 1;">
+              <div style="max-width: 960px; margin: 0 auto; text-align: center;">
+                <div class="hero-badges-row">
+                  <div
+                    style="display: inline-flex; align-items: center; background: #fffbeb; border: 1px solid rgba(217, 119, 6, 0.28); padding: 8px 22px; border-radius: var(--radius-pill); box-shadow: 0 4px 16px rgba(245, 158, 11, 0.12);"
+                  >
+                    <span
+                      class="urdu-font"
+                      style="font-size: 1.05rem; color: #92400e; font-weight: 700; line-height: 1.4; white-space: nowrap;"
+                    >
+                      ہم جذبہِ تعمیر جہاں لے کے اٹھے ہیں
+                    </span>
+                  </div>
+                  <a
+                    href="https://cbtneet.vercel.app/tests"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 1px solid rgba(16, 185, 129, 0.35); padding: 7px 16px; border-radius: var(--radius-pill); text-decoration: none; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.12);"
+                    title="Launch SCIMEE NTA NEET CBT Online Test Simulator"
+                  >
+                    <span class="live-radar-dot"></span>
+                    <span style="font-size: 0.78rem; font-weight: 800; color: #065f46;">
+                      NTA NEET CBT Simulator Live
+                    </span>
+                  </a>
+                </div>
+                <h1
+                  style="font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 900; line-height: 1.06; letter-spacing: -0.04em; margin-bottom: 20px; color: var(--text-heading);"
+                >
+                  Crack NEET-UG with Proven Mastery at <span
+                    style="background: linear-gradient(135deg, #d97706 0%, #b45309 60%, #92400e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;"
+                  >SCIMEE</span>
+                </h1>
+                <p
+                  style="font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--text-sub); max-width: 780px; margin: 0 auto 36px; line-height: 1.6; letter-spacing: -0.01em;"
+                >
+                  Under the mentorship of <strong style="color: var(--text-heading);">Ansari Rehan Ahmed</strong>, we prepare medical aspirants through conceptual clarity, weekly OMR examination drills, and dedicated on-campus reading room facilities.
+                </p>
+                <div
+                  style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; margin-bottom: 48px;"
+                >
+                  <a
+                    href="tel:+919860647895"
+                    class="btn-primary"
+                    style="padding: 13px 24px; font-size: 0.94rem; height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;"
+                  >
+                    <span>Direct Call Helpline</span>
+                  </a>
+                  <a
+                    href="#results"
+                    class="btn-secondary"
+                    style="padding: 13px 24px; font-size: 0.94rem; height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;"
+                  >
+                    <span>100% NEET 2026 Results</span>
+                  </a>
+                  <a
+                    href="#syllabus"
+                    class="btn-secondary"
+                    style="padding: 13px 24px; font-size: 0.94rem; height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;"
+                  >
+                    <span>NMC 2026 Syllabus</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Google tag (gtag.js) - Google Analytics 4 (Deferred to End of Body for Zero Main-Thread Blocking) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DP9LT3BX5P"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-DP9LT3BX5P');
+    </script>
   </body>
 </html>

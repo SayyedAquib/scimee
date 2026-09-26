@@ -22,6 +22,7 @@ export default function Hero({ onOpenCallModal }) {
         <div style={{ maxWidth: '960px', margin: '0 auto', textAlign: 'center' }}>
           {/* Header Badges Row */}
           <div
+            className="hero-badges-row"
             style={{
               display: 'flex',
               flexWrap: 'wrap',
