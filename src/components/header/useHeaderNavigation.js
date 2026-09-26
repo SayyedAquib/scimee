@@ -91,8 +91,22 @@ export function useHeaderNavigation(navItems) {
       }
     };
 
+    let rafId = null;
+
+    const onScroll = () => {
+      if (typeof window?.requestAnimationFrame === 'function') {
+        if (rafId) return;
+        rafId = window.requestAnimationFrame(() => {
+          rafId = null;
+          handleScroll();
+        });
+      } else {
+        handleScroll();
+      }
+    };
+
     try {
-      window?.addEventListener?.('scroll', handleScroll, { passive: true });
+      window?.addEventListener?.('scroll', onScroll, { passive: true });
       handleScroll();
     } catch {
       // Fallback
@@ -100,7 +114,10 @@ export function useHeaderNavigation(navItems) {
 
     return () => {
       try {
-        window?.removeEventListener?.('scroll', handleScroll);
+        window?.removeEventListener?.('scroll', onScroll);
+        if (rafId && typeof window?.cancelAnimationFrame === 'function') {
+          window.cancelAnimationFrame(rafId);
+        }
       } catch {
         // Cleanup safety
       }

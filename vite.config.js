@@ -1,8 +1,34 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+function inlineCss() {
+  return {
+    name: 'vite-plugin-inline-css',
+    enforce: 'post',
+    apply: 'build',
+    transformIndexHtml(html, { bundle }) {
+      if (!bundle) return html;
+      let cssCode = '';
+      for (const [fileName, chunk] of Object.entries(bundle)) {
+        if (
+          fileName.endsWith('.css') &&
+          chunk.type === 'asset' &&
+          typeof chunk.source === 'string'
+        ) {
+          cssCode += chunk.source;
+        }
+      }
+      if (cssCode) {
+        html = html.replace(/<link rel="stylesheet"[^>]+href="[^"]+\.css"[^>]*>/g, '');
+        html = html.replace('</head>', `<style>${cssCode}</style></head>`);
+      }
+      return html;
+    }
+  };
+}
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), inlineCss()],
   server: {
     port: 3000,
     open: false
