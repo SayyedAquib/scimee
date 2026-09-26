@@ -57,20 +57,22 @@ src/components/
 
 | Test File | What It Tests |
 |---|---|
-| `App.test.jsx` | Root app renders without crashing |
+| `App.test.jsx` | Root app renders core sections (async Suspense) and modal workflow |
 | `Header.test.jsx` | Navbar renders, nav links present, call button works |
 | `Hero.test.jsx` | Hero section renders with stats and CTAs |
-| `ToppersSection.test.jsx` | Student data renders correctly |
-| `CourseExplorer.test.jsx` | Course cards render with correct data |
+| `ToppersSection.test.jsx` | Student data renders correctly, filters by rank/score |
+| `CourseExplorer.test.jsx` | Course cards render with correct data, tab switching |
 | `SyllabusExplorer.test.jsx` | Syllabus explorer renders, accordion interaction |
-| `FacilitiesSection.test.jsx` | Facilities cards render |
-| `CbtShowcaseSection.test.jsx` | CBT section renders with portal link |
+| `FacilitiesSection.test.jsx` | Facilities cards render, campus visit CTA |
+| `CbtShowcaseSection.test.jsx` | CBT section renders with 5-state palette and portal link |
 | `FAQSection.test.jsx` | FAQ items render, accordion behavior |
-| `MapLocation.test.jsx` | Map embed and address render |
-| `Footer.test.jsx` | Footer renders with contact info |
+| `MapLocation.test.jsx` | Map embed and address render, copy address button |
+| `Footer.test.jsx` | Footer renders with contact info, Urdu motto |
 | `PhoneCallModal.test.jsx` | Modal opens/closes, phone numbers display |
 | `MobileActionBar.test.jsx` | Mobile bar renders on small screens |
 | `NetworkStatus.test.jsx` | Network banner behavior |
+| `ScrollProgress.test.jsx` | Scroll progress indicator updates on window scroll |
+| `ScrollToTop.test.jsx` | Back-to-top button appears past 500px and scrolls to top |
 | `ErrorBoundary.test.jsx` | Error UI renders on crash, reload button works |
 | `analytics.test.js` | `trackEvent()` handles valid/invalid inputs |
 | `whatsapp.test.js` | `getWhatsAppUrl()` generates correct contextual URLs |
@@ -107,6 +109,12 @@ src/components/
 | `a11yEdgeCases.test.jsx` | Accessibility edge cases — ARIA labels, keyboard navigation, screen reader text |
 
 > **Note**: These are rendered in happy-dom, not a real browser. They test component integration, not actual browser behavior.
+
+### Testing Lazy-Loaded Components (Suspense)
+
+Below-the-fold landing page components are lazy-loaded via `React.lazy()` and `<Suspense>`. When writing integration tests that render `<App />` (such as `App.test.jsx` or `e2eJourney.test.jsx`):
+- **Do not** use synchronous queries like `screen.getByPlaceholderText` or `screen.getByText` for lazy-loaded sections.
+- **Do** use asynchronous `await screen.findBy*` or `await screen.findAllBy*` queries with explicit timeouts (e.g., `{ timeout: 10000 }`) so the test does not time out under parallel test execution load while dynamic imports resolve.
 
 ## API Testing
 

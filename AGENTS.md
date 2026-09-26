@@ -137,6 +137,8 @@ scimee/
 ## Architecture Conventions
 
 - **Single-page SPA** — one HTML entry, no routing library, hash-based section navigation
+- **Lazy loading** — below-the-fold landing page components (`SyllabusExplorer`, `FacilitiesSection`, `CbtShowcaseSection`, `MapLocation`, `FAQSection`, `Footer`) are lazy-loaded via `React.lazy()` and `<Suspense>` to keep initial JS payload small (~63 KB)
+- **Inlined production CSS** — production CSS is automatically inlined into `<style>` inside `<head>` by `vite-plugin-inline-css` in `vite.config.js` to eliminate render-blocking stylesheets
 - **State management** — local `useState` only (no Redux, Zustand, or Context API)
 - **Component composition** — larger sections (Header, Modal) decompose into sub-components in named subdirectories
 - **Utility modules** — cross-cutting concerns (analytics, WhatsApp, CBT) are in `src/utils/`
@@ -179,6 +181,17 @@ Before considering any task complete:
 4. Production build must succeed: `npm run build`
 5. New components should have co-located test files
 
+## Mandatory Documentation Updates (All AI Agents / LLMs)
+
+> [!IMPORTANT]
+> **It does not matter which LLM, model, or tool you are** (Claude, Gemini, GPT, etc.) — you MUST keep the documentation suite synchronized with the code. Never complete a task without updating the relevant documentation:
+>
+> 1. **`MEMORY.md`**: Update after **every** task (Current Status, Recently Completed, Next Steps).
+> 2. **`DECISIONS.md`**: Add an Architecture Decision Record (ADR) whenever any architectural, build, or structural choice is made.
+> 3. **`ARCHITECTURE.md`**: Update when component structures, data flow, bundling, or deployment configurations change.
+> 4. **`TESTING.md`**: Update when test counts, test files, or testing patterns change.
+> 5. **`RULES.md` / `AGENTS.md`**: Update when new constraints, patterns, or commands are introduced.
+
 ## Verification Checklist
 
 Run these commands before committing:
@@ -190,7 +203,7 @@ npm test
 npm run build
 ```
 
-All four must pass. CI (`ci.yml`) runs the same checks on every push and PR.
+All four must pass. In addition, verify that **`MEMORY.md`** and relevant documentation files have been updated with your changes. CI (`ci.yml`) runs the same code checks on every push and PR.
 
 ## Forbidden Changes
 

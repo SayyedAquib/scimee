@@ -7,6 +7,7 @@
 - Every component must be defensive: use `?.` and `??` for all data access
 - Keep the bundle lean — do not add dependencies without strong justification
 - All changes must pass the CI pipeline: lint → format → test → build
+- **Documentation Maintenance (Mandatory for ALL AI Agents/LLMs)**: Regardless of which AI model or tool you are, you must update `MEMORY.md`, `DECISIONS.md`, and other affected docs whenever making code, architecture, or test changes. Never consider a task done without updating the documentation.
 
 ## Code Organization
 

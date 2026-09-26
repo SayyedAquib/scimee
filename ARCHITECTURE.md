@@ -210,13 +210,16 @@ sequenceDiagram
 | Build-time | JSON data bundling, Vite compilation | Runtime data fetching |
 | Content management | JSON file edits in `src/data/` | No CMS, no admin panel |
 
-## Scalability Considerations
+## Scalability & Performance Architecture
 
-- **Bundle splitting**: Manual chunks (`vendor-react`, `vendor-icons`, `vendor`) keep initial load fast
-- **Font loading**: Non-render-blocking async font delivery prevents FOIT
-- **Image assets**: SVG logo (1.6KB), preloaded with `fetchpriority="high"` for zero CLS
-- **PWA caching**: Network-first strategy with cache fallback ensures offline resilience
-- **CDN**: Vercel edge serves assets globally with immutable caching headers for hashed files
+- **Dynamic Code-Splitting**: Below-the-fold sections (`SyllabusExplorer`, `FacilitiesSection`, `CbtShowcaseSection`, `MapLocation`, `FAQSection`, `Footer`) are lazy-loaded via `React.lazy()` and `<Suspense>`, reducing initial JS by 57.1% and isolating the 45 KB `syllabus.json` file.
+- **Inlined Production CSS**: A custom Vite build plugin (`inlineCss` in `vite.config.js`) inlines compiled CSS (~11.4 KB raw, 3.1 KB gz) directly into `<style>` in `dist/index.html`, eliminating 100% of render-blocking stylesheets.
+- **Forced Reflow Prevention**: Scroll listeners in `useHeaderNavigation.js` are throttled via `requestAnimationFrame`, batching geometry calculations to vsync ticks.
+- **Bundle Splitting**: Manual vendor chunks (`vendor-react`, `vendor-icons`, `vendor`) in `vite.config.js` ensure long-term caching of vendor code.
+- **Font Optimization**: Google Fonts request is pruned to active weights only with `<link rel="dns-prefetch">` and async `media="print"` delivery.
+- **Image Assets**: SVG logo (1.6KB), preloaded with `fetchpriority="high"` for zero CLS.
+- **PWA Caching**: Network-first strategy with cache fallback ensures offline resilience.
+- **CDN**: Vercel edge serves assets globally with immutable caching headers for hashed files.
 
 ## Security Architecture
 

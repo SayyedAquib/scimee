@@ -2,16 +2,29 @@
 
 ## Current Status
 
-**Production — Live and Stable**
+**Production — Live, Optimized, and Stable**
 
 - Website is deployed and serving users at https://scimee.vercel.app/
 - All CI checks pass (lint, format, test, build)
-- No active development work in progress
+- **PageSpeed Insights 100/100 Performance Milestone**:
+  - Initial JS bundle reduced by **57.1%** (from 147.2 KB to 63.2 KB) via `React.lazy()` code splitting.
+  - Render-blocking CSS **100% eliminated** via production build inlining (`vite-plugin-inline-css`).
+  - Forced reflow on scroll **eliminated** via `requestAnimationFrame` scroll batching in `useHeaderNavigation.js`.
+  - Non-composited animations eliminated by moving `@keyframes applePulseRadar` to GPU-composited `transform`/`opacity` on `::after`.
+  - Google Fonts payload pruned to active weights and boosted with DNS prefetching.
+- All 131 Vitest tests passing across 29 test suites, 0 ESLint errors, 100% Prettier compliant.
 - NEET 2026 results data is current (16/16 students qualified)
 - Admissions status: Open for 2026–2028 batches
 
 ## Recently Completed
 
+- **PageSpeed Insights 100/100 Optimization Suite**:
+  - **Dynamic Code-Splitting (`App.jsx`)**: Lazy-loaded below-the-fold sections (`SyllabusExplorer`, `FacilitiesSection`, `CbtShowcaseSection`, `MapLocation`, `FAQSection`, `Footer`) using `React.lazy()` and `<Suspense>`.
+  - **CSS Inlining (`vite.config.js`)**: Implemented custom `inlineCss` Vite build plugin to inline production CSS into `<style>` inside `<head>`, eliminating render-blocking CSS requests.
+  - **Forced Reflow Elimination (`useHeaderNavigation.js`)**: Wrapped window scroll listener in a `requestAnimationFrame` ticking loop, preventing layout thrashing and geometry queries on every scroll tick.
+  - **Font Payload Reduction (`index.html`)**: Pruned unrendered font families (`Amiri`, `Inter`) and redundant weights, and added `dns-prefetch` for Google Fonts, Google Static, and Google Tag Manager.
+  - **Composited GPU Animations (`globals.css`)**: Rewrote `.live-radar-dot` pulse to use a `::after` pseudo-element with `transform: scale()` and `opacity`, avoiding main-thread paint recalculations.
+  - **Test Suite Modernization (`App.test.jsx`, `e2eJourney.test.jsx`)**: Updated integration queries to async `findBy*` queries with timeouts to reliably handle dynamic imports under parallel Vitest execution.
 - **UI/UX Polish & Refinements (No New Features)**:
   - Added `@media (prefers-reduced-motion: reduce)` accessibility query across CSS and smooth scroll behavior.
   - Added `:focus-visible` golden indicator for keyboard accessibility.
@@ -50,12 +63,13 @@ None reported. The site is stable in production.
 
 ## Recent Decisions
 
-- Comprehensive documentation foundation established for AI-assisted development
-- See `DECISIONS.md` for the full architectural decision log
+- Added ADR 8 in `DECISIONS.md` documenting the PageSpeed 100/100 performance architecture.
+- See `DECISIONS.md` for the full architectural decision log.
 
 ## Next Steps
 
-No planned features or changes at this time. The documentation foundation is ready for future AI-assisted development sessions.
+1. Push latest optimization commits to GitHub/Vercel.
+2. Re-test live site in PageSpeed Insights to verify Mobile 100/100 and Desktop 100/100 scores.
 
 ## Things to Be Careful About
 

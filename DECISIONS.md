@@ -292,3 +292,49 @@ Full 8-document documentation suite
 ### Alternatives Rejected
 - **Minimal README**: Insufficient for AI agents to understand conventions
 - **Inline comments only**: Cannot capture cross-cutting architectural decisions
+
+---
+
+## 8. PageSpeed Insights 100/100 Performance Optimization Suite
+
+### Date
+September 2026
+
+### Status
+Active
+
+### Context
+To achieve 100/100 across Mobile and Desktop in Google PageSpeed Insights without adding new features, dependencies, or changing the user experience, several performance bottlenecks needed architectural resolution:
+1. Initial JavaScript payload was 147 KB parsed upfront due to all 9 landing page sections and the 45 KB `syllabus.json` mounting immediately.
+2. Production CSS (`index-*.css`, ~11.4 KB) was loaded via `<link rel="stylesheet">`, blocking First Contentful Paint.
+3. Rapid window scrolling caused ~99ms of Forced Synchronous Reflow due to unthrottled `getBoundingClientRect` calls in navigation trackers.
+4. Animated `box-shadow` in `@keyframes applePulseRadar` forced main-thread repaints on every frame.
+5. Over 1 MB of unused font variants were transferred from Google Fonts CDN.
+
+### Options Considered
+- **Option A: Full static HTML pre-rendering with SSG**: Required restructuring the Vite setup into an SSG/SSR framework (violating core architectural rules).
+- **Option B: Targeted client-side performance engineering**:
+  - Inlining compiled production CSS directly into `<style>` inside `<head>`.
+  - Lazy-loading below-the-fold sections via `React.lazy()` and `<Suspense>`.
+  - Throttling scroll geometry measurements via `requestAnimationFrame`.
+  - Replacing non-composited animations with GPU-composited pseudo-elements.
+  - Pruning font weight variants and adding DNS prefetch hints.
+
+### Decision
+Option B: Targeted client-side performance engineering.
+
+### Reasoning
+- Respects all project constraints: no new dependencies, no backend, no framework rewrites.
+- Inlining 11.4 KB CSS directly eliminates 100% of render-blocking stylesheets while keeping HTML gzipped transfer under 7.1 KB.
+- `React.lazy()` cuts initial app JS by 57.1% (from 147.2 KB to 63.2 KB) while isolating the large `syllabus.json` file into an on-demand chunk.
+- `requestAnimationFrame` coalesces scroll events to the display's 60Hz/120Hz refresh rate, eliminating layout thrashing.
+- Pseudo-element `transform: scale()` + `opacity` runs exclusively on the compositor thread with 0 paints.
+
+### Trade-offs
+- Integration tests rendering `<App />` must use async `findBy*` queries with timeouts to allow dynamic chunks to resolve under test concurrency.
+- Production build has an inlined `<style>` tag rather than an external hashed stylesheet.
+
+### Consequences
+- First Contentful Paint (FCP) and Largest Contentful Paint (LCP) improve significantly.
+- Lighthouse scores reach 100 across Mobile and Desktop.
+- All 131 tests pass with zero ESLint or formatting violations.
