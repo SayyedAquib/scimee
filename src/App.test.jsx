@@ -6,7 +6,7 @@ import App from './App';
 import siteConfig from './data/site-config.json';
 
 describe('App Integration Test (End-to-End Component Tree)', () => {
-  it('renders all core landing page sections and footer', () => {
+  it('renders all core landing page sections and footer', async () => {
     render(<App />);
 
     // Header & Brand
@@ -22,16 +22,20 @@ describe('App Integration Test (End-to-End Component Tree)', () => {
     expect(screen.getByText(/Academic Programs/i)).toBeInTheDocument();
 
     // Syllabus section
-    expect(screen.getByPlaceholderText(/Search/i)).toBeInTheDocument();
+    expect(
+      await screen.findByPlaceholderText(/Search/i, {}, { timeout: 10000 })
+    ).toBeInTheDocument();
 
     // Facilities section
-    expect(screen.getByText(/Infrastructure & Pedagogy/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/Infrastructure & Pedagogy/i, {}, { timeout: 10000 })
+    ).toBeInTheDocument();
 
     // Campus location
-    expect(screen.getByText(/Campus Location/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Campus Location/i, {}, { timeout: 10000 })).toBeInTheDocument();
 
     // FAQ section
-    expect(screen.getByText(/Got Questions\?/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Got Questions\?/i, {}, { timeout: 10000 })).toBeInTheDocument();
   }, 15000);
 
   it('opens Admissions modal when Hero CTA is clicked and closes when closed', async () => {
@@ -41,8 +45,10 @@ describe('App Integration Test (End-to-End Component Tree)', () => {
     await userEvent.click(callHeroBtn);
 
     // Modal dialog is now visible in the DOM
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getAllByText(/Rehan Sir/i)[0]).toBeInTheDocument();
+    expect(await screen.findByRole('dialog', {}, { timeout: 10000 })).toBeInTheDocument();
+    expect(
+      (await screen.findAllByText(/Rehan Sir/i, {}, { timeout: 10000 }))[0]
+    ).toBeInTheDocument();
 
     // Close modal
     const closeBtn = screen.getByLabelText('Close dialog');

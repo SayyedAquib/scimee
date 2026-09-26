@@ -1,19 +1,21 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, lazy, Suspense } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ToppersSection from './components/ToppersSection';
 import CourseExplorer from './components/CourseExplorer';
-import SyllabusExplorer from './components/SyllabusExplorer';
-import FacilitiesSection from './components/FacilitiesSection';
-import CbtShowcaseSection from './components/CbtShowcaseSection';
-import MapLocation from './components/MapLocation';
-import FAQSection from './components/FAQSection';
-import Footer from './components/Footer';
 import PhoneCallModal from './components/PhoneCallModal';
 import MobileActionBar from './components/MobileActionBar';
 import NetworkStatus from './components/NetworkStatus';
 import ScrollProgress from './components/ScrollProgress';
 import ScrollToTop from './components/ScrollToTop';
+
+// Lazy-load below-the-fold sections for faster initial paint
+const SyllabusExplorer = lazy(() => import('./components/SyllabusExplorer'));
+const FacilitiesSection = lazy(() => import('./components/FacilitiesSection'));
+const CbtShowcaseSection = lazy(() => import('./components/CbtShowcaseSection'));
+const MapLocation = lazy(() => import('./components/MapLocation'));
+const FAQSection = lazy(() => import('./components/FAQSection'));
+const Footer = lazy(() => import('./components/Footer'));
 
 export default function App() {
   const [isCallModalOpen, setIsCallModalOpen] = useState(false);
@@ -47,15 +49,19 @@ export default function App() {
         <Hero onOpenCallModal={() => openCallModal('hero')} />
         <ToppersSection onOpenCallModal={() => openCallModal('toppers')} />
         <CourseExplorer onOpenCallModal={() => openCallModal('courses')} />
-        <SyllabusExplorer onOpenCallModal={() => openCallModal('syllabus')} />
-        <FacilitiesSection onOpenCallModal={() => openCallModal('facilities')} />
-        <CbtShowcaseSection />
-        <MapLocation onOpenCallModal={() => openCallModal('location')} />
-        <FAQSection onOpenCallModal={() => openCallModal('faq')} />
+        <Suspense fallback={null}>
+          <SyllabusExplorer onOpenCallModal={() => openCallModal('syllabus')} />
+          <FacilitiesSection onOpenCallModal={() => openCallModal('facilities')} />
+          <CbtShowcaseSection />
+          <MapLocation onOpenCallModal={() => openCallModal('location')} />
+          <FAQSection onOpenCallModal={() => openCallModal('faq')} />
+        </Suspense>
       </main>
 
       {/* Footer */}
-      <Footer onOpenCallModal={() => openCallModal('footer')} />
+      <Suspense fallback={null}>
+        <Footer onOpenCallModal={() => openCallModal('footer')} />
+      </Suspense>
 
       {/* Direct Phone Call Popup Modal (Apple Sheet) */}
       <PhoneCallModal isOpen={isCallModalOpen} onClose={closeCallModal} context={modalContext} />

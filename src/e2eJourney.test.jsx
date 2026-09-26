@@ -24,23 +24,43 @@ describe('End-to-End User Conversion Journey', () => {
     expect(screen.getByText('Naushin Ara')).toBeInTheDocument();
 
     // 3. User switches to NEET syllabus and searches for "Optics" in Physics
-    const searchInput = screen.getByPlaceholderText(/Search Physics units/i);
+    const searchInput = await screen.findByPlaceholderText(
+      /Search Physics units/i,
+      {},
+      { timeout: 10000 }
+    );
     fireEvent.change(searchInput, { target: { value: 'Optics' } });
-    expect(screen.getByText(/Optics/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Optics/i, {}, { timeout: 10000 })).toBeInTheDocument();
 
     // 4. User scrolls to FAQ and expands counseling question
-    const counselingFaq = screen.getByText(
-      /Does Rehan Sir provide personal admission counseling after NEET results\?/i
+    const counselingFaq = await screen.findByText(
+      /Does Rehan Sir provide personal admission counseling after NEET results\?/i,
+      {},
+      { timeout: 10000 }
     );
     fireEvent.click(counselingFaq);
-    expect(screen.getByText(/Following the declaration of NEET results/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/Following the declaration of NEET results/i, {}, { timeout: 10000 })
+    ).toBeInTheDocument();
 
     // 5. User inspects NTA CBT Exam Simulator section
     expect(
-      screen.getByRole('heading', { name: /Official NTA NEET Computer-Based Test/i })
+      await screen.findByRole(
+        'heading',
+        { name: /Official NTA NEET Computer-Based Test/i },
+        { timeout: 10000 }
+      )
     ).toBeInTheDocument();
-    expect(screen.getAllByText(/Authentic 5-State Question Palette/i)[0]).toBeInTheDocument();
-    expect(screen.getByText(/200,000\+ Multi-Format Question Architecture/i)).toBeInTheDocument();
+    expect(
+      (await screen.findAllByText(/Authentic 5-State Question Palette/i, {}, { timeout: 10000 }))[0]
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByText(
+        /200,000\+ Multi-Format Question Architecture/i,
+        {},
+        { timeout: 10000 }
+      )
+    ).toBeInTheDocument();
 
     // 6. User clicks "Call Now" in Floating Action Bar / Hero
     const heroCallBtn = screen.getByRole('button', { name: /Direct Call Helpline/i });

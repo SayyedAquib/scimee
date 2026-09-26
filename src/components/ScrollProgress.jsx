@@ -44,7 +44,6 @@ export default function ScrollProgress() {
         background: 'linear-gradient(90deg, #f59e0b 0%, #d97706 100%)',
         zIndex: 10001,
         pointerEvents: 'none',
-        transition: 'width 80ms ease-out',
         opacity: progress > 1 ? 1 : 0
       }}
     />
