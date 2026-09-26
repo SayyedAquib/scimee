@@ -182,6 +182,7 @@ section {
   direction: rtl;
   line-height: 1.85;
   letter-spacing: 0;
+  font-weight: 400;
 }
 
 /* Container */

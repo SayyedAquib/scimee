@@ -24,6 +24,9 @@
 
 ## Recently Completed
 
+- **Urdu Calligraphy Typography & Metrics Restoration (`Hero.jsx`, `Footer.jsx`, `globals.css`, `index.html`)**:
+  - Restored full Google Fonts `Noto Nastaliq Urdu:wght@400;700` and aligned `.urdu-font` `fontWeight: 400` across Hero badge and Footer card.
+  - Eliminated the heavy bold weight (700) and broken OpenType TrueType subsetting metrics that previously pushed the text downward into the badge/card borders, restoring the authentic, elegant calligraphic balance.
 - **Desktop Navigation Sliding Pill Indicator Fix (`HeaderDesktopNav.jsx`)**:
   - Replaced the distorted `width: 1px` + `scaleX(width)` transform with direct dynamic `width` (`${indicatorStyle.width}px`) and pure `translate3d(left, 0, 0)` translation.
   - Eliminated horizontal border-radius stretching (which previously scaled the pill's border-radius by 68x into a distorted ellipse) and box-shadow blur elongation, restoring crisp, rounded squircle pill borders.

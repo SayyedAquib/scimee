@@ -99,8 +99,8 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                   fontSize: '0.94rem',
                   color: '#92400e',
                   display: 'block',
-                  marginBottom: '4px',
-                  fontWeight: '700',
+                  marginBottom: '10px',
+                  fontWeight: '400',
                   lineHeight: '1.4',
                   whiteSpace: 'nowrap'
                 }}
