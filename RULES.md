@@ -101,6 +101,7 @@
 - CI runs on every push and PR to any branch
 - All four checks must pass: lint, format check, test, build
 - Do not commit `node_modules/`, `dist/`, `.env`, or `coverage/`
+- **NEVER run `git push`**: AI agents must NEVER push code to remote repositories. All git pushes must be initiated manually by the user.
 
 ## Performance Rules
 
@@ -123,3 +124,4 @@
 - **Do not** change the GA4 tracking ID or Google Search Console verification tag
 - **Do not** embed the CBT portal in an iframe — always link externally
 - **Do not** add `console.log` in production code — use `import.meta?.env?.DEV` guard
+- **Do not push code (`git push`)** — never push code to remote branches; only the user pushes code

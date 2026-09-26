@@ -216,6 +216,7 @@ All four must pass. In addition, verify that **`MEMORY.md`** and relevant docume
 - **Do not hardcode** content that belongs in `src/data/*.json`
 - **Do not modify** GA4 tracking ID, Google Search Console verification, or canonical URL without approval
 - **Do not introduce** server-side rendering or API routes
+- **Do not push code (`git push`)** — never push commits to remote repositories; all pushing is strictly reserved for the user
 
 ## Additional Documentation
 

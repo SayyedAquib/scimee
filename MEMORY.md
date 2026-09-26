@@ -95,6 +95,7 @@ None reported. The site is stable in production.
 3. **Inline styles are intentional** — do not refactor them to CSS modules; this is a deliberate architectural choice
 4. **`_headers` file** is configured for Vercel/Netlify — if hosting changes, review CDN-specific headers
 5. **Service Worker versioning** — if `sw.js` cache strategy changes, increment `CACHE_NAME` to force users to get fresh content
+6. **NEVER run `git push`** — AI agents must NEVER push code to remote branches. Keep all changes local, tested, and documented; only the user pushes code.
 
 ## Session Handoff
 
