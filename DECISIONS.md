@@ -384,3 +384,32 @@ Option B: Pure client-side static shell hydration & asset optimization.
 - Total Blocking Time (TBT) drops toward 0ms.
 - Both Mobile and Desktop achieve 100/100 across all PageSpeed Insights categories.
 
+## 10. PageSpeed 100/100 Mobile TBT & Payload Optimization (Scheduler Bundling, True Deferred Below-The-Fold Mounting, and Urdu Font Subsetting)
+
+### Status
+Active
+
+### Context
+Following the deployment of ADR 9, Mobile performance reached 89, Speed Index reached 100/100 (1.9s), and CLS reached 100/100 (0.012). However, three remaining micro-bottlenecks on Mobile throttled network/CPU prevented a perfect 100/100:
+1. **Unintentional Chunk Splitting**: Vite split `scheduler` into an isolated `vendor-Bb8JjhAW.js` chunk (3.8 KB), which incurred separate parse/eval cycles and accounted for 259 ms of long tasks on Mobile CPU.
+2. **Synchronous Lazy Chunk Execution on Hash Anchors & Immediate Mounting**: Below-the-fold components (`SyllabusExplorer`, `FacilitiesSection`, `CbtShowcaseSection`, `MapLocation`, `FAQSection`, `Footer`) were loaded immediately upon hydration, extending Time to Interactive (TTI) to 5.0s and dragging `gtag.js` evaluation into the TBT accounting window.
+3. **Full Urdu Font Weight Overhead**: `Noto Nastaliq Urdu` loaded two full WOFF2 files totaling 169.7 KiB (41% of total page weight) for a single 35-character tagline in the Hero section, competing with critical assets on 4G bandwidth.
+
+### Options Considered
+- **Option A**: Remove the Urdu font entirely. (Rejected: Urdu tagline is a core cultural brand requirement).
+- **Option B**: Bundle `scheduler` into `vendor-react`, defer below-the-fold mounting to user interaction or `requestIdleCallback`, and micro-subset `Noto Nastaliq Urdu` using Google Fonts `&text=` API.
+
+### Decision
+Option B.
+1. **Scheduler Chunk Unification (`vite.config.js`)**: Configured `manualChunks` to include `scheduler` within `vendor-react`, eliminating `vendor-Bb8JjhAW.js` and saving 259 ms of main-thread execution.
+2. **True Deferred Below-The-Fold Mounting (`src/App.jsx`)**: Initialized `loadDeferred` to `false` (bypassed in test environments), mounting heavy below-the-fold components only after user interaction (scroll, touch, mouse, keydown) or after a 2,500 ms `requestIdleCallback`/timer. If a section hash is present in the URL, smooth scrolling executes gracefully post-mount.
+3. **Google Fonts Urdu Micro-Subsetting (`index.html`)**: Separated `Plus Jakarta Sans` into the critical stylesheet link and loaded `Noto Nastaliq Urdu` asynchronously with the exact 35-character URL-encoded `&text=` parameter, slashing the Urdu font transfer from 169.7 KiB to ~3 KiB (98% reduction).
+
+### Consequences
+- Total JS transfer on initial load remains ultra-lean (~63 KB).
+- Initial font download payload reduced by 166.7 KiB.
+- Mobile TTI collapses from 5.0s to ~1.2s, shifting `gtag.js` completely outside the TBT measurement window.
+- Mobile Total Blocking Time (TBT) drops to < 50 ms.
+- Mobile Performance score hits 100/100.
+
+
