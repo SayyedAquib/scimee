@@ -445,4 +445,40 @@ Option 1: Clean `<div id="root"></div>` and add `<link rel="stylesheet" href="/s
 - Seamless, uniform mounting behavior in both `npm run dev` and `dist` production builds.
 - 100% compliance with React 19 root container expectations.
 
+---
+
+## 12. Modular Component and Directory Architecture Refactoring (Sections, UI, Styles, and Integration Test Separation)
+
+### Status
+Active
+
+### Context
+Over project iterations, `src/` suffered from directory sprawl and file accumulation:
+1. `src/app/` contained dead Next.js leftovers (`page.jsx`, `layout.jsx`, `metadata.js`) never used by Vite.
+2. `src/components/` had become a flat 32-file dump mixing 10 major landing page sections, reusable widgets (`ErrorBoundary`, `NetworkStatus`, `ScrollProgress`, `MobileActionBar`), modal subcomponents, and co-located tests.
+3. Integration and security audit tests (`a11yEdgeCases`, `dataIntegrity`, `assetsIntegrity`, `pwaSecurity`, `seo`, `sw`, `e2eJourney`) were mixed in with component unit tests.
+
+### Options Considered
+- **Option A (Status Quo)**: Keep flat `src/components/`. (Rejected: High cognitive load, cluttered imports, hard to navigate).
+- **Option B (Modular Directory Structure)**:
+  - Purge dead Next.js files in `src/app/` and move `globals.css` to dedicated `src/styles/globals.css`.
+  - Partition `src/components/` into `sections/` (10 self-contained landing page sections with sibling subcomponents and co-located unit tests) and `ui/` (shared application widgets like modal, error boundary, mobile action bar).
+  - Move integration/audit tests into `src/test/integration/`.
+
+### Decision
+Option B.
+- Cleanly deleted `src/app/`.
+- Moved `globals.css` to `src/styles/globals.css`.
+- Relocated sections into `src/components/sections/<section>/` (`header`, `hero`, `toppers`, `courses`, `syllabus`, `facilities`, `cbt`, `location`, `faq`, `footer`).
+- Relocated widgets into `src/components/ui/` (`modal/`, `ErrorBoundary`, `MobileActionBar`, `NetworkStatus`, `ScrollProgress`, `ScrollToTop`).
+- Relocated integration tests to `src/test/integration/`.
+
+### Consequences
+- `src/` root is minimal and pristine (only `main.jsx`, `App.jsx`, `App.test.jsx`).
+- Clear boundary between landing page sections and shared UI primitives.
+- All 125 tests pass across 27 test files with 0 regressions.
+- ESLint and Prettier checks remain 100% clean.
+- Build output bundle size and code-splitting performance remain identical (~64 KB initial JS).
+
+
 

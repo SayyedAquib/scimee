@@ -42,51 +42,69 @@ The setup file provides:
 Component rendering, utility function logic, data transformations.
 
 ### Pattern
-Each component has a co-located test file:
+Each component has a co-located test file beside its source code:
 
 ```
 src/components/
-├── Hero.jsx
-├── Hero.test.jsx
-├── Header.jsx
-├── Header.test.jsx
-└── ...
+├── sections/
+│   ├── header/Header.test.jsx
+│   ├── hero/Hero.test.jsx
+│   ├── toppers/ToppersSection.test.jsx
+│   ├── courses/CourseExplorer.test.jsx
+│   ├── syllabus/SyllabusExplorer.test.jsx
+│   ├── facilities/FacilitiesSection.test.jsx
+│   ├── cbt/CbtShowcaseSection.test.jsx
+│   ├── location/MapLocation.test.jsx
+│   ├── faq/FAQSection.test.jsx
+│   └── footer/Footer.test.jsx
+└── ui/
+    ├── modal/PhoneCallModal.test.jsx
+    ├── ErrorBoundary.test.jsx
+    ├── MobileActionBar.test.jsx
+    ├── NetworkStatus.test.jsx
+    ├── ScrollProgress.test.jsx
+    └── ScrollToTop.test.jsx
 ```
 
-### Existing Test Files
+### Existing Test Files (27 Test Suites / 125 Tests)
 
-| Test File | What It Tests |
-|---|---|
-| `App.test.jsx` | Root app renders core sections (async Suspense) and modal workflow |
-| `Header.test.jsx` | Navbar renders, nav links present, call button works |
-| `Hero.test.jsx` | Hero section renders with stats and CTAs |
-| `ToppersSection.test.jsx` | Student data renders correctly, filters by rank/score |
-| `CourseExplorer.test.jsx` | Course cards render with correct data, tab switching |
-| `SyllabusExplorer.test.jsx` | Syllabus explorer renders, accordion interaction |
-| `FacilitiesSection.test.jsx` | Facilities cards render, campus visit CTA |
-| `CbtShowcaseSection.test.jsx` | CBT section renders with 5-state palette and portal link |
-| `FAQSection.test.jsx` | FAQ items render, accordion behavior |
-| `MapLocation.test.jsx` | Map embed and address render, copy address button |
-| `Footer.test.jsx` | Footer renders with contact info, Urdu motto |
-| `PhoneCallModal.test.jsx` | Modal opens/closes, phone numbers display |
-| `MobileActionBar.test.jsx` | Mobile bar renders on small screens |
-| `NetworkStatus.test.jsx` | Network banner behavior |
-| `ScrollProgress.test.jsx` | Scroll progress indicator updates on window scroll |
-| `ScrollToTop.test.jsx` | Back-to-top button appears past 500px and scrolls to top |
-| `ErrorBoundary.test.jsx` | Error UI renders on crash, reload button works |
-| `analytics.test.js` | `trackEvent()` handles valid/invalid inputs |
-| `whatsapp.test.js` | `getWhatsAppUrl()` generates correct contextual URLs |
-| `cbt.test.js` | `getCbtUrl()` and `openCbtPortal()` resolve URLs correctly |
-| `layout.test.jsx` | Layout wrapper renders children |
-| `page.test.jsx` | Page component renders sections |
+| Test File | Location | What It Tests |
+|---|---|---|
+| `App.test.jsx` | `src/` | Root app renders core sections (async Suspense) and modal workflow |
+| `Header.test.jsx` | `src/components/sections/header/` | Navbar renders, nav links present, call button works |
+| `Hero.test.jsx` | `src/components/sections/hero/` | Hero section renders with stats and CTAs |
+| `ToppersSection.test.jsx` | `src/components/sections/toppers/` | Student data renders correctly, filters by rank/score |
+| `CourseExplorer.test.jsx` | `src/components/sections/courses/` | Course cards render with correct data, tab switching |
+| `SyllabusExplorer.test.jsx` | `src/components/sections/syllabus/` | Syllabus explorer renders, accordion interaction |
+| `FacilitiesSection.test.jsx` | `src/components/sections/facilities/` | Facilities cards render, campus visit CTA |
+| `CbtShowcaseSection.test.jsx` | `src/components/sections/cbt/` | CBT section renders with 5-state palette and portal link |
+| `FAQSection.test.jsx` | `src/components/sections/faq/` | FAQ items render, accordion behavior |
+| `MapLocation.test.jsx` | `src/components/sections/location/` | Map embed and address render, copy address button |
+| `Footer.test.jsx` | `src/components/sections/footer/` | Footer renders with contact info, Urdu motto |
+| `PhoneCallModal.test.jsx` | `src/components/ui/modal/` | Modal opens/closes, phone numbers display |
+| `MobileActionBar.test.jsx` | `src/components/ui/` | Mobile bar renders on small screens |
+| `NetworkStatus.test.jsx` | `src/components/ui/` | Network banner behavior |
+| `ScrollProgress.test.jsx` | `src/components/ui/` | Scroll progress indicator updates on window scroll |
+| `ScrollToTop.test.jsx` | `src/components/ui/` | Back-to-top button appears past 500px and scrolls to top |
+| `ErrorBoundary.test.jsx` | `src/components/ui/` | Error UI renders on crash, reload button works |
+| `analytics.test.js` | `src/utils/` | `trackEvent()` handles valid/invalid inputs |
+| `whatsapp.test.js` | `src/utils/` | `getWhatsAppUrl()` generates correct contextual URLs |
+| `cbt.test.js` | `src/utils/` | `getCbtUrl()` and `openCbtPortal()` resolve URLs correctly |
+| `dataIntegrity.test.js` | `src/test/integration/` | All JSON data files are valid, required fields exist, values within range |
+| `assetsIntegrity.test.js` | `src/test/integration/` | Critical static assets exist and are accessible |
+| `seo.test.js` | `src/test/integration/` | SEO meta tags, Open Graph, Twitter Cards, JSON-LD schema |
+| `pwaSecurity.test.js` | `src/test/integration/` | PWA manifest validation, security headers, service worker structure |
+| `sw.test.js` | `src/test/integration/` | Service worker cache name and offline asset strategy |
+| `e2eJourney.test.jsx` | `src/test/integration/` | Full user journey — hero renders, navigation works, CTAs trigger modals |
+| `a11yEdgeCases.test.jsx` | `src/test/integration/` | Accessibility edge cases — ARIA labels, keyboard navigation, screen reader text |
 
 ### Utility Tests
 
-| Test File | What It Tests |
-|---|---|
-| `analytics.test.js` | Event dispatch to GA4, graceful failure handling |
-| `whatsapp.test.js` | Context-specific WhatsApp URL generation |
-| `cbt.test.js` | CBT URL resolution with environment variable fallback |
+| Test File | Location | What It Tests |
+|---|---|---|
+| `analytics.test.js` | `src/utils/` | Event dispatch to GA4, graceful failure handling |
+| `whatsapp.test.js` | `src/utils/` | Context-specific WhatsApp URL generation |
+| `cbt.test.js` | `src/utils/` | CBT URL resolution with environment variable fallback |
 
 ## Integration Testing
 

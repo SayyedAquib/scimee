@@ -1,0 +1,163 @@
+import React, { useState } from 'react';
+import { HelpCircle, ChevronDown, PhoneCall } from 'lucide-react';
+import faqData from '../../../data/faq.json';
+
+export default function FAQSection({ onOpenCallModal }) {
+  const [openIndex, setOpenIndex] = useState(0);
+
+  const faqList = Array.isArray(faqData?.faqs)
+    ? faqData.faqs
+    : Array.isArray(faqData?.items)
+      ? faqData.items
+      : [];
+
+  const sectionTitle = faqData?.sectionTitle ?? faqData?.title ?? 'Frequently Asked Questions';
+  const sectionSubtitle =
+    faqData?.sectionSubtitle ??
+    faqData?.subtitle ??
+    'Got questions about admissions, batches, tests, or hostel facilities? We are here to help.';
+
+  const toggleIndex = (idx) => {
+    if (idx === undefined || idx === null) return;
+    setOpenIndex((prev) => (prev === idx ? null : idx));
+  };
+
+  return (
+    <section id="faq" style={{ paddingTop: '20px', paddingBottom: '30px' }}>
+      <div className="container-custom" style={{ maxWidth: '920px' }}>
+        <div className="bento-section-canvas">
+          {/* Section Header */}
+          <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+            <div className="badge-gold" style={{ marginBottom: '10px' }}>
+              <HelpCircle size={13} />
+              <span>Got Questions?</span>
+            </div>
+
+            <h2
+              style={{
+                fontSize: 'clamp(2rem, 4.5vw, 3rem)',
+                fontWeight: '900',
+                lineHeight: '1.12',
+                letterSpacing: '-0.03em',
+                marginBottom: '10px',
+                color: 'var(--text-heading)'
+              }}
+            >
+              {sectionTitle}
+            </h2>
+
+            <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)' }}>{sectionSubtitle}</p>
+          </div>
+
+          {/* FAQ Accordion List */}
+          <div
+            style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px' }}
+          >
+            {faqList.map((item, idx) => {
+              const isOpen = openIndex === idx;
+              return (
+                <div
+                  key={item?.id || item?.question}
+                  className="bento-card"
+                  style={{
+                    borderRadius: '18px',
+                    overflow: 'hidden',
+                    border: isOpen
+                      ? '1px solid rgba(217, 119, 6, 0.4)'
+                      : '1px solid var(--border-glass)',
+                    transition: 'border-color 150ms ease'
+                  }}
+                >
+                  <button
+                    onClick={() => toggleIndex(idx)}
+                    style={{
+                      width: '100%',
+                      padding: '16px 20px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '14px',
+                      background: isOpen ? '#fffbeb' : '#ffffff',
+                      border: 'none',
+                      color: 'var(--text-heading)',
+                      textAlign: 'left',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: '0.96rem',
+                        fontWeight: '700',
+                        color: isOpen ? '#92400e' : 'var(--text-heading)',
+                        letterSpacing: '-0.01em'
+                      }}
+                    >
+                      {item?.question}
+                    </span>
+                    <div
+                      style={{
+                        color: isOpen ? '#d97706' : 'var(--text-muted)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}
+                    >
+                      <ChevronDown
+                        size={17}
+                        style={{
+                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                          transition: 'transform 220ms var(--spring-snappy)'
+                        }}
+                      />
+                    </div>
+                  </button>
+
+                  {isOpen && (
+                    <div
+                      style={{
+                        padding: '0 20px 18px 20px',
+                        background: '#fffbeb',
+                        color: 'var(--text-sub)',
+                        fontSize: '0.88rem',
+                        lineHeight: '1.65',
+                        borderTop: '1px solid rgba(217, 119, 6, 0.15)',
+                        paddingTop: '12px',
+                        animation: 'appleAccordionOpen 220ms var(--spring-snappy)'
+                      }}
+                    >
+                      {item?.answer}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Still Have Questions Callout */}
+          <div
+            style={{
+              textAlign: 'center',
+              padding: '20px',
+              background: '#f8fafc',
+              borderRadius: '18px',
+              border: '1px dashed rgba(0, 0, 0, 0.12)'
+            }}
+          >
+            <p style={{ color: 'var(--text-sub)', fontSize: '0.88rem', marginBottom: '12px' }}>
+              Have more questions regarding admissions, batch timings, or fee structure?
+            </p>
+            <button
+              onClick={() => onOpenCallModal?.()}
+              className="btn-secondary"
+              style={{ padding: '8px 18px', fontSize: '0.84rem' }}
+            >
+              <PhoneCall size={14} color="#d97706" />
+              <span>Speak with Admissions Counselor</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -39,29 +39,29 @@ scimee/
 │   └── robots.txt
 ├── src/
 │   ├── main.jsx             # App bootstrap + SW registration
-│   ├── App.jsx              # Root component (manages call modal state)
-│   ├── app/
-│   │   ├── globals.css      # Design system (all CSS variables & base styles)
-│   │   ├── page.jsx         # Alternative page component (Next.js-style, unused by Vite)
-│   │   ├── layout.jsx       # Layout wrapper
-│   │   └── metadata.js      # SEO metadata constants
-│   ├── components/          # All UI components + co-located tests
-│   │   ├── Header.jsx
-│   │   ├── header/          # Header sub-components (desktop nav, mobile drawer, hook)
-│   │   ├── Hero.jsx
-│   │   ├── ToppersSection.jsx
-│   │   ├── CourseExplorer.jsx
-│   │   ├── SyllabusExplorer.jsx
-│   │   ├── FacilitiesSection.jsx
-│   │   ├── CbtShowcaseSection.jsx
-│   │   ├── MapLocation.jsx
-│   │   ├── FAQSection.jsx
-│   │   ├── Footer.jsx
-│   │   ├── PhoneCallModal.jsx
-│   │   ├── modal/           # Modal sub-components (header, body)
-│   │   ├── MobileActionBar.jsx
-│   │   ├── NetworkStatus.jsx
-│   │   └── ErrorBoundary.jsx # Class-based error boundary
+│   ├── App.jsx              # Root component (orchestrates sections & modals)
+│   ├── App.test.jsx         # App integration test
+│   ├── styles/
+│   │   └── globals.css      # Design system (CSS variables, reset & utilities)
+│   ├── components/
+│   │   ├── sections/        # Modular, self-contained landing page sections
+│   │   │   ├── header/      # Header, DesktopNav, MobileDrawer, hook, tests
+│   │   │   ├── hero/        # Hero section & test
+│   │   │   ├── toppers/     # ToppersSection, cards & tests
+│   │   │   ├── courses/     # CourseExplorer & test
+│   │   │   ├── syllabus/    # SyllabusExplorer, unit card, subject bar & tests
+│   │   │   ├── facilities/  # FacilitiesSection, card & tests
+│   │   │   ├── cbt/         # CbtShowcaseSection, metrics, palette, cards & tests
+│   │   │   ├── location/    # MapLocation & test
+│   │   │   ├── faq/         # FAQSection & test
+│   │   │   └── footer/      # Footer, nav & contact columns & tests
+│   │   └── ui/              # Reusable UI widgets & app-level elements
+│   │       ├── modal/       # PhoneCallModal, body, header & tests
+│   │       ├── ErrorBoundary.jsx
+│   │       ├── MobileActionBar.jsx
+│   │       ├── NetworkStatus.jsx
+│   │       ├── ScrollProgress.jsx
+│   │       └── ScrollToTop.jsx
 │   ├── data/                # Static JSON content (single source of truth)
 │   │   ├── site-config.json
 │   │   ├── courses.json
@@ -75,7 +75,8 @@ scimee/
 │   │   ├── whatsapp.js      # Context-aware WhatsApp URL generator
 │   │   └── cbt.js           # CBT portal URL resolver + opener
 │   └── test/
-│       └── setup.js         # Vitest global test setup
+│       ├── setup.js         # Vitest global test setup
+│       └── integration/     # Integration & security/audit test suites
 └── .github/workflows/
     ├── ci.yml               # Lint → Format → Test → Build
     └── react-doctor.yml     # React health diagnostics

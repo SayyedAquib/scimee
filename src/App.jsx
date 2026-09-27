@@ -1,21 +1,21 @@
 import React, { useState, useCallback, useEffect, lazy, Suspense } from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import ToppersSection from './components/ToppersSection';
-import CourseExplorer from './components/CourseExplorer';
-import PhoneCallModal from './components/PhoneCallModal';
-import MobileActionBar from './components/MobileActionBar';
-import NetworkStatus from './components/NetworkStatus';
-import ScrollProgress from './components/ScrollProgress';
-import ScrollToTop from './components/ScrollToTop';
+import Header from './components/sections/header/Header';
+import Hero from './components/sections/hero/Hero';
+import ToppersSection from './components/sections/toppers/ToppersSection';
+import CourseExplorer from './components/sections/courses/CourseExplorer';
+import PhoneCallModal from './components/ui/modal/PhoneCallModal';
+import MobileActionBar from './components/ui/MobileActionBar';
+import NetworkStatus from './components/ui/NetworkStatus';
+import ScrollProgress from './components/ui/ScrollProgress';
+import ScrollToTop from './components/ui/ScrollToTop';
 
 // Lazy-load below-the-fold sections for faster initial paint
-const SyllabusExplorer = lazy(() => import('./components/SyllabusExplorer'));
-const FacilitiesSection = lazy(() => import('./components/FacilitiesSection'));
-const CbtShowcaseSection = lazy(() => import('./components/CbtShowcaseSection'));
-const MapLocation = lazy(() => import('./components/MapLocation'));
-const FAQSection = lazy(() => import('./components/FAQSection'));
-const Footer = lazy(() => import('./components/Footer'));
+const SyllabusExplorer = lazy(() => import('./components/sections/syllabus/SyllabusExplorer'));
+const FacilitiesSection = lazy(() => import('./components/sections/facilities/FacilitiesSection'));
+const CbtShowcaseSection = lazy(() => import('./components/sections/cbt/CbtShowcaseSection'));
+const MapLocation = lazy(() => import('./components/sections/location/MapLocation'));
+const FAQSection = lazy(() => import('./components/sections/faq/FAQSection'));
+const Footer = lazy(() => import('./components/sections/footer/Footer'));
 
 const isTestEnv =
   (typeof process !== 'undefined' && process.env?.NODE_ENV === 'test') ||

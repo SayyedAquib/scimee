@@ -126,11 +126,16 @@ graph LR
 
 2. **Application Layer**: `App.jsx` is the root component. It manages the only shared state — the phone call modal open/close state and its trigger context. The `ErrorBoundary` class component wraps the entire app.
 
-3. **Component Layer**: Each section of the page is a standalone component. Components are self-contained — they import their own data, render their UI, and expose a single `onOpenCallModal` callback prop for CTA actions. Sub-components live in named subdirectories (e.g., `header/`, `modal/`).
+3. **Component Layer**: Organized into two clean modular directories:
+   - `src/components/sections/`: 10 self-contained landing page sections (`header`, `hero`, `toppers`, `courses`, `syllabus`, `facilities`, `cbt`, `location`, `faq`, `footer`), each containing their section component, sub-components, and co-located unit tests.
+   - `src/components/ui/`: Reusable application widgets and shell elements (`modal/`, `ErrorBoundary`, `MobileActionBar`, `NetworkStatus`, `ScrollProgress`, `ScrollToTop`).
+   Components import their own data, render their UI, and expose a single `onOpenCallModal` callback prop for CTA actions.
 
 4. **Data Layer**: All content is in static JSON files under `src/data/`. Components import JSON directly via ES module imports (Vite handles JSON imports). There is no API fetching — data is bundled at build time.
 
-5. **Utility Layer**: Shared logic for analytics event tracking, WhatsApp URL generation, and CBT portal URL resolution.
+5. **Utility Layer**: Shared logic for analytics event tracking, WhatsApp URL generation, and CBT portal URL resolution under `src/utils/`.
+
+6. **Test Layer**: Co-located component unit tests (`*.test.jsx`) beside their components, with global setup in `src/test/setup.js` and dedicated integration/audit test suites under `src/test/integration/`.
 
 ## Database Architecture
 
