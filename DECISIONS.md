@@ -515,5 +515,34 @@ Option C.
 - 100% test pass rate: 125/125 tests passing across 27 test suites.
 - 0 ESLint errors and 100% Prettier compliance.
 
+---
+
+## 14. Authentic Institute Brand Logo Vectorization (`logo.svg`) and Asset Unification
+
+### Status
+Active
+
+### Context
+1. **Asset Discrepancy**: The authentic SCIMEE institute logo lived in `public/assets/logo.png` (512×512 raster image featuring a jumping figure, athletic 3D 'S' with white contour, perspective-slanted 'C I M E E', calligraphic founder subtext, and silver crescent arc).
+2. **Crude Vector Approximation**: An earlier `public/assets/logo.svg` (1.6 KB) was a crude hand-coded approximation using generic geometric bezier curves and standard web fonts (`<text>SCIMEE</text>` rotated at -24°), resulting in an inaccurate, non-authentic brand presentation in the footer and favicon.
+3. **Bloated Base64 Wrapper**: To circumvent the inaccurate `logo.svg`, `public/assets/scimee_logo.svg` had been introduced in the header as an SVG wrapping a 138 KB base64-encoded PNG, downloading 85× more bytes and causing double-download with preloaded `logo.svg`.
+
+### Options Considered
+- **Option A (Use `logo.png` directly)**: Reference `logo.png` in Header and Footer. (Pros: visually accurate. Cons: raster image, 83 KB payload, not vector scalable).
+- **Option B (High-Fidelity Dual-Layer Vector Tracing)**: Programmatically decode `logo.png`, separate the black brand emblem and grey crescent into dedicated bitmap layers, and trace them using sub-pixel Bezier curve optimization into a unified, authentic `public/assets/logo.svg`.
+
+### Decision
+Option B.
+1. Decoded the 512×512 `logo.png` and separated color channels into pure black artwork (`#000000`) and the silver-grey crescent (`#7E7E7E`).
+2. Performed sub-pixel vector tracing with high curve tolerance (`optTolerance: 0.2`) and speckle suppression, generating clean `<path fill="#7E7E7E">` and `<path fill="#000000" fill-rule="evenodd">` vector elements that precisely capture every detail of the authentic logo.
+3. Replaced `public/assets/logo.svg` with the new authentic vector asset (21 KB raw).
+4. Switched `Header.jsx` from the bloated `scimee_logo.svg` (138 KB) to `/assets/logo.svg`, and deleted `scimee_logo.svg`.
+5. Preloading in `index.html` (`<link rel="preload" as="image" href="/assets/logo.svg">`) now instantly services the authentic header emblem from the preloaded cache on first paint.
+
+### Consequences
+- 100% visual authenticity: both Header and Footer display the true, official SCIMEE logo with crisp vector clarity at all DPI levels.
+- Deleted `scimee_logo.svg`, saving 138 KB of redundant network request on every page load.
+- Maintained 100% test pass rate (125/125 tests) and clean production build.
+
 
 

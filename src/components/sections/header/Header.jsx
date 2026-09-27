@@ -42,7 +42,7 @@ export default function Header({ onOpenCallModal }) {
           <a href="#about" onClick={(e) => onNavClick(e, 'about')} className="header-brand-link">
             <div className="header-logo-box">
               <img
-                src="/assets/scimee_logo.svg"
+                src="/assets/logo.svg"
                 alt="SCIMEE Logo"
                 width="44"
                 height="44"

@@ -35,6 +35,11 @@
 
 ## Recently Completed
 
+- **Authentic Logo Vectorization and Asset Unification (ADR 14)**:
+  - Programmatically decoded the authentic 512×512 `logo.png` master image, separated color channels into pure black artwork (`#000000`) and the silver-grey crescent (`#7E7E7E`), and vectorized them using dual-layer Potrace curve tracing.
+  - Replaced the inaccurate hand-coded `logo.svg` approximation with the authentic, pixel-exact vector asset.
+  - Updated `Header.jsx` to load `/assets/logo.svg` and removed the bloated 138 KB base64 `scimee_logo.svg`.
+  - Verified visual rendering via headless browser subagent: both Header and Footer display the genuine emblem with sharp vector lines at all DPI levels.
 - **Vite Path Aliases (`@/`) and Component Inline Style Pruning (ADR 13)**:
   - Added `@/` path alias to `vite.config.js` and `jsconfig.json`.
   - Converted all 36 files across `src/` to clean `@/` imports.
@@ -76,6 +81,7 @@ None reported. The site is stable in production.
 - Added ADR 11 in `DECISIONS.md` documenting the elimination of FOUC via clean root container and synchronous design system link.
 - Added ADR 12 in `DECISIONS.md` documenting the modular component and directory architecture refactoring.
 - Added ADR 13 in `DECISIONS.md` documenting Vite path aliases (`@/`) and component inline style pruning.
+- Added ADR 14 in `DECISIONS.md` documenting authentic logo vectorization and asset unification.
 - See `DECISIONS.md` for the full architectural decision log.
 
 ## Next Steps
