@@ -28,12 +28,12 @@ describe('PWA, Security Headers, Robots & Web Crawlers Validation', () => {
       );
     });
 
-    it('includes all primary page anchors and high priority rating for home', () => {
+    it('includes the canonical root URL with high priority and without URL fragment hashes', () => {
       expect(sitemapContent).toContain('<loc>https://scimee.vercel.app/</loc>');
-      expect(sitemapContent).toContain('<loc>https://scimee.vercel.app/#results</loc>');
-      expect(sitemapContent).toContain('<loc>https://scimee.vercel.app/#courses</loc>');
-      expect(sitemapContent).toContain('<loc>https://scimee.vercel.app/#syllabus</loc>');
       expect(sitemapContent).toContain('<priority>1.0</priority>');
+      expect(sitemapContent).toContain('<changefreq>weekly</changefreq>');
+      // Google Search Central disallows fragment identifiers (#) in XML sitemaps
+      expect(sitemapContent).not.toContain('/#');
     });
   });
 

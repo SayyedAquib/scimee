@@ -46,11 +46,47 @@ describe('SEO, Social Link Previews & OpenGraph Meta Tags (index.html)', () => {
     expect(htmlContent).toContain('<link rel="manifest" href="/manifest.json"');
   });
 
-  it('contains valid Schema.org JSON-LD structured data with WebSite, EducationalOrganization, and FAQPage', () => {
+  it('contains valid Geo-targeting meta tags for regional and local search ranking', () => {
+    expect(htmlContent).toContain('<meta name="geo.region" content="IN-MH" />');
+    expect(htmlContent).toContain('<meta name="geo.placename" content="Bhusawal" />');
+    expect(htmlContent).toContain('<meta name="geo.position" content="21.036551;75.795913" />');
+    expect(htmlContent).toContain('<meta name="ICBM" content="21.036551, 75.795913" />');
+  });
+
+  it('contains valid Schema.org JSON-LD structured data with WebSite, EducationalOrganization, FAQPage, BreadcrumbList, and areaServed', () => {
     expect(htmlContent).toContain('"@context": "https://schema.org"');
     expect(htmlContent).toContain('"@type": "WebSite"');
+    expect(htmlContent).toContain('"@type": "BreadcrumbList"');
     expect(htmlContent).toContain('"@type": ["EducationalOrganization", "LocalBusiness"]');
     expect(htmlContent).toContain('"@type": "FAQPage"');
+    expect(htmlContent).toContain('"areaServed": [');
+    expect(htmlContent).toContain('"name": "Bhusawal"');
+    expect(htmlContent).toContain('"name": "Jalgaon"');
+    expect(htmlContent).toContain('"name": "Varangaon"');
+    expect(htmlContent).toContain('"sameAs": [');
+    expect(htmlContent).toContain('"courseMode": "onsite"');
+  });
+
+  it('contains crawlable semantic noscript fallback in body for non-JS search spiders', () => {
+    expect(htmlContent).toContain(
+      '<!-- Accessible, Crawlable Fallback for Search Engines & Non-JS Environments -->'
+    );
+    expect(htmlContent).toContain('<noscript>');
+    expect(htmlContent).toContain(
+      '<h1>SCIMEE - Sara Coaching Institute of Medical Entrance Examination</h1>'
+    );
+    expect(htmlContent).toContain('NEET Repeater / Dropper Batch (12th Pass)');
+    expect(htmlContent).toContain('100% NEET 2026 qualification rate');
+    expect(htmlContent).toContain('+91 9175013140');
+  });
+
+  it('verifies that public/sitemap.xml exists, is valid XML, and does not contain fragment # hashes', () => {
+    const sitemapPath = path.resolve(process.cwd(), 'public/sitemap.xml');
+    expect(fs.existsSync(sitemapPath)).toBe(true);
+    const sitemapContent = fs.readFileSync(sitemapPath, 'utf-8');
+    expect(sitemapContent).toContain('<loc>https://scimee.vercel.app/</loc>');
+    // URL fragment identifiers (#) must never be in sitemaps per Google Search Central specifications
+    expect(sitemapContent).not.toContain('/#');
   });
 
   it('verifies that og-preview.jpg social image asset exists and is non-empty', () => {

@@ -544,5 +544,36 @@ Option B.
 - Deleted `scimee_logo.svg`, saving 138 KB of redundant network request on every page load.
 - Maintained 100% test pass rate (125/125 tests) and clean production build.
 
+---
+
+## 15. Comprehensive Local & Technical SEO Architecture
+
+### Status
+Active
+
+### Context
+1. **Sitemap Standard Non-Compliance**: `public/sitemap.xml` previously contained URL fragment identifiers (`/#courses`, `/#results`), which violates Google Search Central XML sitemap guidelines (crawlers discard `#` fragments, triggering duplicate URL warnings).
+2. **Local Proximity Deficit**: Despite serving students across Bhusawal, Jalgaon, Varangaon, Deepnagar, Raver, Yawal, Savda, and Bodwad, the site lacked machine-readable Dublin Core / ICBM geographic coordinates and explicit `areaServed` local business entities.
+3. **Course Rich Results & Breadcrumbs**: Google Course and Breadcrumb rich results were missing top-level structured data (`BreadcrumbList`, `courseMode: "onsite"`, `inLanguage: ["en", "hi", "ur"]`).
+4. **SPA Crawlability Latency**: As a pure client-side React single-page app, search engine crawlers without full JavaScript rendering budgets (or experiencing Google Web Rendering Service queue delays) had limited visibility into static course descriptions, results, and contact info.
+
+### Decision
+1. **Canonical XML Sitemap**: Cleaned `public/sitemap.xml` into a strict W3C-compliant canonical index containing the root URL (`https://scimee.vercel.app/`) with priority `1.0`, `changefreq: "weekly"`, and updated `lastmod: "2026-09-27"`, eliminating all fragment identifiers.
+2. **Geo-Targeting Meta Tags**: Injected Dublin Core / ICBM geographical coordinates in `<head>` (`geo.region: "IN-MH"`, `geo.placename: "Bhusawal"`, `geo.position: "21.036551;75.795913"`, `ICBM: "21.036551, 75.795913"`).
+3. **Structured Data Enhancements (Schema.org JSON-LD)**:
+   - Added `BreadcrumbList` entity linking `Home` and `Courses`.
+   - Added `areaServed` array covering 8 cities/tehsils in Jalgaon district (`Bhusawal`, `Jalgaon`, `Varangaon`, `Deepnagar`, `Raver`, `Yawal`, `Savda`, `Bodwad`).
+   - Added `sameAs` array linking Google Maps Knowledge Graph and CBT mock test portal.
+   - Enriched `Course` offerings with `courseMode: "onsite"` and multilingual `inLanguage: ["en", "hi", "ur"]`.
+4. **Accessible Semantic `<noscript>` Crawlable Fallback**: Added a structured HTML5 `<noscript>` block inside `<body>` containing semantic `<h1>`, `<h2>`, `<p>`, `<ul>`, and `<address>` details, enabling instant non-JS crawler indexing.
+5. **Automated SEO Tests**: Expanded `src/test/integration/seo.test.js` and `src/test/integration/pwaSecurity.test.js` to assert Geo tags, Schema entities, `<noscript>` contents, and clean sitemap syntax.
+
+### Consequences
+- Eliminates Google Search Console sitemap warnings and establishes clean URL indexing.
+- Boosts Local Map Pack (3-pack) and regional discovery for medical and engineering coaching queries across Jalgaon district.
+- Guarantees 100% crawlability for non-JS search spiders and social link indexers.
+- Expanded test suite to 128 tests across 27 suites with 100% pass rate.
+
+
 
 

@@ -229,6 +229,7 @@ sequenceDiagram
 - **Image Assets**: Authentic vector SVG logo, preloaded with `fetchpriority="high"` for zero CLS.
 - **PWA Caching**: Network-first strategy with cache fallback ensures offline resilience.
 - **Vite Path Aliasing (`@/`) & Semantic CSS Pruning**: Project uses `@/` path aliasing configured in `vite.config.js` and `jsconfig.json` for clean module resolution. Common repetitive inline styles across all landing page sections (section headers, hero cards, navbar elements, footer grids) are pruned and extracted into semantic CSS utility primitives in `src/styles/globals.css`, reducing the initial JS chunk from ~63 KB down to 61.05 KB.
+- **Search Engine Optimization (SEO) & Regional Geo-Targeting**: Standardized canonical `sitemap.xml` strictly conforming to Google Search Central guidelines (no URL `#` fragment hashes). Enriched Schema.org JSON-LD with regional `areaServed` coverage across 8 towns in Jalgaon District, `BreadcrumbList`, and enriched `Course` metadata (`courseMode: "onsite"`, multilingual `inLanguage: ["en", "hi", "ur"]`). Embedded a crawlable semantic `<noscript>` block inside `<body>` to guarantee instant indexing by non-JS search spiders and social preview crawlers.
 - **Edge CDN Optimization (`vercel.json`)**: Configured Vercel edge caching (`max-age=31536000, immutable`) and hardened HTTP security headers.
 
 ## Security Architecture

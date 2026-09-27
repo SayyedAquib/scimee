@@ -29,12 +29,18 @@
   - Render-blocking CSS **100% eliminated** via production build inlining (`vite-plugin-inline-css`).
   - Forced reflow on scroll **eliminated** via `requestAnimationFrame` scroll batching in `useHeaderNavigation.js`.
   - Non-composited animations eliminated by moving `@keyframes applePulseRadar` to GPU-composited `transform`/`opacity` on `::after`.
-- All 125 Vitest tests passing across 27 test files, 0 ESLint errors, 100% Prettier compliant, clean production build.
+- All 128 Vitest tests passing across 27 test files, 0 ESLint errors, 100% Prettier compliant, clean production build.
 - NEET 2026 results data is current (16/16 students qualified)
 - Admissions status: Open for 2026–2028 batches
 
 ## Recently Completed
 
+- **Comprehensive Local and Technical SEO Architecture (ADR 15)**:
+  - Cleaned `public/sitemap.xml` to pure canonical format, removing URL fragment hashes (`#`) in strict accordance with Google Search Central specifications.
+  - Added Dublin Core / ICBM machine-readable Geo-targeting tags (`geo.region`, `geo.placename`, `geo.position`, `ICBM`) for Bhusawal & Jalgaon district.
+  - Enriched Schema.org JSON-LD with `BreadcrumbList`, regional `areaServed` coverage across 8 towns (`Bhusawal`, `Jalgaon`, `Varangaon`, `Deepnagar`, `Raver`, `Yawal`, `Savda`, `Bodwad`), Google Maps Knowledge Graph `sameAs` linking, and enhanced `Course` attributes (`courseMode: "onsite"`, `inLanguage: ["en", "hi", "ur"]`).
+  - Added structured HTML5 `<noscript>` semantic fallback in `<body>` containing course details, 100% NEET 2026 results, founder mentorship, address, and helplines for instant indexing by non-JS search spiders and web rendering queues.
+  - Expanded test suite to 128 tests across 27 suites with 100% pass rate.
 - **Authentic Logo Vectorization and Asset Unification (ADR 14)**:
   - Programmatically decoded the authentic 512×512 `logo.png` master image, separated color channels into pure black artwork (`#000000`) and the silver-grey crescent (`#7E7E7E`), and vectorized them using dual-layer Potrace curve tracing.
   - Replaced the inaccurate hand-coded `logo.svg` approximation with the authentic, pixel-exact vector asset.
@@ -82,6 +88,7 @@ None reported. The site is stable in production.
 - Added ADR 12 in `DECISIONS.md` documenting the modular component and directory architecture refactoring.
 - Added ADR 13 in `DECISIONS.md` documenting Vite path aliases (`@/`) and component inline style pruning.
 - Added ADR 14 in `DECISIONS.md` documenting authentic logo vectorization and asset unification.
+- Added ADR 15 in `DECISIONS.md` documenting comprehensive local & technical SEO architecture.
 - See `DECISIONS.md` for the full architectural decision log.
 
 ## Next Steps

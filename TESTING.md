@@ -66,7 +66,7 @@ src/components/
     └── ScrollToTop.test.jsx
 ```
 
-### Existing Test Files (27 Test Suites / 125 Tests)
+### Existing Test Files (27 Test Suites / 128 Tests)
 
 | Test File | Location | What It Tests |
 |---|---|---|
@@ -92,8 +92,8 @@ src/components/
 | `cbt.test.js` | `src/utils/` | `getCbtUrl()` and `openCbtPortal()` resolve URLs correctly |
 | `dataIntegrity.test.js` | `src/test/integration/` | All JSON data files are valid, required fields exist, values within range |
 | `assetsIntegrity.test.js` | `src/test/integration/` | Critical static assets exist and are accessible |
-| `seo.test.js` | `src/test/integration/` | SEO meta tags, Open Graph, Twitter Cards, JSON-LD schema |
-| `pwaSecurity.test.js` | `src/test/integration/` | PWA manifest validation, security headers, service worker structure |
+| `seo.test.js` | `src/test/integration/` | SEO meta tags, Geo tags, Open Graph, Twitter Cards, Schema JSON-LD (BreadcrumbList, areaServed, Course), noscript crawlability, and sitemap |
+| `pwaSecurity.test.js` | `src/test/integration/` | PWA manifest validation, security headers, canonical sitemap validation |
 | `sw.test.js` | `src/test/integration/` | Service worker cache name and offline asset strategy |
 | `e2eJourney.test.jsx` | `src/test/integration/` | Full user journey — hero renders, navigation works, CTAs trigger modals |
 | `a11yEdgeCases.test.jsx` | `src/test/integration/` | Accessibility edge cases — ARIA labels, keyboard navigation, screen reader text |
