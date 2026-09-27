@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PhoneCall, Menu, X } from 'lucide-react';
-import siteConfig from '../../../data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 import HeaderDesktopNav from './HeaderDesktopNav';
 import HeaderMobileDrawer from './HeaderMobileDrawer';
 import { useHeaderNavigation } from './useHeaderNavigation';
@@ -37,67 +37,26 @@ export default function Header({ onOpenCallModal }) {
     <>
       {/* Apple Floating Island Navigation Container */}
       <div className="floating-navbar-wrapper">
-        <header
-          className="floating-navbar"
-          style={{
-            background: scrolled ? 'rgba(255, 255, 255, 0.94)' : 'rgba(255, 255, 255, 0.85)',
-            boxShadow: scrolled
-              ? '0 20px 48px -8px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.08)'
-              : '0 14px 34px -8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06)'
-          }}
-        >
+        <header className={`floating-navbar${scrolled ? ' scrolled' : ''}`}>
           {/* Brand Logo & Name */}
-          <a
-            href="#about"
-            onClick={(e) => onNavClick(e, 'about')}
-            style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}
-          >
-            <div
-              style={{
-                width: '44px',
-                height: '44px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0
-              }}
-            >
+          <a href="#about" onClick={(e) => onNavClick(e, 'about')} className="header-brand-link">
+            <div className="header-logo-box">
               <img
                 src="/assets/scimee_logo.svg"
                 alt="SCIMEE Logo"
                 width="44"
                 height="44"
-                style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+                className="header-logo-img"
               />
             </div>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span
-                  style={{
-                    fontSize: '1.2rem',
-                    fontWeight: '900',
-                    color: 'var(--text-heading)',
-                    letterSpacing: '-0.02em',
-                    lineHeight: '1'
-                  }}
-                >
-                  {brandName}
-                </span>
+              <div className="header-brand-row">
+                <span className="header-brand-title">{brandName}</span>
                 <span className="badge-gold" style={{ padding: '1px 6px', fontSize: '0.6rem' }}>
                   NEET 2026
                 </span>
               </div>
-              <p
-                style={{
-                  fontSize: '0.68rem',
-                  color: 'var(--text-muted)',
-                  fontWeight: '600',
-                  lineHeight: 1,
-                  marginTop: '2px'
-                }}
-              >
-                By {brandFounder}
-              </p>
+              <p className="header-brand-sub">By {brandFounder}</p>
             </div>
           </a>
 
@@ -112,10 +71,7 @@ export default function Header({ onOpenCallModal }) {
           />
 
           {/* Desktop Actions */}
-          <div
-            style={{ display: 'none', alignItems: 'center', gap: '10px' }}
-            className="desktop-nav"
-          >
+          <div className="desktop-nav header-actions-desktop">
             <button
               onClick={() => onOpenCallModal?.()}
               className="btn-primary"
@@ -127,10 +83,7 @@ export default function Header({ onOpenCallModal }) {
           </div>
 
           {/* Mobile Actions */}
-          <div
-            style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-            className="mobile-toggle"
-          >
+          <div className="mobile-toggle header-actions-mobile">
             <button
               onClick={() => onOpenCallModal?.()}
               className="btn-primary"
@@ -144,17 +97,7 @@ export default function Header({ onOpenCallModal }) {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
-              style={{
-                background: 'rgba(0, 0, 0, 0.05)',
-                border: '1px solid rgba(0, 0, 0, 0.1)',
-                color: 'var(--text-heading)',
-                padding: '6px',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
+              className="header-menu-btn"
             >
               {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>

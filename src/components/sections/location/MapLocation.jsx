@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MapPin, Navigation, Clock, PhoneCall, ExternalLink, Copy, Check } from 'lucide-react';
-import siteConfig from '../../../data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 
 export default function MapLocation({ onOpenCallModal }) {
   const [copied, setCopied] = useState(false);
@@ -36,30 +36,19 @@ export default function MapLocation({ onOpenCallModal }) {
   };
 
   return (
-    <section id="location" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
+    <section id="location" className="section-wrap">
       <div className="container-custom">
         <div className="bento-section-canvas">
           {/* Section Header */}
-          <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 32px' }}>
+          <div className="section-header-center" style={{ maxWidth: '800px' }}>
             <div className="badge-blue" style={{ marginBottom: '10px' }}>
               <MapPin size={13} />
               <span>Campus Location</span>
             </div>
 
-            <h2
-              style={{
-                fontSize: 'clamp(2rem, 4.5vw, 3rem)',
-                fontWeight: '900',
-                lineHeight: '1.12',
-                letterSpacing: '-0.03em',
-                marginBottom: '10px',
-                color: 'var(--text-heading)'
-              }}
-            >
-              Convenient Location in Bhusawal
-            </h2>
+            <h2 className="section-heading-h2">Convenient Location in Bhusawal</h2>
 
-            <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)' }}>
+            <p className="section-lead-p">
               Centrally situated at Khadka Square for easy accessibility across Bhusawal, Varangaon,
               and Jalgaon.
             </p>

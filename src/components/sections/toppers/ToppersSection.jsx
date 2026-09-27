@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Trophy, Sparkles } from 'lucide-react';
-import toppersData from '../../../data/toppers.json';
+import toppersData from '@/data/toppers.json';
 import SubjectTopperCard from './SubjectTopperCard';
 import StudentResultCard from './StudentResultCard';
 
@@ -31,26 +31,17 @@ export default function ToppersSection({ onOpenCallModal }) {
     >
       <div className="container-custom">
         {/* Section Header */}
-        <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 36px' }}>
+        <div className="section-header-center" style={{ marginBottom: '36px' }}>
           <div className="badge-gold" style={{ marginBottom: '12px' }}>
             <Trophy size={13} />
             <span>NEET UG {examYear} Results</span>
           </div>
 
-          <h2
-            style={{
-              fontSize: 'clamp(2.1rem, 4.8vw, 3.2rem)',
-              fontWeight: '900',
-              lineHeight: '1.1',
-              letterSpacing: '-0.035em',
-              marginBottom: '12px',
-              color: 'var(--text-heading)'
-            }}
-          >
+          <h2 className="section-heading-h2" style={{ marginBottom: '12px' }}>
             Outstanding Achievers Wall of Fame
           </h2>
 
-          <p style={{ fontSize: '1rem', color: 'var(--text-sub)' }}>
+          <p className="section-lead-p" style={{ fontSize: '1rem' }}>
             Consistent practice, rigorous error analysis, and dedicated mentorship. Celebrating our
             students who cracked NEET-UG.
           </p>

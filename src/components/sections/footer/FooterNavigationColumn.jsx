@@ -1,6 +1,6 @@
 import React from 'react';
 import { Laptop, ExternalLink } from 'lucide-react';
-import { getCbtUrl, openCbtPortal } from '../../../utils/cbt';
+import { getCbtUrl, openCbtPortal } from '@/utils/cbt';
 
 export default function FooterNavigationColumn({ navList }) {
   return (

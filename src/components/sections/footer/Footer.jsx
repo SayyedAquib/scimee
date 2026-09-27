@@ -1,5 +1,5 @@
 import React from 'react';
-import siteConfig from '../../../data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 import FooterNavigationColumn from './FooterNavigationColumn';
 import FooterContactColumn from './FooterContactColumn';
 
@@ -20,103 +20,33 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
   const navList = Array.isArray(siteConfig?.navigation) ? siteConfig.navigation : [];
 
   return (
-    <footer
-      style={{
-        background: '#f8fafc',
-        borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-        borderTopLeftRadius: '36px',
-        borderTopRightRadius: '36px',
-        boxShadow: '0 -10px 30px rgba(0, 0, 0, 0.03)',
-        paddingTop: '48px',
-        paddingBottom: '84px',
-        color: 'var(--text-sub)'
-      }}
-    >
+    <footer className="site-footer">
       <div className="container-custom">
         {/* Main Footer Columns */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '32px',
-            marginBottom: '38px'
-          }}
-        >
+        <div className="footer-grid">
           {/* Column 1: Institute Branding & Urdu Motto */}
           <div>
-            <div
-              style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}
-            >
-              <div
-                style={{
-                  width: '46px',
-                  height: '46px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
-                }}
-              >
+            <div className="footer-brand-header">
+              <div className="footer-logo-box">
                 <img
                   src="/assets/logo.svg"
                   alt="SCIMEE Logo"
                   width="46"
                   height="46"
-                  style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+                  className="footer-logo-img"
                 />
               </div>
-              <span
-                style={{
-                  fontSize: '1.3rem',
-                  fontWeight: '900',
-                  color: 'var(--text-heading)',
-                  letterSpacing: '-0.02em'
-                }}
-              >
-                {brandName}
-              </span>
+              <span className="footer-brand-title">{brandName}</span>
             </div>
 
-            <p
-              style={{
-                fontSize: '0.86rem',
-                color: 'var(--text-sub)',
-                lineHeight: '1.55',
-                marginBottom: '14px'
-              }}
-            >
+            <p className="footer-brand-desc">
               {brandFullName} — Bhusawal&apos;s leading coaching institute for NEET-UG, IIT-JEE
               Foundation &amp; MHT-CET under <strong>{founder}</strong>.
             </p>
 
-            <div
-              className="bento-card-gold"
-              style={{ padding: '12px 14px', borderRadius: '14px', overflow: 'hidden' }}
-            >
-              <span
-                className="urdu-font"
-                style={{
-                  fontSize: '0.94rem',
-                  color: '#92400e',
-                  display: 'block',
-                  marginBottom: '10px',
-                  fontWeight: '500',
-                  lineHeight: '1.4',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                {taglineUrdu}
-              </span>
-              <span
-                style={{
-                  fontSize: '0.72rem',
-                  color: '#b45309',
-                  display: 'block',
-                  lineHeight: '1.4'
-                }}
-              >
-                {taglineEn}
-              </span>
+            <div className="bento-card-gold footer-urdu-card">
+              <span className="urdu-font footer-urdu-text">{taglineUrdu}</span>
+              <span className="footer-tagline-en">{taglineEn}</span>
             </div>
           </div>
 
@@ -128,19 +58,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
         </div>
 
         {/* Bottom Legal Bar */}
-        <div
-          style={{
-            borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-            paddingTop: '18px',
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '10px',
-            fontSize: '0.78rem',
-            color: 'var(--text-muted)'
-          }}
-        >
+        <div className="footer-bottom-bar">
           <div>
             &copy; {currentYear} {brandFullName}. All rights reserved.
           </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Laptop, ExternalLink, ArrowRight } from 'lucide-react';
-import cbtData from '../../../data/cbt-features.json';
-import { getCbtUrl, openCbtPortal, CBT_ROUTES } from '../../../utils/cbt';
+import cbtData from '@/data/cbt-features.json';
+import { getCbtUrl, openCbtPortal, CBT_ROUTES } from '@/utils/cbt';
 import CbtMetricsGrid from './CbtMetricsGrid';
 import CbtPaletteBanner from './CbtPaletteBanner';
 import CbtFeatureCard from './CbtFeatureCard';
@@ -18,30 +18,24 @@ export default function CbtShowcaseSection() {
     'Simulate actual test-day pressure with the official 5-state question palette, 200,000+ curated MCQs, timed auto-submit, and instantaneous performance telemetry.';
 
   return (
-    <section id="cbt-portal" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
+    <section id="cbt-portal" className="section-wrap">
       <div className="container-custom">
         <div className="bento-section-canvas">
           {/* Section Header */}
-          <div style={{ textAlign: 'center', maxWidth: '840px', margin: '0 auto 36px' }}>
+          <div
+            className="section-header-center"
+            style={{ maxWidth: '840px', marginBottom: '36px' }}
+          >
             <div className="badge-emerald" style={{ marginBottom: '12px' }}>
               <Laptop size={13} />
               <span>{sectionBadge}</span>
             </div>
 
-            <h2
-              style={{
-                fontSize: 'clamp(2rem, 4.5vw, 3rem)',
-                fontWeight: '900',
-                lineHeight: '1.12',
-                letterSpacing: '-0.03em',
-                marginBottom: '12px',
-                color: 'var(--text-heading)'
-              }}
-            >
+            <h2 className="section-heading-h2" style={{ marginBottom: '12px' }}>
               {sectionTitle}
             </h2>
 
-            <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)', lineHeight: '1.6' }}>
+            <p className="section-lead-p" style={{ lineHeight: '1.6' }}>
               {sectionSubtitle}
             </p>
           </div>

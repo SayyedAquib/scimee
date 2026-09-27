@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 import MapLocation from './MapLocation';
-import siteConfig from '../../../data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 
 describe('MapLocation Component', () => {
   it('renders institute address and landmark info', () => {

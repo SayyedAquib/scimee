@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import Footer from './Footer';
-import siteConfig from '../../../data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 
 describe('Footer Component', () => {
   it('renders institute brand, founder, and Urdu motto', () => {

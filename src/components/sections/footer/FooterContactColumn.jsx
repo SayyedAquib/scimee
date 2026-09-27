@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapPin, MessageCircle } from 'lucide-react';
-import { getWhatsAppUrl } from '../../../utils/whatsapp';
+import { getWhatsAppUrl } from '@/utils/whatsapp';
 
 export default function FooterContactColumn({ contact, location }) {
   const whatsappUrl = getWhatsAppUrl('general');

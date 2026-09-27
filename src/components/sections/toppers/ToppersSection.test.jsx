@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import ToppersSection from './ToppersSection';
-import toppersData from '../../../data/toppers.json';
+import toppersData from '@/data/toppers.json';
 
 describe('ToppersSection Component', () => {
   it('renders NEET toppers and exam year badge', () => {

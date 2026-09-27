@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Sparkles } from 'lucide-react';
-import siteConfig from '../../../data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 import PhoneModalHeader from './PhoneModalHeader';
 import PhoneModalBody from './PhoneModalBody';
 

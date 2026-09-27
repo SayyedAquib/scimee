@@ -6,6 +6,10 @@
 
 - Website is deployed and serving users at https://scimee.vercel.app/
 - All CI checks pass (lint, format, test, build)
+- **Vite Path Aliases & Component Inline Style Pruning (ADR 13)**:
+  - Configured `@/` path aliasing in `vite.config.js` and `jsconfig.json`, migrating all 36 source and test files across `src/` to clean, refactor-proof imports.
+  - Pruned repetitive inline styles across all major landing page sections (`Header`, `Hero`, `Footer`, `CourseExplorer`, `ToppersSection`, `SyllabusExplorer`, `FacilitiesSection`, `CbtShowcaseSection`, `MapLocation`, `FAQSection`), encapsulating them into clean, reusable CSS primitives in `src/styles/globals.css`.
+  - Reduced initial bundle JS chunk from ~63 KB to 61.05 KB, accelerating JavaScript parse and execution times.
 - **Modular Component & Directory Architecture (ADR 12)**:
   - Purged unused Next.js remnants in `src/app/` (`page.jsx`, `layout.jsx`, `metadata.js`), establishing `src/styles/globals.css` as the clean single home for design tokens and utilities.
   - Reorganized `src/components/` into `sections/` (10 self-contained landing page sections with sibling subcomponents and co-located unit tests) and `ui/` (shared application widgets like modal, error boundary, mobile action bar, network status, scroll progress, back-to-top).
@@ -21,7 +25,7 @@
   - **Scheduler Chunk Deduplication**: Unified `scheduler` into `vendor-react` in `vite.config.js`, eliminating 259 ms of split chunk execution.
   - **Zero Cumulative Layout Shift (CLS 0.000)**: Added `.hero-badges-row` min-height constraints (44px desktop / 92px mobile) preventing badge wrap layout shifts.
   - **Edge CDN Optimization (`vercel.json`)**: Configured Vercel edge caching (`max-age=31536000, immutable`) and hardened security headers.
-  - Initial JS bundle reduced by **57.1%** (from 147.2 KB to 63.2 KB) via `React.lazy()` code splitting.
+  - Initial JS bundle reduced by **57.1%** (from 147.2 KB to 61.05 KB) via `React.lazy()` code splitting and style pruning.
   - Render-blocking CSS **100% eliminated** via production build inlining (`vite-plugin-inline-css`).
   - Forced reflow on scroll **eliminated** via `requestAnimationFrame` scroll batching in `useHeaderNavigation.js`.
   - Non-composited animations eliminated by moving `@keyframes applePulseRadar` to GPU-composited `transform`/`opacity` on `::after`.
@@ -31,6 +35,13 @@
 
 ## Recently Completed
 
+- **Vite Path Aliases (`@/`) and Component Inline Style Pruning (ADR 13)**:
+  - Added `@/` path alias to `vite.config.js` and `jsconfig.json`.
+  - Converted all 36 files across `src/` to clean `@/` imports.
+  - Added section, header, hero, and footer utility classes to `src/styles/globals.css`.
+  - Pruned verbose and repetitive inline styles across Header, Hero, Footer, CourseExplorer, ToppersSection, SyllabusExplorer, FacilitiesSection, CbtShowcaseSection, MapLocation, and FAQSection.
+  - Initial JS bundle payload shrank from ~63 KB to 61.05 KB.
+  - 100% test pass rate (125/125 across 27 suites), 0 ESLint errors, 100% Prettier compliance, and clean production build.
 - **Modular Component & Directory Architecture Refactoring (ADR 12)**:
   - Eliminated dead Next.js leftovers (`src/app/`), moved CSS to `src/styles/globals.css`, partitioned `src/components/` into `sections/` (10 self-contained sections) and `ui/` (shared widgets), and placed integration tests in `src/test/integration/`.
   - 100% test pass rate preserved (125/125 tests across 27 test suites). Zero ESLint errors, 100% Prettier formatting, clean production build.
@@ -64,6 +75,7 @@ None reported. The site is stable in production.
 - Added ADR 10 in `DECISIONS.md` documenting Scheduler bundling, deferred below-the-fold mounting, and Urdu font micro-subsetting.
 - Added ADR 11 in `DECISIONS.md` documenting the elimination of FOUC via clean root container and synchronous design system link.
 - Added ADR 12 in `DECISIONS.md` documenting the modular component and directory architecture refactoring.
+- Added ADR 13 in `DECISIONS.md` documenting Vite path aliases (`@/`) and component inline style pruning.
 - See `DECISIONS.md` for the full architectural decision log.
 
 ## Next Steps

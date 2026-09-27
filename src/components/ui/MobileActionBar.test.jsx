@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 import MobileActionBar from './MobileActionBar';
-import siteConfig from '../../data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 
 describe('MobileActionBar Component (Sticky Mobile Footer Bar)', () => {
   it('renders all three mobile quick-action buttons (Call, WhatsApp, Syllabus)', () => {

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { getWhatsAppUrl } from './whatsapp';
-import siteConfig from '../data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 
 describe('WhatsApp Routing Utility (getWhatsAppUrl)', () => {
   const expectedNumber = siteConfig.contact.whatsappNumber;

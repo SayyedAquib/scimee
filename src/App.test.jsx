@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect } from 'vitest';
 import App from './App';
-import siteConfig from './data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 
 describe('App Integration Test (End-to-End Component Tree)', () => {
   it('renders all core landing page sections and footer', async () => {

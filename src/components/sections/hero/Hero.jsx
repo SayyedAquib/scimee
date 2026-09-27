@@ -1,7 +1,7 @@
 import React from 'react';
 import { PhoneCall, Trophy, BookOpen, Laptop, ExternalLink } from 'lucide-react';
-import siteConfig from '../../../data/site-config.json';
-import { getCbtUrl, openCbtPortal } from '../../../utils/cbt';
+import siteConfig from '@/data/site-config.json';
+import { getCbtUrl, openCbtPortal } from '@/utils/cbt';
 
 export default function Hero({ onOpenCallModal }) {
   const taglineUrdu = siteConfig?.brand?.taglineUrdu ?? 'ہم جذبہِ تعمیر جہاں لے کے اٹھے ہیں';
@@ -9,53 +9,14 @@ export default function Hero({ onOpenCallModal }) {
   const statsList = Array.isArray(siteConfig?.stats) ? siteConfig.stats : [];
 
   return (
-    <section
-      id="about"
-      style={{
-        position: 'relative',
-        paddingTop: 'clamp(36px, 6vw, 64px)',
-        paddingBottom: 'clamp(48px, 8vw, 80px)',
-        overflow: 'hidden'
-      }}
-    >
+    <section id="about" className="hero-section">
       <div className="container-custom" style={{ position: 'relative', zIndex: 1 }}>
-        <div style={{ maxWidth: '960px', margin: '0 auto', textAlign: 'center' }}>
+        <div className="hero-content-wrap">
           {/* Header Badges Row */}
-          <div
-            className="hero-badges-row"
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '10px',
-              marginBottom: '24px'
-            }}
-          >
+          <div className="hero-badges-row">
             {/* Apple Ornate Urdu Tagline Pill (Light Theme) */}
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                background: '#fffbeb',
-                border: '1px solid rgba(217, 119, 6, 0.28)',
-                padding: '8px 22px',
-                borderRadius: 'var(--radius-pill)',
-                boxShadow: '0 4px 16px rgba(245, 158, 11, 0.12)'
-              }}
-            >
-              <span
-                className="urdu-font"
-                style={{
-                  fontSize: '1.05rem',
-                  color: '#92400e',
-                  fontWeight: '500',
-                  lineHeight: '1.4',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                {taglineUrdu}
-              </span>
+            <div className="hero-urdu-pill">
+              <span className="urdu-font hero-urdu-text">{taglineUrdu}</span>
             </div>
 
             {/* Apple CBT Online Simulator Live Pill */}
@@ -67,65 +28,23 @@ export default function Hero({ onOpenCallModal }) {
                 e?.preventDefault?.();
                 openCbtPortal('/tests', 'hero_top_pill');
               }}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
-                border: '1px solid rgba(16, 185, 129, 0.35)',
-                padding: '7px 16px',
-                borderRadius: 'var(--radius-pill)',
-                textDecoration: 'none',
-                boxShadow: '0 4px 14px rgba(16, 185, 129, 0.12)',
-                transition:
-                  'background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease'
-              }}
+              className="hero-cbt-pill"
               title="Launch SCIMEE NTA NEET CBT Online Test Simulator"
             >
               <span className="live-radar-dot" />
               <Laptop size={14} color="#059669" />
-              <span style={{ fontSize: '0.78rem', fontWeight: '800', color: '#065f46' }}>
-                NTA NEET CBT Simulator Live
-              </span>
+              <span className="hero-cbt-pill-label">NTA NEET CBT Simulator Live</span>
               <ExternalLink size={12} color="#047857" style={{ opacity: 0.8 }} />
             </a>
           </div>
 
           {/* Luminous Apple Keynote Display Title (Deep Charcoal / Black) */}
-          <h1
-            style={{
-              fontSize: 'clamp(2.4rem, 5.5vw, 4.2rem)',
-              fontWeight: '900',
-              lineHeight: '1.06',
-              letterSpacing: '-0.04em',
-              marginBottom: '20px',
-              color: 'var(--text-heading)'
-            }}
-          >
-            Crack NEET-UG with Proven Mastery at{' '}
-            <span
-              style={{
-                background: 'linear-gradient(135deg, #d97706 0%, #b45309 60%, #92400e 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                display: 'inline-block'
-              }}
-            >
-              SCIMEE
-            </span>
+          <h1 className="hero-display-title">
+            Crack NEET-UG with Proven Mastery at <span className="text-gradient-gold">SCIMEE</span>
           </h1>
 
           {/* Subheading */}
-          <p
-            style={{
-              fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)',
-              color: 'var(--text-sub)',
-              maxWidth: '780px',
-              margin: '0 auto 36px',
-              lineHeight: '1.6',
-              letterSpacing: '-0.01em'
-            }}
-          >
+          <p className="hero-lead-text">
             Under the mentorship of{' '}
             <strong style={{ color: 'var(--text-heading)' }}>{founder}</strong>, we prepare medical
             aspirants through conceptual clarity, weekly OMR examination drills, and dedicated
@@ -133,63 +52,18 @@ export default function Hero({ onOpenCallModal }) {
           </p>
 
           {/* CTA Buttons (Unified Symmetry) */}
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '12px',
-              marginBottom: '48px'
-            }}
-          >
-            <button
-              onClick={() => onOpenCallModal?.()}
-              className="btn-primary"
-              style={{
-                padding: '13px 24px',
-                fontSize: '0.94rem',
-                height: '48px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px'
-              }}
-            >
+          <div className="hero-cta-group" style={{ marginBottom: '48px' }}>
+            <button onClick={() => onOpenCallModal?.()} className="btn-primary btn-lg">
               <PhoneCall size={17} style={{ flexShrink: 0 }} />
               <span>Direct Call Helpline</span>
             </button>
 
-            <a
-              href="#results"
-              className="btn-secondary"
-              style={{
-                padding: '13px 24px',
-                fontSize: '0.94rem',
-                height: '48px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px'
-              }}
-            >
+            <a href="#results" className="btn-secondary btn-lg">
               <Trophy size={17} color="#d97706" style={{ flexShrink: 0 }} />
               <span>100% NEET 2026 Results</span>
             </a>
 
-            <a
-              href="#syllabus"
-              className="btn-secondary"
-              style={{
-                padding: '13px 24px',
-                fontSize: '0.94rem',
-                height: '48px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px'
-              }}
-            >
+            <a href="#syllabus" className="btn-secondary btn-lg">
               <BookOpen size={17} color="#0284c7" style={{ flexShrink: 0 }} />
               <span>NMC 2026 Syllabus</span>
             </a>
@@ -202,44 +76,11 @@ export default function Hero({ onOpenCallModal }) {
               return (
                 <div
                   key={stat?.id ?? idx}
-                  className={isGold ? 'bento-card-gold' : 'bento-card'}
-                  style={{
-                    padding: '22px 18px',
-                    borderRadius: '22px'
-                  }}
+                  className={`hero-stats-card ${isGold ? 'bento-card-gold' : 'bento-card'}`}
                 >
-                  <div
-                    style={{
-                      fontSize: 'clamp(1.8rem, 3.4vw, 2.4rem)',
-                      fontWeight: '900',
-                      color: isGold ? '#92400e' : 'var(--text-heading)',
-                      letterSpacing: '-0.04em',
-                      lineHeight: '1',
-                      marginBottom: '6px'
-                    }}
-                  >
-                    {stat?.value}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '0.88rem',
-                      fontWeight: '800',
-                      color: isGold ? '#78350f' : 'var(--text-title)',
-                      marginBottom: '3px',
-                      letterSpacing: '-0.01em'
-                    }}
-                  >
-                    {stat?.label}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '0.74rem',
-                      color: isGold ? '#92400e' : 'var(--text-muted)',
-                      lineHeight: '1.3'
-                    }}
-                  >
-                    {stat?.subtext}
-                  </div>
+                  <div className={`hero-stat-value${isGold ? ' gold' : ''}`}>{stat?.value}</div>
+                  <div className={`hero-stat-label${isGold ? ' gold' : ''}`}>{stat?.label}</div>
+                  <div className={`hero-stat-subtext${isGold ? ' gold' : ''}`}>{stat?.subtext}</div>
                 </div>
               );
             })}

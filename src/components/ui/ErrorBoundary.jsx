@@ -1,6 +1,6 @@
 import React from 'react';
 import { PhoneCall, RotateCcw, AlertTriangle } from 'lucide-react';
-import siteConfig from '../../data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {

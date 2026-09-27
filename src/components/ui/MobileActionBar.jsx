@@ -1,6 +1,6 @@
 import React from 'react';
 import { PhoneCall, MessageCircle, BookOpen } from 'lucide-react';
-import { getWhatsAppUrl } from '../../utils/whatsapp';
+import { getWhatsAppUrl } from '@/utils/whatsapp';
 
 export default function MobileActionBar({ onOpenCallModal }) {
   const whatsappUrl = getWhatsAppUrl('general');

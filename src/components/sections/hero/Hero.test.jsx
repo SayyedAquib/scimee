@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 import Hero from './Hero';
-import siteConfig from '../../../data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 
 describe('Hero Component', () => {
   it('renders Urdu tagline badge and official founder name', () => {

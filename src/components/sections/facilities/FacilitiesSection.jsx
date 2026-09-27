@@ -1,7 +1,7 @@
 import React from 'react';
 import { Shield, ArrowRight, Laptop, ExternalLink } from 'lucide-react';
-import facilitiesData from '../../../data/facilities.json';
-import { getCbtUrl, openCbtPortal } from '../../../utils/cbt';
+import facilitiesData from '@/data/facilities.json';
+import { getCbtUrl, openCbtPortal } from '@/utils/cbt';
 import FacilityCard from './FacilityCard';
 
 export default function FacilitiesSection({ onOpenCallModal }) {
@@ -19,30 +19,19 @@ export default function FacilitiesSection({ onOpenCallModal }) {
     'A distraction-free, results-driven atmosphere engineered for serious medical aspirants.';
 
   return (
-    <section id="facilities" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
+    <section id="facilities" className="section-wrap">
       <div className="container-custom">
         <div className="bento-section-canvas">
           {/* Section Header */}
-          <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 32px' }}>
+          <div className="section-header-center">
             <div className="badge-emerald" style={{ marginBottom: '10px' }}>
               <Shield size={13} />
               <span>Infrastructure &amp; Pedagogy</span>
             </div>
 
-            <h2
-              style={{
-                fontSize: 'clamp(2rem, 4.5vw, 3rem)',
-                fontWeight: '900',
-                lineHeight: '1.12',
-                letterSpacing: '-0.03em',
-                marginBottom: '10px',
-                color: 'var(--text-heading)'
-              }}
-            >
-              {sectionTitle}
-            </h2>
+            <h2 className="section-heading-h2">{sectionTitle}</h2>
 
-            <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)' }}>{sectionSubtitle}</p>
+            <p className="section-lead-p">{sectionSubtitle}</p>
           </div>
 
           {/* Feature Cards Grid (Apple Bento Grid) */}

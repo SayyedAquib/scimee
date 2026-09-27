@@ -1,7 +1,7 @@
 import React from 'react';
 import { PhoneCall, Phone, Clock, MapPin, MessageCircle, ExternalLink } from 'lucide-react';
-import { getWhatsAppUrl } from '../../../utils/whatsapp';
-import { getCbtUrl, openCbtPortal } from '../../../utils/cbt';
+import { getWhatsAppUrl } from '@/utils/whatsapp';
+import { getCbtUrl, openCbtPortal } from '@/utils/cbt';
 
 export default function PhoneModalBody({ modalData, siteConfig, context, onClose }) {
   const primaryPhone = siteConfig?.contact?.primaryPhone ?? '9175013140';

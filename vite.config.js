@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { fileURLToPath, URL } from 'node:url';
 
 function inlineCss() {
   return {
@@ -29,6 +30,11 @@ function inlineCss() {
 
 export default defineConfig({
   plugins: [react(), inlineCss()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
   server: {
     port: 3000,
     open: false

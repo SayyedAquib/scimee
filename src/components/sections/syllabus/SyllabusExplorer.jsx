@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { FileText, PhoneCall, Award, CheckCircle2 } from 'lucide-react';
-import syllabusData from '../../../data/syllabus.json';
+import syllabusData from '@/data/syllabus.json';
 import SyllabusUnitCard from './SyllabusUnitCard';
 import SyllabusSubjectBar from './SyllabusSubjectBar';
 
@@ -64,30 +64,22 @@ export default function SyllabusExplorer({ onOpenCallModal }) {
   };
 
   return (
-    <section id="syllabus" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
+    <section id="syllabus" className="section-wrap">
       <div className="container-custom">
         <div className="bento-section-canvas">
           {/* Section Header */}
-          <div style={{ textAlign: 'center', maxWidth: '850px', margin: '0 auto 28px' }}>
+          <div
+            className="section-header-center"
+            style={{ maxWidth: '850px', marginBottom: '28px' }}
+          >
             <div className="badge-gold" style={{ marginBottom: '10px' }}>
               <FileText size={13} />
               <span>Official 2026 Curriculum</span>
             </div>
 
-            <h2
-              style={{
-                fontSize: 'clamp(2rem, 4.5vw, 3rem)',
-                fontWeight: '900',
-                lineHeight: '1.12',
-                letterSpacing: '-0.03em',
-                marginBottom: '10px',
-                color: 'var(--text-heading)'
-              }}
-            >
-              Entrance Examination Syllabus Explorer
-            </h2>
+            <h2 className="section-heading-h2">Entrance Examination Syllabus Explorer</h2>
 
-            <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)' }}>
+            <p className="section-lead-p">
               Comprehensive topic-by-topic curriculum and marking schemes for{' '}
               <strong>NEET-UG</strong>, <strong>JEE (Main)</strong>, and <strong>MHT-CET</strong>.
             </p>

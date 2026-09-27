@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 import SyllabusExplorer from './SyllabusExplorer';
-import syllabusData from '../../../data/syllabus.json';
+import syllabusData from '@/data/syllabus.json';
 
 describe('SyllabusExplorer Component', () => {
   it('renders all exams and subject tab buttons', () => {

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 import ErrorBoundary from './ErrorBoundary';
-import siteConfig from '../../data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 
 const FaultyComponent = () => {
   throw new Error('Simulated Component Crash');

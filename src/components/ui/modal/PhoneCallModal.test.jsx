@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 import PhoneCallModal from './PhoneCallModal';
-import siteConfig from '../../../data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 
 describe('PhoneCallModal Component', () => {
   it('does not render when isOpen is false', () => {

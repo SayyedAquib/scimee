@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircle2, ArrowRight, GraduationCap } from 'lucide-react';
-import coursesData from '../../../data/courses.json';
+import coursesData from '@/data/courses.json';
 
 export default function CourseExplorer({ onOpenCallModal }) {
   const programsList = Array.isArray(coursesData?.programs) ? coursesData.programs : [];
@@ -12,30 +12,21 @@ export default function CourseExplorer({ onOpenCallModal }) {
   const highlightsList = Array.isArray(activeCourse?.highlights) ? activeCourse.highlights : [];
 
   return (
-    <section id="courses" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
+    <section id="courses" className="section-wrap">
       <div className="container-custom">
         <div className="bento-section-canvas">
           {/* Section Header */}
-          <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 32px' }}>
+          <div className="section-header-center">
             <div className="badge-blue" style={{ marginBottom: '10px' }}>
               <GraduationCap size={13} />
               <span>Academic Programs</span>
             </div>
 
-            <h2
-              style={{
-                fontSize: 'clamp(2rem, 4.5vw, 3rem)',
-                fontWeight: '900',
-                lineHeight: '1.12',
-                letterSpacing: '-0.03em',
-                marginBottom: '10px',
-                color: 'var(--text-heading)'
-              }}
-            >
+            <h2 className="section-heading-h2">
               {coursesData?.sectionTitle ?? 'Excellence Programs Tailored for Medical Entrance'}
             </h2>
 
-            <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)' }}>
+            <p className="section-lead-p">
               {coursesData?.sectionSubtitle ??
                 'From foundation building in 5th grade to intensive repeater batches.'}
             </p>

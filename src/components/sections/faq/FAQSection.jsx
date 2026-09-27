@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { HelpCircle, ChevronDown, PhoneCall } from 'lucide-react';
-import faqData from '../../../data/faq.json';
+import faqData from '@/data/faq.json';
 
 export default function FAQSection({ onOpenCallModal }) {
   const [openIndex, setOpenIndex] = useState(0);
@@ -23,30 +23,19 @@ export default function FAQSection({ onOpenCallModal }) {
   };
 
   return (
-    <section id="faq" style={{ paddingTop: '20px', paddingBottom: '30px' }}>
+    <section id="faq" className="section-wrap" style={{ paddingBottom: '30px' }}>
       <div className="container-custom" style={{ maxWidth: '920px' }}>
         <div className="bento-section-canvas">
           {/* Section Header */}
-          <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+          <div className="section-header-center" style={{ marginBottom: '30px' }}>
             <div className="badge-gold" style={{ marginBottom: '10px' }}>
               <HelpCircle size={13} />
               <span>Got Questions?</span>
             </div>
 
-            <h2
-              style={{
-                fontSize: 'clamp(2rem, 4.5vw, 3rem)',
-                fontWeight: '900',
-                lineHeight: '1.12',
-                letterSpacing: '-0.03em',
-                marginBottom: '10px',
-                color: 'var(--text-heading)'
-              }}
-            >
-              {sectionTitle}
-            </h2>
+            <h2 className="section-heading-h2">{sectionTitle}</h2>
 
-            <p style={{ fontSize: '0.96rem', color: 'var(--text-sub)' }}>{sectionSubtitle}</p>
+            <p className="section-lead-p">{sectionSubtitle}</p>
           </div>
 
           {/* FAQ Accordion List */}

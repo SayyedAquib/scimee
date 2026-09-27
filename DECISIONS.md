@@ -480,5 +480,40 @@ Option B.
 - ESLint and Prettier checks remain 100% clean.
 - Build output bundle size and code-splitting performance remain identical (~64 KB initial JS).
 
+---
+
+## 13. Vite Path Aliases (`@/`) and Component Inline Style Pruning
+
+### Status
+Active
+
+### Context
+1. **Import Fragility**: Following the modular directory reorganization (ADR 12), components and tests frequently relied on deep relative imports (e.g. `../../../../data/site-config.json`, `../../ui/modal/PhoneCallModal`). Moving or refactoring components was prone to broken paths.
+2. **Inline Style Bloat**: Repetitive and verbose inline style objects across major landing page sections (`Header`, `Hero`, `Footer`, `CourseExplorer`, `ToppersSection`, `SyllabusExplorer`, `FacilitiesSection`, `CbtShowcaseSection`, `MapLocation`, `FAQSection`) bloated component JSX, created code duplication, and increased JavaScript chunk sizes.
+
+### Options Considered
+- **Option A (Relative Paths & Full Inline Styles)**: Keep deep relative paths and keep all styles in inline JSX objects. (Rejected: hard to maintain, heavy JS parse overhead).
+- **Option B (Tailwind / CSS Modules)**: Introduce a CSS framework or CSS modules. (Rejected: violates architectural constraint of zero extra CSS build toolchains / no Tailwind).
+- **Option C (Vite `@/` Path Aliasing + Semantic CSS Utility Pruning in `globals.css`)**:
+  - Configure `vite.config.js` and `jsconfig.json` with `@/` mapped to `src/`.
+  - Extract common section headers, hero cards, header elements, and footer structures into clean, component-scoped CSS classes in `src/styles/globals.css`.
+
+### Decision
+Option C.
+1. **Vite & IDE Path Aliases**: Configured `resolve.alias` in `vite.config.js` mapping `@` to `src` (using `fileURLToPath(new URL('./src', import.meta.url))`), and added `jsconfig.json` mapping `@/*` to `src/*` for seamless IDE autocompletion and definition navigation. Migrated 36 files across `src/` to `@/` aliases.
+2. **Component & Section Style Pruning**: Extracted repetitive inline styles into clean utility classes in `src/styles/globals.css`:
+   - Section primitives: `.section-wrap`, `.section-header-center`, `.section-heading-h2`, `.section-lead-p`.
+   - Header primitives: `.header-brand-link`, `.header-logo-box`, `.header-logo-img`, `.header-brand-row`, `.header-brand-title`, `.header-brand-sub`, `.header-actions-desktop`, `.header-actions-mobile`, `.header-menu-btn`.
+   - Hero primitives: `.hero-section`, `.hero-content-wrap`, `.hero-urdu-pill`, `.hero-urdu-text`, `.hero-cbt-pill`, `.hero-cbt-pill-label`, `.text-gradient-gold`, `.hero-display-title`, `.hero-lead-text`, `.hero-cta-group`, `.btn-lg`, `.hero-stats-card`, `.hero-stat-value`, `.hero-stat-label`, `.hero-stat-subtext`.
+   - Footer primitives: `.site-footer`, `.footer-grid`, `.footer-brand-header`, `.footer-logo-box`, `.footer-logo-img`, `.footer-brand-title`, `.footer-brand-desc`, `.footer-urdu-card`, `.footer-urdu-text`, `.footer-tagline-en`, `.footer-bottom-bar`.
+3. **Preserved Design Invariants**: Retained exact visual fidelity and Urdu font-weight `500` (Medium) across Hero and Footer.
+
+### Consequences
+- Path imports are robust, readable, and refactor-proof.
+- Component JSX is drastically cleaner, more readable, and declarative.
+- Initial client JS payload dropped from ~63 KB to 61.05 KB (~2 KB reduction in JS bundle parsing).
+- 100% test pass rate: 125/125 tests passing across 27 test suites.
+- 0 ESLint errors and 100% Prettier compliance.
+
 
 

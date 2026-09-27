@@ -3,7 +3,7 @@
 // Generates pre-filled, respectful Islamic greetings based on course context
 // ==============================================================================
 
-import siteConfig from '../data/site-config.json';
+import siteConfig from '@/data/site-config.json';
 
 const DEFAULT_GREETING =
   'As-salamu alaykum Rehan Sir, I would like to enquire about SCIMEE admissions, batch timings, and counseling.';

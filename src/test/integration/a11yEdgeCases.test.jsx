@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import PhoneCallModal from '../../components/ui/modal/PhoneCallModal';
-import SyllabusExplorer from '../../components/sections/syllabus/SyllabusExplorer';
-import { trackEvent } from '../../utils/analytics';
-import { getWhatsAppUrl } from '../../utils/whatsapp';
-import siteConfig from '../../data/site-config.json';
+import PhoneCallModal from '@/components/ui/modal/PhoneCallModal';
+import SyllabusExplorer from '@/components/sections/syllabus/SyllabusExplorer';
+import { trackEvent } from '@/utils/analytics';
+import { getWhatsAppUrl } from '@/utils/whatsapp';
+import siteConfig from '@/data/site-config.json';
 
 describe('Accessibility (a11y) & Utility Edge Cases', () => {
   beforeEach(() => {
