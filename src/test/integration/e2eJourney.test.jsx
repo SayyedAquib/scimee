@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen, fireEvent, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import App from './App';
-import siteConfig from './data/site-config.json';
+import App from '../../App';
+import siteConfig from '../../data/site-config.json';
 
 describe('End-to-End User Conversion Journey', () => {
   beforeEach(() => {

@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import siteConfig from './data/site-config.json';
-import coursesData from './data/courses.json';
-import syllabusData from './data/syllabus.json';
-import toppersData from './data/toppers.json';
-import facilitiesData from './data/facilities.json';
-import faqData from './data/faq.json';
-import cbtFeaturesData from './data/cbt-features.json';
+import siteConfig from '../../data/site-config.json';
+import coursesData from '../../data/courses.json';
+import syllabusData from '../../data/syllabus.json';
+import toppersData from '../../data/toppers.json';
+import facilitiesData from '../../data/facilities.json';
+import faqData from '../../data/faq.json';
+import cbtFeaturesData from '../../data/cbt-features.json';
 
 describe('JSON Data Integrity & Schema Validation', () => {
   describe('site-config.json', () => {
