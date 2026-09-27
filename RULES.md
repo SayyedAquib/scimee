@@ -13,10 +13,10 @@
 
 - One component per file, default export
 - Co-locate test files: `Component.jsx` → `Component.test.jsx` (same directory)
-- Sub-components go in a named subdirectory: `components/header/HeaderDesktopNav.jsx`
+- Sub-components go in their section directory: `src/components/sections/header/HeaderDesktopNav.jsx`
 - Utilities go in `src/utils/` — named exports only
 - JSON data goes in `src/data/` — one file per content domain
-- Global CSS goes in `src/app/globals.css` — use CSS custom properties for all tokens
+- Global CSS goes in `src/styles/globals.css` — use CSS custom properties for all tokens
 
 ## Naming Conventions
 
