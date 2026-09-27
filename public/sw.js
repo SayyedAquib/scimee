@@ -3,7 +3,7 @@
 // Caches core application shell & syllabus for resilient offline access
 // ==============================================================================
 
-const CACHE_NAME = 'scimee-cache-v1';
+const CACHE_NAME = 'scimee-cache-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',

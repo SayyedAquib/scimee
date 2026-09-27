@@ -29,7 +29,7 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Mock global fetch to prevent happy-dom from making live network requests to iframes
-global.fetch = vi.fn().mockImplementation(() =>
+const mockFetch = vi.fn().mockImplementation(() =>
   Promise.resolve({
     ok: true,
     status: 200,
@@ -37,6 +37,10 @@ global.fetch = vi.fn().mockImplementation(() =>
     json: () => Promise.resolve({})
   })
 );
+global.fetch = mockFetch;
+if (typeof window !== 'undefined') {
+  window.fetch = mockFetch;
+}
 
 // Polyfill URL.createObjectURL and URL.revokeObjectURL
 if (typeof window.URL.createObjectURL === 'undefined') {
