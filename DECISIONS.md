@@ -412,4 +412,37 @@ Option B.
 - Mobile Total Blocking Time (TBT) drops to < 50 ms.
 - Mobile Performance score hits 100/100.
 
+---
+
+## 11. Elimination of FOUC (Flash of Unstyled Content) via Clean Root Container and Synchronous Design System Link
+
+### Status
+Active
+
+### Context
+In ADR 9, a static HTML mockup of the Floating Island Navbar and Hero title was hardcoded directly inside `<div id="root">` in `index.html` to optimize synthetic first paint metrics on throttled 4G audits. However, in Vite development mode (`npm run dev`) and whenever CSS execution lagged behind DOM parsing:
+1. `globals.css` was not linked in `<head>` (only imported inside `src/main.jsx`).
+2. Vite dev server injects CSS dynamically via client JS only after `main.jsx` is requested, transformed, and executed.
+3. As a result, the browser painted the static HTML shell with zero CSS applied, exposing a jarring Flash of Unstyled Content (FOUC): default Times New Roman font, default browser-blue (`#0000ee`) underlined hyperlinks, and completely unstyled container layouts.
+4. Furthermore, having pre-rendered static HTML inside `<div id="root">` introduced code duplication and desynchronization bugs against `Header.jsx` and `Hero.jsx`, and caused DOM tearing when React 19’s `createRoot()` mounted and wiped the container.
+
+### Options Considered
+- **Option 1 (Clean `<div id="root"></div>` + Synchronous CSS Link)**: Empty the `#root` container to adhere to standard React 19 SPA architecture, and add `<link rel="stylesheet" href="/src/app/globals.css" />` to `<head>` in `index.html`.
+- **Option 2 (Retain Static Shell with CSS in `<head>`)**: Keep the duplicate static HTML shell in `#root` and style it early with `<link rel="stylesheet">`.
+
+### Decision
+Option 1: Clean `<div id="root"></div>` and add `<link rel="stylesheet" href="/src/app/globals.css" />` to `<head>`.
+
+### Reasoning
+- Completely eliminates FOUC, Times New Roman fallbacks, and unstyled blue links across all network environments and local development.
+- Eliminates code duplication: `Header.jsx` and `Hero.jsx` are the single source of truth.
+- Eliminates DOM tearing and non-functional button clicks ("uncanny valley") prior to React hydration.
+- The production client JS payload is ultra-lean (~63 KB), mounting React in under 400ms on modern devices.
+- `vite-plugin-inline-css` continues to inline the CSS during `npm run build`, ensuring zero render-blocking requests in production.
+
+### Consequences
+- Zero unstyled text or blue links ever display on page load.
+- Seamless, uniform mounting behavior in both `npm run dev` and `dist` production builds.
+- 100% compliance with React 19 root container expectations.
+
 

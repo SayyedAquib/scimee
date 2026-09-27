@@ -49,7 +49,7 @@ export default function Hero({ onOpenCallModal }) {
                 style={{
                   fontSize: '1.05rem',
                   color: '#92400e',
-                  fontWeight: '400',
+                  fontWeight: '500',
                   lineHeight: '1.4',
                   whiteSpace: 'nowrap'
                 }}

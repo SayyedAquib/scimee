@@ -100,7 +100,7 @@ export default function Footer({ onOpenCallModal: _onOpenCallModal }) {
                   color: '#92400e',
                   display: 'block',
                   marginBottom: '10px',
-                  fontWeight: '400',
+                  fontWeight: '500',
                   lineHeight: '1.4',
                   whiteSpace: 'nowrap'
                 }}

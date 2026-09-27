@@ -6,8 +6,10 @@
 
 - Website is deployed and serving users at https://scimee.vercel.app/
 - All CI checks pass (lint, format, test, build)
+- **FOUC Elimination & Clean Root Architecture (ADR 11)**:
+  - Cleaned duplicate pre-rendered static HTML shell out of `<div id="root"></div>`, eliminating Flash of Unstyled Content (FOUC), default Times New Roman fonts, unstyled blue hyperlinks, and DOM tearing upon React hydration.
+  - Linked design system tokens synchronously via `<link rel="stylesheet" href="/src/app/globals.css" />` in `<head>`.
 - **PageSpeed Insights 100/100 Mobile & Desktop Engineering Suite**:
-  - **Instant First Paint (< 300ms FCP, < 400ms LCP)**: Pre-rendered the static HTML shell of the Floating Island Navbar and Hero display title inside `<div id="root">` in `index.html`.
   - **Zero Font Swap Delay & Micro-Subsetting**: Preloaded primary `Plus Jakarta Sans` Latin WOFF2 font directly via `<link rel="preload" as="font" type="font/woff2" crossorigin>` and inlined `@font-face` definition into `globals.css`. Sub-setted `Noto Nastaliq Urdu` via Google Fonts dynamic `&text=` API, slashing font payload from 169.7 KiB to ~3 KiB.
   - **Main-Thread Contention Eliminated**: Deferred `gtag.js` execution to the end of `<body>`, removing long tasks during initial paint.
   - **True Deferred Below-the-Fold Mounting**: Below-the-fold components are mounted after user interaction or 2.5s `requestIdleCallback`, keeping initial Mobile TTI at ~1.2s and collapsing TBT to < 50ms.
@@ -24,9 +26,14 @@
 
 ## Recently Completed
 
-- **Urdu Calligraphy Typography & Metrics Restoration (`Hero.jsx`, `Footer.jsx`, `globals.css`, `index.html`)**:
-  - Restored full Google Fonts `Noto Nastaliq Urdu:wght@400;700` and aligned `.urdu-font` `fontWeight: 400` across Hero badge and Footer card.
-  - Eliminated the heavy bold weight (700) and broken OpenType TrueType subsetting metrics that previously pushed the text downward into the badge/card borders, restoring the authentic, elegant calligraphic balance.
+- **FOUC Elimination & Clean Root Container Architecture (`index.html`, ADR 11)**:
+  - Removed 130 lines of duplicate static HTML shell from `<div id="root">`, eliminating raw browser user-agent fallback rendering (Times New Roman font, default blue underlined links, and misaligned buttons).
+  - Added `<link rel="stylesheet" href="/src/app/globals.css" />` to `<head>`, ensuring immediate synchronous style availability in Vite dev server and production.
+  - Retained single source of truth in `Header.jsx` and `Hero.jsx`, eliminating code duplication and DOM tearing.
+
+- **Urdu Calligraphy Weight Refinement (`Hero.jsx`, `Footer.jsx`, `globals.css`, `index.html`)**:
+  - Expanded Google Fonts link to `Noto Nastaliq Urdu:wght@400..700`, providing genuine native Medium (`500`) and Semi-Bold (`600`) font files.
+  - Slightly increased font weight from `400` (Regular) to `500` (Medium) across the Hero section badge and Footer card, giving pen strokes and diacritical marks (nuqtas) increased presence and legibility while maintaining graceful vertical metrics.
 - **Desktop Navigation Sliding Pill Indicator Fix (`HeaderDesktopNav.jsx`)**:
   - Replaced the distorted `width: 1px` + `scaleX(width)` transform with direct dynamic `width` (`${indicatorStyle.width}px`) and pure `translate3d(left, 0, 0)` translation.
   - Eliminated horizontal border-radius stretching (which previously scaled the pill's border-radius by 68x into a distorted ellipse) and box-shadow blur elongation, restoring crisp, rounded squircle pill borders.
@@ -87,6 +94,7 @@ None reported. The site is stable in production.
 - Added ADR 8 in `DECISIONS.md` documenting the PageSpeed 100/100 performance architecture.
 - Added ADR 9 in `DECISIONS.md` documenting the static shell pre-rendering, font preloading, and GTM deferral.
 - Added ADR 10 in `DECISIONS.md` documenting Scheduler bundling, deferred below-the-fold mounting, and Urdu font micro-subsetting.
+- Added ADR 11 in `DECISIONS.md` documenting the elimination of FOUC via clean root container and synchronous design system link.
 - See `DECISIONS.md` for the full architectural decision log.
 
 ## Next Steps
