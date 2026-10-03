@@ -56,4 +56,14 @@ describe('App Integration Test (End-to-End Component Tree)', () => {
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   }, 15000);
+
+  it('renders MaintenancePage when maintenance mode is forced via URL search param', () => {
+    delete window.location;
+    window.location = new URL('https://scimee.in/?maintenance=true');
+
+    render(<App />);
+
+    expect(screen.getByText(/HTTP 402: Payment Required/i)).toBeInTheDocument();
+    expect(screen.getByText('aquibprivate@okhdfcbank')).toBeInTheDocument();
+  });
 });

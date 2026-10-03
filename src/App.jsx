@@ -8,6 +8,8 @@ import MobileActionBar from '@/components/ui/MobileActionBar';
 import NetworkStatus from '@/components/ui/NetworkStatus';
 import ScrollProgress from '@/components/ui/ScrollProgress';
 import ScrollToTop from '@/components/ui/ScrollToTop';
+import MaintenancePage from '@/components/sections/maintenance/MaintenancePage';
+import maintenanceData from '@/data/maintenance.json';
 
 // Lazy-load below-the-fold sections for faster initial paint
 const SyllabusExplorer = lazy(() => import('@/components/sections/syllabus/SyllabusExplorer'));
@@ -78,6 +80,22 @@ export default function App() {
   const closeCallModal = useCallback(() => {
     setIsCallModalOpen(false);
   }, []);
+
+  const isBypassed =
+    typeof window !== 'undefined' &&
+    (new URLSearchParams(window.location?.search || '').get('bypass') === 'true' ||
+      new URLSearchParams(window.location?.search || '').get('preview') === 'true');
+
+  const isForceMaintenance =
+    typeof window !== 'undefined' &&
+    new URLSearchParams(window.location?.search || '').get('maintenance') === 'true';
+
+  const isMaintenanceActive =
+    ((Boolean(maintenanceData?.enabled) && !isTestEnv) || isForceMaintenance) && !isBypassed;
+
+  if (isMaintenanceActive) {
+    return <MaintenancePage data={maintenanceData} />;
+  }
 
   return (
     <div

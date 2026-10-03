@@ -568,11 +568,36 @@ Active
 4. **Accessible Semantic `<noscript>` Crawlable Fallback**: Added a structured HTML5 `<noscript>` block inside `<body>` containing semantic `<h1>`, `<h2>`, `<p>`, `<ul>`, and `<address>` details, enabling instant non-JS crawler indexing.
 5. **Automated SEO Tests**: Expanded `src/test/integration/seo.test.js` and `src/test/integration/pwaSecurity.test.js` to assert Geo tags, Schema entities, `<noscript>` contents, and clean sitemap syntax.
 
+---
+
+## 16. Toggleable Payment-Required Maintenance Screen Architecture (HTTP 402)
+
+### Status
+Active
+
+### Context
+1. **Milestone Payment Settlement**: Following completion of the website development, pending milestone dues required resolution. The developer needed an immediate mechanism to pause live website serving and present an informative, humorous payment-required screen.
+2. **Payment Routing Requirement**: The screen required a direct payment channel routing to the developer's UPI Virtual Payment Address (`aquibprivate@okhdfcbank`), including direct mobile Google Pay deep-links, clipboard copy functionality, dynamic QR code generation, and simulated verification with WhatsApp escalation.
+3. **Operational Reversibility & Developer Bypass**: The solution needed to be instantly reversible (1-second toggle back to live site once paid) and allow developer preview access (`?bypass=true` or `?preview=true`) without disabling the hold screen for public visitors.
+
+### Options Considered
+- **Option A (Hardcoded Root Replacement)**: Overwrite `index.html` or `App.jsx` completely. (Rejected: destructive, destroys existing component tree and breaks all regression test suites).
+- **Option B (Edge CDN / DNS Pause)**: Pause DNS or Vercel deployment. (Rejected: displays generic 404 or Vercel error, provides zero context or payment instructions to the client).
+- **Option C (Config-Driven React Maintenance Layer with URL Bypass)**: Decouple content into `src/data/maintenance.json`, render a dedicated Apple-glassmorphic `MaintenancePage.jsx` component before main landing page JSX, support `?bypass=true` parameter, and co-locate a full unit test suite.
+
+### Decision
+Option C.
+1. Created `src/data/maintenance.json` holding all maintenance status flags, diagnostic metrics, funny copy, and UPI payment details (`aquibprivate@okhdfcbank`).
+2. Created `src/components/sections/maintenance/MaintenancePage.jsx` with dark obsidian glassmorphism, HTTP 402 status pill, project diagnostic stats, 1-click UPI copy, `upi://pay` mobile intent link, expandable QR code, and funny payment check simulation linking to WhatsApp.
+3. Updated `src/App.jsx` to render `<MaintenancePage />` when `maintenance.json` is `enabled: true`, while allowing seamless developer bypass via `?bypass=true` or `?preview=true`.
+4. Created `src/components/sections/maintenance/MaintenancePage.test.jsx` testing badge display, UPI link formation, clipboard copying, QR code toggling, and WhatsApp verification link.
+5. Added integration test in `src/App.test.jsx` confirming URL-triggered maintenance mode rendering.
+
 ### Consequences
-- Eliminates Google Search Console sitemap warnings and establishes clean URL indexing.
-- Boosts Local Map Pack (3-pack) and regional discovery for medical and engineering coaching queries across Jalgaon district.
-- Guarantees 100% crawlability for non-JS search spiders and social link indexers.
-- Expanded test suite to 128 tests across 27 suites with 100% pass rate.
+- Allows immediate, non-destructive pausing of the live website.
+- Restoring the live website requires only flipping `"enabled": false` in `src/data/maintenance.json`.
+- Developers can inspect and test the full website anytime using `https://domain/?bypass=true`.
+- Zero ESLint errors, 100% Prettier compliant, clean production build, and all 134 Vitest tests passing across 28 suites.
 
 
 

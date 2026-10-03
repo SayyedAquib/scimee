@@ -66,11 +66,12 @@ src/components/
     └── ScrollToTop.test.jsx
 ```
 
-### Existing Test Files (27 Test Suites / 128 Tests)
+### Existing Test Files (28 Test Suites / 134 Tests)
 
 | Test File | Location | What It Tests |
 |---|---|---|
-| `App.test.jsx` | `src/` | Root app renders core sections (async Suspense) and modal workflow |
+| `App.test.jsx` | `src/` | Root app renders core sections, modal workflow, and maintenance routing |
+| `MaintenancePage.test.jsx` | `src/components/sections/maintenance/` | HTTP 402 badge, UPI Google Pay deep-links, clipboard copy, QR toggle, WhatsApp escalation |
 | `Header.test.jsx` | `src/components/sections/header/` | Navbar renders, nav links present, call button works |
 | `Hero.test.jsx` | `src/components/sections/hero/` | Hero section renders with stats and CTAs |
 | `ToppersSection.test.jsx` | `src/components/sections/toppers/` | Student data renders correctly, filters by rank/score |

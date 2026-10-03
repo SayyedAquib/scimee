@@ -1,0 +1,28 @@
+{
+  "enabled": true,
+  "statusCode": 402,
+  "badge": "HTTP 402: Payment Required",
+  "headline": "Website Paused Due To Unfed Developer 🍕💸",
+  "subheadline": "This website is currently taking an emergency siesta because the developer's bank account has reached critically low fuel levels.",
+  "diagnosticTitle": "Project Health Diagnostics",
+  "metrics": [
+    { "id": "code", "label": "Code Architecture", "value": "100%", "status": "completed" },
+    { "id": "seo", "label": "SEO & Performance", "value": "100/100", "status": "completed" },
+    { "id": "caffeine", "label": "Caffeine Consumed", "value": "142 Cups", "status": "completed" },
+    { "id": "payment", "label": "Client Payment", "value": "0% Received", "status": "pending" }
+  ],
+  "messageTitle": "Dear Valued Client,",
+  "messageBody": "Servers require electricity, code requires coffee, and your friendly developer requires money to survive. Once the pending dues land safely in Google Pay, our digital hamsters will immediately spin the wheels and restore this website to full glory!",
+  "payment": {
+    "upiId": "aquibprivate@okhdfcbank",
+    "payeeName": "Aquib",
+    "note": "SCIMEE Website Development Final Settlement",
+    "suggestedApp": "Google Pay / PhonePe / Paytm",
+    "whatsappNumber": "9175013140"
+  },
+  "perks": [
+    "⚡ Instant website resurrection upon UPI confirmation",
+    "🚀 5G turbo speed restored within seconds",
+    "🤝 Happiness restored for both client and developer"
+  ]
+}

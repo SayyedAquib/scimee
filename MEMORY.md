@@ -6,6 +6,11 @@
 
 - Website is deployed and serving users at https://scimee.vercel.app/
 - All CI checks pass (lint, format, test, build)
+- **Toggleable Payment-Required Maintenance Screen Architecture (ADR 16)**:
+  - Implemented configurable maintenance lock screen in `src/data/maintenance.json` and `src/components/sections/maintenance/MaintenancePage.jsx`.
+  - Configured direct Google Pay / UPI intent deep-linking (`upi://pay?pa=aquibprivate@okhdfcbank...`), 1-click clipboard copy, responsive QR code generator, and humorous verification simulation with WhatsApp receipt escalation.
+  - Implemented developer bypass query parameter (`?bypass=true` or `?preview=true`) allowing instant developer inspection of the live site while maintaining the hold screen for public visitors.
+  - 100% test pass rate across 28 test suites (134/134 tests), 0 ESLint errors, 100% Prettier compliant, clean production build.
 - **Vite Path Aliases & Component Inline Style Pruning (ADR 13)**:
   - Configured `@/` path aliasing in `vite.config.js` and `jsconfig.json`, migrating all 36 source and test files across `src/` to clean, refactor-proof imports.
   - Pruned repetitive inline styles across all major landing page sections (`Header`, `Hero`, `Footer`, `CourseExplorer`, `ToppersSection`, `SyllabusExplorer`, `FacilitiesSection`, `CbtShowcaseSection`, `MapLocation`, `FAQSection`), encapsulating them into clean, reusable CSS primitives in `src/styles/globals.css`.
@@ -35,6 +40,11 @@
 
 ## Recently Completed
 
+- **Toggleable Payment-Required Maintenance Screen Architecture (ADR 16)**:
+  - Created `src/data/maintenance.json` holding all maintenance status flags, diagnostic metrics, humor copy, and UPI payment details (`aquibprivate@okhdfcbank`).
+  - Created `src/components/sections/maintenance/MaintenancePage.jsx` with dark obsidian glassmorphism, HTTP 402 status pill, project diagnostic stats, 1-click UPI copy, `upi://pay` mobile intent link, expandable QR code, and funny payment check simulation linking to WhatsApp.
+  - Updated `src/App.jsx` to render `<MaintenancePage />` when `maintenance.json` is `enabled: true`, while allowing seamless developer bypass via `?bypass=true` or `?preview=true`.
+  - Created `src/components/sections/maintenance/MaintenancePage.test.jsx` and updated `src/App.test.jsx`, expanding the test suite to 134 tests across 28 suites with 100% pass rate.
 - **Comprehensive Local and Technical SEO Architecture (ADR 15)**:
   - Cleaned `public/sitemap.xml` to pure canonical format, removing URL fragment hashes (`#`) in strict accordance with Google Search Central specifications.
   - Added Dublin Core / ICBM machine-readable Geo-targeting tags (`geo.region`, `geo.placename`, `geo.position`, `ICBM`) for Bhusawal & Jalgaon district.
