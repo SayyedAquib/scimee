@@ -217,7 +217,7 @@ A task is done when:
 5. ✅ Production build succeeds without warnings or errors
 6. ✅ No regressions in existing functionality
 7. ✅ Data changes are reflected in both JSON files and consuming components
-8. ✅ MEMORY.md is updated if the task involved meaningful changes
+8. ✅ docs/MEMORY.md is updated if the task involved meaningful changes
 
 ### Service Worker Test
 

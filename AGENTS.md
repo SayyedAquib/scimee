@@ -29,6 +29,14 @@ scimee/
 ├── eslint.config.js         # ESLint flat config
 ├── .prettierrc              # Prettier config
 ├── .env                     # VITE_CBT_PORTAL_URL
+├── docs/                    # Consolidated project documentation
+│   ├── ARCHITECTURE.md      # System architecture & scalability
+│   ├── DECISIONS.md         # Architecture Decision Records (ADRs)
+│   ├── DESIGN.md            # Design tokens, typography & components
+│   ├── MEMORY.md            # Working memory for session continuity
+│   ├── PRD.md               # Product requirements document
+│   ├── RULES.md             # Coding rules & forbidden practices
+│   └── TESTING.md           # Testing strategy & suites breakdown
 ├── public/
 │   ├── assets/              # logo.svg, logo.png, og-preview.jpg
 │   ├── sw.js                # PWA service worker
@@ -187,11 +195,11 @@ Before considering any task complete:
 > [!IMPORTANT]
 > **It does not matter which LLM, model, or tool you are** (Claude, Gemini, GPT, etc.) — you MUST keep the documentation suite synchronized with the code. Never complete a task without updating the relevant documentation:
 >
-> 1. **`MEMORY.md`**: Update after **every** task (Current Status, Recently Completed, Next Steps).
-> 2. **`DECISIONS.md`**: Add an Architecture Decision Record (ADR) whenever any architectural, build, or structural choice is made.
-> 3. **`ARCHITECTURE.md`**: Update when component structures, data flow, bundling, or deployment configurations change.
-> 4. **`TESTING.md`**: Update when test counts, test files, or testing patterns change.
-> 5. **`RULES.md` / `AGENTS.md`**: Update when new constraints, patterns, or commands are introduced.
+> 1. **`docs/MEMORY.md`**: Update after **every** task (Current Status, Recently Completed, Next Steps).
+> 2. **`docs/DECISIONS.md`**: Add an Architecture Decision Record (ADR) whenever any architectural, build, or structural choice is made.
+> 3. **`docs/ARCHITECTURE.md`**: Update when component structures, data flow, bundling, or deployment configurations change.
+> 4. **`docs/TESTING.md`**: Update when test counts, test files, or testing patterns change.
+> 5. **`docs/RULES.md` / `AGENTS.md`**: Update when new constraints, patterns, or commands are introduced.
 
 ## Verification Checklist
 
@@ -204,7 +212,7 @@ npm test
 npm run build
 ```
 
-All four must pass. In addition, verify that **`MEMORY.md`** and relevant documentation files have been updated with your changes. CI (`ci.yml`) runs the same code checks on every push and PR.
+All four must pass. In addition, verify that **`docs/MEMORY.md`** and relevant documentation files have been updated with your changes. CI (`ci.yml`) runs the same code checks on every push and PR.
 
 ## Forbidden Changes
 
@@ -219,14 +227,14 @@ All four must pass. In addition, verify that **`MEMORY.md`** and relevant docume
 - **Do not introduce** server-side rendering or API routes
 - **Do not push code (`git push`)** — never push commits to remote repositories; all pushing is strictly reserved for the user
 
-## Additional Documentation
+## Additional Documentation (in `docs/`)
 
 | File | Purpose |
 |---|---|
-| `PRD.md` | Product requirements and feature specification |
-| `DESIGN.md` | Design system, colors, typography, component patterns |
-| `ARCHITECTURE.md` | System architecture, data flow, deployment |
-| `RULES.md` | Coding rules and forbidden practices |
-| `TESTING.md` | Testing strategy and tools |
-| `DECISIONS.md` | Architecture decision records |
-| `MEMORY.md` | Project working memory for session continuity |
+| `docs/PRD.md` | Product requirements and feature specification |
+| `docs/DESIGN.md` | Design system, colors, typography, component patterns |
+| `docs/ARCHITECTURE.md` | System architecture, data flow, deployment |
+| `docs/RULES.md` | Coding rules and forbidden practices |
+| `docs/TESTING.md` | Testing strategy and tools |
+| `docs/DECISIONS.md` | Architecture decision records |
+| `docs/MEMORY.md` | Project working memory for session continuity |

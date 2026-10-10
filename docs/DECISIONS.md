@@ -599,6 +599,36 @@ Option C.
 - Developers can inspect and test the full website anytime using `https://domain/?bypass=true`.
 - Zero ESLint errors, 100% Prettier compliant, clean production build, and all 134 Vitest tests passing across 28 suites.
 
+---
+
+## 17. Project Documentation Consolidation into `docs/` Directory
+
+### Status
+Active
+
+### Context
+1. **Root Directory Clutter**: Seven markdown documentation files (`ARCHITECTURE.md`, `DECISIONS.md`, `DESIGN.md`, `MEMORY.md`, `PRD.md`, `RULES.md`, `TESTING.md`) were located in the workspace root alongside configuration files, cluttering the top-level repository view.
+2. **Canonical Entrypoint Preservation**: AI agents and automated tools require a single root entrypoint (`AGENTS.md` / `CLAUDE.md`).
+3. **Requirement**: Move all project documentation files into a dedicated `docs/` directory while keeping `AGENTS.md` at the root as the primary AI agent handbook.
+
+### Decision
+1. Created dedicated `docs/` folder in the repository root.
+2. Moved 7 project documentation files from root to `docs/`:
+   - `ARCHITECTURE.md` → `docs/ARCHITECTURE.md`
+   - `DECISIONS.md` → `docs/DECISIONS.md`
+   - `DESIGN.md` → `docs/DESIGN.md`
+   - `MEMORY.md` → `docs/MEMORY.md`
+   - `PRD.md` → `docs/PRD.md`
+   - `RULES.md` → `docs/RULES.md`
+   - `TESTING.md` → `docs/TESTING.md`
+3. Kept `AGENTS.md` and `CLAUDE.md` in the project root as canonical agent entrypoints, updating all relative markdown links and mandatory documentation tables to reference `docs/`.
+4. Updated cross-references across `docs/RULES.md`, `docs/TESTING.md`, `docs/MEMORY.md`, and `docs/ARCHITECTURE.md`.
+
+### Consequences
+- Clean root directory layout conforming to modern repository conventions.
+- All documentation centralized under `docs/` for easy navigation and maintenance.
+- Root `AGENTS.md` remains intact for seamless AI agent loading and tooling integration.
+
 
 
 

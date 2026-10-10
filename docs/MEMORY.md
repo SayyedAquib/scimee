@@ -40,6 +40,10 @@
 
 ## Recently Completed
 
+- **Project Documentation Consolidation into `docs/` Directory (ADR 17)**:
+  - Created `docs/` directory and consolidated all 7 project documentation files (`ARCHITECTURE.md`, `DECISIONS.md`, `DESIGN.md`, `MEMORY.md`, `PRD.md`, `RULES.md`, `TESTING.md`) inside it.
+  - Retained `AGENTS.md` and `CLAUDE.md` in the workspace root as the canonical AI agent handbook entrypoint.
+  - Updated all markdown cross-references across `AGENTS.md`, `docs/RULES.md`, `docs/TESTING.md`, `docs/MEMORY.md`, and `docs/DECISIONS.md`.
 - **Toggleable Payment-Required Maintenance Screen Architecture (ADR 16)**:
   - Created `src/data/maintenance.json` holding all maintenance status flags, diagnostic metrics, humor copy, and UPI payment details (`aquibprivate@okhdfcbank`).
   - Created `src/components/sections/maintenance/MaintenancePage.jsx` with dark obsidian glassmorphism, HTTP 402 status pill, project diagnostic stats, 1-click UPI copy, `upi://pay` mobile intent link, expandable QR code, and funny payment check simulation linking to WhatsApp.
@@ -99,7 +103,9 @@ None reported. The site is stable in production.
 - Added ADR 13 in `DECISIONS.md` documenting Vite path aliases (`@/`) and component inline style pruning.
 - Added ADR 14 in `DECISIONS.md` documenting authentic logo vectorization and asset unification.
 - Added ADR 15 in `DECISIONS.md` documenting comprehensive local & technical SEO architecture.
-- See `DECISIONS.md` for the full architectural decision log.
+- Added ADR 16 in `DECISIONS.md` documenting toggleable payment-required maintenance screen architecture.
+- Added ADR 17 in `DECISIONS.md` documenting project documentation consolidation into `docs/` directory.
+- See `docs/DECISIONS.md` for the full architectural decision log.
 
 ## Next Steps
 
@@ -120,7 +126,7 @@ None reported. The site is stable in production.
 This is a production-stable coaching institute website. All 8 documentation files have been created to reflect the actual state of the codebase. A new AI session should:
 
 1. Read `AGENTS.md` first for project overview and conventions
-2. Read `RULES.md` for forbidden practices and coding rules
-3. Read the specific docs (DESIGN, ARCHITECTURE, TESTING) relevant to the task
+2. Read `docs/RULES.md` for forbidden practices and coding rules
+3. Read the specific docs in `docs/` (DESIGN, ARCHITECTURE, TESTING) relevant to the task
 4. Run `npm test` and `npm run lint` before and after any changes
 5. Do not introduce new frameworks, libraries, or architectural patterns without explicit approval
