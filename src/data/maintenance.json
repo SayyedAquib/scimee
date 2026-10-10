@@ -1,5 +1,5 @@
 {
-  "enabled": true,
+  "enabled": false,
   "statusCode": 402,
   "badge": "HTTP 402: Payment Required",
   "headline": "Website Paused Due To Unfed Developer 🍕💸",

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import {
   CheckCircle2,
   Copy,
@@ -19,6 +19,16 @@ export default function MaintenancePage({ data = defaultMaintenanceData }) {
   const [isCheckingPayment, setIsCheckingPayment] = useState(false);
   const [verificationResult, setVerificationResult] = useState(null);
 
+  const copyTimerRef = useRef(null);
+  const verifyTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+      if (verifyTimerRef.current) clearTimeout(verifyTimerRef.current);
+    };
+  }, []);
+
   const payment = data?.payment ?? {};
   const upiId = payment?.upiId ?? 'aquibprivate@okhdfcbank';
   const payeeName = payment?.payeeName ?? 'Aquib';
@@ -37,21 +47,23 @@ export default function MaintenancePage({ data = defaultMaintenanceData }) {
     try {
       if (typeof navigator !== 'undefined' && navigator?.clipboard?.writeText) {
         await navigator.clipboard.writeText(upiId);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2500);
       }
     } catch {
       // Fallback if clipboard API fails
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
     }
+    setCopied(true);
+    if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+    copyTimerRef.current = setTimeout(() => {
+      setCopied(false);
+    }, 2500);
   }, [upiId]);
 
   const handleSimulateVerification = useCallback(() => {
     setIsCheckingPayment(true);
     setVerificationResult(null);
 
-    setTimeout(() => {
+    if (verifyTimerRef.current) clearTimeout(verifyTimerRef.current);
+    verifyTimerRef.current = setTimeout(() => {
       setIsCheckingPayment(false);
       setVerificationResult({
         status: 'unverified',

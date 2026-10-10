@@ -7,6 +7,7 @@
 - Website is deployed and serving users at https://scimee.vercel.app/
 - All CI checks pass (lint, format, test, build)
 - **Toggleable Payment-Required Maintenance Screen Architecture (ADR 16)**:
+  - Maintenance mode deactivated (`"enabled": false` in `src/data/maintenance.json`) — full live website restored for all visitors.
   - Implemented configurable maintenance lock screen in `src/data/maintenance.json` and `src/components/sections/maintenance/MaintenancePage.jsx`.
   - Configured direct Google Pay / UPI intent deep-linking (`upi://pay?pa=aquibprivate@okhdfcbank...`), 1-click clipboard copy, responsive QR code generator, and humorous verification simulation with WhatsApp receipt escalation.
   - Implemented developer bypass query parameter (`?bypass=true` or `?preview=true`) allowing instant developer inspection of the live site while maintaining the hold screen for public visitors.
